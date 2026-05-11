@@ -1,0 +1,18 @@
+{{- /*
+  Callout shortcode — info | tip | warning | danger
+  Usage:
+    {{< callout type="info" title="Heads up" >}}
+    Multi-line **markdown** content here.
+    {{< /callout >}}
+*/ -}}
+{{- $type := .Get "type" | default "info" -}}
+{{- $title := .Get "title" -}}
+{{- $iconMap := dict "info" "i" "tip" "*" "warning" "!" "danger" "x" -}}
+{{- $icon := index $iconMap $type | default "i" -}}
+<div class="cse-callout cse-callout-{{ $type }}" role="note">
+  <div class="cse-callout-icon" aria-hidden="true">[{{ $icon }}]</div>
+  <div class="cse-callout-body">
+    {{- with $title }}<strong>{{ . }}</strong>{{ end }}
+    {{ .Inner | markdownify }}
+  </div>
+</div>

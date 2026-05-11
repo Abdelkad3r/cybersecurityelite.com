@@ -1,0 +1,19 @@
+/* TEAM */
+Site Name: CyberSecurity Elite
+Tagline: Elite Cybersecurity Knowledge, Tutorials, and CTF Writeups
+Domain: cybersecurityelite.com
+Contact: hello [at] cybersecurityelite.com
+Location: Remote / Global
+
+/* THANKS */
+Hugo — https://gohugo.io
+PaperMod Theme — https://github.com/adityatelange/hugo-PaperMod
+The open-source security community
+
+/* SITE */
+Last update: 2026/05/12
+Language: English
+Doctype: HTML5
+Standards: HTML5, CSS3, WCAG 2.1 AA
+Components: Hugo, PaperMod, GitHub Actions, GitHub Pages
+Software: VS Code, git

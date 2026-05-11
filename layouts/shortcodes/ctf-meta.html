@@ -1,0 +1,23 @@
+{{- /*
+  CTF metadata block.
+  Usage:
+    {{< ctf-meta platform="Hack The Box" difficulty="Easy" os="Linux" points="20" release="2024-03-15" >}}
+*/ -}}
+{{- $fields := slice
+  (dict "label" "Platform"   "value" (.Get "platform"))
+  (dict "label" "Difficulty" "value" (.Get "difficulty"))
+  (dict "label" "OS"         "value" (.Get "os"))
+  (dict "label" "Points"     "value" (.Get "points"))
+  (dict "label" "Release"    "value" (.Get "release"))
+  (dict "label" "Tags"       "value" (.Get "skills"))
+-}}
+<div class="cse-ctf-meta" role="region" aria-label="CTF metadata">
+  {{- range $fields -}}
+    {{- if .value -}}
+      <div class="cse-ctf-meta-item">
+        <span class="cse-ctf-meta-label">{{ .label }}</span>
+        <span class="cse-ctf-meta-value">{{ .value }}</span>
+      </div>
+    {{- end -}}
+  {{- end -}}
+</div>

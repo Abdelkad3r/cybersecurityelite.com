@@ -1,0 +1,32 @@
+{
+  "name": "CyberSecurity Elite",
+  "short_name": "CSE",
+  "description": "Elite Cybersecurity Knowledge, Tutorials, and CTF Writeups",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0b1220",
+  "background_color": "#0b1220",
+  "lang": "en-US",
+  "categories": ["education", "news", "productivity", "security"],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

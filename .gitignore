@@ -1,0 +1,31 @@
+# Hugo build artifacts
+/public/
+/resources/
+/.hugo_build.lock
+hugo_stats.json
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# Env / secrets
+.env
+.env.local
+*.local
+
+# Logs
+*.log
+
+# Test output
+coverage/

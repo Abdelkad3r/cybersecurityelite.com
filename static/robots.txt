@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /search/
+Disallow: /404/
+Disallow: /tags/
+Crawl-delay: 1
+
+# Disallow common AI scrapers if desired (uncomment to enforce)
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: CCBot
+# Disallow: /
+
+Sitemap: https://cybersecurityelite.com/sitemap.xml
+Host: https://cybersecurityelite.com

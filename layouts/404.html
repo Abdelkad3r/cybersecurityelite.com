@@ -1,0 +1,18 @@
+{{- define "main" -}}
+<div class="not-found" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height: 60vh; text-align:center; padding: 2rem;">
+  <h1 style="font-size: clamp(3rem, 8vw, 6rem); margin: 0; background: linear-gradient(135deg, var(--cse-accent), var(--cse-accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800;">404</h1>
+  <p style="font-size: 1.2rem; color: var(--secondary); margin: 0.5rem 0 1.5rem; font-family: var(--cse-mono);">
+    <span style="color: var(--cse-accent);">$</span> route not found
+  </p>
+  <p style="max-width: 480px; color: var(--content);">
+    The page you're looking for has been moved, removed, or never existed.
+    Try the search, or jump into one of our most popular sections below.
+  </p>
+  <div class="cse-hero-actions" style="margin-top: 1.6rem;">
+    <a class="cse-btn cse-btn-primary" href="{{ "/" | relURL }}">Back to Home</a>
+    <a class="cse-btn cse-btn-secondary" href="{{ "/search/" | relURL }}">Search</a>
+    <a class="cse-btn cse-btn-secondary" href="{{ "/ctf-writeups/" | relURL }}">CTF Writeups</a>
+    <a class="cse-btn cse-btn-secondary" href="{{ "/tutorials/" | relURL }}">Tutorials</a>
+  </div>
+</div>
+{{- end -}}

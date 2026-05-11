@@ -1,0 +1,20 @@
+{{- /* Custom hero replacing PaperMod's default home_info to add CTA buttons. */ -}}
+<article class="first-entry home-info">
+  <header class="entry-header">
+    <h1>{{ site.Params.homeInfoParams.Title | markdownify }}</h1>
+  </header>
+  <div class="entry-content">
+    {{ site.Params.homeInfoParams.Content | markdownify }}
+    <div class="cse-hero-actions" role="group" aria-label="Primary calls to action">
+      <a class="cse-btn cse-btn-primary" href="{{ "/ctf-writeups/" | relURL }}">
+        Explore Writeups
+      </a>
+      <a class="cse-btn cse-btn-secondary" href="{{ "/tutorials/" | relURL }}">
+        Start Learning
+      </a>
+    </div>
+  </div>
+  <footer class="entry-footer">
+    {{- partial "social_icons.html" site.Params.socialIcons -}}
+  </footer>
+</article>

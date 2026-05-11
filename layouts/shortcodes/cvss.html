@@ -1,0 +1,18 @@
+{{- /*
+  CVSS severity badge.
+  Usage:
+    {{< cvss score="9.8" vector="AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H" >}}
+    {{< cvss score="5.3" >}}
+*/ -}}
+{{- $score := .Get "score" | default "0.0" -}}
+{{- $vector := .Get "vector" -}}
+{{- $f := float $score -}}
+{{- $sev := "none" -}}
+{{- if ge $f 9.0 -}}{{- $sev = "critical" -}}
+{{- else if ge $f 7.0 -}}{{- $sev = "high" -}}
+{{- else if ge $f 4.0 -}}{{- $sev = "medium" -}}
+{{- else if gt $f 0.0 -}}{{- $sev = "low" -}}
+{{- end -}}
+<span class="cse-cvss cse-cvss-{{ $sev }}" title="{{ if $vector }}{{ $vector }}{{ else }}CVSS v3.1{{ end }}">
+  CVSS {{ $score }} · {{ upper $sev }}
+</span>

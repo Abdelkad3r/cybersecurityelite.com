@@ -1,0 +1,134 @@
+{{- /* Extra <head> content layered on top of PaperMod's. */ -}}
+
+{{- /* Theme color & icons */ -}}
+<meta name="theme-color" content="#0b1220">
+<meta name="msapplication-TileColor" content="#0b1220">
+<meta name="msapplication-config" content="/browserconfig.xml">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#00d4ff">
+
+{{- /* Performance hints */ -}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+{{- /* Pagination metadata */ -}}
+{{- if .IsPage -}}
+  {{- with .Paginator -}}
+    {{- if .HasPrev }}<link rel="prev" href="{{ .Prev.URL }}">{{ end -}}
+    {{- if .HasNext }}<link rel="next" href="{{ .Next.URL }}">{{ end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Site verification placeholders — replace tokens before deploy. */ -}}
+{{- with site.Params.analytics.google.SiteVerificationTag -}}
+  <meta name="google-site-verification" content="{{ . }}">
+{{- end -}}
+{{- with site.Params.analytics.bing.SiteVerificationTag -}}
+  <meta name="msvalidate.01" content="{{ . }}">
+{{- end -}}
+
+{{- /* Structured data — Organization + WebSite (sitewide) */ -}}
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{ "#organization" | absURL }}",
+      "name": "CyberSecurity Elite",
+      "url": "{{ "/" | absURL }}",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "{{ "/logo.svg" | absURL }}",
+        "width": 240,
+        "height": 64
+      },
+      "sameAs": [
+        "https://github.com/cybersecurityelite",
+        "https://x.com/cybersecelite",
+        "https://www.linkedin.com/company/cybersecurityelite/"
+      ],
+      "description": "Elite Cybersecurity Knowledge, Tutorials, and CTF Writeups."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ "#website" | absURL }}",
+      "url": "{{ "/" | absURL }}",
+      "name": "CyberSecurity Elite",
+      "publisher": { "@id": "{{ "#organization" | absURL }}" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "{{ "/search/?q={search_term_string}" | absURL }}",
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "en-US"
+    }
+  ]
+}
+</script>
+{{ end }}
+
+{{- /* BreadcrumbList for content pages */ -}}
+{{ if and (not .IsHome) (not (eq .Kind "404")) }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ "/" | absURL }}" }
+    {{- $section := .Section -}}
+    {{- if and $section (not (eq .Kind "section")) -}}
+      , { "@type": "ListItem", "position": 2, "name": "{{ humanize $section }}", "item": "{{ printf "/%s/" $section | absURL }}" },
+      { "@type": "ListItem", "position": 3, "name": {{ .Title | jsonify }}, "item": "{{ .Permalink }}" }
+    {{- else if eq .Kind "section" -}}
+      , { "@type": "ListItem", "position": 2, "name": {{ .Title | jsonify }}, "item": "{{ .Permalink }}" }
+    {{- else -}}
+      , { "@type": "ListItem", "position": 2, "name": {{ .Title | jsonify }}, "item": "{{ .Permalink }}" }
+    {{- end }}
+  ]
+}
+</script>
+{{ end }}
+
+{{- /* BlogPosting for individual articles */ -}}
+{{ if and (eq .Kind "page") (in (slice "posts" "ctf-writeups" "tutorials" "tools" "certifications" "malware-analysis" "reverse-engineering" "forensics" "bug-bounty" "cloud-security" "web-security" "network-security" "career" "news") .Section) }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "{{ .Permalink }}" },
+  "headline": {{ .Title | jsonify }},
+  "description": {{ (or .Description .Summary) | plainify | jsonify }},
+  {{- $cover := "" -}}
+  {{- with .Params.cover -}}{{- $cover = .image -}}{{- end -}}
+  "image": "{{ (or $cover "/images/og-default.svg") | absURL }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ or (.Param "author") site.Params.author }}",
+    "url": "{{ "/about/" | absURL }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CyberSecurity Elite",
+    "logo": { "@type": "ImageObject", "url": "{{ "/logo.svg" | absURL }}" }
+  },
+  "datePublished": "{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}",
+  "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}",
+  "keywords": "{{ delimit (.Param "keywords" | default .Params.tags) ", " }}",
+  "articleSection": "{{ humanize .Section }}",
+  "wordCount": {{ .WordCount }},
+  "inLanguage": "en-US"
+}
+</script>
+{{ end }}
+
+{{- /* Mermaid (lazy loaded when shortcode is used) */ -}}
+{{ if .Param "mermaid" }}
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({ startOnLoad: true, theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default' });
+</script>
+{{ end }}

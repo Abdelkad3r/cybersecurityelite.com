@@ -1,0 +1,18 @@
+{{- /*
+  Terminal block — pre-formatted terminal session with a faux window chrome.
+  Usage:
+    {{< terminal title="kali@kali" >}}
+    $ nmap -sC -sV 10.10.10.10
+    Starting Nmap 7.94 ...
+    {{< /terminal >}}
+*/ -}}
+{{- $title := .Get "title" | default "shell" -}}
+<div class="cse-terminal" role="figure" aria-label="Terminal session">
+  <div class="cse-terminal-header" aria-hidden="true">
+    <span class="cse-terminal-dot red"></span>
+    <span class="cse-terminal-dot yellow"></span>
+    <span class="cse-terminal-dot green"></span>
+    <span class="cse-terminal-title">{{ $title }}</span>
+  </div>
+  <pre class="cse-terminal-body"><code>{{- .Inner | safeHTML -}}</code></pre>
+</div>

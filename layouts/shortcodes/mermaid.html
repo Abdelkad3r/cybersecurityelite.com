@@ -1,0 +1,9 @@
+{{- /*
+  Mermaid diagram shortcode.
+  Set `mermaid: true` in your page front matter so the loader is injected.
+  Usage:
+    {{< mermaid >}}
+    graph LR; A-->B-->C;
+    {{< /mermaid >}}
+*/ -}}
+<pre class="mermaid">{{ .Inner | safeHTML }}</pre>

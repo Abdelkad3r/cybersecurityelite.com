@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="CyberSecurity Elite — Open Graph card">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0 L0 0 0 40" fill="none" stroke="rgba(0,212,255,0.08)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Shield -->
+  <g transform="translate(80 200)">
+    <path d="M115 0 L230 38 V115 C230 187 178 230 115 240 C52 230 0 187 0 115 V38 Z"
+          fill="none" stroke="url(#accent)" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M62 115 L100 152 L168 84" fill="none" stroke="url(#accent)"
+          stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Title -->
+  <g transform="translate(380 220)" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto">
+    <text x="0" y="0" font-size="34" font-weight="500" fill="#94a3b8" letter-spacing="6">CYBERSECURITY ELITE</text>
+    <text x="0" y="90" font-size="74" font-weight="800" fill="#e6edf3">Master Cybersecurity</text>
+    <text x="0" y="170" font-size="74" font-weight="800" fill="url(#accent)">with Elite Tutorials</text>
+    <text x="0" y="240" font-size="34" font-weight="400" fill="#cbd5e1">CTF Writeups · Pentesting · Malware Analysis · Forensics</text>
+  </g>
+
+  <!-- Footer URL -->
+  <text x="80" y="580" font-size="26" font-weight="600" fill="#64748b"
+        font-family="ui-monospace, monospace">cybersecurityelite.com</text>
+</svg>

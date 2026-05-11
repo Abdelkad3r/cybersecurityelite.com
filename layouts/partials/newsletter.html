@@ -1,0 +1,12 @@
+{{- /* Newsletter CTA — drop into any layout. Wire the action to your provider. */ -}}
+<aside class="cse-newsletter" aria-label="Newsletter signup">
+  <div>
+    <h3>Join the CyberSecurity Elite newsletter</h3>
+    <p>Weekly writeups, tools, and tactics — straight to your inbox. No spam, unsubscribe anytime.</p>
+  </div>
+  <form class="cse-newsletter-form" action="https://example.com/newsletter" method="post" novalidate>
+    <label for="cse-newsletter-email" class="sr-only">Email address</label>
+    <input id="cse-newsletter-email" type="email" name="email" placeholder="you@example.com" required autocomplete="email">
+    <button type="submit" class="cse-btn cse-btn-primary">Subscribe</button>
+  </form>
+</aside>

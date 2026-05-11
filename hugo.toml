@@ -1,0 +1,258 @@
+###############################################################################
+# CyberSecurity Elite — Hugo Configuration
+# Domain: https://cybersecurityelite.com
+# Theme:  PaperMod (https://github.com/adityatelange/hugo-PaperMod)
+###############################################################################
+
+baseURL = "https://cybersecurityelite.com/"
+languageCode = "en-us"
+defaultContentLanguage = "en"
+title = "CyberSecurity Elite"
+theme = "PaperMod"
+
+enableRobotsTXT = true
+enableEmoji = false
+enableGitInfo = true
+buildDrafts = false
+buildFuture = false
+buildExpired = false
+pluralizeListTitles = false
+summaryLength = 40
+paginate = 12
+canonifyURLs = true
+
+# Build performance & SEO sitemap
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.7
+
+# Pretty URLs without trailing index.html
+[permalinks]
+  posts = "/posts/:slug/"
+  "ctf-writeups" = "/ctf-writeups/:slug/"
+  tutorials = "/tutorials/:slug/"
+  tools = "/tools/:slug/"
+  certifications = "/certifications/:slug/"
+  "malware-analysis" = "/malware-analysis/:slug/"
+  "reverse-engineering" = "/reverse-engineering/:slug/"
+  forensics = "/forensics/:slug/"
+  "bug-bounty" = "/bug-bounty/:slug/"
+  "cloud-security" = "/cloud-security/:slug/"
+  "web-security" = "/web-security/:slug/"
+  "network-security" = "/network-security/:slug/"
+  career = "/career/:slug/"
+  news = "/news/:slug/"
+
+# Output formats — adds JSON for search index
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  page = ["HTML"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML"]
+  term = ["HTML", "RSS"]
+
+# Markdown rendering
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+  [markup.tableOfContents]
+    endLevel = 4
+    ordered = false
+    startLevel = 2
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    hl_Lines = ""
+    lineAnchors = ""
+    lineNoStart = 1
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+    style = "github-dark"
+    tabWidth = 4
+
+# Taxonomies
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+  series = "series"
+  author = "authors"
+
+# Navigation
+[menu]
+  [[menu.main]]
+    identifier = "ctf"
+    name = "CTF Writeups"
+    url = "/ctf-writeups/"
+    weight = 10
+  [[menu.main]]
+    identifier = "tutorials"
+    name = "Tutorials"
+    url = "/tutorials/"
+    weight = 20
+  [[menu.main]]
+    identifier = "tools"
+    name = "Tools"
+    url = "/tools/"
+    weight = 30
+  [[menu.main]]
+    identifier = "certifications"
+    name = "Certifications"
+    url = "/certifications/"
+    weight = 40
+  [[menu.main]]
+    identifier = "categories"
+    name = "Categories"
+    url = "/categories/"
+    weight = 50
+  [[menu.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 60
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 70
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 80
+
+# Security: shell exec allowed for git info; nothing else
+[security]
+  [security.exec]
+    allow = ["^(dart-)?sass(-embedded)?$", "^go$", "^npx$", "^postcss$", "^git$"]
+    osEnv = ["(?i)^(PATH|PATHEXT|APPDATA|TMP|TEMP|TERM)$"]
+  [security.funcs]
+    getenv = ["^HUGO_", "^CI$"]
+
+###############################################################################
+# Site Parameters — PaperMod + custom branding
+###############################################################################
+[params]
+  env = "production"
+  title = "CyberSecurity Elite"
+  description = "Elite Cybersecurity Knowledge, Tutorials, and CTF Writeups — practical guides, in-depth research, and hands-on walkthroughs for security professionals."
+  keywords = ["cybersecurity", "ctf writeups", "penetration testing", "ethical hacking", "bug bounty", "malware analysis", "reverse engineering", "digital forensics", "OSCP", "red team", "blue team", "OSINT"]
+  author = "CyberSecurity Elite Team"
+  images = ["/images/og-default.png"]
+  DateFormat = "January 2, 2006"
+  defaultTheme = "dark"
+  disableThemeToggle = false
+
+  ShowReadingTime = true
+  ShowShareButtons = true
+  ShareButtons = ["x", "linkedin", "reddit", "facebook", "telegram", "whatsapp"]
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  ShowFullTextinRSS = false
+  ShowToc = true
+  TocOpen = false
+  ShowLastMod = true
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  disableScrollToTop = false
+  comments = false
+  hidemeta = false
+  hideSummary = false
+
+  [params.homeInfoParams]
+    Title = "Master Cybersecurity with Elite Tutorials and CTF Writeups"
+    Content = "Practical guides, in-depth research, and hands-on walkthroughs for aspiring and professional security experts. Learn offensive security, defensive operations, malware analysis, and the certifications that move careers forward."
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/cybersecurityelite"
+  [[params.socialIcons]]
+    name = "x"
+    url = "https://x.com/cybersecelite"
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/company/cybersecurityelite/"
+  [[params.socialIcons]]
+    name = "rss"
+    url = "/index.xml"
+
+  [params.label]
+    text = "CyberSecurity Elite"
+    icon = "/logo.svg"
+    iconHeight = 32
+
+  [params.profileMode]
+    enabled = false
+
+  [params.cover]
+    hidden = false
+    hiddenInList = false
+    hiddenInSingle = false
+    responsiveImages = true
+    linkFullImages = true
+
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 0
+    limit = 20
+    keys = ["title", "permalink", "summary", "content", "tags", "categories"]
+
+  [params.editPost]
+    URL = "https://github.com/cybersecurityelite/cybersecurityelite.com/edit/main/content"
+    Text = "Suggest changes"
+    appendFilePath = true
+
+  [params.assets]
+    disableHLJS = true
+    disableFingerprinting = false
+    favicon = "/favicon.ico"
+    favicon16x16 = "/favicon-16x16.png"
+    favicon32x32 = "/favicon-32x32.png"
+    apple_touch_icon = "/apple-touch-icon.png"
+    safari_pinned_tab = "/safari-pinned-tab.svg"
+
+  [params.analytics]
+    [params.analytics.google]
+      SiteVerificationTag = "REPLACE_WITH_GSC_TOKEN"
+    [params.analytics.bing]
+      SiteVerificationTag = "REPLACE_WITH_BING_TOKEN"
+
+  # Custom branding parameters
+  mainSections = ["posts", "ctf-writeups", "tutorials", "tools", "certifications", "malware-analysis", "reverse-engineering", "forensics", "bug-bounty", "cloud-security", "web-security", "network-security", "career", "news"]
+  ga4 = "G-XXXXXXXXXX"
+  plausibleDomain = "cybersecurityelite.com"
+  microsoftClarity = "REPLACE_WITH_CLARITY_ID"
+
+###############################################################################
+# Privacy
+###############################################################################
+[privacy]
+  [privacy.youtube]
+    privacyEnhanced = true
+  [privacy.twitter]
+    enableDNT = true
+
+###############################################################################
+# Services
+###############################################################################
+[services]
+  [services.googleAnalytics]
+    ID = "G-XXXXXXXXXX"

@@ -1,0 +1,20 @@
+{{- /*
+  Downloads / attachments section.
+  Usage:
+    {{< downloads title="Lab Files" >}}
+      [exploit.py](/files/exploit.py) | 4 KB | SHA-256 abcd...
+      [pcap.zip](/files/pcap.zip) | 2.1 MB | SHA-256 ef89...
+    {{< /downloads >}}
+*/ -}}
+{{- $title := .Get "title" | default "Downloads" -}}
+<div class="cse-downloads" role="region" aria-label="{{ $title }}">
+  <div class="cse-downloads-title">{{ $title }}</div>
+  <ul>
+    {{- range (split (trim .Inner "\n") "\n") -}}
+      {{- $line := trim . " " -}}
+      {{- if $line -}}
+        <li>{{ $line | markdownify }}</li>
+      {{- end -}}
+    {{- end -}}
+  </ul>
+</div>
