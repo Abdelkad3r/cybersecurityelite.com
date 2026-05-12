@@ -47,6 +47,11 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+        with:
+          # Auto-enable GitHub Pages on first run so the workflow doesn't fail
+          # on a fresh repo where Pages hasn't been turned on yet.
+          # Requires the workflow's pages:write permission (already set above).
+          enablement: true
 
       - name: Cache Hugo resources
         uses: actions/cache@v4
