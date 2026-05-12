@@ -23,12 +23,18 @@ Roughly 6-8 minutes to read. Always Friday morning, UTC.
 
 ## Subscribe
 
-<form action="https://example.com/newsletter" method="post" class="cse-newsletter-form" style="margin: 2rem 0; max-width: 480px;">
-  <label for="newsletter-email" style="display:block; margin-bottom:0.5rem; font-weight:600;">Email address</label>
-  <input id="newsletter-email" type="email" name="email" placeholder="you@example.com" required autocomplete="email" style="width:100%; padding:0.7rem; border-radius:10px; border:1px solid var(--border); background:var(--theme); color:var(--primary); margin-bottom:0.6rem;">
-  <button type="submit" class="cse-btn cse-btn-primary" style="width:100%;">Subscribe — it's free</button>
-  <small style="display:block; margin-top:0.6rem; color: var(--secondary);">No spam. Unsubscribe in one click. See <a href="/privacy/">Privacy Policy</a>.</small>
-</form>
+<p style="margin: 1.5rem 0;">
+  <a class="cse-btn cse-btn-primary"
+     href="mailto:hello@cybersecurityelite.com?subject=Subscribe%20me%20to%20the%20CyberSecurity%20Elite%20newsletter&body=Please%20add%20me%20to%20the%20CyberSecurity%20Elite%20weekly%20newsletter.">
+    Subscribe via email →
+  </a>
+</p>
+
+<p style="color: var(--secondary); font-size: 0.92rem;">
+  We're moving to a managed newsletter provider shortly — until then the button above
+  opens your mail client with a pre-filled subscription request. No spam, unsubscribe in
+  one click once issues start shipping. See <a href="/privacy/">Privacy Policy</a>.
+</p>
 
 ## What Subscribers Are Saying
 

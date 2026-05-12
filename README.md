@@ -25,7 +25,8 @@
 
 - [Hugo extended](https://gohugo.io/installation/) **≥ 0.140.0**
 - [Git](https://git-scm.com/) (with submodule support)
-- (Optional) [Node.js](https://nodejs.org/) for ecosystem tooling
+- [Node.js 20+](https://nodejs.org/) (for Pagefind — search index generation)
+- (Optional) ImageMagick — only if generating per-article OG image base
 
 ### Clone and Run Locally
 
@@ -157,9 +158,87 @@ $ nmap -sC -sV 10.10.10.10
 {{< mermaid >}}
 graph LR; Attacker-->Beacon-->C2;
 {{< /mermaid >}}
+
+{{< faq >}}
+- q: "What is Kerberoasting?"
+  a: "An Active Directory attack that requests TGS tickets for service accounts..."
+- q: "Which encryption type is most vulnerable?"
+  a: "RC4-HMAC (etype 23). Move to AES-only on service accounts."
+{{< /faq >}}
+
+{{< howto title="How to enable AS-REP Roasting detection" duration="PT15M" >}}
+- name: "Enable Event ID 4769 logging on Domain Controllers"
+  text: "Configure the Advanced Audit Policy to capture Kerberos Service Ticket Operations."
+- name: "Build a Splunk detection"
+  text: "Alert when a single user requests 5+ TGS tickets with `Ticket_Encryption_Type=0x17` in 10 minutes."
+{{< /howto >}}
 ```
 
+The `{{< faq >}}` and `{{< howto >}}` shortcodes emit both rendered HTML **and** valid JSON-LD `FAQPage` / `HowTo` schema — Google rich-result eligible.
+
 For Mermaid, add `mermaid: true` to the page front matter so the loader gets injected.
+
+## Authors & E-E-A-T
+
+Author metadata lives in [`data/authors.yaml`](./data/authors.yaml) keyed by the
+`author:` string in article front matter. Each entry produces:
+
+- **A profile page** at `/authors/{slug}/` (Markdown content lives under
+  `content/authors/`)
+- **Person JSON-LD** with `jobTitle`, `description`, `image`, `sameAs`, and
+  `knowsAbout` — exactly the E-E-A-T signals Google measures
+- **Enriched BlogPosting `author` field** on every article they wrote
+
+To add a new author:
+
+1. Add a YAML key in `data/authors.yaml` (use the exact string used in articles' `author:` field).
+2. Create `content/authors/{slug}.md` with `layout: "author"` and `authorKey: "..."`.
+3. Articles' `author: "..."` value will auto-link to the profile and inherit the schema.
+
+## Search (Pagefind)
+
+Search is powered by [Pagefind](https://pagefind.app/) — a static-site search
+index built from rendered HTML. No JavaScript framework, no third-party service,
+~50ms response on a 25-article site.
+
+**Local development:**
+
+```bash
+hugo --gc --minify              # build the site
+npx pagefind --site public      # build the search index
+# OR run them together:
+npm run build
+```
+
+For development with `hugo server`, search won't work because Pagefind needs the
+built `public/` directory. Run a full build to test search.
+
+**CI:** the GitHub Actions workflow installs Node 20 and runs `npx pagefind`
+after the Hugo build automatically.
+
+## Per-article OG image generation
+
+By default, every article uses `/images/og-default.svg` as its Open Graph card.
+For higher CTR and SEO, you can enable auto-generated unique OG cards per
+article — title + section + URL composited onto a brand base.
+
+One-time setup:
+
+```bash
+# 1. Create the base canvas (1200×630, no text — see assets/og/README.md)
+convert -background "#000000" -density 144 \
+  static/images/og-default.svg \
+  -resize 1200x630! \
+  assets/og/base.png
+
+# 2. Download a font
+curl -L -o assets/og/font.ttf \
+  https://github.com/rsms/inter/raw/master/docs/font-files/Inter-Bold.ttf
+```
+
+After these two files exist, every article automatically gets a unique
+1200×630 OG image at `/og/...png`. Front-matter `cover.image` overrides this
+per-article.
 
 ## Deployment
 

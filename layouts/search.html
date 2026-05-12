@@ -1,0 +1,59 @@
+{{- define "main" -}}
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description -}}<p class="post-description">{{ . }}</p>{{- end -}}
+  </header>
+
+  <div class="post-content">
+    {{ .Content }}
+    <div id="search" data-pagefind-ui></div>
+
+    <noscript>
+      <p style="color: var(--secondary); margin-top: 1.5rem;">
+        Search requires JavaScript. Browse via the
+        <a href="/archives/">archives</a> or the section menu instead.
+      </p>
+    </noscript>
+
+    <p style="margin-top: 2rem; color: var(--secondary); font-size: 0.88rem;">
+      Powered by <a href="https://pagefind.app/" target="_blank" rel="noopener">Pagefind</a> —
+      results indexed from rendered article content.
+    </p>
+  </div>
+</article>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof PagefindUI === 'undefined') {
+      const el = document.getElementById('search');
+      if (el) el.innerHTML = '<p style="color: var(--secondary); padding: 1rem; border: 1px dashed var(--border); border-radius: 10px;">Search index not built yet. Run <code>npx pagefind --site public</code> after <code>hugo</code> to enable search.</p>';
+      return;
+    }
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      showImages: false,
+      resetStyles: false,
+      excerptLength: 30,
+      autofocus: true,
+      translations: {
+        placeholder: "Search articles, writeups, tools…",
+        clear_search: "Clear",
+        load_more: "Load more results",
+        search_label: "Search this site",
+        filters_label: "Filters",
+        zero_results: "No results for [SEARCH_TERM]",
+        many_results: "[COUNT] results for [SEARCH_TERM]",
+        one_result: "[COUNT] result for [SEARCH_TERM]",
+        alt_search: "No results for [SEARCH_TERM]. Showing results for [DIFFERENT_TERM] instead",
+        search_suggestion: "No results for [SEARCH_TERM]. Try one of the following searches:",
+        searching: "Searching for [SEARCH_TERM]…"
+      }
+    });
+  });
+</script>
+{{- end -}}

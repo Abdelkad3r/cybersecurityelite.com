@@ -1,0 +1,29 @@
+# Author registry — keyed by author name used in article front matter.
+# Drives Person JSON-LD, author profile pages, and BlogPosting `author` enrichment.
+
+"CyberSecurity Elite Team":
+  slug: "cybersecurity-elite-team"
+  jobTitle: "Editorial Team"
+  bio: >-
+    The CyberSecurity Elite editorial team is composed of working
+    security professionals — pentesters, malware reverse engineers,
+    SOC analysts, and incident responders — who hands-on verify every
+    technique we publish.
+  image: "/images/authors/cse-team.svg"
+  url: "/authors/cybersecurity-elite-team/"
+  expertise:
+    - "Penetration testing"
+    - "Malware analysis"
+    - "Digital forensics"
+    - "Detection engineering"
+    - "Cloud security"
+  sameAs:
+    - "https://github.com/cybersecurityelite"
+    - "https://x.com/cybersecelite"
+    - "https://www.linkedin.com/company/cybersecurityelite/"
+    - "https://infosec.exchange/@cybersecelite"
+  knowsAbout:
+    - "https://www.wikidata.org/wiki/Q3510521"   # cybersecurity
+    - "https://www.wikidata.org/wiki/Q1116354"   # penetration test
+    - "https://www.wikidata.org/wiki/Q14001"     # malware
+    - "https://www.wikidata.org/wiki/Q1058914"   # digital forensics

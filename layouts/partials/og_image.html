@@ -1,0 +1,63 @@
+{{- /*
+  Returns the absolute URL of the best available Open Graph image for this page.
+
+  Resolution order:
+    1. Front-matter `cover.image` (per-article override) — used as-is
+    2. Generated image — overlays the article title on `assets/og/base.png`
+       using `assets/og/font.ttf` (one-time setup, see README)
+    3. Fallback to the global `/images/og-default.svg`
+
+  This partial returns a string (no HTML output). Consume with:
+    {{ $img := partial "og_image.html" . }}
+*/ -}}
+
+{{- $url := "" -}}
+
+{{- /* 1. Explicit per-article cover image */ -}}
+{{- with .Params.cover -}}
+  {{- with .image -}}
+    {{- $url = . | absURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* 2. Auto-generate when base + font are present and we're on a content page */ -}}
+{{- if and (not $url) (eq .Kind "page") .Title -}}
+  {{- $base := resources.Get "og/base.png" -}}
+  {{- $font := resources.Get "og/font.ttf" -}}
+  {{- if and $base $font -}}
+    {{- $title := .Title -}}
+    {{- if gt (len $title) 80 -}}{{ $title = printf "%s..." (substr $title 0 77) }}{{- end -}}
+    {{- $section := humanize .Section | upper -}}
+    {{- $img := $base.Filter
+      (images.Text $section (dict
+        "color"        "#22d3ee"
+        "size"         28
+        "linespacing"  6
+        "x"            80
+        "y"            80
+        "font"         $font))
+      (images.Text $title (dict
+        "color"        "#ededef"
+        "size"         62
+        "linespacing"  12
+        "x"            80
+        "y"            190
+        "font"         $font))
+      (images.Text "cybersecurityelite.com" (dict
+        "color"        "#9ba0a8"
+        "size"         24
+        "linespacing"  4
+        "x"            80
+        "y"            540
+        "font"         $font))
+    -}}
+    {{- $url = $img.RelPermalink | absURL -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* 3. Fallback */ -}}
+{{- if not $url -}}
+  {{- $url = "/images/og-default.svg" | absURL -}}
+{{- end -}}
+
+{{- $url -}}
