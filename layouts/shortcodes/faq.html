@@ -1,0 +1,42 @@
+{{- /*
+  FAQ shortcode — renders a styled FAQ block AND emits FAQPage JSON-LD.
+
+  Usage (YAML inside Inner):
+
+    {{< faq >}}
+    - q: "What is Kerberoasting?"
+      a: "Kerberoasting is an Active Directory attack..."
+    - q: "Which encryption types are vulnerable?"
+      a: "RC4-HMAC (etype 23) is the most commonly abused..."
+    {{< /faq >}}
+
+  Notes:
+    - Place at most one {{< faq >}} per page to keep the FAQPage schema valid.
+    - The answer field is rendered through `markdownify` so you can use Markdown
+      (links, inline code, lists) inside it.
+*/ -}}
+
+{{- $items := .Inner | transform.Unmarshal -}}
+{{- if $items -}}
+<section class="cse-faq" aria-label="Frequently asked questions">
+  {{- range $i, $item := $items -}}
+  <details class="cse-faq-item"{{ if eq $i 0 }} open{{ end }}>
+    <summary class="cse-faq-question">{{ $item.q }}</summary>
+    <div class="cse-faq-answer">{{ $item.a | markdownify }}</div>
+  </details>
+  {{- end -}}
+</section>
+
+{{- /* Build the FAQPage object as a Go map and emit once via safeJS */ -}}
+{{- $entities := slice -}}
+{{- range $items -}}
+  {{- $entities = $entities | append (dict
+      "@type" "Question"
+      "name" .q
+      "acceptedAnswer" (dict
+          "@type" "Answer"
+          "text" (.a | markdownify | plainify))) -}}
+{{- end -}}
+{{- $faq := dict "@context" "https://schema.org" "@type" "FAQPage" "mainEntity" $entities -}}
+<script type="application/ld+json">{{ $faq | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}

@@ -1,0 +1,14 @@
+{
+  "name": "cybersecurityelite",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Build-time tooling for CyberSecurity Elite (Pagefind search index).",
+  "scripts": {
+    "index": "pagefind --site public",
+    "search": "pagefind --site public --serve",
+    "build": "hugo --gc --minify && pagefind --site public"
+  },
+  "devDependencies": {
+    "pagefind": "^1.1.1"
+  }
+}

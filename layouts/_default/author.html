@@ -1,0 +1,61 @@
+{{- define "main" -}}
+{{- $key := .Params.authorKey | default .Title -}}
+{{- $a := index site.Data.authors $key -}}
+
+<article class="post-single">
+  <header class="post-header">
+    {{ partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with $a.jobTitle }}<p class="post-description" style="margin-bottom:0.4rem;">{{ . }}</p>{{ end -}}
+    {{- with $a.bio }}<p class="post-description">{{ . }}</p>{{ end -}}
+  </header>
+
+  <div class="post-content">
+    {{ .Content }}
+
+    {{- with $a.expertise }}
+    <h2>Expertise</h2>
+    <ul>
+      {{- range . -}}<li>{{ . }}</li>{{- end -}}
+    </ul>
+    {{- end }}
+
+    {{- with $a.sameAs }}
+    <h2>Find us elsewhere</h2>
+    <ul>
+      {{- range . -}}
+        <li><a href="{{ . }}" rel="me noopener" target="_blank">{{ . }}</a></li>
+      {{- end -}}
+    </ul>
+    {{- end }}
+
+    {{- $authorPosts := where site.RegularPages "Params.author" $key -}}
+    {{- with $authorPosts }}
+    <h2>Recent articles by {{ $.Title }}</h2>
+    <ul>
+      {{- range first 12 . -}}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> &middot; <span style="color:var(--secondary)">{{ .Date.Format "Jan 2, 2006" }}</span></li>
+      {{- end -}}
+    </ul>
+    {{- end }}
+  </div>
+</article>
+
+{{- /* Person JSON-LD for E-E-A-T — single jsonify pass with safeJS */ -}}
+{{- if $a }}
+{{- $person := dict
+    "@context" "https://schema.org"
+    "@type" "Person"
+    "@id" (printf "%s#person" .Permalink)
+    "name" $key
+    "url" .Permalink
+    "worksFor" (dict "@type" "Organization" "name" "CyberSecurity Elite" "url" (absURL "/"))
+-}}
+{{- with $a.jobTitle }}{{ $person = merge $person (dict "jobTitle" .) }}{{ end -}}
+{{- with $a.bio }}{{ $person = merge $person (dict "description" .) }}{{ end -}}
+{{- with $a.image }}{{ $person = merge $person (dict "image" (. | absURL)) }}{{ end -}}
+{{- with $a.knowsAbout }}{{ $person = merge $person (dict "knowsAbout" .) }}{{ end -}}
+{{- with $a.sameAs }}{{ $person = merge $person (dict "sameAs" .) }}{{ end -}}
+<script type="application/ld+json">{{ $person | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}
+{{- end -}}

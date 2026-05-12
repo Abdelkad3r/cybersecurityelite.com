@@ -25,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.140.2
+      HUGO_VERSION: 0.161.1
       HUGO_ENVIRONMENT: production
       TZ: UTC
     steps:
@@ -58,6 +58,11 @@ jobs:
           restore-keys: |
             hugo-${{ runner.os }}-
 
+      - name: Setup Node.js (for Pagefind)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
@@ -66,6 +71,10 @@ jobs:
             --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
+
+      - name: Build Pagefind search index
+        run: |
+          npx -y pagefind@latest --site public
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

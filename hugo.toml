@@ -223,23 +223,34 @@ canonifyURLs = true
   [params.assets]
     disableHLJS = true
     disableFingerprinting = false
-    favicon = "/favicon.ico"
+    favicon = "/favicon.svg"
     favicon16x16 = "/favicon-16x16.png"
     favicon32x32 = "/favicon-32x32.png"
     apple_touch_icon = "/apple-touch-icon.png"
     safari_pinned_tab = "/safari-pinned-tab.svg"
+    theme_color = "#000000"
+    msapplication_TileColor = "#000000"
 
+  # Search engine site-verification tags.
+  # Paste the verification token from Google Search Console / Bing Webmaster Tools when ready.
+  # The partial in extend_head.html only emits the <meta> when these are non-empty.
   [params.analytics]
     [params.analytics.google]
-      SiteVerificationTag = "REPLACE_WITH_GSC_TOKEN"
+      SiteVerificationTag = ""
     [params.analytics.bing]
-      SiteVerificationTag = "REPLACE_WITH_BING_TOKEN"
+      SiteVerificationTag = ""
 
-  # Custom branding parameters
+  # Sections that count as "main" content (used by PaperMod for recent-posts on home, etc.)
   mainSections = ["posts", "ctf-writeups", "tutorials", "tools", "certifications", "malware-analysis", "reverse-engineering", "forensics", "bug-bounty", "cloud-security", "web-security", "network-security", "career", "news"]
-  ga4 = "G-XXXXXXXXXX"
-  plausibleDomain = "cybersecurityelite.com"
-  microsoftClarity = "REPLACE_WITH_CLARITY_ID"
+
+  # Optional analytics — leave empty to disable. The partial guards against placeholder values
+  # so loading is opt-in only when you paste a real ID here.
+  #   ga4               = "G-XXXXXXXXXX"   # Google Analytics 4 Measurement ID
+  #   microsoftClarity  = "abcdefghij"     # Microsoft Clarity project ID
+  #   plausibleDomain   = "cybersecurityelite.com"  # Plausible — uncomment in extend_footer.html too
+  ga4 = ""
+  microsoftClarity = ""
+  plausibleDomain = ""
 
 ###############################################################################
 # Privacy
@@ -247,12 +258,12 @@ canonifyURLs = true
 [privacy]
   [privacy.youtube]
     privacyEnhanced = true
-  [privacy.twitter]
+  [privacy.x]
     enableDNT = true
 
 ###############################################################################
-# Services
+# Services — paste a real GA4 ID when you have one. Empty string = disabled.
 ###############################################################################
 [services]
   [services.googleAnalytics]
-    ID = "G-XXXXXXXXXX"
+    ID = ""

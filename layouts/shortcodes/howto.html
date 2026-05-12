@@ -1,0 +1,58 @@
+{{- /*
+  HowTo shortcode — renders a styled how-to block AND emits HowTo JSON-LD.
+
+  Usage:
+
+    {{< howto title="How to harden an SSH server" duration="PT15M" >}}
+    - name: "Disable password authentication"
+      text: "Set `PasswordAuthentication no` in `/etc/ssh/sshd_config`."
+    - name: "Restrict listening interfaces"
+      text: "Set `ListenAddress` to a specific internal IP."
+    - name: "Restart the daemon"
+      text: "Run `systemctl restart sshd` to apply changes."
+    {{< /howto >}}
+
+  Parameters:
+    title    — HowTo headline (required for schema)
+    duration — ISO 8601 duration like PT15M, PT1H30M (optional)
+    image    — cover image URL (optional)
+*/ -}}
+
+{{- $title := .Get "title" -}}
+{{- $duration := .Get "duration" -}}
+{{- $image := .Get "image" -}}
+{{- $steps := .Inner | transform.Unmarshal -}}
+
+{{- if and $title $steps -}}
+<section class="cse-howto" aria-label="{{ $title }}">
+  <header class="cse-howto-header">
+    <span class="cse-howto-eyebrow">How To</span>
+    <h3 class="cse-howto-title">{{ $title }}</h3>
+    {{- with $duration }}
+    <p class="cse-howto-meta">Estimated time: <strong>{{ . | replaceRE "PT" "" | replaceRE "M" " min" | replaceRE "H" " hr " | replaceRE "S" " sec" }}</strong></p>
+    {{- end }}
+  </header>
+  <ol class="cse-howto-steps">
+    {{- range $i, $s := $steps -}}
+    <li class="cse-howto-step">
+      <h4>{{ $s.name }}</h4>
+      <div>{{ $s.text | markdownify }}</div>
+    </li>
+    {{- end -}}
+  </ol>
+</section>
+
+{{- /* HowTo JSON-LD — single jsonify+safeJS to avoid auto-escape double-encoding */ -}}
+{{- $stepObjs := slice -}}
+{{- range $i, $s := $steps -}}
+  {{- $stepObjs = $stepObjs | append (dict
+      "@type" "HowToStep"
+      "position" (add $i 1)
+      "name" $s.name
+      "text" ($s.text | markdownify | plainify)) -}}
+{{- end -}}
+{{- $h := dict "@context" "https://schema.org" "@type" "HowTo" "name" $title "step" $stepObjs -}}
+{{- with $duration }}{{ $h = merge $h (dict "totalTime" .) }}{{ end -}}
+{{- with $image }}{{ $h = merge $h (dict "image" (. | absURL)) }}{{ end -}}
+<script type="application/ld+json">{{ $h | jsonify (dict "indent" "  ") | safeJS }}</script>
+{{- end -}}

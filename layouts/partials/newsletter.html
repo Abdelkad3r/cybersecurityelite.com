@@ -1,12 +1,30 @@
-{{- /* Newsletter CTA — drop into any layout. Wire the action to your provider. */ -}}
+{{- /*
+  Newsletter CTA — switches behaviour based on `site.Params.newsletterAction`:
+
+    • If newsletterAction is set in hugo.toml → posts the form to that URL
+      (Buttondown / ConvertKit / Beehiiv / Mailchimp embed action).
+
+    • Otherwise → submission opens the visitor's mail client with a
+      pre-filled "Subscribe me" message to site.Params.contactEmail.
+      Zero infrastructure, works offline-first, no broken endpoint.
+*/ -}}
+{{- $action := site.Params.newsletterAction -}}
+{{- $email  := site.Params.contactEmail | default "hello@cybersecurityelite.com" -}}
 <aside class="cse-newsletter" aria-label="Newsletter signup">
   <div>
     <h3>Join the CyberSecurity Elite newsletter</h3>
     <p>Weekly writeups, tools, and tactics — straight to your inbox. No spam, unsubscribe anytime.</p>
   </div>
-  <form class="cse-newsletter-form" action="https://example.com/newsletter" method="post" novalidate>
+  {{- if $action }}
+  <form class="cse-newsletter-form" action="{{ $action }}" method="post" novalidate>
     <label for="cse-newsletter-email" class="sr-only">Email address</label>
     <input id="cse-newsletter-email" type="email" name="email" placeholder="you@example.com" required autocomplete="email">
     <button type="submit" class="cse-btn cse-btn-primary">Subscribe</button>
   </form>
+  {{- else }}
+  <a class="cse-btn cse-btn-primary"
+     href="mailto:{{ $email }}?subject=Subscribe%20me%20to%20the%20CyberSecurity%20Elite%20newsletter&body=Please%20add%20me%20to%20the%20CyberSecurity%20Elite%20newsletter.">
+    Subscribe via email
+  </a>
+  {{- end }}
 </aside>

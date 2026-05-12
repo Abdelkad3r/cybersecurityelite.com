@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="CyberSecurity Elite Team avatar">
+  <defs>
+    <linearGradient id="cseAvatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <radialGradient id="cseAvatarBg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0d0d11"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+  </defs>
+
+  <!-- circular avatar background -->
+  <circle cx="100" cy="100" r="100" fill="url(#cseAvatarBg)"/>
+  <circle cx="100" cy="100" r="98" fill="none" stroke="url(#cseAvatarGrad)" stroke-width="2" opacity="0.4"/>
+
+  <!-- shield mark -->
+  <g transform="translate(58 46)">
+    <path d="M42 0 L84 14 V44 C84 70 64 86 42 90 C20 86 0 70 0 44 V14 Z"
+          fill="none" stroke="url(#cseAvatarGrad)" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M22 44 L36 58 L62 32" fill="none" stroke="url(#cseAvatarGrad)"
+          stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- wordmark -->
+  <g font-family="ui-monospace, 'JetBrains Mono', monospace" text-anchor="middle">
+    <text x="100" y="170" font-size="12" font-weight="600" fill="#9ba0a8" letter-spacing="2">EDITORIAL TEAM</text>
+  </g>
+</svg>
