@@ -71,11 +71,14 @@ jobs:
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
+        # Use the canonical baseURL from hugo.toml — do NOT inject
+        # ${{ steps.pages.outputs.base_url }} because that reads from the Pages
+        # API and can return a stale/wrong custom domain, poisoning every
+        # absolute URL in the built site.
         run: |
           hugo \
             --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --minify
 
       - name: Build Pagefind search index
         run: |
