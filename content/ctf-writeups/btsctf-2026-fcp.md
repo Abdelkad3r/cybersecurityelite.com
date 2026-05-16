@@ -10,7 +10,6 @@ categories: ["CTF Writeups"]
 tags: ["btsctf", "breakthesyntax", "tls", "rsa", "memory forensics", "go", "mcp", "reverse engineering", "network forensics"]
 series: ["BreakTheSyntax CTF 2026"]
 keywords: ["btsctf 2026 fcp writeup", "fcp writeup breakthesyntax", "tls_rsa_with_aes_128_cbc_sha decrypt", "go big.int rsa memory dump", "extended master secret prf", "tls session resumption decrypt pcap"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

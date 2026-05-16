@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tools"]
 tags: ["wireshark", "network analysis", "packet capture", "pcap"]
 keywords: ["wireshark tutorial", "wireshark filters", "pcap analysis"]
-weight: 3
 toc: true
 cover:
   image: "/images/og-default.svg"

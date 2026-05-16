@@ -10,7 +10,6 @@ categories: ["CTF Writeups"]
 tags: ["hackthebox", "active directory", "as-rep roasting", "dcsync", "windows", "easy"]
 series: ["HTB Active Directory Path"]
 keywords: ["hack the box sauna", "htb sauna writeup", "as-rep roasting walkthrough", "dcsync attack"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

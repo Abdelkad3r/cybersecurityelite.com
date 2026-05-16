@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Web Security"]
 tags: ["owasp top 10", "web security", "secure coding", "appsec"]
 keywords: ["owasp top 10 2021", "owasp top ten", "web application security risks"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Cloud Security"]
 tags: ["aws", "iam", "cloud security", "least privilege"]
 keywords: ["aws iam best practices", "iam security", "aws security"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

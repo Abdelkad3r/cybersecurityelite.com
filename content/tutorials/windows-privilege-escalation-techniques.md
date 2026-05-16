@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
 tags: ["windows", "privilege escalation", "post exploitation", "pentest"]
 keywords: ["windows privesc", "windows privilege escalation", "winpeas"]
-weight: 3
 toc: true
 cover:
   image: "/images/og-default.svg"

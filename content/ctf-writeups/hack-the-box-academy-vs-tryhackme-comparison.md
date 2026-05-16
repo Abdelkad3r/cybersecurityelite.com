@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
 tags: ["hackthebox", "tryhackme", "training platforms", "learning"]
 keywords: ["hackthebox vs tryhackme", "htb academy review", "tryhackme review"]
-weight: 4
 toc: true
 cover:
   image: "/images/og-default.svg"

@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["News"]
 tags: ["log4shell", "cve", "supply chain", "vulnerability management"]
 keywords: ["log4shell", "cve-2021-44228", "log4j vulnerability", "supply chain security"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

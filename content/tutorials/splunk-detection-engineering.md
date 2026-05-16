@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
 tags: ["splunk", "siem", "detection engineering", "blue team", "soc"]
 keywords: ["splunk detection engineering", "splunk siem", "detection rules"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"
