@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Network Security"]
 tags: ["active directory", "kerberoasting", "kerberos", "windows", "red team"]
 keywords: ["kerberoasting", "kerberoasting tutorial", "kerberos attacks", "spn enumeration"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
 tags: ["tryhackme", "web exploitation", "command injection", "privilege escalation", "easy"]
 keywords: ["tryhackme pickle rick", "pickle rick walkthrough", "command injection ctf"]
-weight: 2
 toc: true
 cover:
   image: "/images/og-default.svg"

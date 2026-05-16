@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tools"]
 tags: ["nmap", "network scanning", "recon", "nse", "pentest"]
 keywords: ["nmap tutorial", "nmap cheat sheet", "network scanning tutorial"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

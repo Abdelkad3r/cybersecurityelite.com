@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Bug Bounty"]
 tags: ["bug bounty", "recon", "subdomain enumeration", "fuzzing", "automation"]
 keywords: ["bug bounty recon", "subdomain enumeration", "bug bounty methodology"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
 tags: ["linux", "privilege escalation", "post exploitation", "pentest"]
 keywords: ["linux privesc", "linux privilege escalation", "linpeas"]
-weight: 2
 toc: true
 cover:
   image: "/images/og-default.svg"

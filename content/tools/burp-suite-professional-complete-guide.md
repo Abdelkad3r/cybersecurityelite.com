@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tools"]
 tags: ["burp suite", "web pentest", "intruder", "repeater", "appsec"]
 keywords: ["burp suite tutorial", "burp pro guide", "burp intruder", "burp collaborator"]
-weight: 2
 toc: true
 cover:
   image: "/images/og-default.svg"

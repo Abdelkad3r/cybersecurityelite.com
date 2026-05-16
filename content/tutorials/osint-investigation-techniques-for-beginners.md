@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
 tags: ["osint", "investigation", "recon", "threat intelligence"]
 keywords: ["osint", "open source intelligence", "osint techniques"]
-weight: 4
 toc: true
 cover:
   image: "/images/og-default.svg"

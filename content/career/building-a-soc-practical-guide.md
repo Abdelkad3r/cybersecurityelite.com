@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Career"]
 tags: ["soc", "siem", "incident response", "security operations"]
 keywords: ["build a soc", "soc setup", "soc playbook", "security operations"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

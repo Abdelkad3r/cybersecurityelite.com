@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Digital Forensics"]
 tags: ["volatility", "memory forensics", "DFIR", "incident response"]
 keywords: ["volatility 3 tutorial", "memory forensics", "windows memory analysis"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
 tags: ["crypto", "cryptography", "ctf", "rsa", "aes"]
 keywords: ["ctf crypto", "ctf cryptography challenges", "crypto challenge"]
-weight: 3
 toc: true
 cover:
   image: "/images/og-default.svg"

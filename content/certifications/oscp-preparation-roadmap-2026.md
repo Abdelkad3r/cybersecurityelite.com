@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Certifications"]
 tags: ["oscp", "offensive security", "pentest certification", "career"]
 keywords: ["oscp preparation", "oscp roadmap", "oscp study plan", "pen-200"]
-weight: 1
 toc: true
 cover:
   image: "/images/og-default.svg"

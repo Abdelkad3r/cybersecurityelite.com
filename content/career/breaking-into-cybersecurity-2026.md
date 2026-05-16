@@ -9,7 +9,6 @@ author: "CyberSecurity Elite Team"
 categories: ["Career"]
 tags: ["career", "cybersecurity jobs", "entry level", "certifications"]
 keywords: ["breaking into cybersecurity", "cybersecurity career", "how to get into infosec"]
-weight: 2
 toc: true
 cover:
   image: "/images/og-default.svg"
