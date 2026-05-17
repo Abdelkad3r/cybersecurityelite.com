@@ -12,7 +12,7 @@ series: ["BKISC CTF 2026"]
 keywords: ["bkisc ctf 2026 cryptografie writeup", "java filesystempreferences dirname", "java altbase64 decoder", "altbase64 alphabet", "utf-16 base64 ctf"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
+  image: "/images/bkisc.png"
   alt: "BKISC CTF 2026 Cryptografie writeup"
 ---
 
