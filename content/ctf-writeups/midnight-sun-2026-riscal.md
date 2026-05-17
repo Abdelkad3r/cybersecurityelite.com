@@ -12,7 +12,7 @@ series: ["Midnight Sun CTF 2026 Quals"]
 keywords: ["midnight sun ctf 2026 riscal writeup", "risc-v ctf reverse engineering", "strings ctf flag", "rodata flag plaintext"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
+  image: "/images/midnight.png"
   alt: "Midnight Sun CTF 2026 riscal writeup"
 ---
 
