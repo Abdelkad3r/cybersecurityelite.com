@@ -12,7 +12,7 @@ series: ["THCON CTF 2026"]
 keywords: ["thcon 2026 rules writeup", "thcon ctf 2026 info page", "ctf platform osint", "ctf.thcon.party info"]
 toc: true
 cover:
-  image: "/images/thcon.png"
+  image: "/images/thcon.jpg"
   alt: "THCON 2026 Rules / Info Page writeup"
 ---
 
