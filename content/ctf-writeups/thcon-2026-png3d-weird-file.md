@@ -12,7 +12,7 @@ series: ["THCON CTF 2026"]
 keywords: ["thcon 2026 png3d writeup", "weird_file.thc thcon", "emoji binary encoding ctf", "png lsb steganography ctf", "thumbs up thumbs down ctf"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
+  image: "/images/thcon.png"
   alt: "THCON 2026 PNG3D weird_file.thc writeup"
 ---
 
