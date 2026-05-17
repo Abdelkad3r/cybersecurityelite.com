@@ -12,7 +12,7 @@ series: ["THCON CTF 2026"]
 keywords: ["thcon 2026 socials writeup", "thcon ctf 2026", "social media osint ctf", "toulouse hacking convention ctf"]
 toc: true
 cover:
-  image: "/images/thcon.png"
+  image: "/images/thcon.jpg"
   alt: "THCON 2026 Socials writeup"
 ---
 
