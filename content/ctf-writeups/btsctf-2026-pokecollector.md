@@ -12,7 +12,7 @@ series: ["BreakTheSyntax CTF 2026"]
 keywords: ["btsctf 2026 pokecollector writeup", "pokecollector writeup", "idor jwt writeup", "client supplied id idor", "broken access control api"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
+  image: "/images/btsctf.png"
   alt: "BtSCTF 2026 Pokecollector writeup"
 ---
 
