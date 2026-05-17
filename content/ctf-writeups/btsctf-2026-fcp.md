@@ -12,7 +12,7 @@ series: ["BreakTheSyntax CTF 2026"]
 keywords: ["btsctf 2026 fcp writeup", "fcp writeup breakthesyntax", "tls_rsa_with_aes_128_cbc_sha decrypt", "go big.int rsa memory dump", "extended master secret prf", "tls session resumption decrypt pcap"]
 toc: true
 cover:
-  image: "/images/bkisc.png"
+  image: "/images/btsctf.png"
   alt: "BtSCTF 2026 FCP writeup"
 ---
 
