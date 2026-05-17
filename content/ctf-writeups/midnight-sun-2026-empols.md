@@ -12,7 +12,7 @@ series: ["Midnight Sun CTF 2026 Quals"]
 keywords: ["midnight sun ctf 2026 empols writeup", "midnight sun quals 2026", "auto solve ctf binaries radare2", "x86-64 elf static analysis ctf", "templated binary challenge ctf"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
+  image: "/images/midnight.png"
   alt: "Midnight Sun CTF 2026 empols writeup"
 ---
 
