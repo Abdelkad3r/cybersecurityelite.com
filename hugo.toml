@@ -186,6 +186,10 @@ canonifyURLs = true
   hotjar = "5e9ef1eb5d7fb"
   plausibleDomain = ""
 
+  # Single source of truth for the public-facing contact email.
+  # Referenced by layouts/partials/newsletter.html and any future contact UI.
+  contactEmail = "contact@cybersecurityelite.com"
+
   [params.homeInfoParams]
     Title = "Master Cybersecurity with Elite Tutorials and CTF Writeups"
     Content = "Practical guides, in-depth research, and hands-on walkthroughs for aspiring and professional security experts. Learn offensive security, defensive operations, malware analysis, and the certifications that move careers forward."

@@ -25,7 +25,7 @@ Roughly 6-8 minutes to read. Always Friday morning, UTC.
 
 <p style="margin: 1.5rem 0;">
   <a class="cse-btn cse-btn-primary"
-     href="mailto:hello@cybersecurityelite.com?subject=Subscribe%20me%20to%20the%20CyberSecurity%20Elite%20newsletter&body=Please%20add%20me%20to%20the%20CyberSecurity%20Elite%20weekly%20newsletter.">
+     href="mailto:contact@cybersecurityelite.com?subject=Subscribe%20me%20to%20the%20CyberSecurity%20Elite%20newsletter&body=Please%20add%20me%20to%20the%20CyberSecurity%20Elite%20weekly%20newsletter.">
     Subscribe via email →
   </a>
 </p>
