@@ -173,6 +173,18 @@ canonifyURLs = true
   hidemeta = false
   hideSummary = false
 
+  # Sections that count as "main" content (used by PaperMod for recent-posts on home, etc.)
+  mainSections = ["posts", "ctf-writeups", "tutorials", "tools", "certifications", "malware-analysis", "reverse-engineering", "forensics", "bug-bounty", "cloud-security", "web-security", "network-security", "career", "news"]
+
+  # Optional analytics — leave empty to disable. The partial guards against placeholder values
+  # so loading is opt-in only when you paste a real ID here.
+  #   ga4               = "G-XXXXXXXXXX"   # Google Analytics 4 Measurement ID
+  #   microsoftClarity  = "abcdefghij"     # Microsoft Clarity project ID
+  #   plausibleDomain   = "cybersecurityelite.com"  # Plausible — uncomment in extend_footer.html too
+  ga4 = "G-TYE341WL0N"
+  microsoftClarity = ""
+  plausibleDomain = ""
+
   [params.homeInfoParams]
     Title = "Master Cybersecurity with Elite Tutorials and CTF Writeups"
     Content = "Practical guides, in-depth research, and hands-on walkthroughs for aspiring and professional security experts. Learn offensive security, defensive operations, malware analysis, and the certifications that move careers forward."
@@ -239,18 +251,6 @@ canonifyURLs = true
       SiteVerificationTag = ""
     [params.analytics.bing]
       SiteVerificationTag = ""
-
-  # Sections that count as "main" content (used by PaperMod for recent-posts on home, etc.)
-  mainSections = ["posts", "ctf-writeups", "tutorials", "tools", "certifications", "malware-analysis", "reverse-engineering", "forensics", "bug-bounty", "cloud-security", "web-security", "network-security", "career", "news"]
-
-  # Optional analytics — leave empty to disable. The partial guards against placeholder values
-  # so loading is opt-in only when you paste a real ID here.
-  #   ga4               = "G-XXXXXXXXXX"   # Google Analytics 4 Measurement ID
-  #   microsoftClarity  = "abcdefghij"     # Microsoft Clarity project ID
-  #   plausibleDomain   = "cybersecurityelite.com"  # Plausible — uncomment in extend_footer.html too
-  ga4 = ""
-  microsoftClarity = ""
-  plausibleDomain = ""
 
 ###############################################################################
 # Privacy
