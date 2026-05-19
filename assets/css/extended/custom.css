@@ -1159,3 +1159,41 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   .cse-btn { justify-content: center; width: 100%; }
   .paginav { flex-direction: column; }
 }
+
+/* -----------------------------------------------------------------------------
+   12. Footer motto (terminal prompt aesthetic)
+   -------------------------------------------------------------------------- */
+.footer .cse-motto {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.footer .cse-motto code {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+}
+.footer .cse-prompt { color: #22d3ee; }                  /* cyan: user@host */
+.footer .cse-sep    { color: var(--secondary); }
+.footer .cse-path   { color: #a78bfa; }                  /* violet: path */
+.footer .cse-sigil  { color: var(--secondary); margin-right: 0.15rem; }
+.footer .cse-quote  { color: var(--primary); font-style: normal; }
+.footer .cse-credit {
+  display: inline-block;
+  margin-left: 0.75rem;
+  font-size: 0.7rem;
+  opacity: 0.45;
+}
+.footer .cse-credit a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.footer .cse-credit a:hover { opacity: 1; }
+
+@media (max-width: 640px) {
+  .footer .cse-motto { white-space: normal; font-size: 0.74rem; }
+  .footer .cse-credit { display: block; margin: 0.35rem 0 0; }
+}
