@@ -16,6 +16,8 @@
 <meta name="twitter:image" content="{{ $ogimg }}">
 <meta name="twitter:image:alt" content="{{ .Title }} — CyberSecurity Elite">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@cybersecelite">
+<meta name="twitter:creator" content="@cybersecelite">
 
 {{- /* Performance hints + premium typography */ -}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -120,6 +122,7 @@
     "keywords" (delimit (.Param "keywords" | default .Params.tags) ", ")
     "articleSection" (humanize .Section)
     "wordCount" .WordCount
+    "articleBody" (.Content | plainify | htmlUnescape)
     "inLanguage" "en-US"
 -}}
 <script type="application/ld+json">{{ $blog | jsonify (dict "indent" "  ") | safeJS }}</script>
