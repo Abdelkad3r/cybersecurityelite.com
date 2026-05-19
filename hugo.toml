@@ -183,6 +183,7 @@ canonifyURLs = true
   #   plausibleDomain   = "cybersecurityelite.com"  # Plausible — uncomment in extend_footer.html too
   ga4 = "G-TYE341WL0N"
   microsoftClarity = "wsjo9x58jv"
+  hotjar = "5e9ef1eb5d7fb"
   plausibleDomain = ""
 
   [params.homeInfoParams]

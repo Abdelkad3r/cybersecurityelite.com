@@ -33,6 +33,11 @@
   {{- end -}}
 {{- end -}}
 
+{{- /* Hotjar (Contentsquare UXA) — loads tag by ID from t.contentsquare.net */ -}}
+{{- with site.Params.hotjar -}}
+<script src="https://t.contentsquare.net/uxa/{{ . }}.js"></script>
+{{- end -}}
+
 {{- /* Footer notice */ -}}
 <div style="text-align:center; padding: 0.8rem 0 1.4rem; font-size: 0.78rem; color: var(--secondary);">
   <span>Educational content for authorized testing only.</span>
