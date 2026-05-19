@@ -17,13 +17,13 @@ We read every message. Please choose the appropriate channel below — it helps 
 
 For editorial questions, feedback on articles, or general comments, email us at:
 
-**hello [at] cybersecurityelite.com**
+**contact [at] cybersecurityelite.com**
 
 ## Corrections
 
 We take technical accuracy seriously. If you spot an error in any article, please email:
 
-**corrections [at] cybersecurityelite.com**
+**contact [at] cybersecurityelite.com**
 
 Include the article URL, the specific text or technique that's incorrect, and a citation or source for the correct information. We acknowledge corrections in the article footer with a `lastmod` revision.
 
@@ -36,7 +36,7 @@ We accept guest articles from qualified security practitioners. Pitches should i
 - Your background and any prior published work
 - A target word count
 
-Pitch to: **pitches [at] cybersecurityelite.com**
+Pitch to: **contact [at] cybersecurityelite.com**
 
 Please review our [editorial policy](/editorial-policy/) before pitching.
 
@@ -44,7 +44,7 @@ Please review our [editorial policy](/editorial-policy/) before pitching.
 
 If you've found a security issue in cybersecurityelite.com itself — not in a tool we cover — please report it responsibly to:
 
-**security [at] cybersecurityelite.com**
+**contact [at] cybersecurityelite.com**
 
 We follow these handling guidelines:
 
@@ -59,7 +59,7 @@ For sensitive reports, encrypt with our PGP key (fingerprint published once site
 
 For media inquiries, podcast/conference invitations, or press kits:
 
-**press [at] cybersecurityelite.com**
+**contact [at] cybersecurityelite.com**
 
 ## Social
 

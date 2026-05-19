@@ -108,4 +108,4 @@ The curated list of resources we actually use ourselves and recommend without re
 - **Twitter/X**: follow @cybersecelite plus established researchers
 - **InfosecMastodon**: infosec.exchange — the post-Twitter holdout community
 
-If we missed a resource you find indispensable, tell us — **hello [at] cybersecurityelite.com**.
+If we missed a resource you find indispensable, tell us — **contact [at] cybersecurityelite.com**.

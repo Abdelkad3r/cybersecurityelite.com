@@ -52,7 +52,7 @@ When we get something wrong, we correct it:
 2. **Material corrections** (factual errors, command corrections, security-relevant accuracy issues) — corrected, `lastmod` updated, and a "Corrections" note appended to the article footer.
 3. **Substantive retractions** — the article is updated with a retraction notice at the top and an explanation.
 
-Report corrections to **corrections [at] cybersecurityelite.com**.
+Report corrections to **contact [at] cybersecurityelite.com**.
 
 ## Use of AI Tools
 
