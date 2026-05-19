@@ -55,9 +55,9 @@
   {{- end -}}
 {{- end -}}
 
-{{- /* 3. Fallback */ -}}
+{{- /* 3. Fallback — PNG preferred over SVG for social-card compatibility */ -}}
 {{- if not $url -}}
-  {{- $url = "/images/og-default.svg" | absURL -}}
+  {{- $url = "/images/og-default.png" | absURL -}}
 {{- end -}}
 
 {{- $url -}}
