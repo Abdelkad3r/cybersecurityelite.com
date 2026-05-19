@@ -182,7 +182,7 @@ canonifyURLs = true
   #   microsoftClarity  = "abcdefghij"     # Microsoft Clarity project ID
   #   plausibleDomain   = "cybersecurityelite.com"  # Plausible — uncomment in extend_footer.html too
   ga4 = "G-TYE341WL0N"
-  microsoftClarity = ""
+  microsoftClarity = "wsjo9x58jv"
   plausibleDomain = ""
 
   [params.homeInfoParams]
