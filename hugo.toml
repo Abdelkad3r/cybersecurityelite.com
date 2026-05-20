@@ -190,6 +190,12 @@ canonifyURLs = true
   # Referenced by layouts/partials/newsletter.html and any future contact UI.
   contactEmail = "contact@cybersecurityelite.com"
 
+  # Web3Forms access key — free 250-submissions/month inline form backend.
+  # Sign up at https://web3forms.com with the contactEmail above, paste the
+  # access key from the activation email here. When non-empty, the newsletter
+  # partial renders a real inline form instead of a mailto: link.
+  web3formsKey = ""
+
   [params.homeInfoParams]
     Title = "Master Cybersecurity with Elite Tutorials and CTF Writeups"
     Content = "Practical guides, in-depth research, and hands-on walkthroughs for aspiring and professional security experts. Learn offensive security, defensive operations, malware analysis, and the certifications that move careers forward."
