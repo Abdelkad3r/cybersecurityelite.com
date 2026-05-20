@@ -23,17 +23,11 @@ Roughly 6-8 minutes to read. Always Friday morning, UTC.
 
 ## Subscribe
 
-<p style="margin: 1.5rem 0;">
-  <a class="cse-btn cse-btn-primary"
-     href="mailto:contact@cybersecurityelite.com?subject=Subscribe%20me%20to%20the%20CyberSecurity%20Elite%20newsletter&body=Please%20add%20me%20to%20the%20CyberSecurity%20Elite%20weekly%20newsletter.">
-    Subscribe via email →
-  </a>
-</p>
+{{< newsletter >}}
 
-<p style="color: var(--secondary); font-size: 0.92rem;">
-  We're moving to a managed newsletter provider shortly — until then the button above
-  opens your mail client with a pre-filled subscription request. No spam, unsubscribe in
-  one click once issues start shipping. See <a href="/privacy/">Privacy Policy</a>.
+<p style="color: var(--secondary); font-size: 0.92rem; margin-top: 1rem;">
+  Your email is only used to send the weekly newsletter — no spam, unsubscribe in one click.
+  See our <a href="/privacy/">Privacy Policy</a> for details.
 </p>
 
 ## What Subscribers Are Saying
