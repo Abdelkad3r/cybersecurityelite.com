@@ -194,7 +194,7 @@ canonifyURLs = true
   # Sign up at https://web3forms.com with the contactEmail above, paste the
   # access key from the activation email here. When non-empty, the newsletter
   # partial renders a real inline form instead of a mailto: link.
-  web3formsKey = ""
+  web3formsKey = "c2600a29-0620-4971-abd7-ebd1957d468a"
 
   [params.homeInfoParams]
     Title = "Master Cybersecurity with Elite Tutorials and CTF Writeups"
