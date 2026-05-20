@@ -1164,6 +1164,8 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
    11.b Newsletter form — Web3Forms + hCaptcha layout fixes
    -------------------------------------------------------------------------- */
 .cse-newsletter-form { flex-wrap: wrap; align-items: center; gap: 0.65rem; }
+.cse-newsletter-form input[type="email"] { flex: 1 1 220px; min-width: 0; }
+.cse-newsletter-form .cse-btn { flex: 0 0 auto; }
 .cse-newsletter-form .h-captcha { flex-basis: 100%; margin: 0.25rem 0; }
 
 /* -----------------------------------------------------------------------------
