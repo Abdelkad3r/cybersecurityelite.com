@@ -485,12 +485,26 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   color: var(--primary);
 }
 
+/* Fenced code blocks (Chroma): always dark, regardless of page theme.
+   The Catppuccin Macchiato palette PaperMod ships is dark-bg by design;
+   letting a white page show through it leaves the syntax colors at
+   low contrast. Keeping the block dark in both modes gives consistent
+   readability and matches the .cse-terminal aesthetic. */
+.post-content pre,
+.post-content .highlight,
+.post-content .highlight pre,
+.post-content pre.chroma,
+.post-content .chroma {
+  background: #1a1b26 !important;
+  color: #cad3f5 !important;
+}
 .post-content pre {
   border-radius: var(--cse-radius);
-  border: 1px solid var(--border);
+  border: 1px solid #2a2b3a !important;
   padding: 0;
   margin: 1.4rem 0;
   overflow: hidden;
+  box-shadow: var(--cse-shadow-sm);
 }
 
 .post-content pre code {
@@ -498,6 +512,18 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   padding: 1rem 1.1rem;
   line-height: 1.6;
   font-size: 0.9rem;
+  background: transparent !important;
+}
+
+/* Hugo line-number tables: align the table background with the block,
+   and dim the line-number gutter slightly for visual separation. */
+.post-content .chroma .lntable,
+.post-content .chroma .lntd {
+  background: #1a1b26 !important;
+}
+.post-content .chroma .lnt,
+.post-content .chroma .ln {
+  color: #5c6178 !important;
 }
 
 /* Tables */
