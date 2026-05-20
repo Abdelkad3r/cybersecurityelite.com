@@ -1161,6 +1161,12 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
 }
 
 /* -----------------------------------------------------------------------------
+   11.a Newsletter CTA when auto-injected at end of article
+   -------------------------------------------------------------------------- */
+.cse-post-newsletter { margin: 2.5rem 0 0.5rem; }
+.cse-post-newsletter .cse-newsletter { margin: 0; }
+
+/* -----------------------------------------------------------------------------
    11.b Newsletter form — Web3Forms + hCaptcha layout fixes
    -------------------------------------------------------------------------- */
 .cse-newsletter-form { flex-wrap: wrap; align-items: center; gap: 0.65rem; }
