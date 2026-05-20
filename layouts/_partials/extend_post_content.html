@@ -1,0 +1,13 @@
+{{- /*
+  CyberSecurity Elite — render the newsletter CTA at the end of every article.
+
+  Renders only on real content articles (posts, ctf-writeups, tutorials, etc.).
+  Skipped on pages that use layout="page" — about, contact, newsletter, privacy,
+  disclaimer, editorial — since those either don't need a CTA or already render
+  the form themselves via the newsletter shortcode.
+*/ -}}
+{{- if and (eq .Kind "page") (ne .Layout "page") -}}
+<div class="cse-post-newsletter">
+  {{ partial "newsletter.html" . }}
+</div>
+{{- end -}}
