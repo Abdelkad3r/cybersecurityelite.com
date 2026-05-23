@@ -1275,19 +1275,23 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   font-family: inherit;
   font-size: inherit;
 }
-.footer .cse-prompt { color: #22d3ee; }                  /* cyan: user@host */
+/* Default (dark mode): bright cyan/violet — high contrast on the black footer */
+.footer .cse-prompt { color: #22d3ee; }
 .footer .cse-sep    { color: var(--secondary); }
-.footer .cse-path   { color: #a78bfa; }                  /* violet: path */
+.footer .cse-path   { color: #a78bfa; }
 .footer .cse-sigil  { color: var(--secondary); margin-right: 0.15rem; }
 .footer .cse-quote  { color: var(--primary); font-style: normal; }
+/* Light-mode overrides for accent colours — the bright cyan/violet fail
+   WCAG 4.5:1 against a white footer; darker tints pass. */
+:root[data-theme="light"] .footer .cse-prompt { color: #0e7490; }   /* cyan-700  */
+:root[data-theme="light"] .footer .cse-path   { color: #6d28d9; }   /* violet-700 */
+
 .footer .cse-credit {
   display: inline-block;
   margin-left: 0.75rem;
   font-size: 0.78rem;
-  opacity: 0.45;
+  color: var(--secondary);    /* full-opacity colour with built-in WCAG-pass against either theme */
 }
-.footer .cse-credit a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
-.footer .cse-credit a:hover { opacity: 1; }
 
 @media (max-width: 640px) {
   .footer .cse-motto { white-space: normal; font-size: 0.8rem; line-height: 1.5; }
