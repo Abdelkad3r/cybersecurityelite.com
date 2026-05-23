@@ -7,36 +7,50 @@
 */ -}}
 {{- end -}}
 
-{{- /* Google Analytics 4 — only loads when ID is set and not the placeholder */ -}}
-{{- with site.Params.ga4 -}}
-  {{- if and . (ne . "G-XXXXXXXXXX") }}
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+{{- /* Deferred analytics loader — fires after window.load OR first user
+       interaction (whichever is first). Keeps GA4, Clarity, and Hotjar off
+       the critical render path so LCP isn't blocked by third-party JS.
+       Trade-off: very-fast bounces (<2s) may be lost — acceptable for
+       a content blog where bounce-rate accuracy isn't critical. */ -}}
+{{- $ga      := site.Params.ga4 -}}
+{{- $clarity := site.Params.microsoftClarity -}}
+{{- $hotjar  := site.Params.hotjar -}}
+{{- if or $ga $clarity $hotjar }}
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', '{{ . }}', { anonymize_ip: true });
+(function(){
+  var loaded = false;
+  function load(){
+    if (loaded) return; loaded = true;
+    {{- with $ga }}
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id={{ . }}';
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ . }}', { anonymize_ip: true });
+    {{- end }}
+    {{- with $clarity }}
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script','{{ . }}');
+    {{- end }}
+    {{- with $hotjar }}
+    var hj = document.createElement('script');
+    hj.async = true;
+    hj.src = 'https://t.contentsquare.net/uxa/{{ . }}.js';
+    document.head.appendChild(hj);
+    {{- end }}
+  }
+  // Fire after page load (with a small grace period for LCP to settle)
+  if (document.readyState === 'complete') { setTimeout(load, 1500); }
+  else { window.addEventListener('load', function(){ setTimeout(load, 1500); }); }
+  // Also fire on first user interaction so we don't miss bouncers
+  ['mousedown','keydown','touchstart','scroll'].forEach(function(e){
+    window.addEventListener(e, load, { once: true, passive: true });
+  });
+})();
 </script>
-  {{- end -}}
-{{- end -}}
-
-{{- /* Microsoft Clarity */ -}}
-{{- with site.Params.microsoftClarity -}}
-  {{- if and . (ne . "REPLACE_WITH_CLARITY_ID") }}
-<script>
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window,document,"clarity","script","{{ . }}");
-</script>
-  {{- end -}}
-{{- end -}}
-
-{{- /* Hotjar (Contentsquare UXA) — loads tag by ID from t.contentsquare.net */ -}}
-{{- with site.Params.hotjar -}}
-<script src="https://t.contentsquare.net/uxa/{{ . }}.js"></script>
-{{- end -}}
+{{- end }}
 
 {{- /* Footer notice */ -}}
 <div style="text-align:center; padding: 0.8rem 0 1.4rem; font-size: 0.78rem; color: var(--secondary);">

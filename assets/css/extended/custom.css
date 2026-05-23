@@ -1249,6 +1249,7 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   width: 100%;
   height: auto;
   display: block;
+  object-fit: cover;            /* crop instead of distort when image ratio ≠ 1200/630 */
 }
 .logo img {
   width: 120px;

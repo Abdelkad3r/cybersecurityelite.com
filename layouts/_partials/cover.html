@@ -1,0 +1,48 @@
+{{- /*
+  Project override of PaperMod's cover.html.
+
+  Adds:
+    - <picture> with a WebP <source> + PNG/JPEG <img> fallback. Saves
+      60-80% on image bytes for browsers that support WebP (~97% globally).
+    - fetchpriority="high" on the cover when it's above the fold
+      (single-page view) so the browser prioritises the LCP candidate.
+    - loading="eager" / loading="lazy" matching the original behaviour.
+    - Self-resolves the WebP path by swapping the file extension.
+*/ -}}
+{{- with .cxt -}}
+{{- if (and .Params.cover.image (not $.isHidden)) -}}
+<figure class="entry-cover">
+  {{- $loading := cond $.IsSingle "eager" "lazy" -}}
+  {{- $fp      := cond $.IsSingle "high" "auto" -}}
+  {{- $alt     := (.Params.cover.alt | default .Params.cover.caption | plainify) -}}
+  {{- $img     := .Params.cover.image -}}
+  {{- $imgURL  := $img | absURL -}}
+  {{- $webp    := replaceRE "\\.(?i:png|jpe?g)$" ".webp" $img -}}
+  {{- $webpURL := $webp | absURL -}}
+
+  {{- /* Preserve PaperMod's resource-pipeline path for in-bundle / asset images */ -}}
+  {{- $pageBundleCover := (.Resources.ByType "image").GetMatch (printf "*%s*" $img) -}}
+  {{- $globalResourcesCover := (resources.ByType "image").GetMatch (printf "*%s*" $img) -}}
+  {{- $cover := (or $pageBundleCover $globalResourcesCover) -}}
+
+  {{- if $cover -}}
+    <img loading="{{ $loading }}" fetchpriority="{{ $fp }}"
+         src="{{ $cover.Permalink }}"
+         width="{{ $cover.Width }}" height="{{ $cover.Height }}"
+         alt="{{ $alt }}">
+  {{- else -}}
+    <picture>
+      {{- if ne $webp $img -}}<source srcset="{{ $webpURL }}" type="image/webp">{{- end }}
+      <img loading="{{ $loading }}" fetchpriority="{{ $fp }}"
+           src="{{ $imgURL }}"
+           width="1200" height="630"
+           alt="{{ $alt }}">
+    </picture>
+  {{- end -}}
+
+  {{- if $.IsSingle -}}
+    {{- with .Params.cover.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{- end -}}
+  {{- end -}}
+</figure>
+{{- end -}}
+{{- end -}}
