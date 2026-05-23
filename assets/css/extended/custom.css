@@ -25,9 +25,35 @@
   --cse-shadow-lg: 0 24px 48px -24px rgba(0,0,0,0.7);
 
   /* Typography */
-  --cse-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --cse-mono: "JetBrains Mono", ui-monospace, "Fira Code", Menlo, Consolas, monospace;
-  --cse-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --cse-sans: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --cse-mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, "Fira Code", Menlo, Consolas, monospace;
+  --cse-display: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* -----------------------------------------------------------------------------
+   1.b Metric-adjusted fallback fonts (CLS reduction)
+   When Inter / JetBrains Mono load asynchronously from Google Fonts, the
+   browser initially renders text in a generic fallback. If the fallback has
+   different metrics (line-height, character width), the text reflows when
+   the web font swaps in — historically responsible for CLS > 0.5 on text-
+   heavy pages. These @font-face declarations create stand-ins that match
+   the web fonts' metrics, so the swap is visually invisible.
+   -------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  size-adjust: 107.40%;
+  ascent-override: 90.20%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "JetBrains Mono Fallback";
+  src: local("Menlo"), local("Consolas"), local("Courier New");
+  size-adjust: 115%;
+  ascent-override: 86%;
+  descent-override: 17%;
+  line-gap-override: 0%;
 }
 
 /* Dark theme — true-black canvas with subtle card lift for hierarchy
@@ -1198,7 +1224,26 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
 .cse-newsletter-form { flex-wrap: wrap; align-items: center; gap: 0.65rem; }
 .cse-newsletter-form input[type="email"] { flex: 1 1 220px; min-width: 0; }
 .cse-newsletter-form .cse-btn { flex: 0 0 auto; }
-.cse-newsletter-form .h-captcha { flex-basis: 100%; margin: 0.25rem 0; }
+/* Reserve vertical space for hCaptcha iframe so layout doesn't shift on injection */
+.cse-newsletter-form .h-captcha { flex-basis: 100%; margin: 0.25rem 0; min-height: 78px; }
+
+/* -----------------------------------------------------------------------------
+   11.c Image dimensions (CLS reduction)
+   The browser must know an image's aspect ratio before it loads to reserve
+   the correct space. Without explicit width/height (or aspect-ratio CSS),
+   content below the image shifts as it loads — a major CLS contributor.
+   -------------------------------------------------------------------------- */
+.entry-cover img,
+.post-cover img {
+  aspect-ratio: 1200 / 630;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.logo img {
+  width: 120px;
+  height: 32px;
+}
 
 /* -----------------------------------------------------------------------------
    12. Footer motto (terminal prompt aesthetic)
