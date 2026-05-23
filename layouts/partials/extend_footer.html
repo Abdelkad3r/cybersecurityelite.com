@@ -7,37 +7,61 @@
 */ -}}
 {{- end -}}
 
-{{- /* Deferred analytics loader — fires after window.load OR first user
-       interaction (whichever is first). Keeps GA4, Clarity, and Hotjar off
-       the critical render path so LCP isn't blocked by third-party JS.
-       Trade-off: very-fast bounces (<2s) may be lost — acceptable for
-       a content blog where bounce-rate accuracy isn't critical. */ -}}
-{{- $ga      := site.Params.ga4 -}}
+{{- /* GA4 Measurement Protocol beacon — replaces gtag.js (153 KB → 500 bytes).
+       Inline, fires once per page load via sendBeacon (non-blocking, survives
+       page unload). Reads stable client_id from localStorage so GA4 sessions
+       persist across pages. */ -}}
+{{- $ga       := site.Params.ga4 -}}
+{{- $mpSecret := site.Params.ga4MPSecret -}}
+{{- if and $ga $mpSecret }}
+<script>
+(function(){
+  var MID = {{ $ga | jsonify }};
+  var SECRET = {{ $mpSecret | jsonify }};
+  var cid;
+  try {
+    cid = localStorage.getItem('_ga4_cid');
+    if (!cid) {
+      cid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+            : (Date.now() + '.' + Math.random().toString(36).slice(2));
+      localStorage.setItem('_ga4_cid', cid);
+    }
+  } catch (e) { cid = 'nostore-' + Date.now(); }
+  var payload = JSON.stringify({
+    client_id: cid,
+    events: [{
+      name: 'page_view',
+      params: {
+        page_location: location.href,
+        page_title: document.title,
+        page_referrer: document.referrer
+      }
+    }]
+  });
+  var url = 'https://www.google-analytics.com/mp/collect?measurement_id=' + MID + '&api_secret=' + SECRET;
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+  } else if (window.fetch) {
+    fetch(url, { method: 'POST', body: payload, keepalive: true });
+  }
+})();
+</script>
+{{- end }}
+
+{{- /* Microsoft Clarity — deferred. Fires after window.load OR first user
+       interaction (whichever first). Clarity is ~25 KB of third-party JS;
+       deferring keeps it off the LCP critical path. */ -}}
 {{- $clarity := site.Params.microsoftClarity -}}
-{{- if or $ga $clarity }}
+{{- if $clarity }}
 <script>
 (function(){
   var loaded = false;
   function load(){
     if (loaded) return; loaded = true;
-    {{- with $ga }}
-    var ga = document.createElement('script');
-    ga.async = true;
-    ga.src = 'https://www.googletagmanager.com/gtag/js?id={{ . }}';
-    document.head.appendChild(ga);
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '{{ . }}', { anonymize_ip: true });
-    {{- end }}
-    {{- with $clarity }}
-    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script','{{ . }}');
-    {{- end }}
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',{{ $clarity | jsonify }});
   }
-  // Fire after page load (with a small grace period for LCP to settle)
   if (document.readyState === 'complete') { setTimeout(load, 1500); }
   else { window.addEventListener('load', function(){ setTimeout(load, 1500); }); }
-  // Also fire on first user interaction so we don't miss bouncers
   ['mousedown','keydown','touchstart','scroll'].forEach(function(e){
     window.addEventListener(e, load, { once: true, passive: true });
   });
