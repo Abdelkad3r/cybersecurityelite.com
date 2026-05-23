@@ -36,17 +36,18 @@
 {{- partial "extend_footer.html" . }}
 
 <script>
+    // Restore the menu scroll position in the next animation frame so the
+    // initial layout pass completes first. Use a passive scroll listener so
+    // localStorage writes don't block the scroll thread.
     let menu = document.getElementById('menu');
     if (menu) {
-        // Set the scroll position
         const scrollPosition = localStorage.getItem("menu-scroll-position");
         if (scrollPosition) {
-            menu.scrollLeft = parseInt(scrollPosition, 10);
+            requestAnimationFrame(() => { menu.scrollLeft = parseInt(scrollPosition, 10); });
         }
-        
-        menu.onscroll = function () {
+        menu.addEventListener("scroll", function () {
             localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
+        }, { passive: true });
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -72,15 +73,18 @@
 
 {{- if (not site.Params.disableScrollToTop) }}
 <script>
+    // Passive scroll handler + rAF batching to avoid forced reflow on every scroll event.
     var toplink = document.getElementById("top-link");
-    window.onscroll = function () {
-        const scrollThreshold = window.innerHeight;
-        if (document.body.scrollTop > scrollThreshold || document.documentElement.scrollTop > scrollThreshold) {
-            toplink.classList.remove("hidden");
-        } else {
-            toplink.classList.add("hidden");
-        }
-    };
+    var ticking = false;
+    function updateTopLink() {
+        var threshold = window.innerHeight;
+        var y = window.scrollY || document.documentElement.scrollTop;
+        toplink.classList.toggle("hidden", y <= threshold);
+        ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+        if (!ticking) { requestAnimationFrame(updateTopLink); ticking = true; }
+    }, { passive: true });
 
 </script>
 {{- end }}
@@ -103,50 +107,55 @@
 
 {{- if (and (eq .Kind "page") (ne .Layout "archives") (ne .Layout "search") (.Param "ShowCodeCopyButtons")) }}
 <script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
+    // Defer copy-button attachment to browser idle time. The read-DOM-then-mutate-DOM
+    // pattern below would otherwise force a synchronous reflow per code block on
+    // articles with many <pre><code> blocks. requestIdleCallback runs this after
+    // the LCP has fired, with a 1.5s timeout as a fallback so it never starves.
+    function attachCopyButtons() {
+        document.querySelectorAll('pre > code').forEach((codeblock) => {
+            const container = codeblock.parentNode.parentNode;
 
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
+            const copybutton = document.createElement('button');
+            copybutton.classList.add('copy-code');
+            copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
 
-        function copyingDone() {
-            copybutton.innerHTML = '{{- i18n "code_copied" | default "copied!" }}';
-            setTimeout(() => {
-                copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
+            function copyingDone() {
+                copybutton.innerHTML = '{{- i18n "code_copied" | default "copied!" }}';
+                setTimeout(() => {
+                    copybutton.innerHTML = '{{- i18n "code_copy" | default "copy" }}';
+                }, 2000);
             }
 
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
+            copybutton.addEventListener('click', () => {
+                if ('clipboard' in navigator) {
+                    navigator.clipboard.writeText(codeblock.textContent);
+                    copyingDone();
+                    return;
+                }
+                const range = document.createRange();
+                range.selectNodeContents(codeblock);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                try { document.execCommand('copy'); copyingDone(); } catch (e) { }
+                selection.removeRange(range);
+            });
 
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            // td containing LineNos
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            // table containing LineNos and code
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            // code blocks not having highlight as parent class
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
+            if (container.classList.contains("highlight")) {
+                container.appendChild(copybutton);
+            } else if (container.parentNode.firstChild == container) {
+                // td containing LineNos — skip
+            } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+                codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+            } else {
+                codeblock.parentNode.appendChild(copybutton);
+            }
+        });
+    }
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(attachCopyButtons, { timeout: 1500 });
+    } else {
+        setTimeout(attachCopyButtons, 200);
+    }
 </script>
 {{- end }}
