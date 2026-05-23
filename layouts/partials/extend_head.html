@@ -26,11 +26,15 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap">
 
-{{- /* Pagination metadata — only valid on list pages (home, section, taxonomy, term) */ -}}
+{{- /* Pagination metadata — only valid on list pages (home, section, taxonomy, term).
+       Beyond page 1 we emit noindex,follow so paginated archives don't compete with
+       page 1 for the same query. Google honours the most restrictive directive when
+       conflicting robots metas are present, so this overrides PaperMod's default. */ -}}
 {{- if in (slice "home" "section" "taxonomy" "term") .Kind -}}
   {{- with .Paginator -}}
     {{- if .HasPrev }}<link rel="prev" href="{{ .Prev.URL }}">{{ end -}}
     {{- if .HasNext }}<link rel="next" href="{{ .Next.URL }}">{{ end -}}
+    {{- if gt .PageNumber 1 }}<meta name="robots" content="noindex, follow">{{ end -}}
   {{- end -}}
 {{- end -}}
 
