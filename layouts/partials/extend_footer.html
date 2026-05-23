@@ -16,8 +16,8 @@
 {{- if and $ga $mpSecret }}
 <script>
 (function(){
-  var MID = {{ $ga | jsonify }};
-  var SECRET = {{ $mpSecret | jsonify }};
+  var MID = '{{ $ga }}';
+  var SECRET = '{{ $mpSecret }}';
   var cid;
   try {
     cid = localStorage.getItem('_ga4_cid');
@@ -58,7 +58,7 @@
   var loaded = false;
   function load(){
     if (loaded) return; loaded = true;
-    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script',{{ $clarity | jsonify }});
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script','{{ $clarity }}');
   }
   if (document.readyState === 'complete') { setTimeout(load, 1500); }
   else { window.addEventListener('load', function(){ setTimeout(load, 1500); }); }
