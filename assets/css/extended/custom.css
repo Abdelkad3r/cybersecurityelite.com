@@ -529,7 +529,8 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   border: 1px solid #2a2b3a !important;
   padding: 0;
   margin: 1.4rem 0;
-  overflow: hidden;
+  overflow-x: auto;             /* long code lines scroll within the block, not the page */
+  -webkit-overflow-scrolling: touch;
   box-shadow: var(--cse-shadow-sm);
 }
 
@@ -645,7 +646,7 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
 }
 
 .paginav .title {
-  font-size: 0.74rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--secondary);
@@ -896,7 +897,7 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
 }
 
 .cse-ctf-meta-label {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--secondary);
@@ -1011,7 +1012,7 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
 
 .cse-howto-eyebrow {
   display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1210,6 +1211,15 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   .cse-hero-actions { flex-direction: column; }
   .cse-btn { justify-content: center; width: 100%; }
   .paginav { flex-direction: column; }
+
+  /* Make wide tables horizontally scrollable on mobile so they don't force
+     a horizontal page scroll. Desktop semantics are unaffected. */
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+  }
 }
 
 /* -----------------------------------------------------------------------------
@@ -1272,13 +1282,13 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
 .footer .cse-credit {
   display: inline-block;
   margin-left: 0.75rem;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   opacity: 0.45;
 }
 .footer .cse-credit a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
 .footer .cse-credit a:hover { opacity: 1; }
 
 @media (max-width: 640px) {
-  .footer .cse-motto { white-space: normal; font-size: 0.74rem; }
+  .footer .cse-motto { white-space: normal; font-size: 0.8rem; line-height: 1.5; }
   .footer .cse-credit { display: block; margin: 0.35rem 0 0; }
 }
