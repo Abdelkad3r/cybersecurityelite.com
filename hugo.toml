@@ -182,6 +182,9 @@ canonifyURLs = true
   #   microsoftClarity  = "abcdefghij"     # Microsoft Clarity project ID
   #   plausibleDomain   = "cybersecurityelite.com"  # Plausible — uncomment in extend_footer.html too
   ga4 = "G-TYE341WL0N"
+  # GA4 Measurement Protocol API secret — replaces gtag.js with a 500-byte beacon.
+  # Scoped to one data stream; can only write events, not read data.
+  ga4MPSecret = "VbHAQTQhSSiF8RoFozbCfQ"
   microsoftClarity = "wsjo9x58jv"
   plausibleDomain = ""
 
