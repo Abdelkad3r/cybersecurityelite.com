@@ -1,7 +1,7 @@
 ---
-title: "BKISC CTF 2026: Cryptografie Writeup — Java FileSystemPreferences AltBase64 over UTF-16 BE"
+title: "BKISC 2026 Cryptografie: Java AltBase64 over UTF-16 BE"
 slug: "bkisc-ctf-2026-cryptografie"
-description: "BKISC CTF 2026 Cryptografie walkthrough — decoding a ciphertext produced by the JDK's FileSystemPreferences.dirName() helper, which uses an unusual 64-symbol no-uppercase Base64 alphabet over the UTF-16 big-endian bytes of the source string."
+description: "BKISC CTF 2026 Cryptografie writeup — undo Java FileSystemPreferences AltBase64 encoding applied over UTF-16 BE bytes to recover the original flag."
 date: 2026-05-16T02:00:00Z
 lastmod: 2026-05-16T02:00:00Z
 draft: false

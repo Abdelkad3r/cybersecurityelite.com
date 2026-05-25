@@ -1,7 +1,7 @@
 ---
-title: "BKISC CTF 2026: Boring APK Writeup — Android NDK Reverse Engineering and Meet-in-the-Middle on a Graph-Walk Check"
+title: "BKISC 2026 Boring APK: Android NDK Reverse + Graph-Walk MitM"
 slug: "bkisc-ctf-2026-boring-apk"
-description: "BKISC CTF 2026 Boring APK walkthrough — decrypt AES-GCM-protected assets out of the APK, run an arm64-v8a native library standalone under qemu-aarch64 by patching ELF symbol versions, then solve a 27-step graph-walk flag check with a meet-in-the-middle attack that splits at step 13."
+description: "BKISC CTF 2026 Boring APK writeup — decrypt AES-GCM-protected assets out of an Android NDK binary, then break a graph-walk check with meet-in-the-middle."
 date: 2026-05-16T02:15:00Z
 lastmod: 2026-05-16T02:15:00Z
 draft: false

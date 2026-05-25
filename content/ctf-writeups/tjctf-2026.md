@@ -1,7 +1,7 @@
 ---
-title: "TJCTF 2026 Writeups — All 21 Challenges (Web, Rev, Crypto, Forensics, Misc)"
+title: "TJCTF 2026 Writeups: All 21 Challenges Solved"
 slug: "tjctf-2026"
-description: "Complete TJCTF 2026 writeup covering all 21 solved challenges: JWT jwk-injection, Zip Slip, Chrome URL-normalization SSRF, Minerva ECDSA timing attack, invalid-curve ECDLP + CRT, RSA parity oracle, Chebyshev matrix exponentiation, ReDoS-as-side-channel, restricted-unpickler escape via __loader__, Godot 4.6 PCK parsing, and more."
+description: "Complete TJCTF 2026 writeup of all 21 challenges across web, rev, crypto, forensics, misc — JWT, ECDSA Minerva, RSA parity, ReDoS, pickle escape, Godot PCK."
 date: 2026-05-17T16:00:00Z
 lastmod: 2026-05-17T16:00:00Z
 draft: false

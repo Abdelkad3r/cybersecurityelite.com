@@ -1,7 +1,7 @@
 ---
-title: "THCON 2026: Socials Writeup — Stitching Two Halves of a Flag From LinkedIn and X"
+title: "THCON 2026 Socials: Half-Flag Each on LinkedIn and X"
 slug: "thcon-2026-socials"
-description: "THCON 2026 Socials walkthrough — the THCON team posted the same announcement on LinkedIn and X/Twitter with an ellipsis in each version; the flag is the concatenation of the two visible halves, leetspeak for 'subscribe'."
+description: "THCON 2026 Socials writeup — the same announcement on LinkedIn and X each hides half the flag behind an ellipsis. Concatenate the visible halves to win."
 date: 2026-05-16T11:00:00Z
 lastmod: 2026-05-16T11:00:00Z
 draft: false
