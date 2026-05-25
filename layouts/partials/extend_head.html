@@ -38,6 +38,15 @@
   {{- end -}}
 {{- end -}}
 
+{{- /* Noindex all /tags/X/ term pages — for a young site with ~170 tag
+       aggregates of mostly 1-2 articles each, they dilute Google's crawl
+       budget away from real articles. Keep "follow" so internal links from
+       tag pages still help Google discover content. Tag pages remain
+       fully accessible to humans for in-site navigation. */ -}}
+{{- if and (eq .Kind "term") (eq .Section "tags") -}}
+<meta name="robots" content="noindex, follow">
+{{- end -}}
+
 {{- /* Site verification placeholders — replace tokens before deploy. */ -}}
 {{- with site.Params.analytics.google.SiteVerificationTag -}}
   <meta name="google-site-verification" content="{{ . }}">
