@@ -2,11 +2,15 @@
   CyberSecurity Elite — render the newsletter CTA at the end of every article.
 
   Renders only on real content articles (posts, ctf-writeups, tutorials, etc.).
-  Skipped on pages that use layout="page" — about, contact, newsletter, privacy,
-  disclaimer, editorial — since those either don't need a CTA or already render
-  the form themselves via the newsletter shortcode.
+  Skipped on:
+    - layout="page"  — about, contact, newsletter, privacy, disclaimer, editorial
+                       (they either don't need a CTA or render the form
+                        themselves via the {{< newsletter >}} shortcode)
+    - slug="404"     — error pages shouldn't carry the CTA; also avoids an
+                       H1→H3 heading-hierarchy skip (the newsletter partial
+                       uses H3 and the 404 has no H2 between).
 */ -}}
-{{- if and (eq .Kind "page") (ne .Layout "page") -}}
+{{- if and (eq .Kind "page") (ne .Layout "page") (ne .Slug "404") -}}
 <div class="cse-post-newsletter">
   {{ partial "newsletter.html" . }}
 </div>
