@@ -12,8 +12,8 @@ series: ["BreakTheSyntax CTF 2026"]
 keywords: ["btsctf 2026 fcp writeup", "fcp writeup breakthesyntax", "tls_rsa_with_aes_128_cbc_sha decrypt", "go big.int rsa memory dump", "extended master secret prf", "tls session resumption decrypt pcap"]
 toc: true
 cover:
-  image: "/images/btsctf.png"
-  alt: "BtSCTF 2026 FCP writeup"
+  image: "/images/articles/btsctf-2026-fcp.png"
+  alt: "BtSCTF 2026 FCP writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="BreakTheSyntax CTF 2026" difficulty="Hard" os="Linux" skills="TLS, RSA, Go memory forensics, EMS PRF, session resumption" >}}

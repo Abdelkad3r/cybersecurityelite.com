@@ -12,8 +12,8 @@ series: ["Midnight Sun CTF 2026 Quals"]
 keywords: ["midnight sun ctf 2026 riscal writeup", "risc-v ctf reverse engineering", "strings ctf flag", "rodata flag plaintext"]
 toc: true
 cover:
-  image: "/images/midnight.png"
-  alt: "Midnight Sun CTF 2026 riscal writeup"
+  image: "/images/articles/midnight-sun-2026-riscal.png"
+  alt: "MIDNIGHT SUN 2026 RISCAL writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="Midnight Sun CTF 2026 Quals" difficulty="Trivial" os="RISC-V 64-bit Linux" skills="strings(1), reading the rules" >}}

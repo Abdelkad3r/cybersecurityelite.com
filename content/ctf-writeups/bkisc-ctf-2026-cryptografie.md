@@ -12,8 +12,8 @@ series: ["BKISC CTF 2026"]
 keywords: ["bkisc ctf 2026 cryptografie writeup", "java filesystempreferences dirname", "java altbase64 decoder", "altbase64 alphabet", "utf-16 base64 ctf"]
 toc: true
 cover:
-  image: "/images/bkisc.png"
-  alt: "BKISC CTF 2026 Cryptografie writeup"
+  image: "/images/articles/bkisc-ctf-2026-cryptografie.png"
+  alt: "BKISC 2026 CRYPTOGRAFIE writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="BKISC CTF 2026" difficulty="Easy" points="50" os="Encoding" skills="JDK source reading, custom Base64 alphabet, UTF-16 BE" >}}

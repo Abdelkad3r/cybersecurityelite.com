@@ -12,8 +12,8 @@ series: ["BreakTheSyntax CTF 2026"]
 keywords: ["btsctf 2026 pokecollector writeup", "pokecollector writeup", "idor jwt writeup", "client supplied id idor", "broken access control api"]
 toc: true
 cover:
-  image: "/images/btsctf.png"
-  alt: "BtSCTF 2026 Pokecollector writeup"
+  image: "/images/articles/btsctf-2026-pokecollector.png"
+  alt: "BtSCTF 2026 POKECOLLECTOR writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="BreakTheSyntax CTF 2026" difficulty="Easy" os="Web" skills="IDOR, JWT, OWASP API1:2023 Broken Object Level Authorization" >}}

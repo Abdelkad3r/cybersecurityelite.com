@@ -11,8 +11,8 @@ tags: ["tryhackme", "web exploitation", "command injection", "privilege escalati
 keywords: ["tryhackme pickle rick", "pickle rick walkthrough", "command injection ctf"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "TryHackMe Pickle Rick walkthrough"
+  image: "/images/articles/tryhackme-pickle-rick-walkthrough.png"
+  alt: "THM PICKLE RICK WALKTHROUGH writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="TryHackMe" difficulty="Easy" os="Linux" points="10" release="2019-08-29" skills="Web enum, command injection, sudo abuse" >}}

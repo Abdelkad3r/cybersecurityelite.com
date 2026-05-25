@@ -12,8 +12,8 @@ series: ["Midnight Sun CTF 2026 Quals"]
 keywords: ["midnight sun ctf 2026 empols writeup", "midnight sun quals 2026", "auto solve ctf binaries radare2", "x86-64 elf static analysis ctf", "templated binary challenge ctf"]
 toc: true
 cover:
-  image: "/images/midnight.png"
-  alt: "Midnight Sun CTF 2026 empols writeup"
+  image: "/images/articles/midnight-sun-2026-empols.png"
+  alt: "MIDNIGHT SUN 2026 EMPOLS writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="Midnight Sun CTF 2026 Quals" difficulty="Hard" os="Linux x86-64" skills="Templated binary RE, radare2 scripting, automated static analysis" >}}

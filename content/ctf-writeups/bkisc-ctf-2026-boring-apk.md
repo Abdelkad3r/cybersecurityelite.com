@@ -12,8 +12,8 @@ series: ["BKISC CTF 2026"]
 keywords: ["bkisc ctf 2026 boring apk writeup", "android apk reverse engineering ctf", "aes-gcm asset decryption android", "ndk basic_string layout", "qemu aarch64 standalone .so", "meet in the middle ctf solver"]
 toc: true
 cover:
-  image: "/images/bkisc.png"
-  alt: "BKISC CTF 2026 Boring APK writeup"
+  image: "/images/articles/bkisc-ctf-2026-boring-apk.png"
+  alt: "BKISC 2026 BORING APK writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="BKISC CTF 2026" difficulty="Hard" points="250" os="Android (arm64-v8a)" skills="APK extraction, AES-GCM, ELF patching, qemu-aarch64, NDK basic_string, meet-in-the-middle" >}}
