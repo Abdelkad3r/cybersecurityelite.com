@@ -20,14 +20,16 @@
 {{- if .IsHome -}}
   {{- $base = site.Title -}}
 {{- else if eq .Kind "term" -}}
-  {{- $prefix := "" -}}
-  {{- if eq .Section "categories" }}{{ $prefix = "Category: " }}
-  {{- else if eq .Section "tags"   }}{{ $prefix = "Tag: " }}
-  {{- else if eq .Section "series" }}{{ $prefix = "Series: " }}
-  {{- else if eq .Section "authors"}}{{ $prefix = "Author: " }}{{ end -}}
-  {{- $base = printf "%s%s | %s" $prefix .Title site.Title -}}
+  {{- /* Suffix the term type in parens so the primary keyword stays at the
+         start of the title — SEO best practice for ranking. */ -}}
+  {{- $suffix := "" -}}
+  {{- if eq .Section "categories" }}{{ $suffix = " (Category)" }}
+  {{- else if eq .Section "tags"   }}{{ $suffix = " (Tag)" }}
+  {{- else if eq .Section "series" }}{{ $suffix = " (Series)" }}
+  {{- else if eq .Section "authors"}}{{ $suffix = " (Author)" }}{{ end -}}
+  {{- $base = printf "%s%s | %s" .Title $suffix site.Title -}}
 {{- else if eq .Kind "taxonomy" -}}
-  {{- $base = printf "All %s | %s" .Title site.Title -}}
+  {{- $base = printf "%s Index | %s" .Title site.Title -}}
 {{- else if .Title -}}
   {{- $base = printf "%s | %s" .Title site.Title -}}
 {{- else -}}

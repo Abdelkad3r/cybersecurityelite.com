@@ -1,5 +1,5 @@
 ---
-title: "Complete Windows 11 Enterprise Hardening Guide for 2026"
+title: "Windows 11 Enterprise Hardening Guide for 2026 (Complete Checklist)"
 slug: "windows-11-enterprise-hardening"
 description: "Complete Windows 11 enterprise hardening for 2026: ASR rules, Defender config, LAPS, BitLocker + PIN, Credential Guard, Intune & GPO, aligned with CIS Benchmark v3."
 date: 2026-05-20T10:30:00Z

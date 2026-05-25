@@ -1,5 +1,5 @@
 ---
-title: "The Bug Bounty Recon Methodology That Actually Finds Bugs"
+title: "Bug Bounty Recon Methodology: The Workflow That Actually Finds Bugs"
 slug: "bug-bounty-recon-methodology"
 description: "A reproducible bug bounty recon pipeline — subdomain discovery, content discovery, parameter mining, and the prioritization framework that turns recon into findings."
 date: 2026-04-30T10:00:00Z
