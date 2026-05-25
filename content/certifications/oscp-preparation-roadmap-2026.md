@@ -11,8 +11,8 @@ tags: ["oscp", "offensive security", "pentest certification", "career"]
 keywords: ["oscp preparation", "oscp roadmap", "oscp study plan", "pen-200"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "OSCP preparation roadmap"
+  image: "/images/articles/oscp-preparation-roadmap-2026.png"
+  alt: "OSCP preparation roadmap 2026 — 6-month study plan and exam strategy"
 ---
 
 The OSCP exam changed substantially in 2024 — three Active Directory machines worth 40 points and three standalone hosts worth 60. Pass mark stayed at 70/100. This roadmap reflects the *current* exam, not the legacy one your YouTube favorites prepared for.
