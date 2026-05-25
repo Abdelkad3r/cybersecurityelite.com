@@ -1,5 +1,5 @@
 ---
-title: "How to Disable NTLM Safely in Windows: 2026 Hardening Guide"
+title: "Disable NTLM in Windows Safely: 2026 Step-by-Step Hardening Guide"
 slug: "disable-ntlm-windows"
 description: "Step-by-step guide to safely disabling NTLM authentication in Windows 11, Server 2025, and Active Directory: audit usage, stage rollouts, and roll back without breaking production apps."
 date: 2026-05-19T12:00:00Z
