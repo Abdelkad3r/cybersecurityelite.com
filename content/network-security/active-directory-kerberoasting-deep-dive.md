@@ -1,14 +1,14 @@
 ---
 title: "Active Directory Attacks: Kerberoasting Deep Dive"
 slug: "active-directory-kerberoasting-deep-dive"
-description: "Service-account passwords cracked in hours — Kerberoasting from TGS extraction to hashcat, plus the Event ID 4769 detection most SIEMs aren't tuned for."
+description: "Kerberoasting service principal names (SPNs) — TGS extraction with mimikatz, hashcat cracking, lsass dumps, plus gMSA hardening + Event 4769 detection."
 date: 2026-04-20T11:00:00Z
 lastmod: 2026-04-20T11:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Network Security"]
-tags: ["active directory", "kerberoasting", "kerberos", "windows", "red team"]
-keywords: ["kerberoasting", "kerberoasting tutorial", "kerberos attacks", "spn enumeration"]
+tags: ["active directory", "kerberoasting", "kerberos", "windows", "red team", "spn", "mimikatz", "lsass", "gmsa"]
+keywords: ["kerberoasting", "kerberoasting tutorial", "kerberos attacks", "spn enumeration", "spn meaning", "server principal name", "spns", "mimikatz kerberoasting", "lsass mimikatz", "gmsa kerberoasting"]
 toc: true
 cover:
   image: "/images/og-default.svg"
