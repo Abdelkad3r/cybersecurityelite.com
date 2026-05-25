@@ -210,7 +210,7 @@ canonifyURLs = true
     url = "https://x.com/csecurityelite"
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://www.linkedin.com/company/cybersecurityelite/"
+    url = "https://www.linkedin.com/company/cybersecurityelite"
   [[params.socialIcons]]
     name = "rss"
     url = "/index.xml"
