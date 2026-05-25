@@ -11,8 +11,8 @@ tags: ["linux", "privilege escalation", "post exploitation", "pentest"]
 keywords: ["linux privesc", "linux privilege escalation", "linpeas"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Linux privilege escalation"
+  image: "/images/articles/linux-privilege-escalation-cheat-sheet.png"
+  alt: "Linux privilege escalation cheat sheet"
 ---
 
 You have a low-privilege shell. Now what? This cheat sheet is the ordered, opinionated checklist that solves the privesc step on most CTFs and audits.
