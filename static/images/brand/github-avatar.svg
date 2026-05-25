@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="CyberSecurity Elite logo">
+  <defs>
+    <!-- Shield gradient: cyan → violet, brand-matched -->
+    <linearGradient id="shield-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <!-- Text gradient: white → light cyan -->
+    <linearGradient id="text-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#cffafe"/>
+    </linearGradient>
+    <!-- Faint background grid for texture (only visible at full size) -->
+    <pattern id="grid" x="0" y="0" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0 L0 0 0 64" fill="none" stroke="#0d0d12" stroke-width="1"/>
+    </pattern>
+    <!-- Soft cyan glow behind the shield -->
+    <radialGradient id="glow" cx="50%" cy="50%" r="45%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.22"/>
+      <stop offset="0.6" stop-color="#22d3ee" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Drop shadow under the shield for depth -->
+    <filter id="shield-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="10" result="shadow"/>
+      <feFlood flood-color="#22d3ee" flood-opacity="0.35"/>
+      <feComposite in2="shadow" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Canvas: deep black -->
+  <rect width="1024" height="1024" fill="#000000"/>
+  <!-- Subtle grid texture -->
+  <rect width="1024" height="1024" fill="url(#grid)"/>
+  <!-- Soft glow halo -->
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+
+  <!-- Centred shield. Coords designed for the circle-crop GitHub uses:
+       a 700px shield inside a 1024 canvas leaves ~162px padding all sides,
+       so the entire shield stays visible inside GitHub's circular mask. -->
+  <g transform="translate(512, 512)" filter="url(#shield-shadow)">
+    <!-- Filled shield -->
+    <path d="M 0 -320 L -300 -200 L -300 40 Q -300 240 0 380 Q 300 240 300 40 L 300 -200 Z"
+          fill="url(#shield-grad)"
+          stroke="#22d3ee" stroke-width="6" stroke-linejoin="round"/>
+    <!-- "CSE" wordmark inside, large enough to be legible at 80×80px GitHub avatar -->
+    <text x="0" y="40"
+          text-anchor="middle"
+          font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
+          font-size="200" font-weight="900"
+          fill="url(#text-grad)"
+          letter-spacing="-0.04em">CSE</text>
+    <!-- Tiny "ELITE" subtitle, drops off at small sizes but adds polish at large size -->
+    <text x="0" y="140"
+          text-anchor="middle"
+          font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace"
+          font-size="38" font-weight="700"
+          fill="#0a0a14"
+          letter-spacing="0.34em">ELITE</text>
+  </g>
+</svg>
