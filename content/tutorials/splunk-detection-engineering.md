@@ -11,8 +11,8 @@ tags: ["splunk", "siem", "detection engineering", "blue team", "soc"]
 keywords: ["splunk detection engineering", "splunk siem", "detection rules"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Splunk detection engineering"
+  image: "/images/articles/splunk-detection-engineering.png"
+  alt: "Detection engineering in Splunk"
 ---
 
 Most SIEMs fail not because the technology can't keep up but because the detection content is bad. This guide walks through how a detection engineer actually thinks about a rule, from data onboarding to deployment.

@@ -11,8 +11,8 @@ tags: ["osint", "investigation", "recon", "threat intelligence"]
 keywords: ["osint", "open source intelligence", "osint techniques"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "OSINT investigation techniques"
+  image: "/images/articles/osint-investigation-techniques-for-beginners.png"
+  alt: "OSINT investigation techniques for beginners"
 ---
 
 OSINT — open-source intelligence — is the systematic collection of public data to answer a specific question. Done well, it's the single highest-leverage skill in incident response, threat intel, due diligence, and bug bounty recon. Done poorly, it's hours of dead Google links.

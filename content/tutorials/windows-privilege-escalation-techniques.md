@@ -11,8 +11,8 @@ tags: ["windows", "privilege escalation", "post exploitation", "pentest"]
 keywords: ["windows privesc", "windows privilege escalation", "winpeas"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Windows privilege escalation"
+  image: "/images/articles/windows-privilege-escalation-techniques.png"
+  alt: "Windows privilege escalation techniques"
 ---
 
 The Windows privilege escalation surface has narrowed since the days of unquoted-service-path goldmines, but it hasn't disappeared. Token abuse, misconfigured services, and overlooked AutoLogon registry entries still net SYSTEM on a meaningful percentage of corporate hosts.
