@@ -11,8 +11,8 @@ tags: ["wireshark", "network analysis", "packet capture", "pcap"]
 keywords: ["wireshark tutorial", "wireshark filters", "pcap analysis"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Wireshark tutorial"
+  image: "/images/articles/wireshark-network-analysis-for-beginners.png"
+  alt: "Wireshark network analysis tutorial — packet capture and display filters"
 ---
 
 Wireshark is the most powerful free network tool ever made — and arguably the most underused. Most users live in the first 20% of its features. This tutorial pushes you into the productive middle 60%.
