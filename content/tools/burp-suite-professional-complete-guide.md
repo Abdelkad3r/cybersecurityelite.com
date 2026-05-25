@@ -11,8 +11,8 @@ tags: ["burp suite", "web pentest", "intruder", "repeater", "appsec"]
 keywords: ["burp suite tutorial", "burp pro guide", "burp intruder", "burp collaborator"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Burp Suite Professional guide"
+  image: "/images/articles/burp-suite-professional-complete-guide.png"
+  alt: "Burp Suite Professional — bug bounty hunter workflow deep dive"
 ---
 
 Burp Suite Professional is the web pentest workhorse. Once you've moved past clicking "Intercept On", the difference between an average tester and a great one is *Burp fluency* — how quickly you can pivot between Repeater, Intruder, and Collaborator without losing context.

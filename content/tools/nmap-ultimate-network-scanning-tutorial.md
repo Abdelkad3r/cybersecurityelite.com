@@ -11,8 +11,8 @@ tags: ["nmap", "network scanning", "recon", "nse", "pentest"]
 keywords: ["nmap tutorial", "nmap cheat sheet", "network scanning tutorial"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Nmap tutorial"
+  image: "/images/articles/nmap-ultimate-network-scanning-tutorial.png"
+  alt: "Nmap network scanning tutorial — SYN scan to NSE scripting"
 ---
 
 Nmap is the single most important tool in any network security professional's toolkit. This tutorial covers everything from basic discovery to the Nmap Scripting Engine (NSE) and firewall evasion.
