@@ -1,7 +1,7 @@
 ---
-title: "THCON 2026: Rules / Info Page Writeup — When the 'Info Page' Is the CTF Platform's Own Info Page"
+title: "THCON 2026 Rules: Flag Hidden on the CTF Platform's Own /info Page"
 slug: "thcon-2026-rules-info"
-description: "THCON 2026 Rules walkthrough — the prompt names a generic 'info page with the rules' that points away from the obvious linked Code of Conduct and toward the CTF platform's own /info page, where the flag is hidden in tiny grey italic text at the bottom."
+description: "THCON 2026 Rules writeup — the prompt names a generic info page; the flag is on the CTF platform's OWN /info page in tiny grey italic text at the bottom."
 date: 2026-05-16T11:30:00Z
 lastmod: 2026-05-16T11:30:00Z
 draft: false

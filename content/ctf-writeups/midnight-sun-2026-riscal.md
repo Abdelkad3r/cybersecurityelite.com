@@ -1,7 +1,7 @@
 ---
-title: "Midnight Sun CTF 2026: riscal Writeup — A RISC-V Binary That Stores Its Flag in .rodata"
+title: "Midnight Sun 2026 riscal: RISC-V Binary With Flag in .rodata"
 slug: "midnight-sun-2026-riscal"
-description: "Midnight Sun CTF 2026 riscal walkthrough — RISC-V 64-bit ELF that validates input against a hardcoded string. The string is sitting in .rodata in plaintext, so `strings | grep midnight` solves the challenge without ever opening a disassembler."
+description: "Midnight Sun CTF 2026 riscal writeup — RISC-V 64-bit ELF validates input against a hardcoded string in .rodata. Solve with `strings | grep midnight`."
 date: 2026-05-16T12:45:00Z
 lastmod: 2026-05-16T12:45:00Z
 draft: false

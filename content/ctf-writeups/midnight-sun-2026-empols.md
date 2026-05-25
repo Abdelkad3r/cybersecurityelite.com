@@ -1,7 +1,7 @@
 ---
-title: "Midnight Sun CTF 2026: empols Writeup — Auto-Solving 20 Randomly-Generated x86-64 ELFs With radare2"
+title: "Midnight Sun 2026 empols: Auto-Solving 20 x86-64 ELFs with radare2"
 slug: "midnight-sun-2026-empols"
-description: "Midnight Sun CTF 2026 empols walkthrough — the server hands out 20 random gzipped ELFs from three templates (xor_loop, memcpy_strcmp, paired_word_add) and demands the validating input for each one in a single session. Solve with a Python + radare2 static-analysis engine that detects the template and recovers the input from disassembly."
+description: "Midnight Sun CTF 2026 empols writeup — the server hands out 20 randomly-generated ELFs from 3 templates. Solve them all with Python + radare2 static analysis."
 date: 2026-05-16T12:30:00Z
 lastmod: 2026-05-16T12:30:00Z
 draft: false

@@ -1,7 +1,7 @@
 ---
-title: "THCON 2026: PNG3D / weird_file.thc Writeup — Extracting a Hidden PNG From Two Emojis"
+title: "THCON 2026 PNG3D: Hidden PNG Inside Two Emojis (weird_file.thc)"
 slug: "thcon-2026-png3d-weird-file"
-description: "THCON 2026 PNG3D walkthrough — a 40 MB .thc file looks like noise but is binary-encoded with thumbs-up and thumbs-down emojis among ASCII filler. Decoding bit-streams MSB-first reveals a complete 1000×1000 PNG carrying the flag, plus an unsolved second phase hinting at LSB steganography keyed by a music URL."
+description: "THCON 2026 PNG3D walkthrough — a 40 MB .thc file looks like noise but is binary-encoded with thumbs-up/down emojis. Decoding MSB-first reveals a full PNG."
 date: 2026-05-16T12:00:00Z
 lastmod: 2026-05-16T12:00:00Z
 draft: false

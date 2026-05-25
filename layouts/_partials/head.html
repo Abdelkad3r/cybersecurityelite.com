@@ -45,9 +45,28 @@
     {{- range $i, $e := .Params.keywords }}{{ if $i }}, {{ end }}{{ $e }}{{ end }} {{- else }}
     {{- range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }} {{- end -}}">
 {{- end }}
-<meta name="description" content="{{- with .Description }}{{ . }}{{- else }}{{- if or .IsPage .IsSection}}
-    {{- .Summary | default (printf "%s - %s" .Title  site.Title) }}{{- else }}
-    {{- with site.Params.description }}{{ . }}{{- end }}{{- end }}{{- end -}}">
+{{- /* Description — every indexable page gets one, trimmed to ≤160 chars.
+       Articles and standalone pages use their front-matter description.
+       Term / taxonomy / section pages get an auto-generated description so
+       they don't fall back to an empty <meta> tag. */ -}}
+{{- $desc := "" -}}
+{{- if .Description -}}{{- $desc = .Description -}}
+{{- else if .IsHome -}}{{- $desc = site.Params.description -}}
+{{- else if eq .Kind "term" -}}
+  {{- $type := "" -}}
+  {{- if eq .Section "categories" }}{{ $type = "category" }}
+  {{- else if eq .Section "tags"   }}{{ $type = "tag" }}
+  {{- else if eq .Section "series" }}{{ $type = "series" }}
+  {{- else if eq .Section "authors"}}{{ $type = "author" }}{{ end -}}
+  {{- $desc = printf "Practical, technical cybersecurity articles in the %s %q on CyberSecurity Elite — writeups, tutorials, and engineering-grade guides." $type .Title -}}
+{{- else if eq .Kind "taxonomy" -}}
+  {{- $desc = printf "Browse every %s used to organise content on CyberSecurity Elite — CTF writeups, tutorials, and security engineering guides." (lower .Title) -}}
+{{- else if eq .Kind "section" -}}
+  {{- $desc = printf "%s — practical, technical cybersecurity articles on CyberSecurity Elite. Writeups, tutorials, and engineering guides written by working practitioners." .Title -}}
+{{- else if .Summary -}}{{- $desc = .Summary -}}
+{{- else -}}{{- $desc = site.Params.description -}}
+{{- end -}}
+<meta name="description" content="{{ $desc | plainify | truncate 160 }}">
 <meta name="author" content="{{ (partial "author.html" . ) }}">
 <link rel="canonical" href="{{ if .Params.canonicalURL -}} {{ trim .Params.canonicalURL " " }} {{- else -}} {{ .Permalink }} {{- end }}">
 {{- if site.Params.analytics.google.SiteVerificationTag }}

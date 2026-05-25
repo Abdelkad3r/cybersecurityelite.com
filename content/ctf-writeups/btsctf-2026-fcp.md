@@ -1,7 +1,7 @@
 ---
-title: "BtSCTF 2026: FCP Writeup — Recovering an In-Memory RSA Key to Decrypt Resumed TLS Sessions"
+title: "BtSCTF 2026 FCP: Recover In-Memory RSA Key, Decrypt Resumed TLS"
 slug: "btsctf-2026-fcp"
-description: "BreakTheSyntax 2026 FCP walkthrough — dump a Go MCP server's heap, recover the runtime-generated 2048-bit RSA key from big.Int limbs, decrypt the first TLS_RSA session, derive the EMS master secret, and replay it across every resumed stream in the PCAP."
+description: "BtSCTF 2026 FCP walkthrough — dump a Go MCP server's memory, find the in-memory RSA private key, decrypt resumed TLS sessions to recover the flag."
 date: 2026-05-16T00:00:00Z
 lastmod: 2026-05-16T00:00:00Z
 draft: false
