@@ -1,7 +1,7 @@
 ---
 title: "AWS IAM Security Best Practices for 2026"
 slug: "aws-iam-security-best-practices"
-description: "Modern AWS IAM hardening — root account, MFA, least privilege with permission boundaries, IAM Access Analyzer, and detection of common privilege escalation paths."
+description: "Stop AWS account takeovers before they happen — root account hygiene, permission boundaries that actually constrain, IAM Access Analyzer findings to act on."
 date: 2026-05-02T10:00:00Z
 lastmod: 2026-05-02T10:00:00Z
 draft: false

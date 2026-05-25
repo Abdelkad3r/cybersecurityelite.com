@@ -1,7 +1,7 @@
 ---
 title: "Active Directory Attacks: Kerberoasting Deep Dive"
 slug: "active-directory-kerberoasting-deep-dive"
-description: "Kerberoasting end-to-end — TGS ticket extraction, hashcat cracking, defensive detection (Event ID 4769), and modern hardening with gMSA and AES."
+description: "Service-account passwords cracked in hours — Kerberoasting from TGS extraction to hashcat, plus the Event ID 4769 detection most SIEMs aren't tuned for."
 date: 2026-04-20T11:00:00Z
 lastmod: 2026-04-20T11:00:00Z
 draft: false

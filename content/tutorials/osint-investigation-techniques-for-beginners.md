@@ -1,7 +1,7 @@
 ---
 title: "OSINT Investigation Techniques for Beginners"
 slug: "osint-investigation-techniques-for-beginners"
-description: "Open-source intelligence techniques every analyst should know — username pivoting, image geolocation, breach data, certificate transparency, and the ethics that keep you safe."
+description: "Find the person behind a username, geolocate a photo, pivot through breach data — practical OSINT techniques investigators actually run on live cases."
 date: 2026-04-29T11:00:00Z
 lastmod: 2026-04-29T11:00:00Z
 draft: false

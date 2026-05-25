@@ -1,7 +1,7 @@
 ---
 title: "Windows LAPS Implementation: Step-by-Step Enterprise Guide (2026)"
 slug: "windows-laps-implementation"
-description: "Step-by-step Windows LAPS deployment guide for enterprise: AD schema update, KDS root key, encryption setup, Group Policy reference, PowerShell admin, and DSRM password backup for DCs."
+description: "End local-admin password reuse — the single fix that breaks pass-the-hash propagation. 8-step Windows LAPS rollout: schema, encryption, tiered RBAC, DSRM."
 date: 2026-05-20T11:00:00Z
 lastmod: 2026-05-20T11:00:00Z
 draft: false

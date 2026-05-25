@@ -1,7 +1,7 @@
 ---
 title: "Building a SOC From Zero: A Practical Guide"
 slug: "building-a-soc-practical-guide"
-description: "Stand up a Security Operations Center that produces value from day one — staffing, tooling, log sources, processes, and the 90-day milestones that matter."
+description: "Build a SOC that doesn't drown in alerts — 90-day milestone plan, staffing model, SIEM and EDR shortlist, processes that survive the first real incident."
 date: 2026-05-03T09:00:00Z
 lastmod: 2026-05-03T09:00:00Z
 draft: false

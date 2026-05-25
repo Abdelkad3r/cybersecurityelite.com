@@ -1,7 +1,7 @@
 ---
 title: "Burp Suite Professional: The Complete Workflow Guide"
 slug: "burp-suite-professional-complete-guide"
-description: "Burp Suite Professional end-to-end — Proxy, Intruder, Repeater, Collaborator, Macros, and extensions used by top bug bounty hunters and pentesters."
+description: "Master Burp Suite Pro like a working bug bounty hunter — Repeater chains, Intruder configs, Collaborator workflows, and the extensions that actually pay off."
 date: 2026-04-12T11:00:00Z
 lastmod: 2026-04-12T11:00:00Z
 draft: false

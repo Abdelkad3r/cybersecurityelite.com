@@ -1,7 +1,7 @@
 ---
 title: "Bug Bounty Recon Methodology: The Workflow That Actually Finds Bugs"
 slug: "bug-bounty-recon-methodology"
-description: "A reproducible bug bounty recon pipeline — subdomain discovery, content discovery, parameter mining, and the prioritization framework that turns recon into findings."
+description: "The recon pipeline that consistently surfaces bounty-paying bugs — subdomain enum, content discovery, parameter mining, and how to prioritise what to test."
 date: 2026-04-30T10:00:00Z
 lastmod: 2026-04-30T10:00:00Z
 draft: false
