@@ -241,7 +241,7 @@ canonifyURLs = true
     keys = ["title", "permalink", "summary", "content", "tags", "categories"]
 
   [params.editPost]
-    URL = "https://github.com/cybersecurityelite/cybersecurityelite.com/edit/main/content"
+    URL = "https://github.com/Abdelkad3r/cybersecurityelite.com/edit/main/content"
     Text = "Suggest changes"
     appendFilePath = true
 
