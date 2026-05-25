@@ -12,8 +12,8 @@ series: ["THCON CTF 2026"]
 keywords: ["thcon 2026 rules writeup", "thcon ctf 2026 info page", "ctf platform osint", "ctf.thcon.party info"]
 toc: true
 cover:
-  image: "/images/thcon.jpg"
-  alt: "THCON 2026 Rules / Info Page writeup"
+  image: "/images/articles/thcon-2026-rules-info.png"
+  alt: "THCON 2026 RULES / INFO PAGE writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="THCON 2026 (Toulouse Hacking Convention)" difficulty="Easy" os="OSINT" skills="Reading prompts literally, CTF platform recon" >}}

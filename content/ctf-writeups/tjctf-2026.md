@@ -12,8 +12,8 @@ series: ["TJCTF 2026"]
 keywords: ["tjctf 2026 writeup", "tjctf 2026 solutions", "thomas jefferson ctf 2026", "tjctf chained writeup", "tjctf paper-trail jwk jwt writeup", "tjctf minervas-stopwatch writeup", "tjctf bit-leak rsa parity oracle", "tjctf mind-blowers pickle writeup"]
 toc: true
 cover:
-  image: "/images/ctfs/tjctf.png"
-  alt: "TJCTF 2026 — full writeup of all 21 solved challenges"
+  image: "/images/articles/tjctf-2026.png"
+  alt: "TJCTF 2026 ALL 21 CHALLENGES SOLVED writeup — CTF challenge breakdown"
 ---
 
 {{< ctf-meta platform="TJCTF 2026 (Thomas Jefferson CTF)" difficulty="Easy → Hard" os="Mixed: Linux, macOS ARM64, WebAssembly, Network captures" skills="JWT crafting, SSRF via URL normalization, Zip Slip, RSA parity oracle, ECDSA timing/Minerva, invalid-curve attacks, Chebyshev matrix exponentiation, ReDoS as side channel, pickle exploitation, PCK parsing, polyglot files, RTP LSB steganography" >}}

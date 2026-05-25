@@ -12,8 +12,8 @@ series: ["HTB Active Directory Path"]
 keywords: ["hack the box sauna", "htb sauna writeup", "as-rep roasting walkthrough", "dcsync attack"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "Hack The Box Sauna walkthrough"
+  image: "/images/articles/hack-the-box-sauna-walkthrough.png"
+  alt: "HTB SAUNA WALKTHROUGH writeup — CTF challenge breakdown"
   hidden: false
 ---
 

@@ -11,8 +11,8 @@ tags: ["crypto", "cryptography", "ctf", "rsa", "aes"]
 keywords: ["ctf crypto", "ctf cryptography challenges", "crypto challenge"]
 toc: true
 cover:
-  image: "/images/og-default.svg"
-  alt: "CTF crypto strategies"
+  image: "/images/articles/ctf-crypto-challenges-solving-strategies.png"
+  alt: "CTF CRYPTO SOLVING STRATEGIES writeup — CTF challenge breakdown"
 ---
 
 Crypto categories in CTFs intimidate more newcomers than any other. The barrier isn't math — it's pattern recognition. Almost every CTF crypto challenge is a *known weakness* applied to slightly different parameters.
