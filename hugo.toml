@@ -212,8 +212,8 @@ canonifyURLs = true
     name = "linkedin"
     url = "https://www.linkedin.com/company/cybersecurityelite"
   [[params.socialIcons]]
-    name = "rss"
-    url = "/index.xml"
+    name = "youtube"
+    url = "https://www.youtube.com/@csecurityelite"
 
   [params.label]
     text = "CyberSecurity Elite"
