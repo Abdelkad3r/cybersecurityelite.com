@@ -64,7 +64,7 @@ For media inquiries, podcast/conference invitations, or press kits:
 ## Social
 
 - GitHub: [@cybersecurityelite](https://github.com/cybersecurityelite)
-- X/Twitter: [@cybersecelite](https://x.com/cybersecelite)
+- X/Twitter: [@csecurityelite](https://x.com/csecurityelite)
 - LinkedIn: [CyberSecurity Elite](https://www.linkedin.com/company/cybersecurityelite/)
 
 ## Newsletter

@@ -207,7 +207,7 @@ canonifyURLs = true
     url = "https://github.com/cybersecurityelite"
   [[params.socialIcons]]
     name = "x"
-    url = "https://x.com/cybersecelite"
+    url = "https://x.com/csecurityelite"
   [[params.socialIcons]]
     name = "linkedin"
     url = "https://www.linkedin.com/company/cybersecurityelite/"

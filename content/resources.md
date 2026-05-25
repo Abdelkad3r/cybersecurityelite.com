@@ -105,7 +105,7 @@ The curated list of resources we actually use ourselves and recommend without re
 
 - **Reddit**: r/netsec, r/AskNetsec, r/cybersecurity (lighter)
 - **Discord**: HackTheBox, TryHackMe, individual creator servers
-- **Twitter/X**: follow @cybersecelite plus established researchers
+- **Twitter/X**: follow @csecurityelite plus established researchers
 - **InfosecMastodon**: infosec.exchange — the post-Twitter holdout community
 
 If we missed a resource you find indispensable, tell us — **contact [at] cybersecurityelite.com**.
