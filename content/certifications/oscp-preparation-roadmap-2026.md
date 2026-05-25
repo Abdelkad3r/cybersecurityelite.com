@@ -1,7 +1,7 @@
 ---
 title: "OSCP Preparation Roadmap (2026 Edition)"
 slug: "oscp-preparation-roadmap-2026"
-description: "A realistic six-month OSCP study plan — labs, books, methodology, AD focus, exam strategy, and reporting tips from candidates who passed on first attempt."
+description: "Pass the OSCP first try — realistic 6-month study plan, the lab boxes that actually prepare you, AD priority, exam strategy, and reporting template."
 date: 2026-04-28T08:00:00Z
 lastmod: 2026-04-28T08:00:00Z
 draft: false

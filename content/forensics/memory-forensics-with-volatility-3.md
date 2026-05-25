@@ -1,7 +1,7 @@
 ---
 title: "Memory Forensics with Volatility 3: A Hands-On Tutorial"
 slug: "memory-forensics-with-volatility-3"
-description: "Volatility 3 tutorial — acquiring memory, hunting injected processes, recovering credentials, and identifying rootkits in Windows and Linux memory images."
+description: "Catch process injection, dump credentials, find rootkits in a memory image — Volatility 3 workflows that work on real Windows and Linux dumps."
 date: 2026-04-08T10:00:00Z
 lastmod: 2026-04-08T10:00:00Z
 draft: false

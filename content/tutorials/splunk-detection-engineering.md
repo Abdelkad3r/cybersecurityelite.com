@@ -1,7 +1,7 @@
 ---
 title: "Splunk Detection Engineering: From Logs to Useful Alerts"
 slug: "splunk-detection-engineering"
-description: "Build detection rules in Splunk that fire only when they should — sourcetype hygiene, Common Information Model, the detection lifecycle, and tuning to zero false positives."
+description: "Stop drowning in Splunk false positives. The detection-engineering playbook mature SOCs use: CIM hygiene, MITRE-aligned content, lifecycle at scale."
 date: 2026-04-26T09:00:00Z
 lastmod: 2026-04-26T09:00:00Z
 draft: false

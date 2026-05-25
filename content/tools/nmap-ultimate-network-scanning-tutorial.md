@@ -1,7 +1,7 @@
 ---
 title: "Nmap: The Ultimate Network Scanning Tutorial (2026 Edition)"
 slug: "nmap-ultimate-network-scanning-tutorial"
-description: "From your first SYN scan to advanced NSE scripting and firewall evasion — the most comprehensive Nmap tutorial for pentesters and network defenders."
+description: "Find every open service, fingerprint OS versions, bypass firewalls with Nmap. From first SYN scan to NSE scripting — the tutorial pentesters bookmark."
 date: 2026-04-10T11:00:00Z
 lastmod: 2026-04-10T11:00:00Z
 draft: false

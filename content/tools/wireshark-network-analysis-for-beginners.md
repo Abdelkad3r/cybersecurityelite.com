@@ -1,7 +1,7 @@
 ---
 title: "Wireshark Network Analysis for Beginners (And Intermediate Users)"
 slug: "wireshark-network-analysis-for-beginners"
-description: "Practical Wireshark tutorial — capture setup, the display filters that matter, TLS decryption, and the analysis workflow for spotting attacks on the wire."
+description: "Catch attackers in a packet capture using Wireshark — the display filters that matter, TLS decryption setup, and the analysis workflow real analysts use."
 date: 2026-04-02T11:00:00Z
 lastmod: 2026-04-02T11:00:00Z
 draft: false

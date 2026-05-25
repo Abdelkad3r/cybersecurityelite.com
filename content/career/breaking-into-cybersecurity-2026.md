@@ -1,7 +1,7 @@
 ---
 title: "Breaking Into Cybersecurity in 2026: An Honest Roadmap"
 slug: "breaking-into-cybersecurity-2026"
-description: "An honest, opinionated career roadmap into cybersecurity — what to learn first, certifications that move the needle, portfolio projects, and how hiring managers actually screen candidates."
+description: "Stop chasing certs that don't move the needle. Honest 2026 cybersecurity career roadmap: what to learn first, what to skip, what hiring managers actually want."
 date: 2026-05-05T08:00:00Z
 lastmod: 2026-05-05T08:00:00Z
 draft: false

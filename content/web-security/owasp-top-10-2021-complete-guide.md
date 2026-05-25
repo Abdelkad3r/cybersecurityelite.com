@@ -1,7 +1,7 @@
 ---
 title: "OWASP Top 10 (2021): The Complete Guide With Examples"
 slug: "owasp-top-10-2021-complete-guide"
-description: "Every OWASP Top 10 (2021) category explained with real CVE examples, exploit chains, code-level fixes, and detection signatures."
+description: "Every OWASP Top 10 category with real CVEs, exploit chains, the secure-code fix, and the detection signature — the working reference, not a recap."
 date: 2026-04-25T10:00:00Z
 lastmod: 2026-05-01T10:00:00Z
 draft: false

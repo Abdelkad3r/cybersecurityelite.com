@@ -1,7 +1,7 @@
 ---
 title: "Linux Privilege Escalation Cheat Sheet (2026)"
 slug: "linux-privilege-escalation-cheat-sheet"
-description: "The Linux privilege escalation checklist that actually works on modern boxes — enumeration commands, kernel exploits, sudo abuse, capabilities, and writable cron paths."
+description: "From low-priv shell to root on modern Linux — enumeration commands, sudo abuse, SUID/capabilities tricks, and the post-LinPEAS workflow that actually wins."
 date: 2026-04-19T11:00:00Z
 lastmod: 2026-04-19T11:00:00Z
 draft: false

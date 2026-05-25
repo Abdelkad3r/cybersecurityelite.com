@@ -1,7 +1,7 @@
 ---
 title: "Windows Privilege Escalation Techniques That Still Work in 2026"
 slug: "windows-privilege-escalation-techniques"
-description: "Modern Windows privilege escalation — token impersonation, unquoted paths, service abuse, AlwaysInstallElevated, AutoLogon, and the WinPEAS workflow."
+description: "Escalate from local user to SYSTEM on Windows 10/11 — token impersonation, unquoted paths, service hijacking, and the WinPEAS pivots that actually land."
 date: 2026-04-21T11:00:00Z
 lastmod: 2026-04-21T11:00:00Z
 draft: false
