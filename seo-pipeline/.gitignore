@@ -1,0 +1,24 @@
+.env
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Pipeline state — committing this would make every clone re-discover the
+# same keywords. Treat it like a local cache.
+state/*.json
+state/*.jsonl
+!state/.gitkeep
+
+# Log files
+logs/*.log
+logs/*.log.*
+!logs/.gitkeep
+
+# OS junk
+.DS_Store
+Thumbs.db
