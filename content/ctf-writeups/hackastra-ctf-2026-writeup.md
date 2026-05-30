@@ -1,5 +1,5 @@
 ---
-title: "Hackastra CTF 2026 Writeup: All 15 Challenges, Every Flag"
+title: "Hackastra CTF 2026 Writeup: All 15 Challenges"
 slug: "hackastra-ctf-2026-writeup"
 description: "Hackastra CTF 2026 full writeup — reverse, web, crypto, misc and forensics. All 15 challenges solved with methodology, exploit code, and the lessons learned."
 date: 2026-05-30T10:00:00Z
