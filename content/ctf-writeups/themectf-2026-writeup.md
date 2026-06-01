@@ -1,7 +1,7 @@
 ---
-title: "THEM?! CTF 2026 Writeup: All 7 Challenges"
+title: "THEM?! CTF 2026 Writeup: 7 Solved Challenges"
 slug: "themectf-2026-writeup"
-description: "THEM?! CTF 2026 full writeup — crypto and reverse engineering. All 7 challenges solved with methodology, exploit code, and the lessons learned."
+description: "THEM?! CTF 2026 writeup — the 7 reverse and crypto challenges I solved from an 85-challenge event, with exploit code and lessons learned."
 date: 2026-06-01T02:00:00Z
 lastmod: 2026-06-01T02:00:00Z
 draft: false
@@ -45,9 +45,9 @@ cover:
 
 {{< ctf-meta platform="THEM?! CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Reverse, Crypto)" skills="CHIP-8 emulation, x86-64 PE reverse engineering, Unicorn dynamic emulation, FNV-1a hash recovery, custom bytecode VMs, control-flow flattening, DES weak-key parity, XOR-chain cryptanalysis, modular arithmetic over 10^155" >}}
 
-**THEM?! CTF 2026** is a tightly-scoped jeopardy event that goes deep instead of wide — only seven challenges, but every one demands a real reverse-engineering or cryptanalytic technique end-to-end. The reverse track ranges from a CHIP-8 ROM that paints its flag onto a 64×32 screen across ~2⁴⁰ encoder steps per round, to a Windows binary whose VM mutates its own register state *during dispatch*. The crypto track is the same shape — three challenges that look obscure on the surface and reduce to a clean number-theory or XOR-algebra invariant once you read carefully.
+**THEM?! CTF 2026** is a large jeopardy event with **85 total challenges** across the usual categories. This writeup covers the **seven challenges I personally solved**, all from the reverse-engineering and cryptography tracks — every one demanded a real RE or cryptanalytic technique end-to-end. The reverse picks range from a CHIP-8 ROM that paints its flag onto a 64×32 screen across ~2⁴⁰ encoder steps per round, to a Windows binary whose VM mutates its own register state *during dispatch*. The crypto picks are the same shape — three challenges that look obscure on the surface and reduce to a clean number-theory or XOR-algebra invariant once you read carefully.
 
-This is the master writeup. Each challenge below covers the bug, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts, Unicorn hooks, and the bytecode disassemblies — live in the source repository: [Abdelkad3r/themectf-2026](https://github.com/Abdelkad3r/themectf-2026).
+This is the per-challenge writeup for the seven I solved. Each section below covers the bug, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts, Unicorn hooks, and the bytecode disassemblies — live in the source repository: [Abdelkad3r/themectf-2026](https://github.com/Abdelkad3r/themectf-2026).
 
 ## The event at a glance
 
@@ -297,7 +297,7 @@ THEM?!CTF{NUMB3R_TH30R3M_1S_FUN}
 
 ## Lessons learned — what THEM?! CTF 2026 rewarded
 
-Four patterns recur across the seven challenges; they're worth lifting out:
+Four patterns recur across these seven challenges; they're worth lifting out:
 
 1. **Cycles collapse exponential-looking iteration counts.** Old Cassette's 10¹³ encoder steps reduce to ~330 state-machine steps once you find the cycle. Any pure-function iteration on a small state space is doing this whether you notice or not.
 2. **Two-phase static + dynamic is the default reverse-engineering posture.** Entropy Core and Eyes Chico both fight static analysis with VM dispatch and mutating state. Both fall to ~200 lines of Unicorn that re-creates the prologue and hooks the buffer. Don't burn a week in Ghidra when an emulator is one pip install away.
@@ -316,11 +316,11 @@ If you're building detections from this writeup, the *Defender takeaway* lines t
 [
   {
     "q": "What is THEM?! CTF 2026?",
-    "a": "THEM?! CTF 2026 is a jeopardy-style capture-the-flag competition with seven challenges across two categories: Reverse Engineering and Cryptography. Despite the small challenge count, every challenge demands a substantive technique — CHIP-8 emulation, hand-rolled bytecode VMs, Unicorn dynamic emulation, DES weak-key analysis, and modular arithmetic over a 155-digit modulus."
+    "a": "THEM?! CTF 2026 is a large jeopardy-style capture-the-flag competition that released 85 challenges in total across multiple categories. This writeup covers the seven challenges I personally solved, all from the Reverse Engineering and Cryptography tracks. The techniques covered include CHIP-8 emulation, hand-rolled bytecode VMs, Unicorn dynamic emulation, DES weak-key analysis, and modular arithmetic over a 155-digit modulus."
   },
   {
     "q": "How many challenges does THEM?! CTF 2026 have?",
-    "a": "Seven challenges total: four Reverse Engineering (Old Cassette, Ancient Signals, Entropy Core, Eyes Chico) and three Cryptography (Cascadino Chain, Despacito, No 7race). The flag prefix is THEM?!CTF{...} for every challenge."
+    "a": "THEM?! CTF 2026 released 85 challenges in total across the event. This writeup documents only the seven I personally solved: four Reverse Engineering (Old Cassette, Ancient Signals, Entropy Core, Eyes Chico) and three Cryptography (Cascadino Chain, Despacito, No 7race). The flag prefix is THEM?!CTF{...} for every challenge in the event."
   },
   {
     "q": "Where can I find the THEM?! CTF 2026 solver scripts?",
