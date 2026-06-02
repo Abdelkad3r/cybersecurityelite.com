@@ -1,14 +1,15 @@
-# SEO Automation Pipeline — CyberSecurity Elite
+# SEO Article Pipeline — CyberSecurity Elite
 
-Production-ready Python pipeline that discovers long-tail cybersecurity
-keywords, ranks them by intent, generates Hugo articles with an LLM, writes
-them into `content/<section>/`, and (optionally) auto-commits + pushes them
-to GitHub.
+Python pipeline that produces **non-CTF** articles for the CyberSecurity
+Elite Hugo blog: tutorials, deep-dive analyses, tool comparisons, threat-
+intel news posts, troubleshooting guides. Given a topic + target Hugo
+section, it produces a finished article (front-matter + body + cover
+SVG/PNG/WebP) in the same format the blog already uses, then optionally
+commits + pushes to GitHub.
 
-Built for the `cybersecurityelite.com` Hugo + PaperMod site. Default mode is
-**draft** so generated articles land in a review queue rather than going
-straight live — Google penalises unreviewed AI content at scale, and a
-human-in-the-loop checkpoint costs you almost nothing.
+**CTF master writeups are written by hand** — they live in the same blog
+under `content/ctf-writeups/` but a different workflow generates them.
+This pipeline is deliberately scoped to *everything else*.
 
 ---
 
@@ -16,48 +17,44 @@ human-in-the-loop checkpoint costs you almost nothing.
 
 ```
 seo-pipeline/
-├── run.py                          # entry point / orchestrator
-├── config.py                       # .env → frozen Config dataclass
-├── requirements.txt
-├── .env.example
+├── article.py             # entry point (~500 lines, one Python file)
 ├── prompts/
-│   └── article_prompt.md           # system prompt for the LLM
-├── modules/
-│   ├── log_config.py               # rotating-file + rich-console logger
-│   ├── retry.py                    # exponential-backoff decorator
-│   ├── state.py                    # dedup (keywords, slugs) + run history
-│   ├── keyword_generator.py        # Google Autocomplete + PAA scrape
-│   ├── keyword_filter.py           # intent classify + score + cluster
-│   ├── article_generator.py        # Anthropic | OpenAI provider
-│   ├── markdown_builder.py         # Hugo YAML front-matter + body
-│   └── git_publisher.py            # GitPython commit + push
-├── state/                          # *.json — git-ignored runtime state
-└── logs/                           # rotating logs — git-ignored
+│   └── article.md         # LLM prompt template
+├── covers/
+│   └── template.svg       # cover SVG with {{PLACEHOLDER}} fields
+├── .env.example
+├── requirements.txt
+└── README.md              # this file
 ```
 
-Data flow:
+Pipeline stages (each idempotent):
 
 ```
-seeds (.env)
-   │
-   ▼
-keyword_generator   ── Google Autocomplete (alphabet pivot + question modifiers)
-                       People-Also-Ask scrape (best-effort)
-   │
-   ▼
-keyword_filter      ── blocklist, intent classifier, score, dedup vs state
-   │
-   ▼  top-N
-article_generator   ── LLM (Claude or GPT) → JSON contract
-   │
-   ▼
-markdown_builder    ── Hugo front-matter + body → content/<section>/<slug>.md
-   │
-   ▼  (only if PUBLISH_MODE=publish)
-git_publisher       ── stage + commit + push HEAD:main
-   │
-   ▼
-state               ── keywords_seen.json, slugs_seen.json, runs.jsonl
+        topic + section + intent
+                  │
+                  ▼
+         1. classify_intent          (auto if not specified)
+                  │
+                  ▼
+         2. build_prompt             (prompts/article.md + inputs)
+                  │
+                  ▼
+         3. call_llm                 (claude-opus-4-7, 1M ctx, JSON output)
+                  │
+                  ▼
+         4. write_article            (front-matter + body → content/<section>/<slug>.md)
+                  │
+                  ▼
+         5. write_cover              (template.svg → rsvg-convert → cwebp)
+                  │
+                  ▼
+         6. verify                   (hugo build + H1=1, H2≥3, FAQPage schema)
+                  │
+                  ▼
+         7. commit                   (single structured git commit)
+                  │
+                  ▼
+         8. push                     (only if --publish)
 ```
 
 ---
@@ -69,176 +66,267 @@ cd seo-pipeline
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-$EDITOR .env       # fill in ANTHROPIC_API_KEY (or OPENAI_API_KEY)
+$EDITOR .env       # fill in ANTHROPIC_API_KEY
 ```
 
-The `SITE_ROOT` in `.env.example` is already set to this repo's root. Adjust
-if you move the pipeline.
+External tools (all already on most security workstations):
+
+```bash
+# librsvg for SVG → PNG
+brew install librsvg          # macOS
+sudo apt install librsvg2-bin # Debian/Ubuntu
+
+# webp for PNG → WebP
+brew install webp
+sudo apt install webp
+
+# hugo extended (≥0.158)
+brew install hugo
+```
+
+The pipeline checks for `rsvg-convert`, `cwebp`, and `hugo` on every run
+and refuses to start if any are missing.
 
 ---
 
 ## Usage
 
-### Default run (draft mode)
+### Single article — direct topic
 
 ```bash
-python run.py
+python article.py "Kerberoasting Detection in Splunk" \
+    --section network-security \
+    --intent tutorial
 ```
 
-Generates up to `MAX_ARTICLES_PER_RUN` articles, writes them with
-`draft: true`, **does not commit anything**. Open them in your editor, flip
-`draft: false` once happy, commit by hand.
+The article lands at `content/network-security/<slug>.md` with `draft:
+true`. Read it, edit it, flip `draft: false`, commit by hand.
 
-### Just discover keywords (no LLM cost)
+### Single article — let the pipeline classify intent
 
 ```bash
-python run.py --keywords-only
+python article.py "How to Disable LLMNR in Active Directory" \
+    --section tutorials
+# intent → "tutorial" (matched on "how to")
 ```
 
-### Fully autonomous (commit + push to main)
+The `classify_intent()` regex auto-picks `tutorial`, `comparison`,
+`troubleshooting`, `analysis`, `news`, or defaults to `guide`.
+
+### Batch mode — TSV of topics
 
 ```bash
-python run.py --publish
+python article.py --from-file topics.tsv
 ```
 
-Equivalent to setting `PUBLISH_MODE=publish` in `.env`. Each article becomes
-its own commit, signed with `GIT_COMMIT_AUTHOR_*` from `.env`. Aborts if the
-git index has pre-existing staged changes.
+Where `topics.tsv` is one job per line, fields separated by `<TAB>` or
+`|`:
 
-### Smoke-test the pipeline without burning credits
+```text
+# topic <TAB> section <TAB> intent (intent optional)
+NTLM Relay Detection with Zeek            <TAB> network-security <TAB> tutorial
+Defender for Endpoint vs CrowdStrike Falcon <TAB> tools          <TAB> comparison
+LockBit 5 Affiliate Playbook              <TAB> malware-analysis <TAB> analysis
+Hardening Windows 11 Pro for Endpoints     <TAB> tutorials       <TAB> tutorial
+```
+
+### Smoke-test the prompt without spending tokens
 
 ```bash
-python run.py --dry-run
+python article.py "Kerberoasting Detection in Splunk" \
+    --section network-security --prompt-only
 ```
 
-Discovers keywords (real HTTP calls), filters them, generates **synthetic**
-stub articles, doesn't write files, doesn't touch git.
+Prints the rendered prompt to stdout; no LLM call, no file writes.
 
-### Override seeds for a one-off topic push
+### Full autonomous mode — commit + push
 
 ```bash
-python run.py --seed "active directory privilege escalation" --max-articles 1
+python article.py "..." --section ... --publish
 ```
 
-### Force a section
+`--publish` flips the article to `draft: false`, commits, and pushes to
+`origin/main`. Use only after you've reviewed a few drafts and trust the
+output (see *Operating model* below).
 
-```bash
-python run.py --section ctf-writeups --seed "hackthebox sherlocks walkthrough"
+---
+
+## Allowed sections + intents
+
+The pipeline refuses jobs that target a section or intent it doesn't
+know about.
+
+**Sections** (must have a corresponding `content/<section>/` directory):
+
 ```
+tutorials, posts, news, tools, certifications,
+bug-bounty, career, cloud-security, forensics,
+malware-analysis, network-security, reverse-engineering,
+web-security
+```
+
+**Intents** (drive the article's structure + cover badge):
+
+| Intent           | Structure                                         | Schema emitted          |
+|------------------|---------------------------------------------------|--------------------------|
+| `tutorial`       | Concept → prereqs → step-by-step → verify → FAQ   | `HowTo` + `FAQPage`     |
+| `guide`          | Concept → "X for Y" → decision matrix → FAQ       | `FAQPage`               |
+| `analysis`       | Background → breakdown → detection → IOCs → FAQ   | `FAQPage`               |
+| `comparison`     | At-a-glance table → per-option → verdict → FAQ    | `FAQPage`               |
+| `news`           | TLDR → details → impact → mitigation → FAQ        | `FAQPage` + `NewsArticle` (via PaperMod) |
+| `troubleshooting`| Symptoms → root cause → fix → prevention → FAQ    | `FAQPage`               |
 
 ---
 
 ## Configuration reference
 
-All knobs live in `.env`. See `.env.example` for the canonical set.
+All settings live in `seo-pipeline/.env`. See `.env.example` for the
+canonical set.
 
-| Variable                 | Default                | Purpose |
-|--------------------------|------------------------|---------|
-| `LLM_PROVIDER`           | `anthropic`            | `anthropic` or `openai` |
-| `ANTHROPIC_MODEL`        | `claude-opus-4-7`      | Claude model id |
-| `OPENAI_MODEL`           | `gpt-4o`               | OpenAI model id |
-| `SITE_ROOT`              | parent of pipeline dir | Hugo project root |
-| `DEFAULT_SECTION`        | `tutorials`            | Fallback section if classifier doesn't route |
-| `DEFAULT_AUTHOR`         | `CyberSecurity Elite Team` | Must match a key in `data/authors.yaml` |
-| `SEED_KEYWORDS`          | (8 cybersecurity seeds)| Comma-separated discovery seeds |
-| `MAX_KEYWORDS_PER_RUN`   | `20`                   | Hard cap after filter+rank |
-| `MAX_ARTICLES_PER_RUN`   | `3`                    | LLM calls per run |
-| `TARGET_WORD_COUNT_MIN/MAX` | `1800`/`3500`       | Passed to the LLM as guidance |
-| `PUBLISH_MODE`           | `draft`                | `draft` (review queue) or `publish` (auto-commit) |
-| `DRY_RUN`                | `0`                    | `1` = no writes, no LLM bills, no git |
-| `LOG_LEVEL`              | `INFO`                 | Standard Python log levels |
+| Variable | Default | Purpose |
+|---|---|---|
+| `ANTHROPIC_API_KEY` | *(required)* | Anthropic API key |
+| `ANTHROPIC_MODEL` | `claude-opus-4-7` | Model id |
+| `ANTHROPIC_MAX_TOKENS` | `12000` | Output cap (12k = ~9k-word ceiling) |
+| `SITE_ROOT` | parent dir of pipeline | Hugo project root |
+| `DEFAULT_AUTHOR` | `CyberSecurity Elite Team` | Front-matter `author` |
+| `GIT_BRANCH` | `main` | Branch to push to with `--publish` |
+| `GIT_COMMIT_AUTHOR_NAME` | `Article Pipeline` | Commit author |
+| `GIT_COMMIT_AUTHOR_EMAIL` | `article-pipeline@cybersecurityelite.com` | Commit email |
+| `LOG_LEVEL` | `INFO` | `DEBUG` for verbose tracing |
 
 ---
 
 ## Operating model
 
-### Why default draft?
+### Default is draft
 
-Google's helpful-content system explicitly targets sites that publish
-unreviewed AI content at scale. The pipeline solves keyword discovery,
-structure, schema markup, and Hugo front-matter for you — but a human still
-needs to fact-check claims (CVE numbers, registry keys, command flags) before
-the article hits production. Draft mode gives you that checkpoint without
-slowing discovery down.
+Generated articles ship with `draft: true` so they appear in your local
+review queue but are not built into the live site. Open them, fact-check
+every command/CVE/event-ID, polish the prose, then flip the flag.
+
+Why: Google's helpful-content system targets sites that publish
+unreviewed LLM-generated content at scale. The pipeline solves keyword
+research, schema markup, internal-link patterns, and cover-image
+generation for you — but a human reviewer still has to verify technical
+claims before the article hits production.
 
 ### Promoting drafts to published
 
-Open the generated file under `content/<section>/<slug>.md`, edit anything
-that needs fixing, flip `draft: true` → `draft: false`, then commit normally:
-
 ```bash
-git add content/tutorials/disable-ntlm-windows.md
-git commit -m "tutorial: publish disable-ntlm-windows after review"
+$EDITOR content/network-security/kerberoasting-detection-splunk.md
+# - flip draft: false
+# - fix any factual nits
+# - check that the cover doesn't say something weird
+
+git add content/network-security/kerberoasting-detection-splunk.md \
+        static/images/articles/kerberoasting-detection-splunk.{svg,png,webp}
+git commit -m "network-security: publish kerberoasting detection in splunk"
 git push
 ```
 
 ### Scheduling
 
-Cron the pipeline to run once a day at 06:00 local:
+Daily cron at 06:00 to drain a batch file:
 
 ```cron
-0 6 * * * cd /Users/apple/cybersecurityelite/seo-pipeline && /Users/apple/cybersecurityelite/seo-pipeline/.venv/bin/python run.py >> logs/cron.log 2>&1
+0 6 * * * cd /Users/apple/cybersecurityelite/seo-pipeline && \
+          /Users/apple/cybersecurityelite/seo-pipeline/.venv/bin/python \
+          article.py --from-file topics.queue.tsv \
+          >> logs/cron.log 2>&1
 ```
 
-For full autonomous mode, append `--publish` (review the first week of
-output before you trust it unsupervised).
-
-### Cover images
-
-The pipeline does **not** generate covers — the user produces SVG/PNG/WebP
-covers per the site's existing template (black bg + cyan grid + sub-category
-eyebrow). Drafts ship without `cover:` in front matter; add it when you
-publish. PaperMod's `extend_post_content` and `cover.html` overrides handle
-the rest.
+After the run, manually triage the new drafts in
+`content/<section>/`. Append additional topics to
+`topics.queue.tsv` as they come to mind.
 
 ---
 
-## State files
+## Front-matter shape
 
-- **`state/keywords_seen.json`** — normalized lowercase strings of every
-  keyword the pipeline has ever processed (successful or failed). Prevents
-  re-generation on subsequent runs.
-- **`state/slugs_seen.json`** — every slug ever written. Used together with
-  filesystem checks to uniquify new slugs.
-- **`state/runs.jsonl`** — append-only run history. One JSON object per run
-  with timestamp, candidate count, write count, push status, failures.
+Generated front-matter matches the existing blog's pattern (see any
+`content/tutorials/*.md`):
 
-Delete these to reset the pipeline. They're git-ignored on purpose — sharing
-them across machines would defeat dedup.
+```yaml
+---
+title: "Kerberoasting Detection in Splunk: 5 SPL Queries (2026)"
+slug: "kerberoasting-detection-splunk"
+description: "Detect Kerberoasting in Splunk with five SPL queries..."
+date: 2026-06-02T03:00:00Z       # back-dated 2h to avoid buildFuture=false
+lastmod: 2026-06-02T03:00:00Z
+draft: true                       # promoted to false with --publish
+author: "CyberSecurity Elite Team"
+categories: ["Network Security"]
+tags: ["kerberoasting", "splunk", "active directory", "siem", ...]
+keywords: ["detect kerberoasting splunk spl", "event id 4769", ...]
+toc: true
+cover:
+  image: "/images/articles/kerberoasting-detection-splunk.png"
+  alt: "Kerberoasting Detection in Splunk — five SPL queries for SOC teams"
+---
+```
+
+The body always includes `{{< faq >}}` at the bottom (FAQPage schema)
+and, for tutorial-intent articles, `{{< howto title="..." totalTime="..." >}}`
+around the step-by-step block (HowTo schema). Hugo's `_partials/head.html`
+handles the BreadcrumbList and BlogPosting schemas automatically.
 
 ---
 
-## Logs
+## Cover template
 
-`logs/pipeline.log` — 2 MB rotating, 5 backups. Also mirrored to the console
-via `rich`. Set `LOG_LEVEL=DEBUG` in `.env` for verbose tracing (LLM prompts,
-HTTP responses, retry timing).
+`covers/template.svg` is the same dark-grid / cyan-violet brand that
+runs across every existing article cover. The pipeline substitutes
+these placeholders per-article:
+
+| Placeholder | Source | Notes |
+|---|---|---|
+| `{{ALT}}` | `payload.alt_text` | Image alt-text |
+| `{{EYEBROW}}` | `payload.cover.eyebrow` | `[ TYPE · SECTION · YEAR ]` |
+| `{{BADGE}}` | `payload.cover.badge` | Right-side pill, e.g. `TUTORIAL` |
+| `{{TITLE}}` | `payload.cover.title` | Big centred title (1-3 words) |
+| `{{TITLE_FONT_SIZE}}` | auto-sized if missing | 130/120/110/95 by char count |
+| `{{SUBTITLE}}` | `payload.cover.subtitle` | E.g. `DETECTION GUIDE` |
+| `{{TAGLINE}}` | `payload.cover.tagline` | 4–5 concept dots |
+| `{{PROMPT_USER}}` | `payload.cover.prompt_user` | Shell prompt user, e.g. `soc@detect` |
+| `{{TERMINAL_LINE_1}}` | `payload.cover.terminal_line_1` | Realistic command |
+| `{{TERMINAL_LINE_2}}` | `payload.cover.terminal_line_2` | Follow-up or `# summary` |
+
+PNG is rendered at 1200×630, WebP at quality 85.
 
 ---
 
 ## Debugging
 
-| Symptom                                      | Likely cause                                                                 |
-|----------------------------------------------|------------------------------------------------------------------------------|
-| `Config error: ANTHROPIC_API_KEY is required`| `.env` not loaded — check you're running from `seo-pipeline/`               |
-| `SITE_ROOT does not look like a Hugo project`| `SITE_ROOT` points somewhere without `hugo.toml`                            |
-| Discovery returns 0 keywords                 | Google IP-rate-limited you — wait an hour, or rotate network                |
-| LLM response missing required fields         | Model returned prose instead of JSON — check `prompts/article_prompt.md`    |
-| `git index is dirty; resolve before re-running` | You have unrelated staged changes — `git stash` or commit them first      |
-| Push fails with "permission denied"          | SSH key / gh CLI auth missing — `gh auth status` to diagnose                |
+| Symptom | Likely cause |
+|---|---|
+| `config: ANTHROPIC_API_KEY missing` | `.env` not loaded — run from `seo-pipeline/` or set `--env-file` |
+| `hugo did not render the page` | `date:` is in the future (`buildFuture = false` in hugo.toml) or `draft: true` with hugo not built with `-D` |
+| `H2 count N (expected ≥3 sections)` | Model produced a short article; check the prompt rendering with `--prompt-only` |
+| `FAQPage JSON-LD schema not found` | Model forgot `{{< faq >}}`; the prompt mandates it but the model occasionally drops it on short articles |
+| `git diff --cached … pre-existing staged files` | You have unrelated staged changes — `git stash` first |
+| `rsvg-convert: command not found` | `brew install librsvg` |
+
+For verbose tracing of the LLM prompt and HTTP responses:
+
+```bash
+LOG_LEVEL=DEBUG python article.py "..." --section ...
+```
 
 ---
 
 ## Extending
 
-- **Add a new section** — append a `(section, [tokens])` tuple to
-  `_SECTION_RULES` in `modules/keyword_filter.py`. Order matters: first match
-  wins, so put specific sections above general ones.
-- **Tune intent classifier** — edit `_INTENT_PATTERNS` in the same file.
-- **Swap LLM** — implement a `_generate_<provider>` in
-  `modules/article_generator.py` and route on `CONFIG.llm_provider`.
-- **Add a quality gate** — extend `GeneratedArticle.from_dict` or add a
-  post-validation step in `generate_article` (e.g. minimum word count check).
+- **Add a new section** — append to `ALLOWED_SECTIONS` in `article.py`
+  and create `content/<new-section>/_index.md`.
+- **Add a new intent** — append to `ALLOWED_INTENTS` and add an
+  `### Intent = <new>` block to `prompts/article.md` describing the
+  structure.
+- **Swap LLM** — change `ANTHROPIC_MODEL` in `.env`. Sonnet 4.6 works
+  for shorter articles and is ~⅓ the cost; Opus 4.7 for analysis/news
+  where the source-citation accuracy matters more.
+- **Tune the cover** — `covers/template.svg` is the single source of
+  visual truth. Update it; the next run renders the new template.
 
 ---
 
@@ -246,12 +334,14 @@ HTTP responses, retry timing).
 
 By design:
 
-- **No image generation.** Covers are part of the brand and stay in the
-  user's hands.
-- **No cross-posting.** No Twitter / LinkedIn auto-share. The site's
-  newsletter handles distribution.
-- **No A/B testing of titles or descriptions.** The keyword-first
-  title contract from the prompt is the rule, not a hypothesis to test.
-- **No paid-API keyword tools** (SemRush, Ahrefs). Discovery is 100% free
-  surfaces. If you eventually want volume/KD data, add a `serpapi` provider
-  in `keyword_generator.py` and key it off an env var so it stays optional.
+- **No keyword discovery.** You provide the topic. Topic generation is a
+  human-curation task; a pipeline that scrapes Google Autocomplete just
+  produces content that already exists.
+- **No CTF master writeups.** Those have a different workflow (manual,
+  in conversation with a researcher), different structure (per-
+  challenge sections, ctf-meta shortcode, "X/X SOLVED" cover badge), and
+  different scope (event-driven, not topic-driven).
+- **No image generation beyond the cover.** Body images, screenshots,
+  and diagrams stay a human responsibility.
+- **No cross-posting.** No Dev.to / Medium / Hashnode mirroring. The
+  blog is the primary; syndication is a separate concern.

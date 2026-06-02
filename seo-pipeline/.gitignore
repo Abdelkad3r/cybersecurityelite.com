@@ -8,16 +8,14 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
-# Pipeline state — committing this would make every clone re-discover the
-# same keywords. Treat it like a local cache.
-state/*.json
-state/*.jsonl
-!state/.gitkeep
+# Local batch queues — keep your own list of topics out of the repo
+topics.queue.tsv
+topics.*.tsv
+!topics.example.tsv
 
-# Log files
+# Logs
 logs/*.log
 logs/*.log.*
-!logs/.gitkeep
 
 # OS junk
 .DS_Store
