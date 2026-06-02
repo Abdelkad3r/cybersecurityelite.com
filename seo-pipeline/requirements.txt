@@ -1,19 +1,5 @@
-# Core
-python-dotenv>=1.0.0
-requests>=2.32.0
-pyyaml>=6.0.1
-python-slugify>=8.0.4
-
-# LLM providers (install the one you use; both listed so the codebase works either way)
+# CTF writeup pipeline — minimal deps
 anthropic>=0.39.0
-openai>=1.50.0
-
-# Scraping (Google Autocomplete / People-Also-Ask / SERP fragments)
-beautifulsoup4>=4.12.3
-lxml>=5.2.2
-
-# Git automation
-GitPython>=3.1.43
-
-# CLI niceties
-rich>=13.7.1
+python-dotenv>=1.0.0
+python-slugify>=8.0.4
+pyyaml>=6.0.1
