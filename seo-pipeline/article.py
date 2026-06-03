@@ -193,7 +193,9 @@ def call_llm(prompt: str) -> dict[str, Any]:
             text = (resp.choices[0].message.content or "").strip()
             if not text:
                 raise RuntimeError("empty response from model")
-            return _parse_json(text)
+            payload = _parse_json(text)
+            _validate_payload(payload)
+            return payload
         except Exception as exc:
             if attempt == 3:
                 raise
@@ -212,6 +214,52 @@ def _parse_json(text: str) -> dict[str, Any]:
     if start < 0 or end <= start:
         raise ValueError("no JSON object in LLM response")
     return json.loads(text[start:end + 1])
+
+
+def _validate_payload(payload: dict[str, Any]) -> None:
+    """Fail fast on missing/empty required fields BEFORE anything is written.
+
+    Without this, a model that returns {"title": "", "slug": "", ...} produces
+    a PR titled `draft: tutorials: add ()` and a markdown file at
+    `content/tutorials/.md` — both look like the workflow succeeded but the
+    article is unusable. Raise here instead.
+    """
+    required = {
+        "title":          str,
+        "slug":           str,
+        "description":    str,
+        "markdown_body":  str,
+        "cover":          dict,
+    }
+    missing: list[str] = []
+    empty:   list[str] = []
+    wrong:   list[str] = []
+
+    for key, typ in required.items():
+        if key not in payload:
+            missing.append(key)
+        elif not isinstance(payload[key], typ):
+            wrong.append(f"{key} (got {type(payload[key]).__name__}, expected {typ.__name__})")
+        elif typ is str and not payload[key].strip():
+            empty.append(key)
+
+    cover_required = ["eyebrow", "title", "subtitle", "tagline", "badge",
+                      "prompt_user", "terminal_line_1", "terminal_line_2"]
+    cover = payload.get("cover", {}) if isinstance(payload.get("cover"), dict) else {}
+    for k in cover_required:
+        if k not in cover:
+            missing.append(f"cover.{k}")
+        elif not str(cover.get(k, "")).strip():
+            empty.append(f"cover.{k}")
+
+    if missing or empty or wrong:
+        raise ValueError(
+            "model response failed schema validation:\n"
+            + (f"  missing keys: {missing}\n" if missing else "")
+            + (f"  empty values: {empty}\n"    if empty   else "")
+            + (f"  wrong types:  {wrong}\n"    if wrong   else "")
+            + "  → re-run; if it recurs, inspect the prompt with `python article.py ... --prompt-only`"
+        )
 
 
 # ════════════════════════════════════════════════════════════════════════
@@ -369,8 +417,15 @@ def commit_and_push(article: Path, covers: tuple[Path, Path, Path],
 
     _git("add", *rels)
 
-    title = payload["title"]
-    slug  = payload["slug"]
+    # Single-line subject. Multi-line titles from the model would otherwise
+    # split into subject + body, leaving the PR title looking like
+    # `draft: tutorials: add slug (Title-first-line` with no closing paren.
+    title = " ".join(payload["title"].split())
+    slug  = _safe_slug(payload["slug"])
+    if not slug or not title:
+        raise RuntimeError(
+            f"refusing to commit with broken metadata: slug={slug!r}, title={title!r}"
+        )
     msg = textwrap.dedent(f"""\
         {section}: add {slug} ({title})
 
