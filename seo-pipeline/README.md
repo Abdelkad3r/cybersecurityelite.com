@@ -39,7 +39,7 @@ Pipeline stages (each idempotent):
          2. build_prompt             (prompts/article.md + inputs)
                   │
                   ▼
-         3. call_llm                 (claude-opus-4-7, 1M ctx, JSON output)
+         3. call_llm                 (OpenAI gpt-4o, response_format=json_object)
                   │
                   ▼
          4. write_article            (front-matter + body → content/<section>/<slug>.md)
@@ -66,7 +66,7 @@ cd seo-pipeline
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
-$EDITOR .env       # fill in ANTHROPIC_API_KEY
+$EDITOR .env       # fill in OPENAI_API_KEY
 ```
 
 External tools (all already on most security workstations):
@@ -185,9 +185,9 @@ canonical set.
 
 | Variable | Default | Purpose |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | *(required)* | Anthropic API key |
-| `ANTHROPIC_MODEL` | `claude-opus-4-7` | Model id |
-| `ANTHROPIC_MAX_TOKENS` | `12000` | Output cap (12k = ~9k-word ceiling) |
+| `OPENAI_API_KEY` | *(required)* | OpenAI API key (use a `sk-proj-…` project key for revocability) |
+| `OPENAI_MODEL` | `gpt-4o` | Model id (`gpt-4o-mini` for cheap batch runs) |
+| `OPENAI_MAX_TOKENS` | `12000` | Output cap (12k ≈ 9k-word ceiling) |
 | `SITE_ROOT` | parent dir of pipeline | Hugo project root |
 | `DEFAULT_AUTHOR` | `CyberSecurity Elite Team` | Front-matter `author` |
 | `GIT_BRANCH` | `main` | Branch to push to with `--publish` |
@@ -300,7 +300,7 @@ PNG is rendered at 1200×630, WebP at quality 85.
 
 | Symptom | Likely cause |
 |---|---|
-| `config: ANTHROPIC_API_KEY missing` | `.env` not loaded — run from `seo-pipeline/` or set `--env-file` |
+| `config: OPENAI_API_KEY missing` | `.env` not loaded — run from `seo-pipeline/` or set `--env-file` |
 | `hugo did not render the page` | `date:` is in the future (`buildFuture = false` in hugo.toml) or `draft: true` with hugo not built with `-D` |
 | `H2 count N (expected ≥3 sections)` | Model produced a short article; check the prompt rendering with `--prompt-only` |
 | `FAQPage JSON-LD schema not found` | Model forgot `{{< faq >}}`; the prompt mandates it but the model occasionally drops it on short articles |
@@ -322,9 +322,10 @@ LOG_LEVEL=DEBUG python article.py "..." --section ...
 - **Add a new intent** — append to `ALLOWED_INTENTS` and add an
   `### Intent = <new>` block to `prompts/article.md` describing the
   structure.
-- **Swap LLM** — change `ANTHROPIC_MODEL` in `.env`. Sonnet 4.6 works
-  for shorter articles and is ~⅓ the cost; Opus 4.7 for analysis/news
-  where the source-citation accuracy matters more.
+- **Swap model** — change `OPENAI_MODEL` in `.env`. `gpt-4o-mini` is
+  about 10× cheaper for batch runs but weaker on long-form structure;
+  `gpt-4o` is the recommended default; `gpt-4.1` (if available on your
+  account) gives the tightest JSON-schema adherence.
 - **Tune the cover** — `covers/template.svg` is the single source of
   visual truth. Update it; the next run renders the new template.
 
