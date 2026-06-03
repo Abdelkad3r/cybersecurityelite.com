@@ -171,13 +171,49 @@ def build_prompt(topic: str, section: str, intent: str, year: str) -> str:
 # ════════════════════════════════════════════════════════════════════════
 # 3. call_llm
 # ════════════════════════════════════════════════════════════════════════
+# Error codes from the OpenAI API that are persistent — retrying them just
+# burns clock + log noise. Bail immediately with a clear message.
+_PERMANENT_ERROR_CODES = {
+    "insufficient_quota":  "OpenAI account is out of credit / has no billing set up.\n"
+                           "  → Fix at https://platform.openai.com/settings/organization/billing/overview\n"
+                           "    (add a payment method + a small prepaid credit balance)",
+    "invalid_api_key":     "OPENAI_API_KEY is wrong or has been revoked.\n"
+                           "  → Generate a new one at https://platform.openai.com/api-keys",
+    "permission_denied":   "OPENAI_API_KEY does not have permission for this model/endpoint.\n"
+                           "  → Either grant Chat Completions to the key, or use an unrestricted key",
+    "model_not_found":     "OPENAI_MODEL is not available on this key/project.\n"
+                           "  → Check the model name; fall back to gpt-4o or gpt-4o-mini",
+}
+
+
+def _classify_openai_error(exc: BaseException) -> tuple[bool, str | None]:
+    """Returns (is_permanent, error_code) for an OpenAI exception.
+
+    The SDK exposes 429 as RateLimitError regardless of whether the underlying
+    cause is rate-limiting (transient, retry helps) or insufficient_quota
+    (persistent, retry is pointless). We dig into .response.json() to find out.
+    """
+    body: Any = None
+    response = getattr(exc, "response", None)
+    if response is not None:
+        try:
+            body = response.json()
+        except Exception:
+            body = None
+    if isinstance(body, dict):
+        err = body.get("error") or {}
+        code = err.get("code") or err.get("type")
+        if code in _PERMANENT_ERROR_CODES:
+            return True, code
+    return False, None
+
+
 def call_llm(prompt: str) -> dict[str, Any]:
     """Call OpenAI Chat Completions with response_format=json_object.
 
-    The prompt instructs the model to return strict JSON; we enforce it
-    server-side too so a stray ```json fence never appears. With JSON
-    mode on, the model fails fast on schema violations rather than
-    silently returning prose.
+    Retries on transient errors (network, generic 429 rate-limit, 5xx).
+    Bails immediately on permanent errors (insufficient_quota, invalid key,
+    permission denied, model not found) — retrying these wastes time.
     """
     client = OpenAI(api_key=CONFIG.api_key)
     for attempt in range(1, 4):
@@ -197,6 +233,11 @@ def call_llm(prompt: str) -> dict[str, Any]:
             _validate_payload(payload)
             return payload
         except Exception as exc:
+            permanent, code = _classify_openai_error(exc)
+            if permanent and code:
+                log.error("permanent error (%s) — not retrying.", code)
+                log.error(_PERMANENT_ERROR_CODES[code])
+                raise
             if attempt == 3:
                 raise
             wait = 4 * attempt
