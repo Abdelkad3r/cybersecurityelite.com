@@ -317,7 +317,10 @@ def write_cover(payload: dict[str, Any]) -> tuple[Path, Path, Path]:
 # 6. verify
 # ════════════════════════════════════════════════════════════════════════
 def verify(article: Path, section: str) -> None:
-    p = subprocess.run(["hugo", "--quiet"], cwd=SITE_ROOT, capture_output=True, text=True)
+    # --buildDrafts so we can verify draft:true articles too; public/ is
+    # gitignored so this has no impact on what ships to the live site.
+    p = subprocess.run(["hugo", "--quiet", "--buildDrafts"], cwd=SITE_ROOT,
+                       capture_output=True, text=True)
     if p.returncode != 0:
         raise RuntimeError(f"hugo build failed:\n{p.stderr}")
 
