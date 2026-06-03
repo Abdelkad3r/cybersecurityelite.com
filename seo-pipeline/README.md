@@ -331,6 +331,99 @@ LOG_LEVEL=DEBUG python article.py "..." --section ...
 
 ---
 
+## Running it from GitHub Actions
+
+A workflow at `.github/workflows/generate-article.yml` runs the same
+pipeline in CI so you can trigger article generation from the GitHub
+Actions tab — no local Python venv required.
+
+### One-time setup
+
+1. **Add the OpenAI key as a repository secret.**
+   - Go to **Settings → Secrets and variables → Actions → New repository
+     secret**.
+   - Name: `OPENAI_API_KEY`
+   - Value: your `sk-proj-…` key (use a project key so you can revoke
+     just this pipeline if it ever leaks).
+
+   That's it — no other secrets are needed. The runner's `GITHUB_TOKEN`
+   handles git auth automatically.
+
+### Triggering a run
+
+1. Open the **Actions** tab → **Generate Article** workflow → **Run
+   workflow**.
+2. Fill the inputs:
+
+   | Input     | Notes |
+   |-----------|-------|
+   | `topic`   | Free-form article topic, e.g. *"Kerberoasting Detection in Splunk"* |
+   | `section` | One of the 13 allowed sections (dropdown) |
+   | `intent`  | Leave blank for auto-classify; override with one of the six types if needed |
+   | `publish` | `false` (default) opens a draft PR for review. `true` commits straight to main and the Hugo deploy workflow picks it up. |
+   | `model`   | `gpt-4o` by default. Switch to `gpt-4o-mini` for cheap batch runs. |
+
+3. Click **Run workflow**. The job takes 60–120 seconds end-to-end (most
+   of it is the model call).
+
+### What happens behind the scenes
+
+```
+Run workflow → checkout repo → install hugo + librsvg2 + webp + Python deps
+            ↓
+           python article.py <topic> --section X [--intent Y] [--publish]
+            ↓
+            ├─ publish=true:  pipeline commits + pushes to main
+            │                 → hugo.yml deploy workflow rebuilds the site
+            │                 → live in ~1 minute
+            │
+            └─ publish=false: pipeline commits locally (draft:true article)
+                              → workflow pushes to draft/<timestamp>-<slug> branch
+                              → workflow opens a PR with a review checklist
+                              → you review, flip draft:false, merge
+```
+
+### Reviewing draft PRs
+
+Each draft PR includes:
+
+- A populated **review checklist** (title/description length, no invented
+  CVEs, code-block languages, cover image preview).
+- The full article (front-matter + body) as one markdown file under
+  `content/<section>/`.
+- The cover SVG/PNG/WebP in `static/images/articles/`.
+
+To publish:
+
+```bash
+gh pr checkout <PR-number>
+$EDITOR content/<section>/<slug>.md     # flip `draft: true` → `draft: false`
+git commit -am "<section>: publish <slug>"
+git push
+gh pr merge --merge      # or use the web UI
+```
+
+The deploy workflow takes over from the merge.
+
+### Scheduling
+
+To drain a batch of topics on a cron, add a second workflow that calls
+`python article.py --from-file seo-pipeline/topics.queue.tsv` on a
+schedule. The file format is one job per line, TSV or pipe-separated:
+
+```text
+# topic <TAB> section <TAB> intent
+NTLM Relay Detection with Zeek     <TAB> network-security <TAB> tutorial
+Burp Suite vs OWASP ZAP            <TAB> tools            <TAB> comparison
+```
+
+Commit `topics.queue.tsv` to the repo (or keep it in a `topics/` folder)
+and the scheduled workflow can pick it up. The pipeline doesn't track
+"already-processed" lines yet — manage that by removing handled lines
+from the file as part of the cron job.
+
+---
+
 ## What this pipeline does NOT do
 
 By design:
