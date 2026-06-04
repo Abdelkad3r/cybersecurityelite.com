@@ -438,22 +438,75 @@ gh pr merge --merge      # or use the web UI
 
 The deploy workflow takes over from the merge.
 
-### Scheduling
+### Scheduled (cron) generation — Monday 14:00 UTC
 
-To drain a batch of topics on a cron, add a second workflow that calls
-`python article.py --from-file seo-pipeline/topics.queue.tsv` on a
-schedule. The file format is one job per line, TSV or pipe-separated:
+A third workflow at `.github/workflows/generate-article-scheduled.yml`
+fires on a cron schedule (default: every Monday at 14:00 UTC). It:
+
+1. Reads the **first uncommented line** of `seo-pipeline/topics.queue.tsv`
+2. Calls the same Claude agent as `generate-article-claude.yml`
+3. Opens a draft PR with the new article + cover
+4. Commits a queue update on `main` that comments-out the processed line
+   so the next run picks the next uncommented topic
+
+The cron uses the same `CLAUDE_CODE_OAUTH_TOKEN` secret as the manual
+Claude workflow — no extra setup if that's already configured.
+
+#### Queue file format
+
+`seo-pipeline/topics.queue.tsv`:
 
 ```text
-# topic <TAB> section <TAB> intent
-NTLM Relay Detection with Zeek     <TAB> network-security <TAB> tutorial
-Burp Suite vs OWASP ZAP            <TAB> tools            <TAB> comparison
+# Lines starting with # are skipped. Blank lines are skipped.
+# Format: topic <TAB> section <TAB> intent  (intent optional)
+
+ASREProasting Detection in Splunk            network-security  tutorial
+LLMNR and NBT-NS Disabling via Group Policy  tutorials         tutorial
+Pass-the-Hash Detection with Sysmon          network-security  tutorial
 ```
 
-Commit `topics.queue.tsv` to the repo (or keep it in a `topics/` folder)
-and the scheduled workflow can pick it up. The pipeline doesn't track
-"already-processed" lines yet — manage that by removing handled lines
-from the file as part of the cron job.
+`seo-pipeline/topics.queue.example.tsv` is committed for reference (it's
+never processed; only `topics.queue.tsv` is drained).
+
+#### Operational discipline
+
+- **Curate the queue weekly.** Spend ~15 minutes on Sunday adding 4-8
+  topics. The cron only ships what you've queued; an empty queue means
+  no articles get published that week. That's a feature.
+- **Review each PR.** Every Monday morning there's an open PR. The
+  review checklist is in the PR body. Flip `draft: true` → `draft: false`
+  before merging if you want the article live.
+- **Watch Google Search Console weekly.** If impressions drop, indexed
+  pages shrink, or "Crawled — currently not indexed" surges past 20%,
+  pause the cron immediately by either:
+  1. Commenting out every active line in `topics.queue.tsv`, or
+  2. Commenting out the `schedule:` block in the workflow file
+- **Don't exceed 3 articles/week.** Even if the queue is full. Google's
+  helpful-content classifier treats sudden volume surges from young blogs
+  as content-farm signals. Stay at 1/week for the first 8 weeks; ramp
+  to 2/week only if Search Console signals are clean.
+
+#### Adjusting the schedule
+
+Edit the `cron:` line in
+`.github/workflows/generate-article-scheduled.yml`. Standard cron
+syntax, UTC:
+
+| Cadence | cron expression |
+|---|---|
+| Weekly (Monday 14:00 UTC) — default | `'0 14 * * 1'` |
+| Twice weekly (Mon + Thu 14:00 UTC) | `'0 14 * * 1,4'` |
+| Daily (every day 14:00 UTC) | `'0 14 * * *'` — **not recommended** |
+
+#### Failure / recovery semantics
+
+The queue update commit only fires after the article PR is successfully
+opened. If the agent step or PR step fails, the queue file is
+**unchanged**, so the next run (manual or scheduled) re-attempts the
+same topic. No silent topic loss.
+
+If you want to skip a topic that's failing repeatedly, edit
+`topics.queue.tsv` manually — comment it out or delete the line.
 
 ---
 
