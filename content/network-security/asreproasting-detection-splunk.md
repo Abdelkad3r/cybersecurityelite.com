@@ -4,7 +4,7 @@ slug: "asreproasting-detection-splunk"
 description: "Catch ASREProasting attacks before privilege escalation. Build Splunk detections for Event 4768, AS-REQ failures, no preauth accounts, and anomaly patterns."
 date: 2026-06-04T11:39:46Z
 lastmod: 2026-06-04T11:39:46Z
-draft: true
+draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Network Security"]
 tags: ["asreproasting", "splunk", "event-4768", "kerberos", "active-directory", "threat-detection", "siem", "pre-authentication", "user-accounts", "privilege-escalation", "spl", "windows-security"]
