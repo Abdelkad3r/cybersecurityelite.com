@@ -308,6 +308,19 @@ jobs:
           git pull --rebase origin main
           git push origin main
 
+      # GitHub Actions silently swallows the on:push trigger when the push
+      # is performed by GITHUB_TOKEN (prevents recursive workflow loops).
+      # Without this explicit dispatch, hugo.yml wouldn't fire and the
+      # article never gets built into the live site — visible as a 404
+      # despite a clean commit on main.
+      - name: Trigger Hugo deploy explicitly
+        if: steps.pop.outputs.empty == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run hugo.yml --ref main
+          echo "→ deploy dispatched; article live in ~60s"
+
       # ───────────────────────────────────────────────────────────────────
       # Now that the article PR is open, comment out the processed line in
       # the queue file and push to main. This is idempotent: if any earlier
