@@ -148,8 +148,8 @@ jobs:
             - `title`: 50-65 chars, primary keyword in position 1, year in parens only for time-sensitive content
             - `slug`: kebab-case, ASCII, 3-6 words
             - `description`: 140-160 chars, primary keyword once, ends with a concrete benefit clause
-            - `date` / `lastmod`: ISO 8601 UTC. **Back-date by 2 hours** (the Hugo config has `buildFuture = false` and any future-dated article is silently dropped)
-            - `draft`: `${{ inputs.publish && 'false' || 'true' }}`
+            - `date` / `lastmod`: ISO 8601 UTC. **Use this exact value** — run `date -u -d '2 hours ago' +"%Y-%m-%dT%H:%M:%SZ"` in a Bash tool call and paste the output verbatim into both fields. The Hugo config has `buildFuture = false`, so any future-dated article is silently dropped from the production build and the URL 404s post-merge. The 2-hour back-date is a hard safety margin against runner clock skew.
+            - `draft`: `${{ inputs.publish && 'false' || 'true' }}`. Note: if you set `draft: true`, the article ships to the repo but **Hugo's production build skips it** — the URL will return 404 after merge. The reviewer flips `draft: false` before merging if they want it live.
             - `author`: `"CyberSecurity Elite Team"`
             - `categories`: 1-2 Title-Case strings matching the section's nature
             - `tags`: 8-14 lowercase strings (broad technique + specific sub-techniques + audience)
