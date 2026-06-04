@@ -54,11 +54,6 @@ on:
           - comparison
           - news
           - troubleshooting
-      publish:
-        description: 'Commit straight to main? (false = open a PR for review)'
-        required: false
-        type: boolean
-        default: false
 
 concurrency:
   group: generate-article-claude
@@ -123,7 +118,7 @@ jobs:
             - **Topic:** ${{ inputs.topic }}
             - **Hugo section:** `content/${{ inputs.section }}/`
             - **Intent:** `${{ inputs.intent }}` (blank → auto-classify from topic phrasing)
-            - **Publish mode:** ${{ inputs.publish && 'publish (draft: false)' || 'draft (draft: true)' }}
+            - **Publish mode:** direct publish (draft:false, no PR, no human review — your Step 4 self-review is the gate)
 
             ## Step 1 — Study the brand voice
 
@@ -149,7 +144,7 @@ jobs:
             - `slug`: kebab-case, ASCII, 3-6 words
             - `description`: 140-160 chars, primary keyword once, ends with a concrete benefit clause
             - `date` / `lastmod`: ISO 8601 UTC. **Use this exact value** — run `date -u -d '2 hours ago' +"%Y-%m-%dT%H:%M:%SZ"` in a Bash tool call and paste the output verbatim into both fields. The Hugo config has `buildFuture = false`, so any future-dated article is silently dropped from the production build and the URL 404s post-merge. The 2-hour back-date is a hard safety margin against runner clock skew.
-            - `draft`: `${{ inputs.publish && 'false' || 'true' }}`. Note: if you set `draft: true`, the article ships to the repo but **Hugo's production build skips it** — the URL will return 404 after merge. The reviewer flips `draft: false` before merging if they want it live.
+            - `draft: false` — this is the autopilot path; the article publishes on push. Your Step 4 self-review is the gate.
             - `author`: `"CyberSecurity Elite Team"`
             - `categories`: 1-2 Title-Case strings matching the section's nature
             - `tags`: 8-14 lowercase strings (broad technique + specific sub-techniques + audience)
@@ -191,32 +186,94 @@ jobs:
             cwebp -quiet -q 85 static/images/articles/<slug>.png -o static/images/articles/<slug>.webp
             ```
 
-            ## Step 4 — Verify the Hugo build
+            ## Step 4 — Self-review (mandatory, executable, iterate up to 3 times)
 
-            Run `hugo --quiet --buildDrafts` from the repo root. Check that
-            `public/${{ inputs.section }}/<slug>/index.html` exists. Then run:
-            ```
-            grep -c "<h1" public/${{ inputs.section }}/<slug>/index.html   # must be 1
-            grep -c "<h2" public/${{ inputs.section }}/<slug>/index.html   # must be ≥ 3
-            grep -c "FAQPage" public/${{ inputs.section }}/<slug>/index.html  # must be ≥ 1
-            ```
-            If any check fails, fix the article and re-run. Do NOT proceed to commit unless all three pass.
+            You are now the reviewer. Run THIS exact bash block from the
+            repo root. **If any check fails: fix the article, then re-run
+            the full block.** Maximum 3 iterations. If still failing after
+            3, exit non-zero so the workflow fails loudly (do NOT commit a
+            broken article — better to fail visibly).
 
-            ## Step 5 — Commit (do not push)
+            ```bash
+            SECTION=${{ inputs.section }}
+            # SLUG = your chosen slug from front matter
+            F=content/$SECTION/$SLUG.md
+            fails=0
+
+            # 1. Title length 50-65
+            title=$(awk -F'"' '/^title:/{print $2; exit}' "$F")
+            len=${#title}
+            [ "$len" -ge 50 ] && [ "$len" -le 65 ] \
+              || { echo "FAIL: title $len chars (need 50-65): $title"; fails=$((fails+1)); }
+
+            # 2. Description length 140-160
+            desc=$(awk -F'"' '/^description:/{print $2; exit}' "$F")
+            len=${#desc}
+            [ "$len" -ge 140 ] && [ "$len" -le 160 ] \
+              || { echo "FAIL: description $len chars (need 140-160)"; fails=$((fails+1)); }
+
+            # 3. draft: false (NOT true)
+            grep -q '^draft: false$' "$F" \
+              || { echo "FAIL: draft is not false"; fails=$((fails+1)); }
+
+            # 4. date is in the past
+            date_val=$(awk -F': ' '/^date:/{print $2; exit}' "$F")
+            now=$(date -u +%s)
+            art=$(date -u -d "$date_val" +%s 2>/dev/null || echo 0)
+            [ "$art" -lt "$now" ] \
+              || { echo "FAIL: date $date_val is not in the past"; fails=$((fails+1)); }
+
+            # 5. No banned filler phrases
+            for p in "As an AI" "In this article we will" "Let'\''s dive in" "In conclusion,"; do
+              ! grep -qF "$p" "$F" \
+                || { echo "FAIL: banned filler '\''$p'\''"; fails=$((fails+1)); }
+            done
+
+            # 6. Hugo builds it (prod mode, no --buildDrafts) + structural counts
+            hugo --quiet >/dev/null 2>&1
+            html=public/$SECTION/$SLUG/index.html
+            if [ ! -f "$html" ]; then
+              echo "FAIL: Hugo did not render the page (date in future? draft true?)"
+              fails=$((fails+1))
+            else
+              h1=$(grep -c '<h1' "$html")
+              h2=$(grep -c '<h2' "$html")
+              [ "$h1" = "1" ] || { echo "FAIL: H1 count $h1 (need exactly 1)"; fails=$((fails+1)); }
+              [ "$h2" -ge 3 ] || { echo "FAIL: H2 count $h2 (need >=3)"; fails=$((fails+1)); }
+              grep -q FAQPage "$html" \
+                || { echo "FAIL: FAQPage JSON-LD schema missing — is {{< faq >}} in the body?"; fails=$((fails+1)); }
+            fi
+
+            # 7. Word count in range
+            wc_count=$(awk 'NR>1 && !/^---/{p=1} p' "$F" | wc -w)
+            [ "$wc_count" -ge 1500 ] && [ "$wc_count" -le 3200 ] \
+              || { echo "FAIL: word count $wc_count out of 1500-3200"; fails=$((fails+1)); }
+
+            if [ "$fails" -gt 0 ]; then
+              echo ""
+              echo "$fails check(s) failed — FIX the article and re-run THIS block before committing"
+              exit 1
+            fi
+            echo "✓ all self-review checks passed ($wc_count words, $h1 H1, $h2 H2)"
+            ```
+
+            Track your iterations. After 3 failed attempts, stop and exit
+            with a clear summary of what you couldn't fix. Don't commit a
+            broken article.
+
+            ## Step 5 — Commit (do not push; the workflow handles push)
 
             ```
             git add content/${{ inputs.section }}/<slug>.md
             git add static/images/articles/<slug>.{svg,png,webp}
-            git commit -m "${{ inputs.section }}: add <slug> (<title>)
+            git commit -m "${{ inputs.section }}: publish <slug> (<title>)
 
-            Auto-generated via Claude Code Action.
+            Auto-generated via Claude Code Action with executable self-review.
 
             Co-Authored-By: Claude <noreply@anthropic.com>"
             ```
 
-            **Do not run `git push`.** The workflow's next step handles
-            pushing to main (if publish=true) or opening a draft PR (if
-            publish=false).
+            Print one line at the end: the slug + title + word count.
 
             ## Output
 
@@ -225,68 +282,16 @@ jobs:
             PR title and step summary.
 
       # ───────────────────────────────────────────────────────────────────
-      # If publish=true: push the commit to main, the Hugo deploy workflow
-      # picks it up. If publish=false: push to a draft branch and open PR.
+      # Push the article commit straight to main. The Hugo deploy workflow
+      # (hugo.yml) picks up the push and publishes in ~60s. No PR step,
+      # no draft flag, no human review — Step 4 of the agent prompt is
+      # the gate.
       # ───────────────────────────────────────────────────────────────────
-      - name: Push to main (when publish=true)
-        if: ${{ inputs.publish == true }}
+      - name: Push article to main
         run: |
           set -euo pipefail
+          git pull --rebase origin main
           git push origin main
-
-      - name: Open draft PR (when publish=false)
-        if: ${{ inputs.publish == false }}
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          set -euo pipefail
-
-          # Derive the slug from the path the commit just added.
-          slug=$(git log -1 --name-only --pretty=format: \
-                 | grep -E '^content/.+\.md$' | head -1 \
-                 | xargs -I {} basename {} .md)
-          if [[ -z "$slug" ]]; then
-            echo "::error::could not derive slug from the last commit"
-            git log -1 --stat
-            exit 1
-          fi
-
-          branch="draft/$(date -u +%Y%m%d-%H%M%S)-${slug}"
-          git checkout -b "$branch"
-          git push origin "$branch"
-
-          title=$(git log -1 --pretty=%s)
-          gh pr create \
-            --title  "draft: ${title}" \
-            --base   main \
-            --head   "$branch" \
-            --body   "$(cat <<EOF
-          Auto-generated by Claude Code via the
-          [Generate Article (Claude)](../actions/workflows/generate-article-claude.yml) workflow.
-
-          ### Inputs
-          | Field    | Value |
-          |----------|-------|
-          | Topic    | ${{ inputs.topic }} |
-          | Section  | ${{ inputs.section }} |
-          | Intent   | ${{ inputs.intent || 'auto' }} |
-
-          ### Review checklist
-          - [ ] Title/description lengths within target (50-65 / 140-160 chars)
-          - [ ] Front-matter tags + keywords look right
-          - [ ] No invented CVE numbers, event IDs, registry keys, version strings
-          - [ ] Code blocks have correct language tags
-          - [ ] FAQ schema renders (\`grep FAQPage public/${{ inputs.section }}/${slug}/index.html\`)
-          - [ ] Cover image at \`static/images/articles/${slug}.png\` looks brand-correct
-
-          The article ships with \`draft: true\`. To publish: flip
-          \`draft: false\` on the front matter, push, then merge.
-
-          ---
-
-          *Generated by Claude Code Action (CI run: [\`${{ github.run_id }}\`](../actions/runs/${{ github.run_id }}))*
-          EOF
-          )"
 
       # ───────────────────────────────────────────────────────────────────
       - name: Summary
@@ -300,16 +305,12 @@ jobs:
             echo "| Topic    | ${{ inputs.topic }} |"
             echo "| Section  | ${{ inputs.section }} |"
             echo "| Intent   | ${{ inputs.intent || 'auto' }} |"
-            echo "| Publish  | ${{ inputs.publish }} |"
             echo "| Model    | Claude (Max subscription quota) |"
             echo ""
             if [[ "${{ job.status }}" == "success" ]]; then
-              if [[ "${{ inputs.publish }}" == "true" ]]; then
-                echo "✅ Pushed to **main**; the Hugo deploy workflow will publish in ~1 minute."
-              else
-                echo "✅ Opened a draft PR. Review, flip \`draft: false\`, merge to publish."
-              fi
+              echo "✅ Article pushed to **main** with draft:false (executable self-review passed)."
+              echo "🚀 Hugo deploy workflow will publish to the live site in ~60s."
             else
-              echo "❌ Job failed — see logs above."
+              echo "❌ Job failed — see logs above. Self-review either rejected the draft or another step errored."
             fi
           } >> "$GITHUB_STEP_SUMMARY"
