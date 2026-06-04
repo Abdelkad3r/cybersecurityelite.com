@@ -1,10 +1,10 @@
 ---
-title: "Kerberoasting Detection in Splunk: Event 4769 Queries & Dashboards (2026)"
+title: "Kerberoasting Detection in Splunk: Event 4769 Queries (2026)"
 slug: "kerberoasting-detection-splunk"
-description: "Stop Kerberoasting attacks before privilege escalation. Build Splunk detections for Event 4769 patterns, RC4 encryption, unusual service accounts, volume spikes."
-date: 2026-06-04T04:00:00Z
-lastmod: 2026-06-04T04:00:00Z
-draft: true
+description: "Stop Kerberoasting before privilege escalation. Build Splunk detections for Event 4769, RC4 encryption, unusual service accounts, and volume spikes."
+date: 2026-06-04T00:00:00Z
+lastmod: 2026-06-04T00:00:00Z
+draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
 tags: ["kerberoasting", "splunk", "event-4769", "kerberos", "active-directory", "threat-detection", "siem", "rc4-hmac", "service-accounts", "privilege-escalation", "spl", "windows-security"]
