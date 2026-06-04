@@ -1,0 +1,361 @@
+###############################################################################
+# CyberSecurity Elite — scheduled article generation (Claude + topic queue)
+#
+# Every Monday 14:00 UTC, pops the first uncommented line of
+# seo-pipeline/topics.queue.tsv, runs the same Claude agent as the manual
+# workflow, opens a draft PR for review, then commits a queue update that
+# comments out the processed line (idempotent — if the run fails, the
+# queue is unchanged and the next run picks up the same line).
+#
+# To pause the cron: comment out every active line in
+# seo-pipeline/topics.queue.tsv, OR comment out the cron schedule below.
+#
+# Required secret: CLAUDE_CODE_OAUTH_TOKEN (same as the manual workflow).
+###############################################################################
+name: Generate Article (Scheduled)
+
+on:
+  schedule:
+    # Mondays at 14:00 UTC = 10am ET / 4pm CET / 9am Buenos Aires / 3pm Lagos
+    - cron: '0 14 * * 1'
+  # Also runnable on demand for testing.
+  workflow_dispatch:
+
+# Share the concurrency group with the manual Claude workflow so they
+# never overlap on the same branch / queue file.
+concurrency:
+  group: generate-article-claude
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  HUGO_VERSION: 0.161.1
+  TZ: UTC
+  QUEUE_FILE: seo-pipeline/topics.queue.tsv
+
+jobs:
+  drain-queue:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # for committing queue updates + article commits
+      pull-requests: write  # for opening the draft PR
+
+    steps:
+      # ───────────────────────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ───────────────────────────────────────────────────────────────────
+      # Pop the next topic from the queue. Writes outputs:
+      #   empty=true  → exit cleanly; no work to do
+      #   empty=false → topic / section / intent / line_b64 set
+      # ───────────────────────────────────────────────────────────────────
+      - name: Pop next topic from queue
+        id: pop
+        run: |
+          set -euo pipefail
+
+          if [[ ! -f "$QUEUE_FILE" ]]; then
+            echo "::error::queue file $QUEUE_FILE does not exist"
+            exit 1
+          fi
+
+          line=$(awk 'NF && !/^[[:space:]]*#/' "$QUEUE_FILE" | head -1 || true)
+
+          if [[ -z "$line" ]]; then
+            echo "empty=true" >> "$GITHUB_OUTPUT"
+            echo "queue is empty"
+            exit 0
+          fi
+
+          topic=$(printf '%s\n' "$line"   | awk -F'\t' '{print $1}' | xargs)
+          section=$(printf '%s\n' "$line" | awk -F'\t' '{print $2}' | xargs)
+          intent=$(printf '%s\n' "$line"  | awk -F'\t' '{print $3}' | xargs)
+
+          if [[ -z "$topic" || -z "$section" ]]; then
+            echo "::error::malformed queue line (need TAB-separated topic + section): $line"
+            exit 1
+          fi
+
+          # Preserve the exact original line bytes for the commenting-out step;
+          # base64 avoids shell-escaping nightmares with quotes / specials.
+          echo "empty=false"                                        >> "$GITHUB_OUTPUT"
+          echo "topic=$topic"                                       >> "$GITHUB_OUTPUT"
+          echo "section=$section"                                   >> "$GITHUB_OUTPUT"
+          echo "intent=$intent"                                     >> "$GITHUB_OUTPUT"
+          echo "line_b64=$(printf '%s' "$line" | base64 | tr -d '\n')" >> "$GITHUB_OUTPUT"
+
+          echo "next: $topic → $section → ${intent:-auto}"
+
+      - name: Exit cleanly if queue empty
+        if: steps.pop.outputs.empty == 'true'
+        run: |
+          {
+            echo "## Scheduled run — nothing to do"
+            echo ""
+            echo "Queue is empty. Add topics to \`$QUEUE_FILE\` to schedule more articles."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ───────────────────────────────────────────────────────────────────
+      # Setup steps — only run when we have work
+      # ───────────────────────────────────────────────────────────────────
+      - name: Install image tooling (librsvg2-bin, webp)
+        if: steps.pop.outputs.empty == 'false'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq librsvg2-bin webp
+
+      - name: Set up Hugo extended ${{ env.HUGO_VERSION }}
+        if: steps.pop.outputs.empty == 'false'
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - name: Configure git identity
+        if: steps.pop.outputs.empty == 'false'
+        run: |
+          git config user.name  "Scheduled Pipeline (Claude)"
+          git config user.email "scheduled-pipeline@cybersecurityelite.com"
+
+      # ───────────────────────────────────────────────────────────────────
+      # The agent step — mirrors the prompt in generate-article-claude.yml.
+      # If you edit one, edit the other. (We could refactor to a reusable
+      # workflow but two files is currently easier to read.)
+      # ───────────────────────────────────────────────────────────────────
+      - name: Run Claude Code agent
+        if: steps.pop.outputs.empty == 'false'
+        uses: anthropics/claude-code-base-action@beta
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_tools: "Bash,Read,Write,Edit,Glob,Grep"
+          timeout_minutes: "15"
+          prompt: |
+            You are generating one blog article for the **CyberSecurity Elite**
+            Hugo site. Read existing articles first to lock the brand voice,
+            then produce the new article + cover, then commit (no push).
+
+            ## Inputs (drained from seo-pipeline/topics.queue.tsv)
+            - **Topic:** ${{ steps.pop.outputs.topic }}
+            - **Hugo section:** `content/${{ steps.pop.outputs.section }}/`
+            - **Intent:** `${{ steps.pop.outputs.intent }}` (blank → auto-classify from topic phrasing)
+            - **Publish mode:** draft (scheduled runs always open a PR for review; the reviewer flips draft:false before merging if they want it live)
+
+            ## Step 1 — Study the brand voice
+
+            Read these three existing tutorials end-to-end (do not skim) to
+            learn the front-matter schema, prose voice, code-block
+            conventions, FAQ shape, and Hugo shortcode usage:
+
+            - `content/tutorials/disable-ntlm-windows.md`
+            - `content/tutorials/windows-laps-implementation.md`
+            - `content/tutorials/kerberoasting-detection-splunk.md`
+
+            Then read **one cover SVG** for the template:
+            - `static/images/articles/disable-ntlm-windows.svg`
+
+            ## Step 2 — Generate the article
+
+            Write a new markdown file at
+            `content/${{ steps.pop.outputs.section }}/<slug>.md` following the
+            schema and voice you just studied. Hard constraints:
+
+            **Front matter:**
+            - `title`: **50-65 chars**, primary keyword in position 1, year in parens only for time-sensitive content
+            - `slug`: kebab-case, ASCII, 3-6 words
+            - `description`: **140-160 chars**, primary keyword once, ends with a benefit clause
+            - `date` / `lastmod`: **Run `date -u -d '2 hours ago' +"%Y-%m-%dT%H:%M:%SZ"` and paste the exact output**. The Hugo config has `buildFuture = false`; any future-dated article is silently dropped and the URL 404s post-merge. The 2-hour margin protects against runner clock skew.
+            - `draft: true` — the reviewer flips this to `false` before merging if they want it live
+            - `author`: `"CyberSecurity Elite Team"`
+            - `categories`: 1-2 Title-Case strings matching the section
+            - `tags`: 8-14 lowercase
+            - `keywords`: 10-18 lowercase, mix of head and long-tail
+            - `toc: true`
+            - `cover`: `image: /images/articles/<slug>.png` + `alt: "..."`
+
+            **Body:**
+            - **No H1** (Hugo renders from title). Start with a thesis paragraph, then H2 sections.
+            - Intent-specific structure (tutorial: HowTo block; analysis: detection-IOCs-playbook; comparison: at-a-glance table; news: TLDR-details-impact; troubleshooting: symptoms-cause-fix; guide: decision-matrix).
+            - **Mandatory:** `{{< faq >}}[...]{{< /faq >}}` shortcode at the bottom with 8-12 entries, each 150-400 chars.
+            - Code blocks: triple-backtick with explicit language tag.
+            - Word count: 1,500-2,800 for tutorial/guide/comparison/troubleshooting; 1,800-3,200 for analysis/news.
+            - **Accuracy is the floor.** Do not invent CVE numbers, event IDs, registry paths, vendor product versions. Omit if uncertain.
+
+            ## Step 3 — Generate the cover
+
+            Read `static/images/articles/disable-ntlm-windows.svg` as
+            template. Create `static/images/articles/<slug>.svg` substituting:
+            - **Eyebrow:** `[ INTENT-LABEL · SECTION-LABEL · 2026 ]`
+            - **Badge:** `TUTORIAL` / `GUIDE` / `DEEP DIVE` / `ANALYSIS` / `COMPARISON` / `NEWS` / `TROUBLESHOOT`
+            - **Title:** 1-3 word UPPERCASE brand title. Auto-size: 130pt ≤13 chars, 120pt 14-15, 110pt 16-18, 95pt 19+.
+            - **Subtitle:** 1-3 word CAPS descriptor
+            - **Tagline:** 4-5 concepts ` · ` separated, <55 chars
+            - **Terminal:** 2 lines of realistic commands matching the topic
+
+            Then convert:
+            ```
+            rsvg-convert -w 1200 -h 630 static/images/articles/<slug>.svg -o static/images/articles/<slug>.png
+            cwebp -quiet -q 85 static/images/articles/<slug>.png -o static/images/articles/<slug>.webp
+            ```
+
+            ## Step 4 — Verify Hugo build
+
+            ```
+            hugo --quiet --buildDrafts
+            ```
+            Check `public/${{ steps.pop.outputs.section }}/<slug>/index.html` exists, then:
+            ```
+            grep -c "<h1" .../index.html       # must be 1
+            grep -c "<h2" .../index.html       # must be ≥ 3
+            grep -c "FAQPage" .../index.html   # must be ≥ 1
+            ```
+            Fix any failure and re-verify before committing.
+
+            ## Step 5 — Commit (do not push)
+
+            ```
+            git add content/${{ steps.pop.outputs.section }}/<slug>.md
+            git add static/images/articles/<slug>.{svg,png,webp}
+            git commit -m "${{ steps.pop.outputs.section }}: add <slug> (<title>)
+
+            Auto-generated via scheduled Claude Code Action.
+
+            Co-Authored-By: Claude <noreply@anthropic.com>"
+            ```
+
+            **Do not run `git push`.** The workflow handles pushing.
+
+            Print one line at the end: the slug + title + word count, for the
+            workflow's step summary.
+
+      # ───────────────────────────────────────────────────────────────────
+      # Push the article commit to a draft branch and open a PR
+      # ───────────────────────────────────────────────────────────────────
+      - name: Open draft PR
+        if: steps.pop.outputs.empty == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          slug=$(git log -1 --name-only --pretty=format: \
+                 | grep -E '^content/.+\.md$' | head -1 \
+                 | xargs -I {} basename {} .md)
+          if [[ -z "$slug" ]]; then
+            echo "::error::could not derive slug from the last commit"
+            git log -1 --stat
+            exit 1
+          fi
+
+          branch="draft/$(date -u +%Y%m%d-%H%M%S)-${slug}"
+          git checkout -b "$branch"
+          git push origin "$branch"
+
+          title=$(git log -1 --pretty=%s)
+          gh pr create \
+            --title  "draft: ${title}" \
+            --base   main \
+            --head   "$branch" \
+            --body   "$(cat <<EOF
+          **Auto-generated by the [Scheduled Article workflow](../actions/workflows/generate-article-scheduled.yml).**
+
+          Drained from \`seo-pipeline/topics.queue.tsv\`:
+
+          | Field    | Value |
+          |----------|-------|
+          | Topic    | ${{ steps.pop.outputs.topic }} |
+          | Section  | ${{ steps.pop.outputs.section }} |
+          | Intent   | ${{ steps.pop.outputs.intent || 'auto' }} |
+
+          ### Review checklist
+          - [ ] Title 50-65 chars, primary keyword position 1
+          - [ ] Description 140-160 chars
+          - [ ] No invented CVEs, event IDs, registry keys, product versions
+          - [ ] Code blocks have correct language tags
+          - [ ] FAQ block renders FAQPage JSON-LD (\`grep FAQPage public/${{ steps.pop.outputs.section }}/${slug}/index.html\`)
+          - [ ] Cover image at \`static/images/articles/${slug}.png\` looks brand-correct
+          - [ ] Flip \`draft: true\` → \`draft: false\` before merging if you want it live
+
+          The queue file was updated in a separate commit on main: the topic
+          line was commented out so the next scheduled run picks the next
+          uncommented topic.
+
+          ---
+          *Scheduled CI run: [\`${{ github.run_id }}\`](../actions/runs/${{ github.run_id }}). To pause the cron, comment out every active line in \`seo-pipeline/topics.queue.tsv\`.*
+          EOF
+          )"
+
+      # ───────────────────────────────────────────────────────────────────
+      # Now that the article PR is open, comment out the processed line in
+      # the queue file and push to main. This is idempotent: if any earlier
+      # step failed, the queue is unchanged and the next run picks up the
+      # same line.
+      # ───────────────────────────────────────────────────────────────────
+      - name: Mark topic as processed in queue
+        if: steps.pop.outputs.empty == 'false'
+        run: |
+          set -euo pipefail
+
+          # Get back on main; the previous step left us on the draft branch.
+          git checkout main
+          git pull --rebase origin main
+
+          original_line=$(echo "${{ steps.pop.outputs.line_b64 }}" | base64 -d)
+
+          # Comment-out the FIRST occurrence of the exact line. Python is
+          # used here (not sed) to avoid escaping every regex metachar in
+          # the line text.
+          python3 - "$original_line" <<'PY'
+          import sys, pathlib
+          path = pathlib.Path("seo-pipeline/topics.queue.tsv")
+          orig = sys.argv[1]
+          lines = path.read_text(encoding="utf-8").splitlines()
+          for i, ln in enumerate(lines):
+              if ln == orig:
+                  lines[i] = "# [processed " + __import__("time").strftime("%Y-%m-%d") + "] " + ln
+                  break
+          else:
+              sys.stderr.write("warning: line not found in queue (was it edited mid-run?)\n")
+              sys.exit(0)
+          path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+          PY
+
+          if git diff --quiet seo-pipeline/topics.queue.tsv; then
+            echo "::warning::queue file unchanged after mark — was the line removed manually?"
+            exit 0
+          fi
+
+          git add seo-pipeline/topics.queue.tsv
+          git commit -m "scheduled: mark queue line processed → ${{ steps.pop.outputs.topic }}"
+          git push origin main
+
+      # ───────────────────────────────────────────────────────────────────
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Scheduled article generation"
+            echo ""
+            if [[ "${{ steps.pop.outputs.empty }}" == "true" ]]; then
+              echo "📭 Queue is empty. Add topics to \`seo-pipeline/topics.queue.tsv\`."
+            elif [[ "${{ job.status }}" == "success" ]]; then
+              echo "| Field    | Value |"
+              echo "|----------|-------|"
+              echo "| Topic    | ${{ steps.pop.outputs.topic }} |"
+              echo "| Section  | ${{ steps.pop.outputs.section }} |"
+              echo "| Intent   | ${{ steps.pop.outputs.intent || 'auto' }} |"
+              echo ""
+              echo "✅ Opened a draft PR. Review, flip \`draft: false\`, merge."
+              echo "🗑️  Queue line was commented out on main."
+            else
+              echo "❌ Run failed — queue was NOT updated. The next run will pick up the same line."
+              echo ""
+              echo "Topic that failed: \`${{ steps.pop.outputs.topic }}\` → \`${{ steps.pop.outputs.section }}\`"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

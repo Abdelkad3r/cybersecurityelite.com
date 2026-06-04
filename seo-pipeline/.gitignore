@@ -8,10 +8,9 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 
-# Local batch queues — keep your own list of topics out of the repo
-topics.queue.tsv
-topics.*.tsv
-!topics.example.tsv
+# topics.queue.tsv and topics.queue.example.tsv are committed (the
+# scheduled workflow reads the queue from the repo). Scratch / backup
+# queues belong in your personal .gitignore_local, not here.
 
 # Logs
 logs/*.log
