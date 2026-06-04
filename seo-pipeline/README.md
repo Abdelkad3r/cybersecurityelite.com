@@ -333,6 +333,39 @@ LOG_LEVEL=DEBUG python article.py "..." --section ...
 
 ## Running it from GitHub Actions
 
+Two workflows live under `.github/workflows/`:
+
+| Workflow file | Backed by | Cost per article | Quality |
+|---|---|---|---|
+| `generate-article.yml` | OpenAI `gpt-4o` / `gpt-4o-mini` | ~$0.003 – $0.05 | Good |
+| `generate-article-claude.yml` | Claude Code with your Max-plan OAuth token | **$0 extra** (uses your Max quota) | Best |
+
+If you're already paying for **Claude Max ($100-200/mo)**, the Claude
+workflow is the right default — articles cost nothing on top of your
+existing subscription, and the quality is noticeably higher than
+`gpt-4o`. Keep the OpenAI workflow around as a fallback for when you
+want to triage quota or run a different style of test.
+
+### Claude workflow setup (one-time)
+
+1. **Generate a long-lived OAuth token from your local Claude Code:**
+   ```bash
+   claude setup-token
+   ```
+   This prints an `sk-ant-oat01-…` value. The token is bound to your
+   account and consumes your Max plan's quota (not API credit).
+
+2. **Add it as a repository secret:**
+   - Settings → Secrets and variables → Actions → New repository secret
+   - Name: `CLAUDE_CODE_OAUTH_TOKEN`
+   - Secret: paste the `sk-ant-oat01-…` value
+
+3. **Done.** Open the Actions tab → **Generate Article (Claude)** → Run
+   workflow → fill `topic` + `section` → ~3 minutes later you have a
+   draft PR.
+
+### OpenAI workflow setup (one-time)
+
 A workflow at `.github/workflows/generate-article.yml` runs the same
 pipeline in CI so you can trigger article generation from the GitHub
 Actions tab — no local Python venv required.

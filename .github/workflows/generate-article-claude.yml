@@ -1,0 +1,315 @@
+###############################################################################
+# CyberSecurity Elite — article generation pipeline (Claude variant)
+#
+# Same UX as generate-article.yml (OpenAI) but uses Claude Code under the
+# hood. Authenticates with your Max plan's OAuth token, so workflow runs
+# consume your $100/mo Claude subscription quota — no separate API bill.
+#
+# REQUIRED SECRET: CLAUDE_CODE_OAUTH_TOKEN
+#   Generate on your local machine:
+#       claude setup-token
+#   Then copy the printed sk-ant-oat01-... value into
+#   Settings → Secrets and variables → Actions → New repository secret.
+#
+# Quality: matches the prose depth of the hand-written tutorials on the blog
+# (Sonnet 4.6 or whichever model your Max plan uses by default).
+###############################################################################
+name: Generate Article (Claude)
+
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Article topic (e.g. "Kerberoasting Detection in Splunk")'
+        required: true
+        type: string
+      section:
+        description: 'Hugo section under content/'
+        required: true
+        type: choice
+        options:
+          - tutorials
+          - posts
+          - news
+          - tools
+          - certifications
+          - bug-bounty
+          - career
+          - cloud-security
+          - forensics
+          - malware-analysis
+          - network-security
+          - reverse-engineering
+          - web-security
+      intent:
+        description: 'Override auto-classified intent (blank = let Claude decide)'
+        required: false
+        type: choice
+        default: ''
+        options:
+          - ''
+          - tutorial
+          - guide
+          - analysis
+          - comparison
+          - news
+          - troubleshooting
+      publish:
+        description: 'Commit straight to main? (false = open a PR for review)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: generate-article-claude
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  HUGO_VERSION: 0.161.1
+  TZ: UTC
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # for pushing the article commit
+      pull-requests: write  # for opening the draft PR
+
+    steps:
+      # ───────────────────────────────────────────────────────────────────
+      - name: Checkout (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install image tooling (librsvg2-bin, webp)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq librsvg2-bin webp
+
+      - name: Set up Hugo extended ${{ env.HUGO_VERSION }}
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "Article Pipeline (Claude)"
+          git config user.email "article-pipeline@cybersecurityelite.com"
+
+      # ───────────────────────────────────────────────────────────────────
+      # The agent step. Claude reads existing articles for style, writes a
+      # new one + cover, verifies the Hugo build, and commits. We handle
+      # the push / PR step ourselves below so the workflow controls auth.
+      # ───────────────────────────────────────────────────────────────────
+      - name: Run Claude Code agent
+        uses: anthropics/claude-code-base-action@beta
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          allowed_tools: "Bash,Read,Write,Edit,Glob,Grep"
+          timeout_minutes: "15"
+          prompt: |
+            You are generating one blog article for the **CyberSecurity Elite**
+            Hugo site. Read existing articles first to lock the brand voice,
+            then produce the new article + cover, then commit (no push).
+
+            ## Inputs (from the workflow_dispatch trigger)
+            - **Topic:** ${{ inputs.topic }}
+            - **Hugo section:** `content/${{ inputs.section }}/`
+            - **Intent:** `${{ inputs.intent }}` (blank → auto-classify from topic phrasing)
+            - **Publish mode:** ${{ inputs.publish && 'publish (draft: false)' || 'draft (draft: true)' }}
+
+            ## Step 1 — Study the brand voice
+
+            Read these three existing tutorials end-to-end to learn the
+            front-matter schema, prose voice, code-block conventions, FAQ
+            shape, and Hugo shortcode usage. **Do not skim.**
+
+            - `content/tutorials/disable-ntlm-windows.md`
+            - `content/tutorials/windows-laps-implementation.md`
+            - `content/tutorials/adfs-security-hardening.md`
+
+            Then read **one cover SVG** for the template:
+            - `static/images/articles/disable-ntlm-windows.svg`
+
+            ## Step 2 — Generate the article
+
+            Write a new markdown file at
+            `content/${{ inputs.section }}/<slug>.md` following the schema and
+            voice you just studied. Hard constraints:
+
+            **Front matter (YAML):**
+            - `title`: 50-65 chars, primary keyword in position 1, year in parens only for time-sensitive content
+            - `slug`: kebab-case, ASCII, 3-6 words
+            - `description`: 140-160 chars, primary keyword once, ends with a concrete benefit clause
+            - `date` / `lastmod`: ISO 8601 UTC. **Back-date by 2 hours** (the Hugo config has `buildFuture = false` and any future-dated article is silently dropped)
+            - `draft`: `${{ inputs.publish && 'false' || 'true' }}`
+            - `author`: `"CyberSecurity Elite Team"`
+            - `categories`: 1-2 Title-Case strings matching the section's nature
+            - `tags`: 8-14 lowercase strings (broad technique + specific sub-techniques + audience)
+            - `keywords`: 10-18 lowercase strings (primary + 2-3 variations + long-tail phrases)
+            - `toc: true`
+            - `cover`: `image: /images/articles/<slug>.png` + `alt: "<descriptive alt text>"`
+
+            **Body:**
+            - **No H1** (Hugo renders it from the title). Start with a thesis paragraph, then H2 sections.
+            - Intent-specific structure:
+              - **tutorial:** Concept → prereqs → step-by-step (wrap steps in `{{< howto title="..." totalTime="PT15M" >}}...{{< /howto >}}`) → verification → troubleshooting → references → FAQ
+              - **guide:** Concept → "X for Y" sections → decision matrix → FAQ
+              - **analysis:** Background → technical breakdown → detection (Sigma/KQL/SPL in code blocks) → IOCs → defender playbook → FAQ
+              - **comparison:** At-a-glance table → per-option deep-dive → side-by-side dimensions → verdict → FAQ
+              - **news:** TLDR → details → impact → detection → mitigation → references → FAQ
+              - **troubleshooting:** Symptoms → root cause → primary fix → fallback fixes → prevention → FAQ
+            - **Mandatory bottom block:** `{{< faq >}}[...]{{< /faq >}}` with 8-12 entries, each 150-400 chars, self-contained.
+            - Use `{{< callout type="info|warning" title="..." >}}...{{< /callout >}}` 1-3 times max for warnings or critical context.
+            - Code blocks: triple-backtick with explicit language tag (`bash`, `powershell`, `python`, `kql`, `splunk`, `sigma`, `yaml`, `text`).
+            - Word count: 1,500-2,800 for tutorial/guide/comparison/troubleshooting; 1,800-3,200 for analysis/news.
+            - **Accuracy is the floor.** Do not invent CVE numbers, exact event IDs you're not sure about, registry paths, or vendor product versions. If you don't know, omit.
+            - **No filler.** No "As an AI...", no "In this article we will explore...". Lead with substance.
+
+            ## Step 3 — Generate the cover
+
+            Create `static/images/articles/<slug>.svg` by:
+            1. Reading the disable-ntlm-windows.svg as template
+            2. Substituting these fields (keep the dark grid + cyan/violet gradients):
+               - **Eyebrow (top-left):** `[ INTENT-LABEL · SECTION-LABEL · 2026 ]` where INTENT-LABEL is one of `TUTORIAL`/`GUIDE`/`DEEP DIVE`/`COMPARISON`/`NEWS`/`TROUBLESHOOT` and SECTION-LABEL is the human section name in CAPS (`NETWORK SECURITY`, `MALWARE ANALYSIS`, etc.)
+               - **Badge (top-right pill):** intent-specific tag like `TUTORIAL`, `DEEP DIVE`, `GUIDE`, `ANALYSIS`, `COMPARISON`, `NEWS`. Use violet `#a78bfa` for the dot.
+               - **Title (centred, big):** 1-3 word UPPERCASE brand title for the article. Auto-size by char count: 130pt for ≤13 chars, 120pt for 14-15, 110pt for 16-18, 95pt for 19+.
+               - **Subtitle (under title):** 1-3 word descriptor in CAPS (e.g. `DETECTION GUIDE`, `PLAYBOOK`)
+               - **Tagline (below subtitle):** 4-5 concepts separated by ` · `, under 55 chars total
+               - **Terminal panel (bottom):** 2 lines of realistic command examples matching the topic, with `<section-slug>@kali` as the prompt user
+
+            Then convert:
+            ```
+            rsvg-convert -w 1200 -h 630 static/images/articles/<slug>.svg -o static/images/articles/<slug>.png
+            cwebp -quiet -q 85 static/images/articles/<slug>.png -o static/images/articles/<slug>.webp
+            ```
+
+            ## Step 4 — Verify the Hugo build
+
+            Run `hugo --quiet --buildDrafts` from the repo root. Check that
+            `public/${{ inputs.section }}/<slug>/index.html` exists. Then run:
+            ```
+            grep -c "<h1" public/${{ inputs.section }}/<slug>/index.html   # must be 1
+            grep -c "<h2" public/${{ inputs.section }}/<slug>/index.html   # must be ≥ 3
+            grep -c "FAQPage" public/${{ inputs.section }}/<slug>/index.html  # must be ≥ 1
+            ```
+            If any check fails, fix the article and re-run. Do NOT proceed to commit unless all three pass.
+
+            ## Step 5 — Commit (do not push)
+
+            ```
+            git add content/${{ inputs.section }}/<slug>.md
+            git add static/images/articles/<slug>.{svg,png,webp}
+            git commit -m "${{ inputs.section }}: add <slug> (<title>)
+
+            Auto-generated via Claude Code Action.
+
+            Co-Authored-By: Claude <noreply@anthropic.com>"
+            ```
+
+            **Do not run `git push`.** The workflow's next step handles
+            pushing to main (if publish=true) or opening a draft PR (if
+            publish=false).
+
+            ## Output
+
+            When you're done, print a one-line summary of the slug, title,
+            section, and word count. The workflow uses this to construct the
+            PR title and step summary.
+
+      # ───────────────────────────────────────────────────────────────────
+      # If publish=true: push the commit to main, the Hugo deploy workflow
+      # picks it up. If publish=false: push to a draft branch and open PR.
+      # ───────────────────────────────────────────────────────────────────
+      - name: Push to main (when publish=true)
+        if: ${{ inputs.publish == true }}
+        run: |
+          set -euo pipefail
+          git push origin main
+
+      - name: Open draft PR (when publish=false)
+        if: ${{ inputs.publish == false }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          # Derive the slug from the path the commit just added.
+          slug=$(git log -1 --name-only --pretty=format: \
+                 | grep -E '^content/.+\.md$' | head -1 \
+                 | xargs -I {} basename {} .md)
+          if [[ -z "$slug" ]]; then
+            echo "::error::could not derive slug from the last commit"
+            git log -1 --stat
+            exit 1
+          fi
+
+          branch="draft/$(date -u +%Y%m%d-%H%M%S)-${slug}"
+          git checkout -b "$branch"
+          git push origin "$branch"
+
+          title=$(git log -1 --pretty=%s)
+          gh pr create \
+            --title  "draft: ${title}" \
+            --base   main \
+            --head   "$branch" \
+            --body   "$(cat <<EOF
+          Auto-generated by Claude Code via the
+          [Generate Article (Claude)](../actions/workflows/generate-article-claude.yml) workflow.
+
+          ### Inputs
+          | Field    | Value |
+          |----------|-------|
+          | Topic    | ${{ inputs.topic }} |
+          | Section  | ${{ inputs.section }} |
+          | Intent   | ${{ inputs.intent || 'auto' }} |
+
+          ### Review checklist
+          - [ ] Title/description lengths within target (50-65 / 140-160 chars)
+          - [ ] Front-matter tags + keywords look right
+          - [ ] No invented CVE numbers, event IDs, registry keys, version strings
+          - [ ] Code blocks have correct language tags
+          - [ ] FAQ schema renders (\`grep FAQPage public/${{ inputs.section }}/${slug}/index.html\`)
+          - [ ] Cover image at \`static/images/articles/${slug}.png\` looks brand-correct
+
+          The article ships with \`draft: true\`. To publish: flip
+          \`draft: false\` on the front matter, push, then merge.
+
+          ---
+
+          *Generated by Claude Code Action (CI run: [\`${{ github.run_id }}\`](../actions/runs/${{ github.run_id }}))*
+          EOF
+          )"
+
+      # ───────────────────────────────────────────────────────────────────
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "## Article generation run (Claude)"
+            echo ""
+            echo "| Field    | Value |"
+            echo "|----------|-------|"
+            echo "| Topic    | ${{ inputs.topic }} |"
+            echo "| Section  | ${{ inputs.section }} |"
+            echo "| Intent   | ${{ inputs.intent || 'auto' }} |"
+            echo "| Publish  | ${{ inputs.publish }} |"
+            echo "| Model    | Claude (Max subscription quota) |"
+            echo ""
+            if [[ "${{ job.status }}" == "success" ]]; then
+              if [[ "${{ inputs.publish }}" == "true" ]]; then
+                echo "✅ Pushed to **main**; the Hugo deploy workflow will publish in ~1 minute."
+              else
+                echo "✅ Opened a draft PR. Review, flip \`draft: false\`, merge to publish."
+              fi
+            else
+              echo "❌ Job failed — see logs above."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
