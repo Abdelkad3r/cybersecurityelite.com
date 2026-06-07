@@ -6,7 +6,9 @@ date: 2026-06-04T11:39:46Z
 lastmod: 2026-06-04T11:39:46Z
 draft: false
 author: "CyberSecurity Elite Team"
-categories: ["Network Security"]
+categories: ["Tutorials"]
+aliases:
+  - /network-security/asreproasting-detection-splunk/
 tags: ["asreproasting", "splunk", "event-4768", "kerberos", "active-directory", "threat-detection", "siem", "pre-authentication", "user-accounts", "privilege-escalation", "spl", "windows-security"]
 keywords: [
   "asreproasting detection splunk",
