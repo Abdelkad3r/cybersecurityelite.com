@@ -1,5 +1,5 @@
 ---
-title: "Incident 67: BGP Sub-Prefix Hijack of a Crypto Wallet (2026)"
+title: "Incident 67: BGP Sub-Prefix Hijack of a Crypto Wallet (SAS CTF 2026 Quals)"
 slug: "incident-67-bgp-hijack-crypto-wallet"
 description: "Detailed BGP sub-prefix hijack against a crypto wallet gateway — FRR config, RIB origin trick, DNS sinkhole, TLS MitM, and full transaction capture."
 date: 2026-06-04T13:00:00Z
