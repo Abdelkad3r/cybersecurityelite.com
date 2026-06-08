@@ -73,6 +73,7 @@ jobs:
     permissions:
       contents: write       # for pushing the article commit
       pull-requests: write  # for opening the draft PR
+      actions: write        # for dispatching hugo.yml after push
 
     steps:
       # ───────────────────────────────────────────────────────────────────
