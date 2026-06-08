@@ -23,6 +23,6 @@
 
 # [processed 2026-06-04] ASREProasting Detection in Splunk	network-security	tutorial
 # [processed 2026-06-08] LLMNR and NBT-NS Disabling via Group Policy	tutorials	tutorial
-Pass-the-Hash Detection with Sysmon	network-security	tutorial
+# [processed 2026-06-08] Pass-the-Hash Detection with Sysmon	network-security	tutorial
 Sigma Rule Format: A Practical Reference	tutorials	guide
 Detecting Mimikatz with Microsoft Defender for Endpoint	malware-analysis	analysis
