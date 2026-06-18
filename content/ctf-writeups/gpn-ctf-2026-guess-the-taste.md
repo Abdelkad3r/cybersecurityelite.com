@@ -116,7 +116,7 @@ Three reasons, in order of confidence:
 
 1. **The bug is the kind of bug NTRU implementations specifically warn against.** Every NTRU reference implementation reduces `c mod q` immediately after assembling the polynomial product. The missing reduction is a textbook implementation footgun, not a deliberate design.
 2. **The parameter choice contradicts the bug.** `q=512` is picked to make lattice attacks expensive enough to be a multi-hour exercise. Authors who intend a `c mod p == m` solve pick `q=4` and turn the challenge into a teaching toy.
-3. **The LLM harness burned six hours on the intended path before pivoting.** Claude initially built an NTRU lattice solver in Sage, ran LLL and BKZ at increasing block sizes, and was deep in a "tune `beta` and recover" loop before a fresh look at the protocol output revealed the over-range `c` values. The intended-path solve *almost worked* — exactly the signature of an unintended shortcut sitting next to a working intended attack.
+3. **The LLM harness burned six hours on the intended path before pivoting.** LLM initially built an NTRU lattice solver in Sage, ran LLL and BKZ at increasing block sizes, and was deep in a "tune `beta` and recover" loop before a fresh look at the protocol output revealed the over-range `c` values. The intended-path solve *almost worked* — exactly the signature of an unintended shortcut sitting next to a working intended attack.
 
 The flag — `GPNCTF{sOM7IMe5_4lL_YOu_NeED_1S_luCk}` — is the wink. *Sometimes all you need is luck.*
 

@@ -338,19 +338,19 @@ Two workflows live under `.github/workflows/`:
 | Workflow file | Backed by | Cost per article | Quality |
 |---|---|---|---|
 | `generate-article.yml` | OpenAI `gpt-4o` / `gpt-4o-mini` | ~$0.003 – $0.05 | Good |
-| `generate-article-claude.yml` | Claude Code with your Max-plan OAuth token | **$0 extra** (uses your Max quota) | Best |
+| `generate-article-llm.yml` | LLM coding tool with your Max-plan OAuth token | **$0 extra** (uses your Max quota) | Best |
 
-If you're already paying for **Claude Max ($100-200/mo)**, the Claude
+If you're already paying for **LLM Max**, the LLM
 workflow is the right default — articles cost nothing on top of your
 existing subscription, and the quality is noticeably higher than
 `gpt-4o`. Keep the OpenAI workflow around as a fallback for when you
 want to triage quota or run a different style of test.
 
-### Claude workflow setup (one-time)
+### LLM workflow setup (one-time)
 
-1. **Generate a long-lived OAuth token from your local Claude Code:**
+1. **Generate a long-lived OAuth token from your local LLM coding tool:**
    ```bash
-   claude setup-token
+   llm setup-token
    ```
    This prints an `sk-ant-oat01-…` value. The token is bound to your
    account and consumes your Max plan's quota (not API credit).
@@ -360,7 +360,7 @@ want to triage quota or run a different style of test.
    - Name: `CLAUDE_CODE_OAUTH_TOKEN`
    - Secret: paste the `sk-ant-oat01-…` value
 
-3. **Done.** Open the Actions tab → **Generate Article (Claude)** → Run
+3. **Done.** Open the Actions tab → **Generate Article (LLM)** → Run
    workflow → fill `topic` + `section` → ~3 minutes later you have a
    draft PR.
 
@@ -444,13 +444,13 @@ A third workflow at `.github/workflows/generate-article-scheduled.yml`
 fires on a cron schedule (default: every Monday at 14:00 UTC). It:
 
 1. Reads the **first uncommented line** of `seo-pipeline/topics.queue.tsv`
-2. Calls the same Claude agent as `generate-article-claude.yml`
+2. Calls the same LLM agent as `generate-article-llm.yml`
 3. Opens a draft PR with the new article + cover
 4. Commits a queue update on `main` that comments-out the processed line
    so the next run picks the next uncommented topic
 
 The cron uses the same `CLAUDE_CODE_OAUTH_TOKEN` secret as the manual
-Claude workflow — no extra setup if that's already configured.
+LLM workflow — no extra setup if that's already configured.
 
 #### Queue file format
 

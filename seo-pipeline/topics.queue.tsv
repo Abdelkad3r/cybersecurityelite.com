@@ -3,7 +3,7 @@
 #
 # The scheduled workflow at .github/workflows/generate-article-scheduled.yml
 # fires every Monday 14:00 UTC. It pops the FIRST uncommented line, calls
-# the Claude pipeline, opens a draft PR, then comments out the processed
+# the LLM pipeline, opens a draft PR, then comments out the processed
 # line in this file and pushes the queue update.
 #
 # Lines that start with `#` are skipped. Blank lines are skipped. To pause

