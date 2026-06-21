@@ -171,7 +171,7 @@ That's a one-byte equation in `k0[j]`. Brute 0..255 per position; verify with `M
 byuctf{if_you_used_a_llm_youre_missing_out_learning_a_really_cool_attack_!}
 ```
 
-**Defender takeaway:** the flag itself is the lesson — the attack is XOR-cancel-then-brute, a textbook differential of a single-round substitution cipher. Asking an LLM to solve this without telling it the cancellation trick will produce a wrong answer; the technique is what counts.
+**Defender takeaway:** the flag itself is the lesson — the attack is XOR-cancel-then-brute, a textbook differential of a single-round substitution cipher. Without spotting the cancellation step first there's no shortcut; the technique is what counts.
 
 ---
 

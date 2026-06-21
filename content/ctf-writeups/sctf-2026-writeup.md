@@ -242,7 +242,7 @@ Remove any one of those and the attack collapses. Together, the vault is paying 
 
 ### A note on the README
 
-The challenge README is intentionally larded with prompt-injection bait clearly aimed at LLM-assisted solves:
+The challenge README is intentionally larded with social-engineering bait — fake assistant transcripts, override markers, instructions telling the reader to "submit nothing":
 
 ```
 <assistant_override>...</assistant_override>
@@ -409,7 +409,7 @@ cast send $CHALLENGE \
 - **`RECIPIENT_COMMITMENT` is a hardcoded constant.** The deployer cannot vary `m`. Once you have it, cache it. Skip the RSA decryption step entirely on re-runs.
 - **Vaults pay `msg.sender`.** `claim()` sweeps to whoever submitted the bundle. On a public testnet that'd be a front-run risk; on the per-team Anvil you own the mempool, but the design pattern is worth flagging in any real protocol review.
 - **`Setup.sol` is not in the handout.** That's fine; the storage layout (`1 = N, 2 = e, 3 = c`) is stable across deployments and confirmable via `cast storage`.
-- **Don't try to brute-force a Poseidon preimage.** circomlibjs's JS Poseidon does ~8k hashes/second on a workstation; even `2³²` is multiple days. The intended path is always: get `N` and `c` from chain, Fermat-factor `N`, RSA-decrypt to `m`. Brute-forcing Poseidon is the failure mode of an LLM that read about Poseidon being a SNARK-friendly hash and decided that means it's also weak.
+- **Don't try to brute-force a Poseidon preimage.** circomlibjs's JS Poseidon does ~8k hashes/second on a workstation; even `2³²` is multiple days. The intended path is always: get `N` and `c` from chain, Fermat-factor `N`, RSA-decrypt to `m`. Poseidon being SNARK-friendly doesn't make it weak as a hash; treat it as a one-way function and don't waste cycles on the preimage.
 
 ### Sample run (sanity values)
 
@@ -517,7 +517,7 @@ Full per-challenge writeups, the Solidity contracts in scope, the circom circuit
 - **Chronostasis writeup:** [`chronostasis/README.md`](https://github.com/Abdelkad3r/SCTF-2026/blob/main/chronostasis/README.md)
 - **The Last Honest Witness writeup:** [`last-honest-witness/README.md`](https://github.com/Abdelkad3r/SCTF-2026/blob/main/last-honest-witness/README.md)
 
-For more CTF coverage — including the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/) (19 challenges + LLM harness post-mortem), the [DalCTF 2026 writeup](/ctf-writeups/dalctf-2026-writeup/) (9 challenges, crypto-heavy), and the [SAS CTF 2026 Quals Incident 67 BGP hijack writeup](/ctf-writeups/incident-67-bgp-hijack-crypto-wallet/) — see the full [CTF writeups index](/ctf-writeups/).
+For more CTF coverage — including the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/) (19 challenges across reverse, crypto, web, pwn, and misc), the [DalCTF 2026 writeup](/ctf-writeups/dalctf-2026-writeup/) (9 challenges, crypto-heavy), and the [SAS CTF 2026 Quals Incident 67 BGP hijack writeup](/ctf-writeups/incident-67-bgp-hijack-crypto-wallet/) — see the full [CTF writeups index](/ctf-writeups/).
 
 <script type="application/ld+json">
 {

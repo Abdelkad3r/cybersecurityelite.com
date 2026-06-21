@@ -54,10 +54,6 @@ When we get something wrong, we correct it:
 
 Report corrections to **contact [at] cybersecurityelite.com**.
 
-## Use of AI Tools
-
-We use AI tools for assistance — proofreading, formatting, and brainstorming. We do **not** publish AI-generated technical content without human verification. Every article has a human author responsible for the technical correctness of the content.
-
 ## Responsible Disclosure of Other Parties' Vulnerabilities
 
 When we cover vulnerabilities not previously disclosed:

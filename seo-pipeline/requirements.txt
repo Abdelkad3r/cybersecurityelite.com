@@ -1,5 +1,0 @@
-# Article pipeline — minimal deps
-openai>=1.50.0
-python-dotenv>=1.0.0
-python-slugify>=8.0.4
-pyyaml>=6.0.1

@@ -597,7 +597,7 @@ The full per-challenge writeups, with solver scripts, RSA values, Huffman tree b
 - **Web track:** [`web/`](https://github.com/Abdelkad3r/dalctf-2026/tree/main/web)
 - **Android track:** [`android/`](https://github.com/Abdelkad3r/dalctf-2026/tree/main/android)
 
-For more CTF coverage — including the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/) (19 challenges + LLM harness post-mortem), the [BhAcKAri CTF 2026 multi-category writeup](/ctf-writeups/bhackari-ctf-2026-writeup/), and the [SAS CTF 2026 Quals Incident 67 BGP hijack writeup](/ctf-writeups/incident-67-bgp-hijack-crypto-wallet/) — see the full [CTF writeups index](/ctf-writeups/).
+For more CTF coverage — including the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/) (19 challenges across reverse, crypto, web, pwn, and misc), the [BhAcKAri CTF 2026 multi-category writeup](/ctf-writeups/bhackari-ctf-2026-writeup/), and the [SAS CTF 2026 Quals Incident 67 BGP hijack writeup](/ctf-writeups/incident-67-bgp-hijack-crypto-wallet/) — see the full [CTF writeups index](/ctf-writeups/).
 
 <script type="application/ld+json">
 {

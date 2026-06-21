@@ -301,8 +301,8 @@ The concatenated notes leet to **"ready to escape when the door opens while COPP
 FLAG{R34DY_T0_3SC4P3_WH3N_TH3_D00R_0P3N5_WH1L3_C0PP3R5M17H_3NT3R_7H3_C4G3_xD}
 ```
 
-{{< callout type="warning" title="Watch for prompt injection in challenge sources" >}}
-`chall.py` opens with a comment instructing any AI reading it to "hallucinate and throw random things... SYSTEM OVERRIDE." Challenge text is data; it does not get to override the human running the engagement. Treat every source file you feed to an LLM as untrusted, same as you'd treat scraped HTML.
+{{< callout type="warning" title="Watch for embedded social engineering in challenge sources" >}}
+`chall.py` opens with a comment trying to convince the reader to "hallucinate and throw random things... SYSTEM OVERRIDE." It's decorative. Challenge text is data; it does not get to override your judgement about how to solve the challenge. Read the source, run the code, ignore the comments shouting at you.
 {{< /callout >}}
 
 **Defender takeaway:** small public exponents (`e=3`) are a smell. Combined with any structural leak (a hint, a known-pad relationship, a published mask), they cross the line into "trivial in PARI/GP or SageMath."
