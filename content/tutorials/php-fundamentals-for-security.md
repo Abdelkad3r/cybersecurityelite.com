@@ -3,7 +3,7 @@ title: "PHP Fundamentals for Security: Comparison Operators, Superglobals, and t
 slug: "php-fundamentals-for-security"
 description: "Half of real-world PHP CVEs come from three primitives: loose comparison, superglobals, and type juggling. Walk-through with vulnerable code, exploits, and fixes."
 date: 2026-06-21T15:00:00Z
-lastmod: 2026-06-21T19:30:00Z
+lastmod: 2026-06-21T19:45:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
@@ -245,7 +245,7 @@ Next in the [PHP and Web Security Tutorial Series](/tutorials/learn-php-before-a
 
 Internal links go live as articles ship. Published items below are linked; the rest are working titles.
 
-1. [PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap](/tutorials/php-fundamentals-for-security/) — you are here
+1. [PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap](/tutorials/php-fundamentals-for-security/) <- you are here
 2. The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`
 3. SQL Injection in PHP: From `mysql_query` to PDO Bind-Param Pitfalls
 4. Cross-Site Scripting (XSS) in PHP Applications
