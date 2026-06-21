@@ -3,7 +3,7 @@ title: "PHP Fundamentals for Security: Comparison Operators, Superglobals, and t
 slug: "php-fundamentals-for-security"
 description: "Half of real-world PHP CVEs come from three primitives: loose comparison, superglobals, and type juggling. Walk-through with vulnerable code, exploits, and fixes."
 date: 2026-06-21T15:00:00Z
-lastmod: 2026-06-21T15:00:00Z
+lastmod: 2026-06-21T19:30:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
@@ -240,6 +240,25 @@ PHP's reputation for security bugs is mostly earned. The language ships features
 When you read PHP, read the types. Every comparison is asking "what type is each side, and what does PHP do when the types don't match?" Every superglobal access is asking "where did this value originate, and is the originator trustworthy?" Answer those two questions on every line of a sensitive routine and you'll outpace any static analyser I've run.
 
 Next in the [PHP and Web Security Tutorial Series](/tutorials/learn-php-before-advanced-web-hacking/): *The HTTP Request Lifecycle in PHP — from socket to `$_SERVER`*. I want the next vulnerability articles (SQLi, XSS, CSRF, file upload, LFI) to sit on a shared understanding of how a request actually reaches your code, because most of those bugs look different once you know the runtime path.
+
+## Coming up in the series
+
+Internal links go live as articles ship. Published items below are linked; the rest are working titles.
+
+1. [PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap](/tutorials/php-fundamentals-for-security/) — you are here
+2. The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`
+3. SQL Injection in PHP: From `mysql_query` to PDO Bind-Param Pitfalls
+4. Cross-Site Scripting (XSS) in PHP Applications
+5. CSRF and WordPress Nonces Explained
+6. File Upload Vulnerabilities: Double Extensions, Magic Bytes, and `.htaccess` Bundling
+7. Local File Inclusion (LFI) and `php://filter` Chains to RCE
+8. PHP Object Injection: Deserialization, PHAR, and Gadget Chains
+9. PHP Type Juggling: Loose Comparison, Hash Collisions, and `0e...` Strings
+10. SSRF in PHP: DNS Rebinding and Allow-List Bypasses
+11. Apache, Nginx, and PHP-FPM for Web Hackers
+12. Source Code Review for WordPress Plugins: A Practical Workflow
+
+If there's a topic you want pulled forward, drop it in the comments on any article in the series and I'll re-order.
 
 ---
 

@@ -3,7 +3,7 @@ title: "Why Every Cybersecurity Professional Should Learn PHP Before Advanced We
 slug: "learn-php-before-advanced-web-hacking"
 description: "Why every pentester, bug bounty hunter, and security engineer should learn PHP before advanced web hacking — launching a new tutorial series."
 date: 2026-06-19T00:00:00Z
-lastmod: 2026-06-19T00:00:00Z
+lastmod: 2026-06-21T19:30:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Tutorials"]
@@ -136,20 +136,22 @@ PHP isn't glamorous. It's just where the bugs are.
 
 ---
 
-**Coming up in the series** (internal links will go live as articles ship):
+## Coming up in the series
 
-- PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap
-- The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`
-- SQL Injection in PHP: From `mysql_query` to PDO Bind-Param Pitfalls
-- Cross-Site Scripting (XSS) in PHP Applications
-- CSRF and WordPress Nonces Explained
-- File Upload Vulnerabilities: Double Extensions, Magic Bytes, and `.htaccess` Bundling
-- Local File Inclusion (LFI) and `php://filter` Chains to RCE
-- PHP Object Injection: Deserialization, PHAR, and Gadget Chains
-- PHP Type Juggling: Loose Comparison, Hash Collisions, and `0e...` Strings
-- SSRF in PHP: DNS Rebinding and Allow-List Bypasses
-- Apache, Nginx, and PHP-FPM for Web Hackers
-- Source Code Review for WordPress Plugins: A Practical Workflow
+Internal links go live as articles ship. Published items below are linked; the rest are working titles.
+
+1. [PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap](/tutorials/php-fundamentals-for-security/)
+2. The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`
+3. SQL Injection in PHP: From `mysql_query` to PDO Bind-Param Pitfalls
+4. Cross-Site Scripting (XSS) in PHP Applications
+5. CSRF and WordPress Nonces Explained
+6. File Upload Vulnerabilities: Double Extensions, Magic Bytes, and `.htaccess` Bundling
+7. Local File Inclusion (LFI) and `php://filter` Chains to RCE
+8. PHP Object Injection: Deserialization, PHAR, and Gadget Chains
+9. PHP Type Juggling: Loose Comparison, Hash Collisions, and `0e...` Strings
+10. SSRF in PHP: DNS Rebinding and Allow-List Bypasses
+11. Apache, Nginx, and PHP-FPM for Web Hackers
+12. Source Code Review for WordPress Plugins: A Practical Workflow
 
 If there's a topic you want pulled forward, drop it in the comments on any article in the series and I'll re-order.
 
