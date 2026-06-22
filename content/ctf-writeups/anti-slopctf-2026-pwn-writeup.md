@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 Pwn Writeup: Paper Lantern, Graceful Exit, Anchorpoin
 slug: "anti-slopctf-2026-pwn-writeup"
 description: "Step-by-step pwn writeups for Anti-Slop CTF 2026. Paper Lantern Bellcore CRT fault, Graceful Exit leak-and-overwrite, Anchorpoint five-stage VM-to-GCM forge chain."
 date: 2026-06-22T20:30:00Z
-lastmod: 2026-06-22T20:30:00Z
+lastmod: 2026-06-23T00:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -43,7 +43,7 @@ Third post in the Anti-Slop CTF 2026 series. The [web writeup](/ctf-writeups/ant
 
 The order below is roughly easiest to hardest. **Paper Lantern** is a clean single-chain CRT-fault attack against an RSA-FDH signer. **Graceful Exit** composes a negative-offset leak with a heap-object overwrite to convert an address disclosure into a controlled read through the legitimate output path. **Anchorpoint** is the marathon: a tiny stack-VM overflow unlocks ECDSA nonce recovery, a BIP340-style shadow proof, and an AES-GCM nonce-reuse GHASH forge, all chained into one connection. All three rewarded reading the binary and modelling the state machine before writing any exploit code.
 
-Artefacts, the stripped ELFs, the capsule format helpers, and the full Python exploits are all at [Abdelkad3r/Anti-SlopCTF-2026/pwn](https://github.com/Abdelkad3r/Anti-SlopCTF-2026/pwn).
+Artefacts, the stripped ELFs, the capsule format helpers, and the full Python exploits are all at [Abdelkad3r/Anti-SlopCTF-2026/pwn](https://github.com/Abdelkad3r/Anti-SlopCTF-2026/tree/main/pwn).
 
 ## The three pwn challenges
 
@@ -556,7 +556,7 @@ In principle, anything that gives you the private key works. Padding-oracle atta
 
 ### Where can I find the full solver scripts?
 
-All three solvers, the stripped binaries, the capsule format helpers, and the original handout zips are at [Abdelkad3r/Anti-SlopCTF-2026/pwn](https://github.com/Abdelkad3r/Anti-SlopCTF-2026/pwn). Anchorpoint's `exploit.py` includes the AP framing, the VM encoder, the quote-key recovery, the BIP340 shadow signature, and the GHASH forge helpers. Graceful Exit's `solve.py` includes the GORF framing with nonce handling and the GFC2 capsule builder. Paper Lantern's `solve.py` includes the capsule.py-compatible client, the fault-trigger sequence, the Bellcore factoring step, and the FDH forge.
+All three solvers, the stripped binaries, the capsule format helpers, and the original handout zips are at [Abdelkad3r/Anti-SlopCTF-2026/pwn](https://github.com/Abdelkad3r/Anti-SlopCTF-2026/tree/main/pwn). Anchorpoint's `exploit.py` includes the AP framing, the VM encoder, the quote-key recovery, the BIP340 shadow signature, and the GHASH forge helpers. Graceful Exit's `solve.py` includes the GORF framing with nonce handling and the GFC2 capsule builder. Paper Lantern's `solve.py` includes the capsule.py-compatible client, the fault-trigger sequence, the Bellcore factoring step, and the FDH forge.
 
 ### What's the broader lesson from the Anti-Slop CTF pwn track?
 
@@ -582,7 +582,7 @@ For more pwn writeups on this site, the [GPN CTF 2026 master writeup](/ctf-write
     {"@type": "Question","name": "How does AES-GCM nonce reuse leak the hash subkey?","acceptedAnswer": {"@type": "Answer","text": "For two one-block GCM ciphertexts under the same nonce and AAD, tag_0 XOR tag_1 = (C_0 XOR C_1) * H^2 in GF(2^128) because E_K(J0) cancels and AAD contribution is identical. Dividing gives H^2; the square root in GF(2^128) is (H^2)^(2^127). With H you compute E_K(J0) = tag_0 XOR GHASH(H, AAD_0, C_0) and forge tags for any (AAD', C') under the same nonce."}},
     {"@type": "Question","name": "Why does the VM overflow only need four bytes?","acceptedAnswer": {"@type": "Answer","text": "The four adjacent state bytes — quote budget, shadow unlock, capsule budget, seal-nonce freeze — all live in the same small struct following the response buffer. Writing 68 bytes of value 1 covers all four offsets at once. Exact offsets come from reversing the response-buffer struct; the layout is stable because the allocator places the struct in the same arena each connection."}},
     {"@type": "Question","name": "Could you bypass Paper Lantern's signer without the Bellcore fault?","acceptedAnswer": {"@type": "Answer","text": "Anything that recovers the private key works. Padding-oracle attacks on FDH don't apply because FDH with m mod n has no padding oracle. Direct factoring of 256-bit primes is computationally infeasible. RSA-FDH is otherwise sound. The Bellcore fault is the intended and only practical path because the signer's CRT implementation provides the fault primitive."}},
-    {"@type": "Question","name": "Where can I find the full solver scripts?","acceptedAnswer": {"@type": "Answer","text": "All three solvers, the stripped binaries, the capsule format helpers, and the original handout zips are at github.com/Abdelkad3r/Anti-SlopCTF-2026/pwn. Anchorpoint's exploit.py includes AP framing, VM encoder, quote-key recovery, BIP340 shadow signature, GHASH forge. Graceful Exit's solve.py includes GORF framing and the GFC2 capsule builder. Paper Lantern's solve.py includes the capsule.py-compatible client, fault-trigger sequence, Bellcore factoring, FDH forge."}},
+    {"@type": "Question","name": "Where can I find the full solver scripts?","acceptedAnswer": {"@type": "Answer","text": "All three solvers, the stripped binaries, the capsule format helpers, and the original handout zips are at github.com/Abdelkad3r/Anti-SlopCTF-2026/tree/main/pwn. Anchorpoint's exploit.py includes AP framing, VM encoder, quote-key recovery, BIP340 shadow signature, GHASH forge. Graceful Exit's solve.py includes GORF framing and the GFC2 capsule builder. Paper Lantern's solve.py includes the capsule.py-compatible client, fault-trigger sequence, Bellcore factoring, FDH forge."}},
     {"@type": "Question","name": "What is the broader lesson from the Anti-Slop CTF pwn track?","acceptedAnswer": {"@type": "Answer","text": "Memory corruption in modern services is rarely a direct RIP-control bug. It's an unlock for the cryptographic or state-machine surface behind the memory layer. All three challenges punish solvers who fixate on find the overflow, write shellcode. The actual flag requires modelling the state machine, identifying which transitions the corruption unlocks, then composing the unlocked transitions with whatever cryptographic weakness the protocol shipped."}}
   ]
 }
