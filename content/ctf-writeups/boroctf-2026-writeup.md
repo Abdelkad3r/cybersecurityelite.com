@@ -1,9 +1,9 @@
 ---
-title: "boroCTF 2026 Writeup: All 8 Challenges Solved Across Reverse, Web, and Forensics"
+title: "boroCTF 2026 Writeup: 8 Challenges Solved Across Reverse, Web, and Forensics"
 slug: "boroctf-2026-writeup"
 description: "boroCTF 2026 full writeup — 5 reverse, 2 web, 1 forensics. XOR-7 ELFs, AHK hotstrings, LCG + marshal puzzle, PDF object streams, ImageTragick MVG label:@, and ext4 block slack."
 date: 2026-06-25T22:00:00Z
-lastmod: 2026-06-25T22:00:00Z
+lastmod: 2026-06-26T02:30:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -44,11 +44,11 @@ cover:
   alt: "boroCTF 2026 writeup — 8 challenges solved across reverse, web, and forensics"
 ---
 
-**boroCTF 2026** is a Jeopardy-style CTF with a tight, opinionated challenge set. The 2026 edition shipped eight challenges across reverse engineering, web exploitation, and forensics. The reverse track is the heaviest at five challenges (a stripped XOR-7 ELF, an AutoHotkey hotstring keylogger, a Python LCG + `marshal.loads` puzzle, a tiny PDF object-stream stash, and a custom DSL whose interpreter has to be reverse-engineered from probing). The web track has two themed challenges (a Steins;Gate-flavoured IDOR and a Chainsaw Man-themed ImageTragick lab). The forensics track ships one ext4 image whose flag hides in block slack.
+**boroCTF 2026** is a Jeopardy-style CTF with a tight, opinionated challenge set. This writeup covers eight challenges from the 2026 edition across reverse engineering, web exploitation, and forensics. The reverse track here is the heaviest at five challenges (a stripped XOR-7 ELF, an AutoHotkey hotstring keylogger, a Python LCG + `marshal.loads` puzzle, a tiny PDF object-stream stash, and a custom DSL whose interpreter has to be reverse-engineered from probing). The web track has two themed challenges (a Steins;Gate-flavoured IDOR and a Chainsaw Man-themed ImageTragick lab). The forensics track is one ext4 image whose flag hides in block slack.
 
-This is the full master writeup. All eight challenges were solved end-to-end. Each section covers the surface, the bug or trick, the exploit chain, and the recovered flag. Full per-challenge reproductions (solver scripts, exact byte offsets, payload MVGs, the AlphaCode DSL semantics table) live in the source repository at [Abdelkad3r/boroCTF-2026](https://github.com/Abdelkad3r/boroCTF-2026).
+Each of the eight challenges below was solved end-to-end. Each section covers the surface, the bug or trick, the exploit chain, and the recovered flag. Full per-challenge reproductions (solver scripts, exact byte offsets, payload MVGs, the AlphaCode DSL semantics table) live in the source repository at [Abdelkad3r/boroCTF-2026](https://github.com/Abdelkad3r/boroCTF-2026).
 
-## The event at a glance
+## The challenges covered here
 
 | Category | Challenge | Core technique | Flag |
 |---|---|---|---|
@@ -69,7 +69,7 @@ A pattern that worked across the entire event: don't trust the wrapper. The wrap
 
 password_protected's wrapper says "strcmp is the gate." The artifact says "the strcmp branch only triggers a XOR-7 reveal loop over a pre-baked 34-byte buffer." big_brother's wrapper says "complex Windows reverse." The artifact says "AutoHotkey script glued to an interpreter, plain-text in `.rsrc`." Kobeni's Dashboard's wrapper says "image upload form, JPG/PNG/GIF/BMP only." The artifact says "the server picks the IM input coder from the filename extension and the IM policy is permissive."
 
-This is the entire shape of the event. Per-challenge walkthroughs follow.
+That's the through-line for every challenge below. Per-challenge walkthroughs follow.
 
 ## Reverse engineering — five challenges, five different tricks
 
@@ -263,7 +263,7 @@ base64.b64decode('Ym9yb0NURntlczRAcGVfd0E1XzFuZXYhdGFibGV9').decode()
 
 ### AlphaCode
 
-The hardest reverse of the event. The handout is two `.ac` files (one prints "hello world", one reads a name and prints "hello {name}"). The remote is an `ALPHACODE COMPILER` with two modes: a Compile mode that runs your snippet against your own stdin, and a **Gauntlet** mode that runs your snippet three times with three fixed input sets, expecting each run to emit exactly:
+The hardest reverse covered here. The handout is two `.ac` files (one prints "hello world", one reads a name and prints "hello {name}"). The remote is an `ALPHACODE COMPILER` with two modes: a Compile mode that runs your snippet against your own stdin, and a **Gauntlet** mode that runs your snippet three times with three fixed input sets, expecting each run to emit exactly:
 
 ```
 Hello I am {input 3}, and I like {input 2}.
@@ -507,7 +507,7 @@ Three patterns recur across boroCTF 2026 and travel into production work.
 
 ### What is boroCTF?
 
-boroCTF is a Jeopardy-style CTF event. The 2026 edition shipped eight challenges across reverse engineering, web exploitation, and forensics. The flag prefix is `boroCTF{...}`. Writeups for every solved challenge live in the source repository at [Abdelkad3r/boroCTF-2026](https://github.com/Abdelkad3r/boroCTF-2026).
+boroCTF is a Jeopardy-style CTF event. This writeup covers eight challenges from the 2026 edition across reverse engineering, web exploitation, and forensics. The flag prefix is `boroCTF{...}`. Writeups for every challenge covered here live in the source repository at [Abdelkad3r/boroCTF-2026](https://github.com/Abdelkad3r/boroCTF-2026).
 
 ### What was the hardest reverse challenge?
 
@@ -555,11 +555,11 @@ Per-challenge READMEs and solver scripts live at [Abdelkad3r/boroCTF-2026](https
 
 ### What's the broader lesson from boroCTF 2026?
 
-Read the artifact before you read the wrapper. Every challenge in the event had a prompt or a UI hint that pointed at a more elaborate solve than what was actually needed. password_protected looks like a strcmp bypass; the flag is in a XOR-7 reveal loop. boro-senpai 1 looks like a profile-discovery puzzle; the bug is IDOR. Kobeni's Dashboard looks like a image-format challenge; the bug is the server picking the coder from the filename. The pattern is consistent: the artifact tells you what the bug is faster than the prompt does.
+Read the artifact before you read the wrapper. Every challenge in this writeup had a prompt or a UI hint that pointed at a more elaborate solve than what was actually needed. password_protected looks like a strcmp bypass; the flag is in a XOR-7 reveal loop. boro-senpai 1 looks like a profile-discovery puzzle; the bug is IDOR. Kobeni's Dashboard looks like a image-format challenge; the bug is the server picking the coder from the filename. The pattern is consistent: the artifact tells you what the bug is faster than the prompt does.
 
 ## Closing notes
 
-Eight challenges. Five reverse, two web, one forensics. The reverse track is the meat of the event, and AlphaCode is the centrepiece: a custom DSL whose entire opcode set has to be probed empirically, with one parser quirk that opens the door to the gauntlet template. The web track is two clean themed boxes: an IDOR and an ImageTragick. The forensics single-track is a textbook ext4 block-slack extraction once the per-file metadata decoys have been ruled out.
+Eight challenges covered. Five reverse, two web, one forensics. The reverse track here is the meat of this writeup, and AlphaCode is the centrepiece: a custom DSL whose entire opcode set has to be probed empirically, with one parser quirk that opens the door to the gauntlet template. The web track is two clean themed boxes: an IDOR and an ImageTragick. The forensics is a textbook ext4 block-slack extraction once the per-file metadata decoys have been ruled out.
 
 For more long-form CTF coverage on this site, see the [DalCTF 2026 writeup](/ctf-writeups/dalctf-2026-writeup/) (9 challenges, crypto-heavy), the [BhAcKAri CTF 2026 writeup](/ctf-writeups/bhackari-ctf-2026-writeup/) (8 challenges across web / misc / crypto / reverse), and the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/) (19 challenges across the full Jeopardy board). The Anti-Slop CTF 2026 series breaks down by category in seven separate posts, starting with the [Anti-Slop web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/). Full [CTF writeups index](/ctf-writeups/) for everything else.
 
@@ -568,7 +568,7 @@ For more long-form CTF coverage on this site, see the [DalCTF 2026 writeup](/ctf
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question","name": "What is boroCTF?","acceptedAnswer": {"@type": "Answer","text": "boroCTF is a Jeopardy-style CTF event. The 2026 edition shipped eight challenges across reverse engineering, web exploitation, and forensics. The flag prefix is boroCTF{...}. Writeups for every solved challenge live at github.com/Abdelkad3r/boroCTF-2026."}},
+    {"@type": "Question","name": "What is boroCTF?","acceptedAnswer": {"@type": "Answer","text": "boroCTF is a Jeopardy-style CTF event. This writeup covers eight challenges from the 2026 edition across reverse engineering, web exploitation, and forensics. The flag prefix is boroCTF{...}. Writeups for every challenge covered here live at github.com/Abdelkad3r/boroCTF-2026."}},
     {"@type": "Question","name": "What was the hardest reverse challenge in boroCTF 2026?","acceptedAnswer": {"@type": "Answer","text": "AlphaCode. A custom DSL whose six opcodes have to be probed empirically and whose parser's one-zm-per-program rule is actually one-open-function-at-a-time. That quirk lets you stage multiple literals on the queue and concatenate them via fr/dp pairs to produce text that interleaves the gauntlet inputs with the required template strings."}},
     {"@type": "Question","name": "How does password_protected hide the flag?","acceptedAnswer": {"@type": "Answer","text": "The strcmp gate against Rate5StarsBecauseGreatChallenge is decorative. The actual flag is a 34-byte buffer initialised one movb at a time. On a successful strcmp, a loop XORs each byte with 0x7 and prints it. Pull the bytes from the disassembly, XOR with 7, recover the flag without running the binary."}},
     {"@type": "Question","name": "How do you extract the AutoHotkey script from big_brother?","acceptedAnswer": {"@type": "Answer","text": "AutoHotkey embeds the script as RCDATA (resource type 10) in the PE's .rsrc section. wrestool -x -t10 big_brother extracts it cleanly; Resource Hacker on Windows does the same. In this build the script is close to plaintext, so even strings surfaces the full hotstring handler and the Chr() concatenated flag."}},
