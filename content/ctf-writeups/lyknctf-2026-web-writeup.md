@@ -3,7 +3,7 @@ title: "LYKNCTF 2026 Web Writeup: 10 Challenges Solved (Padding Oracle, JWT alg:
 slug: "lyknctf-2026-web-writeup"
 description: "Step-by-step LYKNCTF 2026 web-track writeup — ten challenges covering HTTP 302 body leaks, WebSocket race, nginx case-sensitivity bypass, AES-CBC padding oracle (CBC-R), 4-digit OTP brute + SQLi RCE + SUID csvtool, client-side API key leak, Flask debug source disclosure, JWT alg:none forge, PHP short-tag .php5 RCE, and SSRF into HMAC-invite forge into Jinja2 SSTI."
 date: 2026-07-09T14:15:00Z
-lastmod: 2026-07-09T14:15:00Z
+lastmod: 2026-07-09T15:05:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -898,7 +898,7 @@ Six patterns recur across the LYKNCTF web track and translate directly into prod
 
 ### What is LYKNCTF 2026?
 
-LYKNCTF 2026 is a CTF whose challenges are grouped into four tracks: web (10 challenges covered in this writeup), crack (reverse-engineering, 9 challenges), pwn (3 challenges), and forensics (4 challenges). The web-track flag prefix is `LYKNCTF{...}` (one challenge, FU Career, uses `LYKN{...}` for design reasons). All ten web challenges are mirrored with per-challenge READMEs, artifacts, and solver scripts at [Abdelkad3r/LYKNCTF](https://github.com/Abdelkad3r/LYKNCTF).
+LYKNCTF 2026 is a CTF whose challenges span multiple categories including web, reverse-engineering (crack), pwn, and forensics. This writeup covers the ten web-track challenges I solved. The web-track flag prefix is `LYKNCTF{...}` (one challenge, FU Career, uses `LYKN{...}` for design reasons). Per-challenge READMEs, artifacts, and solver scripts are mirrored at [Abdelkad3r/LYKNCTF](https://github.com/Abdelkad3r/LYKNCTF).
 
 ### Why does browsing to the Right in front of your eyes challenge not show the flag?
 
@@ -970,7 +970,7 @@ For more web-track writeups on this site, the [RIFFHACK 2026 master writeup](/ct
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question","name": "What is LYKNCTF 2026?","acceptedAnswer": {"@type": "Answer","text": "LYKNCTF 2026 is a CTF whose challenges are grouped into four tracks: web (10 challenges covered in this writeup), crack (9), pwn (3), and forensics (4). Web-track flag prefix is LYKNCTF{...}. All ten web challenges are mirrored with per-challenge READMEs, artifacts, and solver scripts at github.com/Abdelkad3r/LYKNCTF."}},
+    {"@type": "Question","name": "What is LYKNCTF 2026?","acceptedAnswer": {"@type": "Answer","text": "LYKNCTF 2026 is a CTF whose challenges span multiple categories including web, reverse-engineering (crack), pwn, and forensics. This writeup covers the ten web-track challenges I solved. Web-track flag prefix is LYKNCTF{...}. Per-challenge READMEs, artifacts, and solver scripts are mirrored at github.com/Abdelkad3r/LYKNCTF."}},
     {"@type": "Question","name": "Why does browsing to Right in front of your eyes not show the flag?","acceptedAnswer": {"@type": "Answer","text": "The flag is in the body of the 302 redirect response. RFC 9110 §15.4 allows 3xx responses to include a body, but browsers drop 3xx bodies before rendering: they read Location:, discard the body, and issue the follow-up. curl -i without -L behaves like the wire and prints the body directly."}},
     {"@type": "Question","name": "How does the WebSocket race work in Spawn Race?","acceptedAnswer": {"@type": "Answer","text": "The server tracks a per-connection counter. The sixth spawn frame within a tight time window returns a race:won reply with the flag. Button clicking at 10Hz plus microtask drain and audio-play calls is well below the race window. A scripted client that pipelines six frames before reading any reply trips the counter."}},
     {"@type": "Question","name": "Why does /Backup bypass the nginx block on /backup in LYKN Mail?","acceptedAnswer": {"@type": "Answer","text": "nginx location matching is case-sensitive by default. A block written as location /backup { deny all; } matches only /backup. /Backup, /BACKUP, /BaCkUp fall through to the default location, which had autoindex enabled. The fix is location ~* ^/backup for case-insensitive matching."}},
