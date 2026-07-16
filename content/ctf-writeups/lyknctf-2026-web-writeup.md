@@ -1,5 +1,5 @@
 ---
-title: "LYKNCTF 2026 Web Writeup: 10 Challenges Solved (Padding Oracle, JWT alg:none, SSRF+SSTI, PHP .php5, SQLi RCE)"
+title: "LYKNCTF 2026 Web Writeup: 10 Challenges Solved"
 slug: "lyknctf-2026-web-writeup"
 description: "Step-by-step LYKNCTF 2026 web-track writeup — ten challenges covering HTTP 302 body leaks, WebSocket race, nginx case-sensitivity bypass, AES-CBC padding oracle (CBC-R), 4-digit OTP brute + SQLi RCE + SUID csvtool, client-side API key leak, Flask debug source disclosure, JWT alg:none forge, PHP short-tag .php5 RCE, and SSRF into HMAC-invite forge into Jinja2 SSTI."
 date: 2026-07-09T14:15:00Z

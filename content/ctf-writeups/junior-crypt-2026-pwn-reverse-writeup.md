@@ -1,5 +1,5 @@
 ---
-title: "Junior.Crypt 2026 Pwn + Reverse Writeup: 4 Challenges Solved (Cookie-Encoded Function Pointers, UAF Type Confusion, Heap Overflow with Reclassify, TCC-Injected VM)"
+title: "Junior.Crypt 2026 Pwn + Reverse Writeup: 4 Challenges Solved"
 slug: "junior-crypt-2026-pwn-reverse-writeup"
 description: "Step-by-step Junior.Crypt 2026 pwn and reverse writeup — three pwn challenges (Clockwork Vault: negative-index array bug + service-cookie-encoded function pointers; House of Mirage: session-to-sink UAF type confusion with pipelined race + fake vtable; Museum of Echoes: reclassify without realloc + heap overflow into adjacent exhibit's routine ptr) and one reverse challenge (Write The Кодэ: modified TCC compiler smuggles a hidden C source with a 512-byte VM blob decrypted by an ELF-relocation-derived key)."
 date: 2026-07-15T12:15:00Z

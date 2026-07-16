@@ -1,5 +1,5 @@
 ---
-title: "Junior.Crypt 2026 Web + Crypto Writeup: 7 Challenges Solved (Newline Command Injection, JWT Wordlist Crack, SplitMix64 Timestamp Search, Vaudenay Timing Trace, Franklin-Reiter, LCG Seed Truncation, Many-Time Pad)"
+title: "Junior.Crypt 2026 Web + Crypto Writeup: 7 Challenges Solved"
 slug: "junior-crypt-2026-web-crypto-writeup"
 description: "Step-by-step Junior.Crypt 2026 web and crypto writeup — two web challenges (Pulse: first-line-only validator bypassed by a newline shell separator; Wrodle: HS256 JWT with wordlist-cracked butterfly secret plus coordinate-encoded flag) and five crypto challenges (MeowMeow: timestamp-seeded RSA key generation with 604800 candidates; Neurotoxin Diagnostics: offline Vaudenay CBC padding-oracle replay from a timing trace; Still Alive: Franklin-Reiter with e=3 and a known affine relation; Stream Calibration: LCG with 20-bit truncated seed; Weighted Companion Cube: many-time pad with template + multiset-match keystream recovery)."
 date: 2026-07-15T13:15:00Z

@@ -1,5 +1,5 @@
 ---
-title: "NoHackNoCTF 2026 Writeup: 5 Challenges Solved (AES-CTR Nonce Reuse, ECDSA HNP via Unicode .lower(), Redis SSTI, ext4 Carving, EXIF OSINT)"
+title: "NoHackNoCTF 2026 Writeup: 5 Challenges Solved"
 slug: "nohacknoctf-2026-writeup"
 description: "Step-by-step NoHackNoCTF 2026 (NHNC) writeup — five challenges across crypto (AES-CTR keystream reuse, ECDSA same-prefix HNP via Turkish İ length expansion + LLL), web (whois TCP-client SSRF into Redis SAVE into Jinja2 SSTI with request.args token smuggling), forensics (Firefox places.sqlite → Proton Drive → ext4 unallocated-block carving → WZ-AES ZIP), and misc/OSINT (boarding-gate photo → EXIF + aircraft registration + airport identification + timetable lookup)."
 date: 2026-07-11T04:00:00Z

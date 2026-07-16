@@ -1,5 +1,5 @@
 ---
-title: "LYKNCTF 2026 Forensics Writeup: 4 Challenges Solved (PNG Metadata XOR, Red-Channel LSB, JPEG-as-PNG ZIP Append, TRON USDT OFAC Trace)"
+title: "LYKNCTF 2026 Forensics Writeup: 4 Challenges Solved"
 slug: "lyknctf-2026-forensics-writeup"
 description: "Step-by-step LYKNCTF 2026 forensics writeup — four challenges covering PNG eXIf/tEXt metadata trap with repeating-key XOR, red-channel LSB PNG stego with decoy IEND trailer, JPEG masquerading as .png with an appended ZIP archive whose EOCD self-locates, and a TRC-20 USDT chain trace on TRON hitting an OFAC-sanctioned FUNNULL wallet before landing in a Bitget hot wallet."
 date: 2026-07-11T02:00:00Z

@@ -1,5 +1,5 @@
 ---
-title: "TraceBash CTF 2026 OSINT Writeup: 4 Challenges Solved (Geocaching, Plus Codes, NYC DOB, Handle Pivoting)"
+title: "TraceBash CTF 2026 OSINT Writeup: 4 Challenges Solved"
 slug: "tracebash-ctf-2026-osint-writeup"
 description: "TraceBash CTF 2026 OSINT track writeup — geocaching lookup, Plus Code geolocation, NYC DOB open-data query, and cross-platform handle pivoting from a chat screenshot."
 date: 2026-06-27T13:30:00Z

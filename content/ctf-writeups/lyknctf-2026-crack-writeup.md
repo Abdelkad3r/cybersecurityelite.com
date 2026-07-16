@@ -1,5 +1,5 @@
 ---
-title: "LYKNCTF 2026 Crack Writeup: 9 Reverse Engineering Challenges (ARX VMs, Self-Hash Anti-Tamper, ChaCha20 Layers, Brainfuck Esolang)"
+title: "LYKNCTF 2026 Crack (Reverse) Writeup: 9 Challenges Solved"
 slug: "lyknctf-2026-crack-writeup"
 description: "Step-by-step LYKNCTF 2026 crack (reverse engineering) writeup — nine keygen and crackme challenges covering RC4-KSA S-box S-box recovery, ARX/Feistel VMs seeded with 0x9E3779B9, SHA-256(.text) self-hash KDFs, anti-debug byte poisoning, control-flow-flattened taint OR-folding, chained per-byte VM state machines, PyInstaller + ChaCha20/AES/marshal layers, Tauri desktop-app string trails, and a character-name Brainfuck esolang."
 date: 2026-07-10T22:00:00Z

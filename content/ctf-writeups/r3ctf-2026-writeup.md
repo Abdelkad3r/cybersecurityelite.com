@@ -1,5 +1,5 @@
 ---
-title: "R3CTF 2026 Writeup: 5 Challenges Solved (SEAL CKKS Delta Recovery, MIPS64 PAC Spectre, .NET xoshiro256** MITM, Lagrange Oracle, RDP Bitmap Cache)"
+title: "R3CTF 2026 Writeup: 5 Challenges Solved"
 slug: "r3ctf-2026-writeup"
 description: "Step-by-step R3CTF 2026 writeup — five challenges across crypto (Microsoft SEAL CKKS delta recovery via 240-bit modulus with 188-bit noise leak), misc (MIPS64r6 soft-core pointer authentication broken by a Spectre-style speculative PAC-gated load), web (ASP.NET Core System.Random shared between debug tickets and API responses recovered via xoshiro256** meet-in-the-middle; Lagrange-basis get_num oracle abused via base-K polynomial decoding), and forensics (encrypted beatmap → hidden Python bytecode → hh.exe-dictionary C2 → RDP bitmap cache → MetaMask recovery phrase)."
 date: 2026-07-15T10:30:00Z

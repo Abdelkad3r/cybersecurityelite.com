@@ -1,5 +1,5 @@
 ---
-title: "LYKNCTF 2026 Pwn Writeup: 3 Binary Exploitation Challenges (ret2win, Signed Length Bypass, Off-by-One UAF Heap)"
+title: "LYKNCTF 2026 Pwn Writeup: 3 Challenges Solved"
 slug: "lyknctf-2026-pwn-writeup"
 description: "Step-by-step LYKNCTF 2026 pwn (binary exploitation) writeup — three challenges covering a textbook non-PIE ret2win, a signed-int length check that becomes 0xff after byte truncation, and an off-by-one UAF in a note manager chained into heap-safe-linking leak, unsorted-bin libc leak, tcache poisoning, PIE recovery, notes-table hijack for arbitrary read/write, stack ROP, and system('/bin/sh')."
 date: 2026-07-11T01:30:00Z

@@ -1,5 +1,5 @@
 ---
-title: "TraceBash CTF 2026 Pwn Writeup: 2 Challenges Solved (Badchars ROP, Format-String %hn to Shellcode)"
+title: "TraceBash CTF 2026 Pwn Writeup: 2 Challenges Solved"
 slug: "tracebash-ctf-2026-pwn-writeup"
 description: "TraceBash CTF 2026 pwn track writeup — Banned Bytes badchars ROP with a socat PTY quoting wrinkle, and Legacy Ledger format-string %hn writes redirecting saved RIP into stack shellcode."
 date: 2026-06-27T14:30:00Z

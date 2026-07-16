@@ -1,5 +1,5 @@
 ---
-title: "TraceBash CTF 2026 Crypto Writeup: 4 Challenges Solved (Shared Prime, DH Small-Subgroup, More)"
+title: "TraceBash CTF 2026 Crypto Writeup: 4 Challenges Solved"
 slug: "tracebash-ctf-2026-crypto-writeup"
 description: "TraceBash CTF 2026 crypto track writeup — DH small-subgroup attack, audio-derived XOR key, shared 512-bit prime RSA, and an exhaustive 16-bit state-machine cipher recovery."
 date: 2026-06-27T11:00:00Z

@@ -1,5 +1,5 @@
 ---
-title: "SEKAI CTF 2026 Writeup: 11 Challenges Solved (Blockchain, Crypto, Web, Pwn, Reverse, Game, Misc)"
+title: "SEKAI CTF 2026 Writeup: 11 Challenges Solved"
 slug: "sekai-ctf-2026-writeup"
 description: "Step-by-step SEKAI CTF 2026 writeup — eleven challenges across blockchain (TON cross-instance funding, Solidity reentrancy, transparent-proxy storage collision), crypto, web (Next.js triple bug), pwn (AFC heap overflow + tcache GOT overwrite), reverse (eBPF VM + custom KDF), game, and Android misc."
 date: 2026-06-29T14:00:00Z
