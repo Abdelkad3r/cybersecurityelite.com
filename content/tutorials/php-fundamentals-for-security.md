@@ -239,14 +239,14 @@ PHP's reputation for security bugs is mostly earned. The language ships features
 
 When you read PHP, read the types. Every comparison is asking "what type is each side, and what does PHP do when the types don't match?" Every superglobal access is asking "where did this value originate, and is the originator trustworthy?" Answer those two questions on every line of a sensitive routine and you'll outpace any static analyser I've run.
 
-Next in the [PHP and Web Security Tutorial Series](/tutorials/learn-php-before-advanced-web-hacking/): *The HTTP Request Lifecycle in PHP — from socket to `$_SERVER`*. I want the next vulnerability articles (SQLi, XSS, CSRF, file upload, LFI) to sit on a shared understanding of how a request actually reaches your code, because most of those bugs look different once you know the runtime path.
+Next in the [PHP and Web Security Tutorial Series](/tutorials/learn-php-before-advanced-web-hacking/): *[The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`](/tutorials/http-request-lifecycle-in-php/)*. I want the next vulnerability articles (SQLi, XSS, CSRF, file upload, LFI) to sit on a shared understanding of how a request actually reaches your code, because most of those bugs look different once you know the runtime path.
 
 ## Coming up in the series
 
 Internal links go live as articles ship. Published items below are linked; the rest are working titles.
 
 1. [PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap](/tutorials/php-fundamentals-for-security/) <- you are here
-2. The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`
+2. [The HTTP Request Lifecycle in PHP: From Socket to `$_SERVER`](/tutorials/http-request-lifecycle-in-php/)
 3. SQL Injection in PHP: From `mysql_query` to PDO Bind-Param Pitfalls
 4. Cross-Site Scripting (XSS) in PHP Applications
 5. CSRF and WordPress Nonces Explained
