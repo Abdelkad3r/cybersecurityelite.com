@@ -1,12 +1,14 @@
 ---
-title: "OmniCTF 2026 Quals Misc Writeup: 4 Challenges Solved"
-slug: "omnictf-2026-quals-misc-writeup"
-description: "OmniCTF 2026 Quals misc step-by-step: baccarat Kelly-x2 bets; Node-RED unauth RCE + DT_RUNPATH SUID privesc; Scratch RISC-V ROM; 10x10 QR jigsaw CP-SAT."
+title: "OmniCTF 2026 Quals Misc + Forensics Writeup: 5 Solved"
+slug: "omnictf-2026-quals-misc-forensics-writeup"
+description: "OmniCTF 2026 Quals misc + forensics: baccarat Kelly-x2; Node-RED unauth RCE + DT_RUNPATH SUID privesc; Scratch RISC-V ROM; jigsaw CP-SAT; Qakbot obama264 PCAP."
 date: 2026-07-20T00:30:00Z
 lastmod: 2026-07-20T00:30:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
+aliases:
+  - /ctf-writeups/omnictf-2026-quals-misc-writeup/
 series: ["OmniCTF 2026 Quals"]
 tags:
   - "omnictf"
@@ -14,6 +16,7 @@ tags:
   - "omnictf quals"
   - "ctf writeup"
   - "misc"
+  - "forensics"
   - "kelly criterion"
   - "baccarat betting"
   - "node-red unauth rce"
@@ -27,12 +30,19 @@ tags:
   - "jigsaw puzzle solver"
   - "cp-sat assignment"
   - "qr code repair"
+  - "pcap forensics"
+  - "qakbot obama264"
+  - "ja3 ja4 tls fingerprint"
+  - "malware-traffic-analysis.net"
+  - "phishing eml analysis"
 keywords:
   - "omnictf 2026 quals misc writeup"
+  - "omnictf 2026 quals forensics writeup"
   - "omnictf baccarat writeup"
   - "omnictf node writeup"
   - "omnictf nostalgia writeup"
   - "omnictf sanity p0zzl3 writeup"
+  - "omnictf quackquackdiridiriduck writeup"
   - "kelly criterion 2x bet sizing baccarat"
   - "node-red 5.0.1 exec node rce"
   - "dt_runpath world-writable directory suid hijack"
@@ -42,18 +52,22 @@ keywords:
   - "jigsaw alpha channel edge classification"
   - "cp-sat 10x10 puzzle assignment"
   - "purple qr code morphological repair"
+  - "qakbot obama264 pcap analysis"
+  - "ja3 43016d7f7f9336b17c884650d0d2545d no-sni"
+  - "malware-traffic-analysis brad duncan iocs"
+  - "tshark http export-objects pcap"
   - "ctf step by step 2026"
 toc: true
 cover:
-  image: "/images/articles/omnictf-2026-quals-misc-writeup.png"
-  alt: "OmniCTF 2026 Quals misc writeup — four challenges solved covering baccarat live TCP betting game where BlackShard is the deliberately weak agent so simulating matchups with the handout's own game.py plus Kelly-x2 bet sizing reaches the 100x target in ~13% of sessions with a reconnect loop, Node Node-RED 5.0.1 with no admin auth exposing exec-node flows for instant RCE as svc_node then a SUID nodestatus binary with DT_RUNPATH pointing at a world-writable /var/lib/node directory that lets a malicious libshared.so constructor run as uid 0, nostalgia Scratch 3 .sb3 archive whose RISCV.ROM list is a bootable Linux kernel plus initramfs cpio whose root/readme.txt carries the flag, and Sanity P0zzl3 100 transparent PNG jigsaw pieces of a shuffled purple QR code solved as a 10x10 CP-SAT assignment on alpha-channel-recovered piece geometry followed by morphological repair of the seam cuts"
+  image: "/images/articles/omnictf-2026-quals-misc-forensics-writeup.png"
+  alt: "OmniCTF 2026 Quals misc + forensics writeup — five challenges solved covering baccarat Kelly-x2 bet sizing against the deliberately weak BlackShard agent, Node Node-RED unauth RCE chained to a SUID DT_RUNPATH shared-library hijack for root, nostalgia Scratch .sb3 archive embedding a bootable RISC-V Linux kernel with newc cpio initramfs, Sanity P0zzl3 100-piece jigsaw CP-SAT with morphological QR repair, and QuackQuackDiriDiriDuck the Brad Duncan 2023-05-24 obama264 Qakbot infection PCAP with 10 sub-question flags recovered via tshark HTTP object export, no-SNI JA3 43016d7f7f9336b17c884650d0d2545d clustering to the four TLS C2 endpoints, and UTC timestamp reconciliation against the malware-traffic-analysis.net ground-truth notes"
 ---
 
-OmniCTF 2026 Quals shipped a misc track that runs the full skill spectrum: **baccarat** (game theory / Kelly criterion + reconnect loop), **Node** (Node-RED unauth RCE chained to a SUID `DT_RUNPATH` shared-library hijack for root), **nostalgia** (nested container parsing from Scratch `.sb3` to a RISC-V Linux kernel to a `newc` cpio to a text file), and **Sanity P0zzl3** (computer vision + constraint programming: 100 transparent PNG jigsaw pieces of a shuffled QR code solved as a 10x10 assignment problem, then morphological repair to decode). What ties them together is a single discipline: **the handout is the oracle**. baccarat's `game.py` simulates its own agents. Node's `/entrypoint.sh` names the misconfiguration. nostalgia's `.sb3` is a ZIP. Sanity P0zzl3's PNG alpha channels give piece geometry cleanly. Every challenge hands you enough to reconstruct the exploit from first principles.
+OmniCTF 2026 Quals shipped a misc track that runs the full skill spectrum, plus a rich forensics challenge that pairs naturally with it: **baccarat** (game theory / Kelly criterion + reconnect loop), **Node** (Node-RED unauth RCE chained to a SUID `DT_RUNPATH` shared-library hijack for root), **nostalgia** (nested container parsing from Scratch `.sb3` to a RISC-V Linux kernel to a `newc` cpio to a text file), **Sanity P0zzl3** (computer vision + constraint programming: 100 transparent PNG jigsaw pieces of a shuffled QR code solved as a 10x10 assignment problem, then morphological repair to decode), and **QuackQuackDiriDiriDuck** (forensics: a 2023-05-24 Qakbot/OBAMA264 infection PCAP with 10 sub-question flags reconstructed from `tshark` HTTP object export, JA3/JA4 no-SNI fingerprints identifying the four TLS C2 endpoints, and UTC timestamp reconciliation against Brad Duncan's malware-traffic-analysis.net ground-truth notes). What ties them together is a single discipline: **the handout is the oracle**. baccarat's `game.py` simulates its own agents. Node's `/entrypoint.sh` names the misconfiguration. nostalgia's `.sb3` is a ZIP. Sanity P0zzl3's PNG alpha channels give piece geometry cleanly. QuackQuackDiriDiriDuck's PCAP filename literally names the malware-traffic-analysis.net corpus entry to cross-reference. Every challenge hands you enough to reconstruct the exploit from first principles.
 
 Handouts, per-challenge READMEs, and solver scripts live at [Abdelkad3r/OmniCTF-2026-Quals](https://github.com/Abdelkad3r/OmniCTF-2026-Quals). Adjacent writeups on the same event: the [OmniCTF 2026 Quals web writeup](/ctf-writeups/omnictf-2026-quals-web-writeup/), [OmniCTF 2026 Quals pwn writeup](/ctf-writeups/omnictf-2026-quals-pwn-writeup/), [OmniCTF 2026 Quals reverse writeup](/ctf-writeups/omnictf-2026-quals-reverse-writeup/), [OmniCTF 2026 Quals crypto writeup](/ctf-writeups/omnictf-2026-quals-crypto-writeup/), and [OmniCTF 2026 Quals game writeup](/ctf-writeups/omnictf-2026-quals-game-writeup/).
 
-## The four OmniCTF 2026 Quals misc challenges
+## The five OmniCTF 2026 Quals misc + forensics challenges
 
 | Challenge | Difficulty | Bug class / primitive | Flag |
 |---|---|---|---|
@@ -61,14 +75,15 @@ Handouts, per-challenge READMEs, and solver scripts live at [Abdelkad3r/OmniCTF-
 | Node | Medium (85 solves) | Two-stage chain. **Stage 1**: Node-RED 5.0.1 with no `adminAuth`; `POST /flows` accepts an `http in → exec (useSpawn:false) → change → http response` flow, giving instant RCE as `svc_node` via `POST /api/x`. **Stage 2**: `/usr/local/bin/nodestatus` is SUID root, ELF has `DT_NEEDED: libshared.so` + `DT_RUNPATH: /var/lib/node`. `/entrypoint.sh` does `chmod 0777 /var/lib/node` before dropping privileges, and musl `ld.so` honours `DT_RUNPATH` for setuid binaries. Compile a malicious `libshared.so` with the container's own `gcc` + musl-dev; `__attribute__((constructor))` calls `setuid(0); system(...)` before `main()`; trigger `nodestatus` and read `/root/flag.txt`. | `OmniCTF{N0d3_3v3rywh3r3_1d974eea307327134462512614582680}` |
 | nostalgia | Easy (105 solves) | Handout is a Scratch 3 `.sb3` project (which is a ZIP). `project.json` has a `RISCV.ROM` Scratch list with 4,263,001 decimal-string byte entries: a bootable RISC-V Linux 6.1.14 kernel (`riscv-minimal-nommu`, BusyBox 1.36.0). `strings` on the reconstructed ROM shows a `newc` cpio initramfs (magic `070701`). Parse the cpio (110-byte ASCII-hex header, 13 fields, 4-byte-aligned name + data), extract `root/readme.txt`, which contains `console.log("OmniCTF{...}");`. | `OmniCTF{ig_bro_have_some_n0stalgiaaa-676767676789}` |
 | Sanity P0zzl3 | Sanity (59 solves) | 100 transparent PNG jigsaw pieces of a shuffled purple QR code. Direct barcode scan fails: the grey jigsaw outlines and seam gaps cut thin white notches through the QR modules. Solve as a 10x10 assignment problem. Recover per-piece boundary curves from the alpha channel (`L[y]`, `R[y]`, `T[x]`, `B[x]`), classify each side as flat/tab/hole from the central-half deviation from the shoulder line, score neighbour pair compatibility from normalised boundary curve match, CP-SAT `AllDifferent` + border-flat constraints + tab/hole compatibility, minimise total seam cost. After rendering the assembled board, threshold purple pixels, morphological dilate + close to bridge seam cuts, then `QRCodeDetector.detectAndDecode()`. | `omniCTF{I_h0p3_y0u_found_th1s_fun_5a3bba1fec}` |
+| QuackQuackDiriDiriDuck | Forensics (161 pts) | Handout is `2023-05-24-obama264-Qakbot-infection.pcap` (18 MB) plus 5 phishing `.eml` samples + a red-herring `NoPDFEmail.eml`. Filename maps directly to Brad Duncan's malware-traffic-analysis.net corpus entry for that day (password `infected_20230524`). Ten sub-question flags on rCTF. Solve chain: `7z x -pinfected` (macOS `unzip` can't do WinZip AES), `tshark ... --export-objects "http,pcap_objects"` extracts the initial ZIP (containing `Claim_A615.wsf` padded with Kant's *Critique of Pure Reason* as anti-analysis filler) and the Qakbot DLL `aKUVYL8o0uv.dat` (PE32, MD5 `775988673806d9522b889aa2a09cc05b`), cluster no-SNI JA3 `43016d7f7f9336b17c884650d0d2545d` for the four TLS C2 endpoints, convert timestamps to UTC (grader defaults to UTC, not local), match Brad's uppercase `QAKBOT` / `OBAMA264` conventions verbatim. **9 of 10 sub-flags recovered** (Q2 "sender addresses alphabetically" unresolved due to `.example` sanitisation ambiguity). | Sub-flags include `OmniCTF{5}`, `OmniCTF{http://adubuildersco.com/ewukhyqpjz/ewukhyqpjz.zip}`, `OmniCTF{4}`, `OmniCTF{142.118.221.248:2222+185.81.114.188:443+188.28.19.84:443+201.130.154.90:443}`, `OmniCTF{2023-05-24 16:34:13}`, `OmniCTF{2023-05-24 16:35:27}`, `OmniCTF{340.388}`, `OmniCTF{QAKBOT}`, `OmniCTF{OBAMA264}` |
 
-The four challenges share a discipline worth stating up front: **the handout is the oracle**. In every case the challenge author ships enough infrastructure that you don't need to guess anything. baccarat ships the game logic and the agents, so simulating the exact win probabilities is a five-line loop. Node ships the entrypoint script and the SUID binary, so the misconfiguration is grep-visible. nostalgia ships the entire RISC-V Linux ROM as a Scratch list, so the exploit is "know that `.sb3` is a ZIP and `070701` is a cpio magic." Sanity P0zzl3 ships transparent alpha channels on every piece, so boundary geometry is exact rather than inferred. When the handout is this thorough, the trained-triage move is to import it, dump it, or parse it before touching any theory.
+The five challenges share a discipline worth stating up front: **the handout is the oracle**. In every case the challenge author ships enough infrastructure that you don't need to guess anything. baccarat ships the game logic and the agents, so simulating the exact win probabilities is a five-line loop. Node ships the entrypoint script and the SUID binary, so the misconfiguration is grep-visible. nostalgia ships the entire RISC-V Linux ROM as a Scratch list, so the exploit is "know that `.sb3` is a ZIP and `070701` is a cpio magic." Sanity P0zzl3 ships transparent alpha channels on every piece, so boundary geometry is exact rather than inferred. QuackQuackDiriDiriDuck's PCAP filename literally names the malware-traffic-analysis.net corpus entry to cross-reference for ground-truth IoCs. When the handout is this thorough, the trained-triage move is to import it, dump it, or parse it before touching any theory.
 
 ## Methodology — import the handout, don't rewrite it
 
-A pattern that worked on every challenge in this set: **use the challenge author's own code and data structures as your primary tools**. baccarat's `import game` + `import agents` gives you the exact matchup edges to 0.1% accuracy in under a minute, so no need to derive baccarat probability theory. Node's shell-visible `/entrypoint.sh` and `readelf -d`-visible `DT_RUNPATH` are the entire attack surface; you never need to reverse-engineer the C code of `nodestatus` because the shell script and the ELF metadata already tell you where the trust boundary breaks. nostalgia's `project.json` reveals the RISC-V ROM in the first `zipfile.ZipFile` call; parsing it as bytes and running `strings` on the result surfaces both the Linux banner and the cpio magic without ever booting the ROM in an emulator. Sanity P0zzl3's alpha channel eliminates any need for corner-detection heuristics or CNN-based edge classifiers; the boundary is the alpha edge, exactly.
+A pattern that worked on every challenge in this set: **use the challenge author's own code and data structures as your primary tools**. baccarat's `import game` + `import agents` gives you the exact matchup edges to 0.1% accuracy in under a minute, so no need to derive baccarat probability theory. Node's shell-visible `/entrypoint.sh` and `readelf -d`-visible `DT_RUNPATH` are the entire attack surface; you never need to reverse-engineer the C code of `nodestatus` because the shell script and the ELF metadata already tell you where the trust boundary breaks. nostalgia's `project.json` reveals the RISC-V ROM in the first `zipfile.ZipFile` call; parsing it as bytes and running `strings` on the result surfaces both the Linux banner and the cpio magic without ever booting the ROM in an emulator. Sanity P0zzl3's alpha channel eliminates any need for corner-detection heuristics or CNN-based edge classifiers; the boundary is the alpha edge, exactly. QuackQuackDiriDiriDuck's PCAP filename (`2023-05-24-obama264-Qakbot-infection.pcap`) is a direct index into Brad Duncan's malware-traffic-analysis.net corpus, whose published notes package (password `infected_20230524`) is the ground-truth IoC list; every sub-question flag can be cross-checked against Brad's timestamps, IP list, and JA3 fingerprints before submitting.
 
-The correlate is: **don't overengineer the "easier" challenges**. nostalgia is not asking you to run the RISC-V kernel; it's asking you to recognise that the ROM is a container and to know how to parse its layers. baccarat is not asking you to write a baccarat solver; it's asking you to notice that the handout already contains one. When you find yourself building infrastructure that the challenge doesn't strictly need, you've probably missed the intended shortcut.
+The correlate is: **don't overengineer the "easier" challenges**. nostalgia is not asking you to run the RISC-V kernel; it's asking you to recognise that the ROM is a container and to know how to parse its layers. baccarat is not asking you to write a baccarat solver; it's asking you to notice that the handout already contains one. QuackQuackDiriDiriDuck is not asking you to reverse-engineer a Qakbot sample; it's asking you to run `tshark`, cluster no-SNI TLS ClientHellos by JA3, and match Brad's published IoCs. When you find yourself building infrastructure that the challenge doesn't strictly need, you've probably missed the intended shortcut.
 
 Per-challenge walkthroughs follow.
 
@@ -589,11 +604,129 @@ Per-challenge README + solver: [misc/sanity_p0zzl3](https://github.com/Abdelkad3
 
 Three portable lessons. **PNG alpha channels give exact geometry.** No corner detection, no CNN, no edge Hough transform needed. If a challenge ships transparent pieces, alpha is the ground truth. **CP-SAT is the right tool for constrained assignment problems**. 100-variable jigsaws are past hand-solving, past greedy heuristics, and inside OR-Tools' reach. `AllDifferent` + per-cell constraints + weighted objective + a few minutes of solver time. **Morphological repair beats a stronger decoder** when the QR modules are cut by seam gaps. Standard `dilate + close` with correctly-sized kernels (dilate ~4px for module thickening, close 17x17 for the seam gap width) restores the modules to a clean B/W image any QR library will decode.
 
+## 5. QuackQuackDiriDiriDuck
+
+Forensics. Handout is a Qakbot infection PCAP plus phishing `.eml` samples. Ten sub-question flags on rCTF, each graded separately. The PCAP filename maps directly to Brad Duncan's malware-traffic-analysis.net corpus, whose published notes are the ground-truth IoC list to cross-check every answer against.
+
+### Step 1 — Triage the archive
+
+```
+Password: infected
+Archive contents:
+  Malware/2023-05-24-obama264-Qakbot-infection.pcap (18 MB)
+  Malware/MailChalls.zip → Email1..Email5.eml + NoPDFEmail.eml
+~/Downloads/Email3.eml (delivered separately)
+```
+
+macOS `unzip` can't handle the WinZip AES encryption; use `7z x -pinfected` instead. The filename `2023-05-24-obama264-Qakbot-infection.pcap` is a direct reference to Brad Duncan's [malware-traffic-analysis.net](https://www.malware-traffic-analysis.net/) post for that day; his published notes archive (password `infected_20230524`) contains the definitional IoC list for the OBAMA264 (TA570) QAKBOT distribution tag.
+
+```bash
+mkdir -p ~/quack && cd ~/quack
+7z x -pinfected ~/Downloads/QuackQuackDiriDiriDuck.zip
+7z x Malware/MailChalls.zip
+tshark -r Malware/2023-05-24-obama264-Qakbot-infection.pcap \
+       --export-objects "http,pcap_objects"
+```
+
+The exported HTTP objects include the initial `ewukhyqpjz.zip` (containing `Claim_A615.wsf`, a Windows script padded with ~1,000 lines of Kant's *Critique of Pure Reason* as anti-analysis filler) and the Qakbot DLL `aKUVYL8o0uv.dat` (PE32, MD5 `775988673806d9522b889aa2a09cc05b`).
+
+### Step 2 — Q1: How many emails have malicious PDFs?
+
+```bash
+for f in "Emails to give/"*.eml; do
+  echo "$f: $(grep -c '^Content-Type: application/pdf' "$f") PDF(s)"
+done
+```
+
+Email1-Email5 each carry exactly one PDF; `NoPDFEmail.eml` has zero. **Flag: `OmniCTF{5}`**.
+
+### Step 3 — Q3: First malicious HTTP download URL
+
+```bash
+tshark -r Malware/2023-05-24-obama264-Qakbot-infection.pcap \
+       -Y "http.request" \
+       -T fields -e frame.time -e http.host -e http.request.uri | head -1
+```
+
+```
+2023-05-24T18:34:13.441341+0200  adubuildersco.com  /ewukhyqpjz/ewukhyqpjz.zip
+```
+
+**Flag: `OmniCTF{http://adubuildersco.com/ewukhyqpjz/ewukhyqpjz.zip}`**.
+
+### Step 4 — Q4 & Q5: Qakbot TLS C2 fingerprint and endpoints
+
+Every TLS ClientHello in the capture has a JA3/JA4 fingerprint. The obvious cluster is the **no-SNI** ClientHellos — Qakbot's giveaway:
+
+- **JA3**: `43016d7f7f9336b17c884650d0d2545d`
+- **JA4**: `t12i180600_4b22cbed5bed_2dae41c691ec` (the `i` marks "no SNI"; a Windows SChannel cipher list without a hostname is a bright red flag for any benign process)
+
+```bash
+tshark -r ... -Y "tls.handshake.ja3 == 43016d7f7f9336b17c884650d0d2545d" \
+       -T fields -e ip.dst -e tcp.dstport | sort -u
+```
+
+Four unique remote endpoints, all completing full TLS handshakes:
+
+| IP:port | Bytes | ServerHellos | Role |
+|---|---|---|---|
+| `142.118.221.248:2222` | 5.15 MB | 81 | main C2 (long session; chosen after the 188 probe failed) |
+| `185.81.114.188:443` | 837 KB | 1 | secondary; self-cert `gifts.com` |
+| `188.28.19.84:443` | 3.6 KB | 1 | initial probe; self-cert `xoouxld.net` |
+| `201.130.154.90:443` | 14.5 KB | 4 | late-session backup; self-cert `nabislo.org` |
+
+Cross-check with Brad's notes: same four IPs, same roles.
+
+- **Q4 flag: `OmniCTF{4}`**.
+- **Q5 flag** (IP-ascending): `OmniCTF{142.118.221.248:2222+185.81.114.188:443+188.28.19.84:443+201.130.154.90:443}`.
+
+### Step 5 — Q6 & Q7: UTC timestamps
+
+The PCAP records local time (CEST, +0200). Convert to UTC — the grader expects UTC, and Brad's notes use UTC throughout.
+
+- ZIP request: `2023-05-24T18:34:13.441341+0200` → `2023-05-24 16:34:13 UTC`. **Flag: `OmniCTF{2023-05-24 16:34:13}`**.
+- DLL request: `2023-05-24T18:35:27.396568+0200` → `2023-05-24 16:35:27 UTC`. **Flag: `OmniCTF{2023-05-24 16:35:27}`**.
+
+First attempt used local CEST (`18:34:13`) and was rejected. UTC first on any PCAP forensics question.
+
+### Step 6 — Q8: Seconds between DLL GET and first C2 ClientHello
+
+```
+DLL GET (epoch):             1684946127.396568
+First C2 ClientHello (JA3):  1684946467.784470  → to 188.28.19.84:443
+Delta:                          340.387902 s
+```
+
+**Flag: `OmniCTF{340.388}`**.
+
+The "first C2 ClientHello" is specifically the first `t12i...` (no-SNI) handshake. Connectivity checks to `irs.gov` etc. that fire ~1 second earlier use the SNI-present JA3 `6a5d...` and aren't C2.
+
+### Step 7 — Q9 & Q10: Family and campaign
+
+Brad's header spells both in caps:
+
+```
+DISTRIBUTION TAG OBAMA264 (TA570) — QAKBOT (QBOT)
+```
+
+- **Q9 flag: `OmniCTF{QAKBOT}`**. Case-sensitive: `Qakbot`, `Qbot`, `QakBot` all rejected until I matched Brad's uppercase form.
+- **Q10 flag: `OmniCTF{OBAMA264}`**.
+
+### Step 8 — Q2 (unresolved)
+
+Q2 asks for the attacker sender addresses in alphabetical order. The `.example` sanitisation on `From:` / `Return-Path:` / `Sender:` produces multiple defensible sets (2 unique `From:`, 3 real `Sender:`, 5 real `From:` from Brad's originals), and none of the case/sort combinations were accepted. Skipping — needs a hint from the platform on which field and which case convention to use.
+
+Final tally: **9 of 10 sub-flags recovered**.
+
+Per-challenge README + solver: [forensics/quackquackdiridiriduck](https://github.com/Abdelkad3r/OmniCTF-2026-Quals/tree/main/forensics/quackquackdiridiriduck).
+
+Three portable lessons. **The malware-traffic-analysis.net corpus is the definitional IoC source for a huge swathe of CTF PCAP challenges.** Filenames matching the `YYYY-MM-DD-<tag>-<family>-infection.pcap` convention are almost always drawn from Brad's blog; the published notes package (usually password-`infected_YYYYMMDD`) is the ground truth. Any PCAP forensics challenge whose filename matches that convention is one search away from the answer set. **JA3/JA4 no-SNI fingerprints identify Qakbot C2 uniquely.** SChannel-style ClientHellos without SNI to non-standard ports (2222 in this case) don't happen for benign processes. `tshark -Y "tls.handshake.ja3 == <hash>"` clusters the whole C2 conversation in one filter. **Grader case sensitivity + UTC default.** rCTF-style graders are usually case-sensitive on plain-word answers (`QAKBOT` yes, `Qakbot` no), and timestamps default to UTC even when the source PCAP records local time. Try UTC first, match the ground-truth notes' case second.
+
 ## Cross-cutting defender notes
 
-Five patterns recur across the OmniCTF 2026 Quals misc track and translate directly into review or triage heuristics.
+Six patterns recur across the OmniCTF 2026 Quals misc + forensics tracks and translate directly into review or triage heuristics.
 
-**When the handout ships infrastructure, use it.** baccarat's `game.py` and agents. Node's `/entrypoint.sh` and SUID binary. nostalgia's `.sb3` archive layout. Sanity P0zzl3's alpha channels. The "handout is the oracle" pattern shows up on every non-trivial CTF category, from RSA challenges where the generator is in Sage to reversing challenges where the target binary is unstripped. Import the handout, dump its structure, parse it, before writing any solver code from first principles. Half the challenges dissolve the moment you notice what the author gave you.
+**When the handout ships infrastructure, use it.** baccarat's `game.py` and agents. Node's `/entrypoint.sh` and SUID binary. nostalgia's `.sb3` archive layout. Sanity P0zzl3's alpha channels. QuackQuackDiriDiriDuck's PCAP filename indexing Brad Duncan's corpus. The "handout is the oracle" pattern shows up on every non-trivial CTF category, from RSA challenges where the generator is in Sage to reversing challenges where the target binary is unstripped. Import the handout, dump its structure, parse it, before writing any solver code from first principles. Half the challenges dissolve the moment you notice what the author gave you.
 
 **Node-RED without `adminAuth` is a shell.** Any exposed Node-RED admin API is RCE, full stop. Exec nodes execute arbitrary shell; function nodes execute arbitrary JavaScript with `functionExternalModules: true` giving arbitrary npm imports. Same class shows up in Grafana without auth (executes arbitrary panel scripts), Jenkins without auth (Groovy console), any headless BI tool with SQL panels. Never rely on network-level ACLs for admin surfaces; require auth inside the app.
 
@@ -603,11 +736,13 @@ Five patterns recur across the OmniCTF 2026 Quals misc track and translate direc
 
 **Ship a compiler in production containers only if you intend to hand privilege escalation to attackers.** Node's exploit chain closes because the container has `gcc-15.2.0` and musl headers. Without those, an attacker would need to cross-compile a musl-compatible shared object elsewhere and ship it in via the flow, which is still possible but higher friction. Production containers should have no compilers, no interpreters they don't need, no `perl`, no `python3` with dev headers, no `find | xargs`, and no shell utilities beyond what the runtime literally invokes. Every one of those is a rung on someone's post-exploitation ladder.
 
+**PCAP forensics filenames are usually direct index into public IoC corpora.** QuackQuackDiriDiriDuck's PCAP is named `2023-05-24-obama264-Qakbot-infection.pcap` — a filename that matches malware-traffic-analysis.net's convention exactly, and Brad Duncan's published notes for that day are the ground-truth answer set. Any CTF forensics engagement on a PCAP whose filename matches `YYYY-MM-DD-<tag>-<family>-infection.pcap`, `<year>-<n>-<family>.pcap`, or `<CVE>-*.pcap` deserves a search across malware-traffic-analysis.net / Any.Run / VirusTotal / Hybrid Analysis / URLhaus / Malshare corpora before you write your own IoC extractor. Real-world SOC triage runs the same reflex: fingerprint the sample, look it up in your threat-intel feeds, only then dig into per-packet analysis if the ground truth isn't already published.
+
 ## Frequently asked questions
 
 ### What is OmniCTF 2026 Quals?
 
-OmniCTF 2026 Quals is the qualifier round of the OmniCTF 2026 competition, with challenges spanning web, pwn, reverse, crypto, game, misc, and forensics. Flags use event-specific namespaces (`CTF{...}`, `OMNICTF{...}`, `OmniCTF{...}`, `omniCTF{...}`, `omni{...}`) depending on the challenge author. This writeup covers the four misc challenges I solved (baccarat, Node, nostalgia, Sanity P0zzl3). Paired [web](/ctf-writeups/omnictf-2026-quals-web-writeup/), [pwn](/ctf-writeups/omnictf-2026-quals-pwn-writeup/), [reverse](/ctf-writeups/omnictf-2026-quals-reverse-writeup/), [crypto](/ctf-writeups/omnictf-2026-quals-crypto-writeup/), and [game](/ctf-writeups/omnictf-2026-quals-game-writeup/) writeups on the same site cover the other tracks. Per-challenge READMEs and solvers at [Abdelkad3r/OmniCTF-2026-Quals](https://github.com/Abdelkad3r/OmniCTF-2026-Quals).
+OmniCTF 2026 Quals is the qualifier round of the OmniCTF 2026 competition, with challenges spanning web, pwn, reverse, crypto, game, misc, and forensics. Flags use event-specific namespaces (`CTF{...}`, `OMNICTF{...}`, `OmniCTF{...}`, `omniCTF{...}`, `omni{...}`) depending on the challenge author. This writeup covers the four misc challenges I solved (baccarat, Node, nostalgia, Sanity P0zzl3) plus the QuackQuackDiriDiriDuck forensics challenge (Brad Duncan 2023-05-24 obama264 Qakbot infection PCAP, 9 of 10 sub-flags recovered). Paired [web](/ctf-writeups/omnictf-2026-quals-web-writeup/), [pwn](/ctf-writeups/omnictf-2026-quals-pwn-writeup/), [reverse](/ctf-writeups/omnictf-2026-quals-reverse-writeup/), [crypto](/ctf-writeups/omnictf-2026-quals-crypto-writeup/), and [game](/ctf-writeups/omnictf-2026-quals-game-writeup/) writeups on the same site cover the other tracks. Per-challenge READMEs and solvers at [Abdelkad3r/OmniCTF-2026-Quals](https://github.com/Abdelkad3r/OmniCTF-2026-Quals).
 
 ### Why does the baccarat challenge use Kelly x2 instead of full Kelly?
 
@@ -641,26 +776,34 @@ Every entry starts with 6 bytes of `070701` magic, followed by 13 × 8-byte ASCI
 
 100 transparent PNG pieces of a shuffled purple QR code. Recover per-piece boundary curves from alpha (`L[y], R[y], T[x], B[x]`), classify each side as flat/tab/hole from the central-half deviation from the shoulder line (median of the two straight regions at 12-28% and 72-88% of the side length). Model as a 10x10 CP-SAT assignment: 100 variables, `AllDifferent`, border cells constrained to correct flat side, internal seams constrained to tab/hole compatibility, minimise sum of neighbour edge-curve mismatch. OR-Tools solves in ~2.5 minutes. Render, then repair QR modules via purple thresholding + morphological dilate + 17x17 close to bridge seam cuts, then `QRCodeDetector().detectAndDecode()`.
 
-### What's the broader lesson from the OmniCTF 2026 Quals misc track?
+### What's the broader lesson from the OmniCTF 2026 Quals misc + forensics tracks?
 
-*Import the handout, don't rewrite it.* Every challenge in this set ships enough infrastructure that reproducing the exploit from first principles is strictly more work than using what the author already provided. baccarat's `game.py` is a first-class baccarat simulator. Node's `/entrypoint.sh` names the misconfiguration. nostalgia's `.sb3` is a ZIP with the whole RISC-V Linux image inline. Sanity P0zzl3's PNG alpha gives exact piece geometry with no heuristic estimation. Trained triage catalogues what the handout gives before writing solver code.
+*Import the handout, don't rewrite it.* Every challenge in this set ships enough infrastructure that reproducing the exploit from first principles is strictly more work than using what the author already provided. baccarat's `game.py` is a first-class baccarat simulator. Node's `/entrypoint.sh` names the misconfiguration. nostalgia's `.sb3` is a ZIP with the whole RISC-V Linux image inline. Sanity P0zzl3's PNG alpha gives exact piece geometry with no heuristic estimation. QuackQuackDiriDiriDuck's PCAP filename indexes Brad Duncan's malware-traffic-analysis.net corpus, whose published notes are the ground-truth IoC list. Trained triage catalogues what the handout gives before writing solver code.
+
+### How do you identify Qakbot C2 in the QuackQuackDiriDiriDuck PCAP?
+
+Cluster TLS ClientHellos by JA3, then filter for the no-SNI fingerprint `43016d7f7f9336b17c884650d0d2545d` (JA4 `t12i180600_...` where the `i` marks "no SNI"). SChannel-style ClientHellos without SNI to non-standard ports (2222 in this case) don't happen for benign processes. `tshark -Y "tls.handshake.ja3 == 43016d7f7f9336b17c884650d0d2545d" -T fields -e ip.dst -e tcp.dstport | sort -u` clusters the whole C2 conversation in one filter — four unique endpoints, all confirmed against Brad Duncan's published IoC list.
+
+### Why did Q2 (sender addresses alphabetically) fail on QuackQuackDiriDiriDuck?
+
+The `.example` sanitisation on `From:`, `Return-Path:`, and `Sender:` headers in the handout produces multiple defensible sender-address sets (2 unique `From:`, 3 real `Sender:`, 5 real `From:` from Brad's originals), and none of the case/sort combinations were accepted by rCTF. Without a hint on which header field the grader keys off and whether it wants sanitised or de-sanitised forms, the sub-flag is ambiguous. 9 of 10 sub-flags recovered; skipping Q2 was the right call once the obvious permutations exhausted.
 
 ### Where can I find the solver scripts?
 
-Per-challenge READMEs, handouts, and solver scripts at [Abdelkad3r/OmniCTF-2026-Quals](https://github.com/Abdelkad3r/OmniCTF-2026-Quals). baccarat, Node, and nostalgia solvers are pure Python stdlib. Sanity P0zzl3 needs `pillow`, `numpy`, `opencv-python`, and `ortools` (`python3 -m pip install pillow numpy opencv-python ortools`). Node's solver deploys the flow, compiles the malicious `.so` in-container, triggers `nodestatus`, and prints the flag end-to-end. All four reproducible against fresh instances / handouts.
+Per-challenge READMEs, handouts, and solver scripts at [Abdelkad3r/OmniCTF-2026-Quals](https://github.com/Abdelkad3r/OmniCTF-2026-Quals). baccarat, Node, and nostalgia solvers are pure Python stdlib. Sanity P0zzl3 needs `pillow`, `numpy`, `opencv-python`, and `ortools` (`python3 -m pip install pillow numpy opencv-python ortools`). QuackQuackDiriDiriDuck needs `tshark` / Wireshark and `7z` for the WinZip-AES archive. Node's solver deploys the flow, compiles the malicious `.so` in-container, triggers `nodestatus`, and prints the flag end-to-end. All five reproducible against fresh instances / handouts.
 
 ## Closing notes
 
-Four misc challenges from very different corners of the platform, one shared discipline: **the handout is the oracle, and importing it beats rewriting it every time**. baccarat's Kelly x2 sizing is a five-line loop over the handout's own `game.py`. Node's SUID `DT_RUNPATH` privesc is a `chmod 0777` in `/entrypoint.sh` plus a two-symbol shared-library stub compiled in-container. nostalgia's flag is one `unzip → json.loads → bytes → strings → cpio parse` chain across four well-known container formats. Sanity P0zzl3's 10x10 assignment is exact CP-SAT input plus a morphological repair pass to close seam cuts in the QR modules. In every case the intended path is legible from the handout's structure, not derived from theory.
+Four misc challenges plus one forensics challenge from very different corners of the platform, one shared discipline: **the handout is the oracle, and importing it beats rewriting it every time**. baccarat's Kelly x2 sizing is a five-line loop over the handout's own `game.py`. Node's SUID `DT_RUNPATH` privesc is a `chmod 0777` in `/entrypoint.sh` plus a two-symbol shared-library stub compiled in-container. nostalgia's flag is one `unzip → json.loads → bytes → strings → cpio parse` chain across four well-known container formats. Sanity P0zzl3's 10x10 assignment is exact CP-SAT input plus a morphological repair pass to close seam cuts in the QR modules. QuackQuackDiriDiriDuck's ten sub-flags are `tshark` object export, no-SNI JA3 clustering, and UTC timestamp reconciliation against Brad Duncan's malware-traffic-analysis.net notes for the same day. In every case the intended path is legible from the handout's structure, not derived from theory.
 
-For the same event's other tracks, the [OmniCTF 2026 Quals web writeup](/ctf-writeups/omnictf-2026-quals-web-writeup/), [OmniCTF 2026 Quals pwn writeup](/ctf-writeups/omnictf-2026-quals-pwn-writeup/), [OmniCTF 2026 Quals reverse writeup](/ctf-writeups/omnictf-2026-quals-reverse-writeup/), [OmniCTF 2026 Quals crypto writeup](/ctf-writeups/omnictf-2026-quals-crypto-writeup/), and [OmniCTF 2026 Quals game writeup](/ctf-writeups/omnictf-2026-quals-game-writeup/) each cover their own set. Adjacent misc writeups on the site: the [Junior.Crypt 2026 forensic + misc + OSINT writeup](/ctf-writeups/junior-crypt-2026-forensic-misc-osint-writeup/) walks a Krita `.bundle` (PNG-inside-zip-inside-`zTXt`-inside-XML-inside-CDATA) that rhymes with nostalgia's container-nesting discipline, plus a pickle supply-chain backdoor with a `LedgerModel.infer` trigger that rhymes with Node's "handout ships the loader for the exploit." The [BroncoCTF 2026 beginner + forensics + misc writeup](/ctf-writeups/broncoctf-2026-beginner-forensics-misc-writeup/) covers a Bundle 99 six-layer format staircase and a Zip Zip Hooray 1,251-layer archive stack. Full [CTF writeups index](/ctf-writeups/) for the rest.
+For the same event's other tracks, the [OmniCTF 2026 Quals web writeup](/ctf-writeups/omnictf-2026-quals-web-writeup/), [OmniCTF 2026 Quals pwn writeup](/ctf-writeups/omnictf-2026-quals-pwn-writeup/), [OmniCTF 2026 Quals reverse writeup](/ctf-writeups/omnictf-2026-quals-reverse-writeup/), [OmniCTF 2026 Quals crypto writeup](/ctf-writeups/omnictf-2026-quals-crypto-writeup/), and [OmniCTF 2026 Quals game writeup](/ctf-writeups/omnictf-2026-quals-game-writeup/) each cover their own set. Adjacent misc + forensics writeups on the site: the [Junior.Crypt 2026 forensic + misc + OSINT writeup](/ctf-writeups/junior-crypt-2026-forensic-misc-osint-writeup/) walks a Krita `.bundle` (PNG-inside-zip-inside-`zTXt`-inside-XML-inside-CDATA) that rhymes with nostalgia's container-nesting discipline, plus a pickle supply-chain backdoor with a `LedgerModel.infer` trigger that rhymes with Node's "handout ships the loader for the exploit." The [BroncoCTF 2026 beginner + forensics + misc writeup](/ctf-writeups/broncoctf-2026-beginner-forensics-misc-writeup/) covers a Bundle 99 six-layer format staircase and a Zip Zip Hooray 1,251-layer archive stack. Full [CTF writeups index](/ctf-writeups/) for the rest.
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question","name": "What is OmniCTF 2026 Quals?","acceptedAnswer": {"@type": "Answer","text": "OmniCTF 2026 Quals is the qualifier round of the OmniCTF 2026 competition, with challenges spanning web, pwn, reverse, crypto, game, misc, and forensics. Flags use event-specific namespaces. This writeup covers the four misc challenges I solved (baccarat, Node, nostalgia, Sanity P0zzl3). Paired web/pwn/reverse/crypto/game writeups on the same site cover the other tracks. Per-challenge READMEs and solvers at github.com/Abdelkad3r/OmniCTF-2026-Quals."}},
+    {"@type": "Question","name": "What is OmniCTF 2026 Quals?","acceptedAnswer": {"@type": "Answer","text": "OmniCTF 2026 Quals is the qualifier round of the OmniCTF 2026 competition, with challenges spanning web, pwn, reverse, crypto, game, misc, and forensics. Flags use event-specific namespaces. This writeup covers the four misc challenges I solved (baccarat, Node, nostalgia, Sanity P0zzl3) plus the QuackQuackDiriDiriDuck forensics challenge (Brad Duncan 2023-05-24 obama264 Qakbot infection PCAP, 9 of 10 sub-flags recovered). Paired web/pwn/reverse/crypto/game writeups on the same site cover the other tracks. Per-challenge READMEs and solvers at github.com/Abdelkad3r/OmniCTF-2026-Quals."}},
     {"@type": "Question","name": "Why does the baccarat challenge use Kelly x2 instead of full Kelly?","acceptedAnswer": {"@type": "Answer","text": "Full Kelly maximises log growth but takes ~940 bets on this roster's ~4.9e-3 nats-per-bet growth to reach the 100x target. The 180-second timeout doesn't accommodate that. Over-Kelly trades log growth for reach: Kelly x1 hits target 1.7% in 171 rounds; Kelly x2 hits 12.9% in 134; Kelly x5 drops to 5.7%. Kelly x2 sits on a broad viable plateau. Wrap in a reconnect loop; five attempts reach 50% chance, twenty attempts above 95%."}},
     {"@type": "Question","name": "How do you identify the weak baccarat agent?","acceptedAnswer": {"@type": "Answer","text": "The five agents ship with docstrings that announce their strength tier. blackshard is 'timid, refuses good draws' (weak), voltaicai is 'over-draws far past 6' (weak), omnicybr is 'ideal' (strong), northstar is 'near-ideal', nipcat is 'noisy threshold'. Every table where blackshard is on one side has 5.3-6.7% edge for the other side. Simulate each roster pair for 50k rounds with the handout's own game.py to get exact edges, then bet the favoured side."}},
     {"@type": "Question","name": "How does Node's Node-RED unauth RCE flow work?","acceptedAnswer": {"@type": "Answer","text": "Node-RED 5.0.1 with no adminAuth exposes the admin API. POST /flows accepts a full flow definition; deploy http in → exec → change → http response. Exec node's useSpawn:false uses child_process.exec(cmd + payload) which wraps in /bin/sh -c, so command:'' + addpay:'payload' gives arbitrary shell RCE via POST /api/x. useSpawn:true tokenises on whitespace and confuses argv, so use false for arbitrary command strings."}},
@@ -669,8 +812,10 @@ For the same event's other tracks, the [OmniCTF 2026 Quals web writeup](/ctf-wri
     {"@type": "Question","name": "What's inside the nostalgia Scratch .sb3 file?","acceptedAnswer": {"@type": "Answer","text": ".sb3 is a ZIP. Inside is project.json + media assets. project.json has a Scratch list RISCV.ROM with 4,263,001 decimal-string byte entries. Reconstructing as raw bytes gives a bootable RISC-V Linux 6.1.14 kernel with embedded newc cpio initramfs (magic 070701). Inside the initramfs, root/readme.txt has console.log('OmniCTF{ig_bro_have_some_n0stalgiaaa-676767676789}') which is the flag."}},
     {"@type": "Question","name": "How do you parse a newc cpio archive?","acceptedAnswer": {"@type": "Answer","text": "Every entry starts with 6 bytes of 070701 magic, then 13 × 8-byte ASCII-hex fields, then namesize bytes of NUL-terminated name (4-byte-aligned), then filesize bytes of data (also 4-byte-aligned). Field 6 is filesize, field 11 is namesize. Iterate: read 110-byte header, read name (align to 4), read data (align to 4), stop when name is TRAILER!!!."}},
     {"@type": "Question","name": "How does the Sanity P0zzl3 jigsaw solver work?","acceptedAnswer": {"@type": "Answer","text": "100 transparent PNG pieces. Recover boundary curves from alpha (L[y], R[y], T[x], B[x]), classify each side as flat/tab/hole from the central-half deviation from the shoulder line (median of the two straight regions). Model as CP-SAT: 100 variables, AllDifferent, border cells constrained to correct flat side, internal seams constrained to tab/hole, minimise sum of edge-curve mismatch. OR-Tools solves in ~2.5 min. Render, then repair QR via purple thresholding + dilate + 17x17 close to bridge seam cuts, then QRCodeDetector."}},
-    {"@type": "Question","name": "What's the broader lesson from the OmniCTF 2026 Quals misc track?","acceptedAnswer": {"@type": "Answer","text": "Import the handout, don't rewrite it. Every challenge ships enough infrastructure that reproducing the exploit from first principles is strictly more work than using what the author provided. baccarat's game.py is a first-class simulator. Node's /entrypoint.sh names the misconfiguration. nostalgia's .sb3 is a ZIP with the whole RISC-V Linux image inline. Sanity P0zzl3's PNG alpha gives exact piece geometry. Trained triage catalogues what the handout gives before writing solver code."}},
-    {"@type": "Question","name": "Where can I find the solver scripts?","acceptedAnswer": {"@type": "Answer","text": "Per-challenge READMEs, handouts, and solver scripts at github.com/Abdelkad3r/OmniCTF-2026-Quals. baccarat, Node, and nostalgia solvers are pure Python stdlib. Sanity P0zzl3 needs pillow, numpy, opencv-python, and ortools. Node's solver deploys the flow, compiles the malicious .so in-container, triggers nodestatus, and prints the flag end-to-end. All four reproducible against fresh instances / handouts."}}
+    {"@type": "Question","name": "What's the broader lesson from the OmniCTF 2026 Quals misc + forensics tracks?","acceptedAnswer": {"@type": "Answer","text": "Import the handout, don't rewrite it. Every challenge ships enough infrastructure that reproducing the exploit from first principles is strictly more work than using what the author provided. baccarat's game.py is a first-class simulator. Node's /entrypoint.sh names the misconfiguration. nostalgia's .sb3 is a ZIP with the whole RISC-V Linux image inline. Sanity P0zzl3's PNG alpha gives exact piece geometry. QuackQuackDiriDiriDuck's PCAP filename indexes Brad Duncan's malware-traffic-analysis.net corpus, whose published notes are the ground-truth IoC list. Trained triage catalogues what the handout gives before writing solver code."}},
+    {"@type": "Question","name": "How do you identify Qakbot C2 in the QuackQuackDiriDiriDuck PCAP?","acceptedAnswer": {"@type": "Answer","text": "Cluster TLS ClientHellos by JA3, then filter for the no-SNI fingerprint 43016d7f7f9336b17c884650d0d2545d (JA4 t12i180600_... where the i marks no SNI). SChannel-style ClientHellos without SNI to non-standard ports (2222 in this case) don't happen for benign processes. tshark -Y 'tls.handshake.ja3 == 43016d7f7f9336b17c884650d0d2545d' -T fields -e ip.dst -e tcp.dstport | sort -u clusters the whole C2 conversation in one filter — four unique endpoints, all confirmed against Brad Duncan's published IoC list."}},
+    {"@type": "Question","name": "Why did Q2 (sender addresses alphabetically) fail on QuackQuackDiriDiriDuck?","acceptedAnswer": {"@type": "Answer","text": "The .example sanitisation on From:, Return-Path:, and Sender: headers in the handout produces multiple defensible sender-address sets (2 unique From:, 3 real Sender:, 5 real From: from Brad's originals), and none of the case/sort combinations were accepted by rCTF. Without a hint on which header field the grader keys off and whether it wants sanitised or de-sanitised forms, the sub-flag is ambiguous. 9 of 10 sub-flags recovered; skipping Q2 was the right call once the obvious permutations exhausted."}},
+    {"@type": "Question","name": "Where can I find the solver scripts?","acceptedAnswer": {"@type": "Answer","text": "Per-challenge READMEs, handouts, and solver scripts at github.com/Abdelkad3r/OmniCTF-2026-Quals. baccarat, Node, and nostalgia solvers are pure Python stdlib. Sanity P0zzl3 needs pillow, numpy, opencv-python, and ortools. QuackQuackDiriDiriDuck needs tshark / Wireshark and 7z for the WinZip-AES archive. Node's solver deploys the flow, compiles the malicious .so in-container, triggers nodestatus, and prints the flag end-to-end. All five reproducible against fresh instances / handouts."}}
   ]
 }
 </script>
