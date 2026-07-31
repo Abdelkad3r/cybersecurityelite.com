@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="D3CTF 2026 crypto writeup — D3HFERP multivariate public-key encryption over GF(3) with HFE core and Oil-Vinegar rows broken by direct msolve Gröbner basis solving of the 53-equation 31-variable overdetermined public MQ system augmented with GF(3) field equations yielding a degree-1 zero-dimensional ideal with unique plaintext preimage for each of the 7 ciphertext blocks">
   <defs>
     <linearGradient id="title-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ededef"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
-    <linearGradient id="accent-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <linearGradient id="accent-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
     <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0 L0 0 0 48" fill="none" stroke="#0d0d12" stroke-width="1"/></pattern>
     <radialGradient id="glow" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.10"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
   </defs>
@@ -19,8 +19,8 @@
   <text x="600" y="320" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#accent-grad)" letter-spacing="0.05em">CRYPTO &#183; STEP BY STEP</text>
   <text x="600" y="380" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="19" font-weight="500" fill="#9ba0a8" letter-spacing="0.03em">hfe &#183; oil-vinegar &#183; gf(3) mq system &#183; msolve &#183; degree-1 ideal</text>
   <g transform="translate(60, 510)">
-    <text x="0" y="0" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#a78bfa">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">msolve -f block0.msolve  &#8594;  degree of ideal: 1  &#8594;  unique preimage</tspan></text>
-    <text x="0" y="22" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#a78bfa">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef"># 53 eqs + 31 field eqs / 31 vars / GF(3)  &#8594;  flag</tspan></text>
+    <text x="0" y="0" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">msolve -f block0.msolve  &#8594;  degree of ideal: 1  &#8594;  unique preimage</tspan></text>
+    <text x="0" y="22" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef"># 53 eqs + 31 field eqs / 31 vars / GF(3)  &#8594;  flag</tspan></text>
   </g>
   <text x="60" y="600" font-family="ui-monospace, 'SFMono-Regular', Menlo, monospace" font-size="15" fill="#9ba0a8" letter-spacing="0.04em">cybersecurityelite.com</text>
   <g transform="translate(1075, 555)" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round">
