@@ -2,8 +2,8 @@
 title: "D3CTF 2026 PWN Writeup: d3kbus & d3kbus-revenge — Kernel Page-Cache Write via CRC32C Forgery"
 slug: "d3ctf-2026-pwn-writeup"
 description: "D3CTF 2026 PWN writeup for d3kbus and d3kbus-revenge: a custom Linux kernel module with a confused-ownership bug in its splice path commits a deferred CRC32C trailer into the backing page cache of an external file, giving any unprivileged user an aligned 4-byte page-cache write to any readable file — exploited by forging user_tag via meet-in-the-middle CRC32C solving to patch 16 dwords of /bin/busybox poweroff_main with a flag-reading shellcode stub, then triggering root to execute the patched binary."
-date: 2026-08-01T12:00:00Z
-lastmod: 2026-08-01T12:00:00Z
+date: 2026-07-31T20:00:00Z
+lastmod: 2026-07-31T20:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

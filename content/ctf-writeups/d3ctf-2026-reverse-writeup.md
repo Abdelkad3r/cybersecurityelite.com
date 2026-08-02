@@ -2,8 +2,8 @@
 title: "D3CTF 2026 Reverse Engineering Writeup: D3LLVM & PacMan — Mobile RE with OLLVM, MNN Runtime Trap, and Actor VM"
 slug: "d3ctf-2026-reverse-writeup"
 description: "D3CTF 2026 reverse engineering writeup for D3LLVM and PacMan: D3LLVM hides an ARM64 native validator VM behind OLLVM control-flow flattening inside a self-unpacking Android APK, then anchors half the AES-128-ECB flag key to MNN runtime callback operator names that differ from the static model graph — bypassed by Unicorn emulation plus MNN 3.6.1 Docker execution. PacMan is an iOS Pac-Man game whose flag is RC4-encrypted with a key derived by a 72-record deterministic actor VM baked into the ARM64 Mach-O — solved in 28 VM steps without running the game."
-date: 2026-08-01T14:00:00Z
-lastmod: 2026-08-01T14:00:00Z
+date: 2026-07-31T22:00:00Z
+lastmod: 2026-07-31T22:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
