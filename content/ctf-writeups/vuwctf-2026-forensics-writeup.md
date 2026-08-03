@@ -3,7 +3,7 @@ title: "VuwCTF 2026 Forensics Writeup: Byte-Pair RLE Decoding & FIGlet ASCII-Art
 slug: "vuwctf-2026-forensics-writeup"
 description: "VuwCTF 2026 forensics writeup for the challenge 'compression': an unknown compressed.dat that file(1) reports as raw data turns out to be a custom (count, byte) run-length-encoded stream. Decoding the byte pairs expands to a seven-line ASCII-art banner, which is a FIGlet rendering (varsity font) of the flag — confirmed exactly by re-rendering the candidate flag with pyfiglet."
 date: 2026-08-03T15:00:00Z
-lastmod: 2026-08-03T15:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -48,7 +48,7 @@ cover:
   alt: "VuwCTF 2026 forensics writeup — the compression challenge ships an unknown file compressed.dat that the file command reports only as data with no recognizable archive or image magic bytes, but a hex dump reveals a repeating pattern of a small integer byte followed by a printable ASCII byte such as space underscore and backslash which is a custom run-length encoding where each pair is a count and a value; decoding the (count, byte) pairs and appending count copies of value expands the 1900-byte stream into a 2182-byte seven-line ASCII-art banner that is a FIGlet rendering in the varsity font of the flag confirmed exactly by re-rendering the candidate flag with pyfiglet and comparing line by line after trimming trailing whitespace"
 ---
 
-VuwCTF 2026's forensics entry, **compression** (100 pts, Easy), is a clean two-layer puzzle: first identify a *homemade* compression format that no tool recognizes, then realize the decompressed payload isn't text you read — it's text you *render*. The file is a custom byte-pair run-length encoding, and once expanded it's a FIGlet ASCII-art banner spelling the flag. This writeup walks the full chain: triage → recognizing the RLE from a hex dump → writing the four-line decompressor → identifying the FIGlet font → verifying the flag exactly with `pyfiglet`.
+This **CyberSecurity Elite** forensics writeup walks through **VuwCTF 2026**'s **compression** challenge (100 pts, Easy), a clean two-layer puzzle: first identify a *homemade* compression format that no tool recognizes, then realize the decompressed payload isn't text you read — it's text you *render*. The file is a custom byte-pair run-length encoding, and once expanded it's a FIGlet ASCII-art banner spelling the flag. This writeup walks the full chain: triage → recognizing the RLE from a hex dump → writing the four-line decompressor → identifying the FIGlet font → verifying the flag exactly with `pyfiglet`.
 
 Challenge files and the solver are at [Abdelkad3r/VuwCTF-2026](https://github.com/Abdelkad3r/VuwCTF-2026/tree/master/Forensics/compression). Companion post from the same event: [VuwCTF 2026 Cryptography Writeup](/ctf-writeups/vuwctf-2026-crypto-writeup/).
 

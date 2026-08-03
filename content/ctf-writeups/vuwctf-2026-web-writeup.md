@@ -3,7 +3,7 @@ title: "VuwCTF 2026 Web Writeup: Double URL-Decode Null-Byte Path Traversal & a 
 slug: "vuwctf-2026-web-writeup"
 description: "VuwCTF 2026 web writeup covering both challenges: just-download-it (a Flask image host where a double URL-decode smuggles a null byte past the .png guard, enabling path traversal, and a 403-vs-404 status-code oracle leaks the flag one byte per file) and ant-universe (a PHP forum that never verifies the login password combined with bcrypt's silent 72-byte truncation, engineered so user 3's 71-byte JSON prefix leaves only the first password character inside the hash window — a single-character brute force)."
 date: 2026-08-03T16:15:00Z
-lastmod: 2026-08-03T16:15:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -50,7 +50,7 @@ cover:
   alt: "VuwCTF 2026 web writeup — two challenges covering just-download-it a Flask image-sharing service whose files route checks that a filename ends in .png and contains no raw null byte but then calls unquote a second time on the already-decoded query parameter so a double-encoded percent-two-five-zero-zero smuggles a null byte past both guards and the split on chr zero strips the .png suffix enabling path traversal through os.path.join to arbitrary files while a mismatch between the raw open used for the key check and send_from_directory used for delivery creates a 403 versus 404 status-code oracle that leaks the eight single-character flag files one byte at a time; and ant-universe a 1999-themed PHP forum whose login endpoint never verifies the submitted password and whose bcrypt hashing silently truncates its input to 72 bytes so user 3 whose json-encoded prefix of date and 37-character username is exactly 71 bytes leaves only the first password character inside the bcrypt window reducing the attack to a single printable-ascii brute force that unlocks the private blog"
 ---
 
-VuwCTF 2026's web track was two lessons in *boundary mismatches*: two components that each look correct in isolation but disagree about what the input means. **just-download-it** (100 pts, Easy) is a Flask image host where the validator and the file-opener decode the path a different number of times — a double URL-decode that smuggles a null byte past a `.png` filter, plus a `403`-vs-`404` oracle that leaks the flag byte by byte. **ant-universe** (a 1999-era PHP forum) pairs a login endpoint that never checks the password with bcrypt's silent 72-byte truncation, hand-tuned so exactly one character of the target user's password lands inside the hash window. This writeup solves both step by step.
+This **CyberSecurity Elite** web exploitation writeup dissects **VuwCTF 2026**'s web track — two lessons in *boundary mismatches*, where two components each look correct in isolation but disagree about what the input means. **just-download-it** (100 pts, Easy) is a Flask image host where the validator and the file-opener decode the path a different number of times — a double URL-decode that smuggles a null byte past a `.png` filter, plus a `403`-vs-`404` oracle that leaks the flag byte by byte. **ant-universe** (a 1999-era PHP forum) pairs a login endpoint that never checks the password with bcrypt's silent 72-byte truncation, hand-tuned so exactly one character of the target user's password lands inside the hash window. This writeup solves both step by step.
 
 Application source, exploit scripts, and artifacts are at
 [Abdelkad3r/VuwCTF-2026](https://github.com/Abdelkad3r/VuwCTF-2026/tree/master/Web).
