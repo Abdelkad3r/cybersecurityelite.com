@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 Blockchain Writeup: Finality Cache + Canopy Cache"
 slug: "anti-slopctf-2026-blockchain-writeup"
 description: "Step-by-step blockchain-track writeups for Anti-Slop CTF 2026. Finality Cache: bridge receipt commitment patch. Canopy Cache: PackBits decompression overwrites the bind table after validation."
 date: 2026-06-22T22:30:00Z
-lastmod: 2026-06-22T22:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -36,7 +36,7 @@ cover:
   alt: "Anti-Slop CTF 2026 blockchain writeup — Finality Cache receipt commitment patch and Canopy Cache PackBits overflow into the bind table"
 ---
 
-Fifth and final per-category post in the Anti-Slop CTF 2026 series. The earlier writeups covered [web](/ctf-writeups/anti-slopctf-2026-web-writeup/) (HTTP parsers), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) (ECDSA nonce attack + SHA-256 length extension), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/) (Bellcore CRT fault + leak-and-overwrite + GCM forge chain), and [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/) (HNP CVP + CBC-MAC splice). This one walks the two blockchain-track challenges in the same step-by-step format.
+This **CyberSecurity Elite** blockchain writeup is the fifth and final per-category post in the **Anti-Slop CTF 2026** series. The earlier writeups covered [web](/ctf-writeups/anti-slopctf-2026-web-writeup/) (HTTP parsers), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) (ECDSA nonce attack + SHA-256 length extension), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/) (Bellcore CRT fault + leak-and-overwrite + GCM forge chain), and [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/) (HNP CVP + CBC-MAC splice). This one walks the two blockchain-track challenges in the same step-by-step format.
 
 A note before starting: "blockchain" here means *bridge-style protocol with custom commitments*, not Solidity smart contracts. There's no Solidity, no Foundry, no EVM. Both challenges ship a custom binary that plays the role of a guardian/relayer service. The bugs are in how those guardians validate and consume bytes, not in any on-chain contract. If you came looking for a reentrancy bug or a TWAP oracle attack, the [SCTF 2026 writeup](/ctf-writeups/sctf-2026-writeup/) is the post you want.
 

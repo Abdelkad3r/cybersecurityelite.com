@@ -3,7 +3,7 @@ title: "HASBLCTF 2026 Pwn Writeup: All 5 Challenges Solved"
 slug: "hasblctf-2026-pwn-writeup"
 description: "HASBLCTF 2026 pwn writeup — all 5 binary exploitation challenges solved: ret2win, int16 wrap, shellcode injection, jmp rdx gadget chain, and ROP."
 date: 2026-06-01T04:00:00Z
-lastmod: 2026-06-01T04:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -56,7 +56,7 @@ cover:
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Pwn (Linux x86-64)" skills="ret2win with movaps stack alignment, int16 signed overflow, mmap RWX shellcode injection, register-controlled jmp into pre-built gadget chain, classic ROP with SysV-ABI argument-register setup, pwntools payload construction, checksec mitigation analysis" >}}
 
-**HASBL CTF 2026** is a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Pwn track** — the five pwn challenges (`baby-bufferoverflow`, `candy-store`, `baby-shellcoder`, `jumper`, `padawan-pwn`) were all solved, and each one teaches a different beginner-to-intermediate binary-exploitation primitive: ret2win with the `movaps` 16-byte stack-alignment trap, a signed-vs-unsigned integer-width bug exploitable via menu interaction, direct shellcode execution on an `mmap`'d RWX page, a 7-byte shellcode budget that has to set `rdx` for a hard-coded `jmp rdx` into the binary's own gadget chain, and a full ROP chain that loads three argument registers before calling a flag-printing function.
+In this **CyberSecurity Elite** pwn writeup, we solve all five pwn challenges from **HASBLCTF 2026**, a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Pwn track** — the five pwn challenges (`baby-bufferoverflow`, `candy-store`, `baby-shellcoder`, `jumper`, `padawan-pwn`) were all solved, and each one teaches a different beginner-to-intermediate binary-exploitation primitive: ret2win with the `movaps` 16-byte stack-alignment trap, a signed-vs-unsigned integer-width bug exploitable via menu interaction, direct shellcode execution on an `mmap`'d RWX page, a 7-byte shellcode budget that has to set `rdx` for a hard-coded `jmp rdx` into the binary's own gadget chain, and a full ROP chain that loads three argument registers before calling a flag-printing function.
 
 This is the master writeup for the pwn track. Each challenge below covers the binary's mitigations, the vulnerability, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts, disassembly listings, and pwntools payloads — live in the source repository: [Abdelkad3r/hasblctf-2026](https://github.com/Abdelkad3r/hasblctf-2026).
 

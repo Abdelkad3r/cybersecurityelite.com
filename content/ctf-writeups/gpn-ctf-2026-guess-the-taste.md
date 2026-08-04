@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Guess the Taste: NTRU Missing mod q (Unintended)"
 slug: "gpn-ctf-2026-guess-the-taste"
 description: "GPN CTF 2026 Crypto: the NTRU ciphertext is never reduced modulo q. c mod p == m drops out for free. Two lines of Python recover the message; the intended BKZ-50 lattice attack also works."
 date: 2026-06-07T18:00:00Z
-lastmod: 2026-06-07T18:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -33,7 +33,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Crypto — labelled Hard, solved as Easy" os="Crypto — NTRU encryption, ternary plaintext, mod q reduction bug" skills="observing the protocol output to spot c values exceeding the q=512 bound, recognising p · r · h ≡ 0 (mod p) lets c mod p leak the plaintext directly, building the standard NTRU lattice basis for the intended BKZ-50 attack, verifying both paths recover the same flag" >}}
 
-**Guess the Taste** ships an NTRU encryption challenge that should have required hours of lattice reduction. The implementation drops the `mod q` reduction at the end of encryption, so `c mod p ≡ m` recovers the plaintext directly — **two lines of Python**. The flag is `GPNCTF{sOM7IMe5_4lL_YOu_NeED_1S_luCk}`, and the wink at the end is that the intended BKZ-50 lattice attack also recovers the same message in ~30 minutes, confirming the bug is the specific unintended side channel and not a deeper protocol failure.
+In this **CyberSecurity Elite** crypto writeup, we solve GPN CTF 2026's **Guess the Taste**, an NTRU encryption challenge that should have required hours of lattice reduction. The implementation drops the `mod q` reduction at the end of encryption, so `c mod p ≡ m` recovers the plaintext directly — **two lines of Python**. The flag is `GPNCTF{sOM7IMe5_4lL_YOu_NeED_1S_luCk}`, and the wink at the end is that the intended BKZ-50 lattice attack also recovers the same message in ~30 minutes, confirming the bug is the specific unintended side channel and not a deeper protocol failure.
 
 This is the standalone deep-dive on `crypto/guess-the-taste` from the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/). The full meta-narrative for the *Best Unintended Solution* prize submission lives at [`meta/unintended-solution.md`](https://github.com/Abdelkad3r/gpn-ctf-2026/blob/master/meta/unintended-solution.md).
 

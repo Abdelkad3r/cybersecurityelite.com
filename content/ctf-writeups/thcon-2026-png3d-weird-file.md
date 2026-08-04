@@ -3,7 +3,7 @@ title: "THCON 2026 PNG3D: Hidden PNG Inside Two Emojis (weird_file.thc)"
 slug: "thcon-2026-png3d-weird-file"
 description: "THCON 2026 PNG3D walkthrough — a 40 MB .thc file looks like noise but is binary-encoded with thumbs-up/down emojis. Decoding MSB-first reveals a full PNG."
 date: 2026-05-16T12:00:00Z
-lastmod: 2026-05-16T12:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="THCON 2026 (Toulouse Hacking Convention)" difficulty="Medium" os="Steganography" skills="Frequency analysis, binary encoding, PNG carving, LSB steganography" >}}
 
-PNG3D is the steganography challenge that rewards the simplest possible recon move — frequency analysis — and punishes anyone who tries fancy stego tools first. The challenge file is ~40 MB of UTF-8 text that looks like noise; the trick is to notice that **two** specific characters make up nearly all of it, in roughly equal numbers, and that's a binary encoding screaming to be decoded.
+Here at **CyberSecurity Elite**, we cracked **THCON 2026**'s **PNG3D**, the steganography challenge that rewards the simplest possible recon move — frequency analysis — and punishes anyone who tries fancy stego tools first. The challenge file is ~40 MB of UTF-8 text that looks like noise; the trick is to notice that **two** specific characters make up nearly all of it, in roughly equal numbers, and that's a binary encoding screaming to be decoded.
 
 Source: [Abdelkad3r/thcon-ctf-2026 · 03-stego-weird-file/](https://github.com/Abdelkad3r/thcon-ctf-2026/tree/main/03-stego-weird-file).
 

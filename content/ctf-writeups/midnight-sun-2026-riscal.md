@@ -3,7 +3,7 @@ title: "Midnight Sun 2026 riscal: RISC-V Binary With Flag in .rodata"
 slug: "midnight-sun-2026-riscal"
 description: "Midnight Sun CTF 2026 riscal writeup — RISC-V 64-bit ELF validates input against a hardcoded string in .rodata. Solve with `strings | grep midnight`."
 date: 2026-05-16T12:45:00Z
-lastmod: 2026-05-16T12:45:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="Midnight Sun CTF 2026 Quals" difficulty="Trivial" os="RISC-V 64-bit Linux" skills="strings(1), reading the rules" >}}
 
-`riscal` is the kind of challenge that gets harder the more you respect the category label. *"Reverse engineering"* + *"RISC-V"* primes you to spin up a cross-disassembler, set up a `qemu-user` static binary, learn the RV64 calling convention, and start manually annotating decompilation. The intended solve is `strings`.
+**Midnight Sun CTF 2026**'s `riscal` is the kind of challenge that gets harder the more you respect the category label — this **CyberSecurity Elite** reverse writeup takes the shortcut. *"Reverse engineering"* + *"RISC-V"* primes you to spin up a cross-disassembler, set up a `qemu-user` static binary, learn the RV64 calling convention, and start manually annotating decompilation. The intended solve is `strings`.
 
 Source: [Abdelkad3r/midnight-sun-ctf-2026-quals · riscal/](https://github.com/Abdelkad3r/midnight-sun-ctf-2026-quals/tree/main/riscal).
 

@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 Web Writeup: Slipstream Cache + SloppedRider"
 slug: "anti-slopctf-2026-web-writeup"
 description: "Step-by-step web writeup for Anti-Slop CTF 2026. Slipstream Cache: TLV parser-split + blind RSA. SloppedRider: SSRF reflection leaks the HMAC key for a forged ride ticket."
 date: 2026-06-21T22:00:00Z
-lastmod: 2026-06-21T22:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -38,7 +38,7 @@ cover:
   alt: "Anti-Slop CTF 2026 web writeup — Slipstream Cache TLV parser split and SloppedRider SSRF-to-HMAC-key leak"
 ---
 
-The premise of Anti-Slop CTF 2026 is in the name. It's a CTF built to punish lazy solving and reward people who read code. The web track had two challenges that hit that brief exactly: **Slipstream Cache**, a custom package registry whose signature verifier and installer disagreed about which bytes were authenticated, and **SloppedRider**, a Node app whose error path leaked the HMAC key that signed its own score tickets. Neither one falls to a tool. Both fall to a careful read.
+The premise of **Anti-Slop CTF 2026** is in the name, and this **CyberSecurity Elite** web writeup leans into it. It's a CTF built to punish lazy solving and reward people who read code. The web track had two challenges that hit that brief exactly: **Slipstream Cache**, a custom package registry whose signature verifier and installer disagreed about which bytes were authenticated, and **SloppedRider**, a Node app whose error path leaked the HMAC key that signed its own score tickets. Neither one falls to a tool. Both fall to a careful read.
 
 This writeup walks both challenges end-to-end, in the order I actually worked them during the event. The goal is reproducibility. Anyone holding the same handouts should be able to follow these steps and land both flags. Source artefacts and full solver scripts live at [Abdelkad3r/Anti-SlopCTF-2026/web](https://github.com/Abdelkad3r/Anti-SlopCTF-2026/tree/main/web).
 

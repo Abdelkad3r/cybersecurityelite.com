@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Customer Service: Three Bugs in a holpy Proof Checker"
 slug: "gpn-ctf-2026-customer-service"
 description: "GPN CTF 2026 Misc: list == 1 typo, every thm is re-axiomatized, win check matches false by name. Declare a homemade false constant, axiomatize it, ship a one-line proof."
 date: 2026-06-07T19:50:00Z
-lastmod: 2026-06-07T19:50:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -33,7 +33,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Misc — holpy proof checker, LCF-style higher-order logic" skills="reading 115 lines of checker glue around holpy's monitor, spotting list == 1 as a dead branch, recognising Theorem.get_extension always re-axiomatizes, exploiting concl.is_const('false') as a name comparison in an EmptyTheory scope, declaring a homemade false constant and proving it with a one-line theorem rule" >}}
 
-**Customer Service** is the GPN CTF 2026 misc challenge that builds an LCF-style higher-order-logic proof assistant from [holpy](https://github.com/Mr-Pine/holpy), pretends to forbid axioms, and gets its guard wrong three ways. The exploit is a three-item JSON payload: declare a `false` constant of our own, axiomatize it, ship a one-line proof. The flag spells the lesson:
+Here at **CyberSecurity Elite**, we tackled **Customer Service**, the GPN CTF 2026 misc challenge that builds an LCF-style higher-order-logic proof assistant from [holpy](https://github.com/Mr-Pine/holpy), pretends to forbid axioms, and gets its guard wrong three ways. The exploit is a three-item JSON payload: declare a `false` constant of our own, axiomatize it, ship a one-line proof. The flag spells the lesson:
 
 ```
 GPNCTF{Ex-Un4-Line4-VACu4-sEqui7ur-QuOdl1b3t}

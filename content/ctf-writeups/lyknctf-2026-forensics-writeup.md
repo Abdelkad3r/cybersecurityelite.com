@@ -3,7 +3,7 @@ title: "LYKNCTF 2026 Forensics Writeup: 4 Challenges Solved"
 slug: "lyknctf-2026-forensics-writeup"
 description: "Step-by-step LYKNCTF 2026 forensics writeup — four challenges covering PNG eXIf/tEXt metadata trap with repeating-key XOR, red-channel LSB PNG stego with decoy IEND trailer, JPEG masquerading as .png with an appended ZIP archive whose EOCD self-locates, and a TRC-20 USDT chain trace on TRON hitting an OFAC-sanctioned FUNNULL wallet before landing in a Bitget hot wallet."
 date: 2026-07-11T02:00:00Z
-lastmod: 2026-07-11T02:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -52,7 +52,7 @@ cover:
   alt: "LYKNCTF 2026 forensics writeup — four challenges solved covering PNG metadata XOR, red-channel LSB stego, JPEG-as-PNG ZIP append, and TRON USDT OFAC chain trace"
 ---
 
-LYKNCTF 2026's forensics track is small but well-shaped: four challenges that cover the whole spectrum of file-format triage, from PNG chunk parsing and repeating-key XOR through steganographic LSB extraction and polyglot ZIP appending to a real on-chain USDT trace on TRON that ends at an OFAC-sanctioned wallet before landing in a Bitget hot wallet. Each challenge deliberately ships a decoy layer (an EXIF cover story, an `IEND` trailer with a fake "password hint," a `.png` extension that lies about the container format, a suggestive first hop) that looks like the answer if you stop reading too early.
+**LYKNCTF 2026**'s forensics track is small but well-shaped, and this **CyberSecurity Elite** writeup walks all four solves — challenges that cover the whole spectrum of file-format triage, from PNG chunk parsing and repeating-key XOR through steganographic LSB extraction and polyglot ZIP appending to a real on-chain USDT trace on TRON that ends at an OFAC-sanctioned wallet before landing in a Bitget hot wallet. Each challenge deliberately ships a decoy layer (an EXIF cover story, an `IEND` trailer with a fake "password hint," a `.png` extension that lies about the container format, a suggestive first hop) that looks like the answer if you stop reading too early.
 
 This writeup walks all four forensics solves in the order they appear in the repository: Photograph (PNG with an eXIf decoy and a `Description` tEXt chunk carrying a repeating-key-XOR ciphertext), WorldCup 1 (PNG red-channel LSB stego with a decoy `HIDDEN_DATA_START` trailer after `IEND`), WorldCup 2 (JPEG under a `.png` extension with a ZIP appended after `FFD9` whose End-of-Central-Directory self-locates), and Follow The Layer (TRC-20 USDT hop-by-hop trace via TronGrid, cross-checked against OFAC's SDN feed, stopping at a `Bitget 9` hot wallet where the money co-mingles with 20 million other transactions).
 

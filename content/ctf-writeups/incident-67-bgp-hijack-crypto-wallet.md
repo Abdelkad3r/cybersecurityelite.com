@@ -3,7 +3,7 @@ title: "Incident 67: BGP Sub-Prefix Hijack of a Crypto Wallet (SAS CTF 2026 Qual
 slug: "incident-67-bgp-hijack-crypto-wallet"
 description: "Detailed BGP sub-prefix hijack against a crypto wallet gateway — FRR config, RIB origin trick, DNS sinkhole, TLS MitM, and full transaction capture."
 date: 2026-06-04T13:00:00Z
-lastmod: 2026-06-04T13:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -48,7 +48,7 @@ cover:
 
 {{< ctf-meta platform="SAS CTF 2026 Quals" difficulty="Hard" os="Network — Alpine Linux + FRR 10.0" skills="BGP sub-prefix hijack, FRR network-statement RIB origin, vtysh static routes, dnsmasq DNS sinkhole, OpenSSL self-signed certs, Python TLS termination + ALPN, RPKI/ROA defender perspective, IXP filtering" >}}
 
-**Incident 67** from the SAS CTF 2026 Quals was the kind of network challenge that rewards patience. The category badge said *"Network / BGP"* and the brief read like an Internet routing exam: you're a fresh hire at a small regional ISP, you've SSH'd into your edge router, and somewhere out on the public Internet there's a crypto wallet gateway you're not supposed to be able to touch. The router config is already half-built. The story all but tells you what to do.
+**Incident 67** from the SAS CTF 2026 Quals was the kind of network challenge that rewards patience, and this **CyberSecurity Elite** writeup walks its BGP sub-prefix hijack end to end. The category badge said *"Network / BGP"* and the brief read like an Internet routing exam: you're a fresh hire at a small regional ISP, you've SSH'd into your edge router, and somewhere out on the public Internet there's a crypto wallet gateway you're not supposed to be able to touch. The router config is already half-built. The story all but tells you what to do.
 
 The fun lives in the *execution* — every step has a subtle wall that costs you ten minutes if you haven't read carefully. The `network 10.0.1.0/24` statement is sitting right there in `frr.conf`, but it isn't advertising the prefix and the answer is buried in how FRR talks to the kernel RIB. The DNS server you'll spoof rejects your queries until you understand what `bind-interfaces` is doing. The wallet client speaks TLS 1.3 with ALPN, so you can't just netcat the socket and read the cleartext POST.
 

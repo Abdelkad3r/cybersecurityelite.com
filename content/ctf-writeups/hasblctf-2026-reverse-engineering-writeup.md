@@ -3,7 +3,7 @@ title: "HASBLCTF 2026 Reverse Engineering: All 4 Challenges Solved"
 slug: "hasblctf-2026-reverse-engineering-writeup"
 description: "HASBLCTF 2026 reverse engineering writeup — all 4 rev challenges solved: Go binary triage, anti-debug bypass, custom protocol, game-logic RE."
 date: 2026-06-01T03:00:00Z
-lastmod: 2026-06-01T03:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -46,7 +46,7 @@ cover:
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Reverse Engineering" skills="Go binary triage, static-only flag recovery, PE anti-debug bypass (PEB.BeingDebugged, x64dbg process scan, NtCreateThreadEx), custom binary protocol parsing, game-logic reverse engineering" >}}
 
-**HASBL CTF 2026** is a multi-category jeopardy event covering Reverse Engineering, Pwn, Web, and Forensics. This writeup is dedicated to the **Reverse Engineering track** — the four rev challenges (`baby-go`, `DebugMe`, `Pr0t0c0l1337`, `PamukTheCat`) were all solved, and each one teaches a different reverse-engineering skill: static-only recognition on a Go binary with debug symbols, anti-debug bypass on a Windows PE, custom binary-protocol parsing on a Linux PIE, and game-logic reverse engineering on a JRPG-shaped crackme.
+This **CyberSecurity Elite** reverse engineering writeup covers **HASBL CTF 2026**, a multi-category jeopardy event spanning Reverse Engineering, Pwn, Web, and Forensics. It is dedicated to the **Reverse Engineering track** — the four rev challenges (`baby-go`, `DebugMe`, `Pr0t0c0l1337`, `PamukTheCat`) were all solved, and each one teaches a different reverse-engineering skill: static-only recognition on a Go binary with debug symbols, anti-debug bypass on a Windows PE, custom binary-protocol parsing on a Linux PIE, and game-logic reverse engineering on a JRPG-shaped crackme.
 
 This is the master writeup for the rev track. Each challenge below covers the binary's structure, the bug or hidden constant, and the recovered flag. Full per-challenge reproductions — solver scripts, disassembly listings, and PEB/anti-debug primitive notes — live in the source repository: [Abdelkad3r/hasblctf-2026](https://github.com/Abdelkad3r/hasblctf-2026).
 

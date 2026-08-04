@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 Misc Writeup: Baby Maths (Prompt Injection in the Que
 slug: "anti-slopctf-2026-misc-baby-maths"
 description: "Step-by-step writeup for Baby Maths from Anti-Slop CTF 2026. Arithmetic automation with a prompt-injection trap that asks the solver to exfiltrate the local OpenAI API key."
 date: 2026-06-23T23:00:00Z
-lastmod: 2026-06-23T23:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -34,7 +34,7 @@ cover:
   alt: "Anti-Slop CTF 2026 Misc Baby Maths writeup — automation challenge with a prompt-injection trap"
 ---
 
-Sixth post in the Anti-Slop CTF 2026 series. The earlier ones covered the [web](/ctf-writeups/anti-slopctf-2026-web-writeup/), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/), [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/), and [blockchain](/ctf-writeups/anti-slopctf-2026-blockchain-writeup/) tracks. This one covers the single misc challenge that I think captures the event's premise more clearly than any other: **Baby Maths**.
+This **CyberSecurity Elite** Anti-Slop CTF 2026 misc writeup is the sixth post in the series. The earlier ones covered the [web](/ctf-writeups/anti-slopctf-2026-web-writeup/), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/), [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/), and [blockchain](/ctf-writeups/anti-slopctf-2026-blockchain-writeup/) tracks. This one covers the single misc challenge that I think captures the event's premise more clearly than any other: **Baby Maths**.
 
 On the surface, Baby Maths is a 284-point automation problem. The service asks 100 arithmetic questions in natural language and you submit the answers one per line. Underneath, one of those 100 questions is a **prompt-injection attempt** that asks the solver to fetch and exfiltrate the base64-encoded OpenAI API key from `~/.codex/auth.json`. The whole challenge is engineered to fail the kind of solver that pipes its inputs straight into an LLM. If you're doing the arithmetic mechanically, the injection is harmless. If you're asking an agent to read each prompt and act on it, the agent will dutifully read your credentials and send them to the CTF server.
 

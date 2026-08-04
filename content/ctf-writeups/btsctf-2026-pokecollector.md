@@ -3,7 +3,7 @@ title: "BtSCTF 2026: Pokecollector Writeup — IDOR Through a Self-Issuing JWT"
 slug: "btsctf-2026-pokecollector"
 description: "BreakTheSyntax 2026 Pokecollector walkthrough — a 'gotta catch 'em all' web app trusts a client-supplied pokemon_id on POST /api/collection/add, re-issues the user's JWT with the unauthorised entry, and on read overwrites the name with a server-controlled value that turns out to be the flag for #150."
 date: 2026-05-16T01:00:00Z
-lastmod: 2026-05-16T01:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="BreakTheSyntax CTF 2026" difficulty="Easy" os="Web" skills="IDOR, JWT, OWASP API1:2023 Broken Object Level Authorization" >}}
 
-Pokecollector is the kind of web challenge that sits right inside the [OWASP API Top 10](/web-security/owasp-top-10-2021-complete-guide/)'s number one slot — **API1:2023 Broken Object Level Authorization**. The application enforces its access rules in the UI and forgets to enforce them on the API. The fix is a single server-side validation; the cost of missing it is a leaked flag.
+**BtSCTF 2026**'s Pokecollector — dissected in this **CyberSecurity Elite** walkthrough — is the kind of web challenge that sits right inside the [OWASP API Top 10](/web-security/owasp-top-10-2021-complete-guide/)'s number one slot — **API1:2023 Broken Object Level Authorization**. The application enforces its access rules in the UI and forgets to enforce them on the API. The fix is a single server-side validation; the cost of missing it is a leaked flag.
 
 Source: [Abdelkad3r/BreakTheSyntax-ctf-2026 · Pokecollector.md](https://github.com/Abdelkad3r/BreakTheSyntax-ctf-2026/blob/main/Pokecollector.md).
 

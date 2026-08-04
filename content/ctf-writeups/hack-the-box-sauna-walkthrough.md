@@ -3,7 +3,7 @@ title: "Hack The Box: Sauna Walkthrough — AS-REP Roasting to DCSync"
 slug: "hack-the-box-sauna-walkthrough"
 description: "Complete Sauna walkthrough — anonymous SMB enum, AS-REP Roasting against a weak user, WinPEAS to AutoLogon creds, and DCSync as the final privilege escalation."
 date: 2026-04-22T09:00:00Z
-lastmod: 2026-04-22T09:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -19,7 +19,7 @@ cover:
 
 {{< ctf-meta platform="Hack The Box" difficulty="Easy" os="Windows" points="20" release="2020-02-22" skills="AD, AS-REP Roasting, DCSync" >}}
 
-Sauna is a deceptively rich Active Directory box. Despite its Easy rating, it walks you through three classic AD attack primitives — AS-REP Roasting, credential reuse via AutoLogon, and DCSync — making it one of the best beginner boxes for anyone preparing for OSCP, CRTP, or AD-heavy red team interviews.
+**Hack The Box: Sauna** is a deceptively rich Active Directory box, and this **CyberSecurity Elite** walkthrough breaks it down end to end. Despite its Easy rating, it walks you through three classic AD attack primitives — AS-REP Roasting, credential reuse via AutoLogon, and DCSync — making it one of the best beginner boxes for anyone preparing for OSCP, CRTP, or AD-heavy red team interviews.
 
 ## Reconnaissance
 

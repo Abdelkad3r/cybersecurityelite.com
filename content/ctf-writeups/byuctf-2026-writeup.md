@@ -3,7 +3,7 @@ title: "BYUCTF 2026 Writeup: All 15 Challenges"
 slug: "byuctf-2026-writeup"
 description: "BYUCTF 2026 full writeup — crypto, forensics, reverse and web. All 15 challenges solved with methodology, exploit code, and the lessons learned."
 date: 2026-05-30T21:00:00Z
-lastmod: 2026-05-30T21:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -48,7 +48,7 @@ cover:
 
 {{< ctf-meta platform="BYUCTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Crypto, Forensics, Reverse, Web)" skills="Coppersmith small-roots, multi-prime RSA, Euler totient tower reduction, YARA constraint solving, NTP/ICMP/HTTP pcap forensics, Go reverse engineering, Python prototype pollution, CSP bypass" >}}
 
-**BYUCTF 2026** is Brigham Young University's annual capture-the-flag, hosted on the **Cyber Jousting** infrastructure (`chals.cyberjousting.com`). The 2026 edition runs fifteen challenges across four classic jeopardy categories — Crypto, Forensics, Reverse, and Web — with a heavy *Portal*-flavoured forensics arc starring GLaDOS, Wheatley, and the cake-is-a-lie ICMP/NTP/HTTP capture.
+Here at **CyberSecurity Elite**, we tackled **BYUCTF 2026**, Brigham Young University's annual capture-the-flag, hosted on the **Cyber Jousting** infrastructure (`chals.cyberjousting.com`). The 2026 edition runs fifteen challenges across four classic jeopardy categories — Crypto, Forensics, Reverse, and Web — with a heavy *Portal*-flavoured forensics arc starring GLaDOS, Wheatley, and the cake-is-a-lie ICMP/NTP/HTTP capture.
 
 This is the master writeup. Each challenge below covers the bug, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts, lattice constructions, and the Go disassembly — live in the source repository: [Abdelkad3r/byuctf-2026](https://github.com/Abdelkad3r/byuctf-2026).
 

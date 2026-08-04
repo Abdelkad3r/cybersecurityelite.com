@@ -3,7 +3,7 @@ title: "HASBLCTF 2026 Crypto Writeup: All 6 Challenges Solved"
 slug: "hasblctf-2026-crypto-writeup"
 description: "HASBLCTF 2026 crypto writeup — all 6 challenges solved: modular bijections, permutation undo, debug-leak shortcut, LFSR endianness, classic VIC cipher."
 date: 2026-06-01T06:00:00Z
-lastmod: 2026-06-01T06:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -53,7 +53,7 @@ cover:
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Crypto (Python + C)" skills="Modular multiplicative bijections, modular-inverse tables, permutation reversal, debug-print leakage exploitation, Galois LFSR + htonl endianness pitfalls, classic VIC cipher (straddling checkerboard + chain-addition keystream + special-character word substitution)" >}}
 
-**HASBL CTF 2026** is a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Crypto track** — the six crypto challenges (`baby-counting-fingers`, `baby-learns-obfuscation`, `baby-learns-walking`, `script-kiddie`, `head-team`, `VIC`) were all solved, and each one teaches a different applied-cryptography primitive: modular multiplicative bijections on `Z_n`, two-layer permutation-plus-multiplication ciphers, position-salted chained byte operations, debug-print leakage of an otherwise elaborate matrix cipher, dual Galois LFSRs ruined by an `htonl` endianness asymmetry, and a faithful textbook implementation of the Soviet **VIC hand-cipher** with straddling checkerboard and chain-addition keystream.
+Welcome to a **CyberSecurity Elite** cryptography writeup on **HASBL CTF 2026**, a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Crypto track** — the six crypto challenges (`baby-counting-fingers`, `baby-learns-obfuscation`, `baby-learns-walking`, `script-kiddie`, `head-team`, `VIC`) were all solved, and each one teaches a different applied-cryptography primitive: modular multiplicative bijections on `Z_n`, two-layer permutation-plus-multiplication ciphers, position-salted chained byte operations, debug-print leakage of an otherwise elaborate matrix cipher, dual Galois LFSRs ruined by an `htonl` endianness asymmetry, and a faithful textbook implementation of the Soviet **VIC hand-cipher** with straddling checkerboard and chain-addition keystream.
 
 This is the master writeup for the crypto track. Each challenge below covers the cipher primitives, the inversion path, and the recovered flag. Full per-challenge reproductions — solver scripts and handout files — live in the source repository: [Abdelkad3r/hasblctf-2026](https://github.com/Abdelkad3r/hasblctf-2026).
 

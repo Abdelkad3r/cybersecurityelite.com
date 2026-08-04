@@ -3,7 +3,7 @@ title: "BhAcKAri CTF 2026 Writeup: All 8 Challenges Solved"
 slug: "bhackari-ctf-2026-writeup"
 description: "BhAcKAri CTF 2026 full writeup — all 8 challenges solved across web, misc, crypto, and reverse with detailed methodology and end-to-end exploit chains."
 date: 2026-06-02T08:00:00Z
-lastmod: 2026-06-02T08:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -58,7 +58,7 @@ cover:
 
 {{< ctf-meta platform="BhAcKAri CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Web, Misc, Crypto, Reverse (Italian event)" skills="JavaScript deobfuscation + AES-256-CBC cookie C2 + sed shell-glob bypass, lighttpd HTTP CONNECT tunneling past url.access-deny, patched d8 V8 sandbox eval escape via shop-trusted credits, seed-keyed LSB steganography with shuffle order, Minecraft 1.21.10 .mcfunction Vigenère with floor-mod, Coppersmith partial-prime small-roots via Howgrave-Graham lattice, deterministic Python C-extension stage chain with SHA-256/CRC32 key derivation, manual Windows PE loader with 4-byte patches into 7-Zip's GetHandlerProperty2" >}}
 
-**BhAcKAri CTF 2026** is an Italian-themed jeopardy event whose infrastructure lives on the `.it` TLD (`challs.ctf.bhackari.it`) and whose challenges drip with **Venetian flavour** — the name itself is a play on *bacari*, the small wine-and-cicchetti taverns of Venice. The 2026 edition runs eight challenges across four categories (Web, Misc, Crypto, Reverse) and rewards careful reading of source code, binary disassembly, and protocol logs in roughly equal measure.
+This **CyberSecurity Elite** writeup breaks down **BhAcKAri CTF 2026**, an Italian-themed jeopardy event whose infrastructure lives on the `.it` TLD (`challs.ctf.bhackari.it`) and whose challenges drip with **Venetian flavour** — the name itself is a play on *bacari*, the small wine-and-cicchetti taverns of Venice. The 2026 edition runs eight challenges across four categories (Web, Misc, Crypto, Reverse) and rewards careful reading of source code, binary disassembly, and protocol logs in roughly equal measure.
 
 This is the full master writeup. All eight challenges (`BhAcKAri Streaming Service`, `Proxyproxy`, `Horses`, `Last Bacaro Standing`, `Cake`, `Eepy`, `Mystery`, `Don't Unpack Me`) were solved end-to-end. Each section below covers the surface, the bug class, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts, AES key recovery, lattice setups, and PE loader traces — live in the source repository: [Abdelkad3r/bhackari-ctf-2026](https://github.com/Abdelkad3r/bhackari-ctf-2026).
 

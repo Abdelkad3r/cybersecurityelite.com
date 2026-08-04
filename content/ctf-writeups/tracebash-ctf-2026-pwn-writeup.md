@@ -3,7 +3,7 @@ title: "TraceBash CTF 2026 Pwn Writeup: 2 Challenges Solved"
 slug: "tracebash-ctf-2026-pwn-writeup"
 description: "TraceBash CTF 2026 pwn track writeup — Banned Bytes badchars ROP with a socat PTY quoting wrinkle, and Legacy Ledger format-string %hn writes redirecting saved RIP into stack shellcode."
 date: 2026-06-27T14:30:00Z
-lastmod: 2026-06-27T14:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -38,7 +38,7 @@ cover:
   alt: "TraceBash CTF 2026 pwn writeup — Banned Bytes badchars ROP and Legacy Ledger format-string %hn writes to stack shellcode"
 ---
 
-Third post in the TraceBash CTF 2026 series on this site. The earlier ones cover [crypto](/ctf-writeups/tracebash-ctf-2026-crypto-writeup/) (small-subgroup DH, shared RSA prime, harmonic XOR, 16-bit seed brute) and [OSINT](/ctf-writeups/tracebash-ctf-2026-osint-writeup/) (geocaching pivot, Plus Codes, NYC DOB open data, cross-platform handle pivoting). This one walks the two pwn challenges in the same step-by-step format.
+Third post in the **CyberSecurity Elite** TraceBash CTF 2026 pwn series on this site. The earlier ones cover [crypto](/ctf-writeups/tracebash-ctf-2026-crypto-writeup/) (small-subgroup DH, shared RSA prime, harmonic XOR, 16-bit seed brute) and [OSINT](/ctf-writeups/tracebash-ctf-2026-osint-writeup/) (geocaching pivot, Plus Codes, NYC DOB open data, cross-platform handle pivoting). This one walks the two pwn challenges in the same step-by-step format.
 
 **Banned Bytes** is a classic stack overflow into a ROP chain with two interesting wrinkles: a post-overflow byte filter strips `x`, `g`, `a`, `.` from the entire input (and the target filename `flag.txt` contains all four), and the remote service runs the binary behind `socat ... pty,stderr`, so any control byte in the wire payload gets eaten by the PTY's canonical mode line discipline. **Legacy Ledger** is the 446-point headline: a banking program leaks two stack pointers at startup, then passes attacker input to `printf` as the format string, and the binary was compiled with `-z execstack`. Three `%hn` writes redirect main's saved return address into in-buffer shellcode.
 

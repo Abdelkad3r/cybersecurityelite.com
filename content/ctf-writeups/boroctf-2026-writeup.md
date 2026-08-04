@@ -3,7 +3,7 @@ title: "boroCTF 2026 Writeup: 8 Challenges Solved Across Reverse, Web, and Foren
 slug: "boroctf-2026-writeup"
 description: "boroCTF 2026 full writeup — 5 reverse, 2 web, 1 forensics. XOR-7 ELFs, AHK hotstrings, LCG + marshal puzzle, PDF object streams, ImageTragick MVG label:@, and ext4 block slack."
 date: 2026-06-25T22:00:00Z
-lastmod: 2026-06-26T02:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -44,7 +44,7 @@ cover:
   alt: "boroCTF 2026 writeup — 8 challenges solved across reverse, web, and forensics"
 ---
 
-**boroCTF 2026** is a Jeopardy-style CTF with a tight, opinionated challenge set. This writeup covers eight challenges from the 2026 edition across reverse engineering, web exploitation, and forensics. The reverse track here is the heaviest at five challenges (a stripped XOR-7 ELF, an AutoHotkey hotstring keylogger, a Python LCG + `marshal.loads` puzzle, a tiny PDF object-stream stash, and a custom DSL whose interpreter has to be reverse-engineered from probing). The web track has two themed challenges (a Steins;Gate-flavoured IDOR and a Chainsaw Man-themed ImageTragick lab). The forensics track is one ext4 image whose flag hides in block slack.
+In this **CyberSecurity Elite** writeup we take on **boroCTF 2026**, a Jeopardy-style CTF with a tight, opinionated challenge set. This writeup covers eight challenges from the 2026 edition across reverse engineering, web exploitation, and forensics. The reverse track here is the heaviest at five challenges (a stripped XOR-7 ELF, an AutoHotkey hotstring keylogger, a Python LCG + `marshal.loads` puzzle, a tiny PDF object-stream stash, and a custom DSL whose interpreter has to be reverse-engineered from probing). The web track has two themed challenges (a Steins;Gate-flavoured IDOR and a Chainsaw Man-themed ImageTragick lab). The forensics track is one ext4 image whose flag hides in block slack.
 
 Each of the eight challenges below was solved end-to-end. Each section covers the surface, the bug or trick, the exploit chain, and the recovered flag. Full per-challenge reproductions (solver scripts, exact byte offsets, payload MVGs, the AlphaCode DSL semantics table) live in the source repository at [Abdelkad3r/boroCTF-2026](https://github.com/Abdelkad3r/boroCTF-2026).
 

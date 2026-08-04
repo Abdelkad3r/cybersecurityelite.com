@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 Crypto Writeup: Polynomial Drift + Sealed Signal"
 slug: "anti-slopctf-2026-crypto-writeup"
 description: "Step-by-step crypto writeups for Anti-Slop CTF 2026. Polynomial Drift: 24-bit ECDSA nonce leak solved as a CVP lattice. Sealed Signal: CBC-MAC splice past a domain header."
 date: 2026-06-22T21:30:00Z
-lastmod: 2026-06-22T21:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -37,7 +37,7 @@ cover:
   alt: "Anti-Slop CTF 2026 crypto writeup — Polynomial Drift CVP-based ECDSA recovery and Sealed Signal CBC-MAC splice"
 ---
 
-Fourth post in the Anti-Slop CTF 2026 series. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered HTTP parsers. The [reverse writeup](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) covered a quadratic ECDSA nonce and a SHA-256 length extension. The [pwn writeup](/ctf-writeups/anti-slopctf-2026-pwn-writeup/) covered a Bellcore CRT fault, a leak-then-overwrite, and a five-stage GCM forge chain. This one walks the two crypto challenges in the same step-by-step format.
+Fourth post in the **CyberSecurity Elite** Anti-Slop CTF 2026 crypto series. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered HTTP parsers. The [reverse writeup](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) covered a quadratic ECDSA nonce and a SHA-256 length extension. The [pwn writeup](/ctf-writeups/anti-slopctf-2026-pwn-writeup/) covered a Bellcore CRT fault, a leak-then-overwrite, and a five-stage GCM forge chain. This one walks the two crypto challenges in the same step-by-step format.
 
 **Polynomial Drift** is the more mathematical of the two: a Rust TCP service signs capsule commits with ECDSA over secp256k1, but the VM that runs each capsule leaks the low 24 bits of the signing nonce. Eleven signatures plus an `fpylll` CVP solve recovers the private key. **Sealed Signal** is the more protocol-level of the two: a WebSocket relay uses CBC-MAC over two compatible capsule families, the cache-signing oracle accepts attacker-chosen blobs, and an XOR-cancellation against the fixed 16-byte cache header splices a valid MAC onto a forbidden resume capsule.
 

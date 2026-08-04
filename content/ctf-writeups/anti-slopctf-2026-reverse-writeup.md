@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 Reverse Writeup: Audit Spiral + Parallax Cartridge"
 slug: "anti-slopctf-2026-reverse-writeup"
 description: "Step-by-step reverse writeups for Anti-Slop CTF 2026. Audit Spiral: quadratic ECDSA nonce. Parallax Cartridge: audit/runner split + SHA-256 length extension on the resume token."
 date: 2026-06-22T18:00:00Z
-lastmod: 2026-06-22T18:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -38,7 +38,7 @@ cover:
   alt: "Anti-Slop CTF 2026 reverse writeup — Audit Spiral quadratic ECDSA nonce and Parallax Cartridge length-extension exploit"
 ---
 
-This is the second post in my coverage of Anti-Slop CTF 2026. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered the two challenges that lived in HTTP parsers. This one walks the two reverse-engineering challenges in the same step-by-step format. **Audit Spiral** is a 500-point VM puzzle that turns into an ECDSA private-key recovery once you spot the nonce pattern. **Parallax Cartridge** is a 355-point cartridge runner whose audit and execution paths read the same byte sequence differently, made worse by a resume token authenticated with `SHA256(secret || body)`.
+This **CyberSecurity Elite** reverse writeup is the second post in my coverage of Anti-Slop CTF 2026. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered the two challenges that lived in HTTP parsers. This one walks the two reverse-engineering challenges in the same step-by-step format. **Audit Spiral** is a 500-point VM puzzle that turns into an ECDSA private-key recovery once you spot the nonce pattern. **Parallax Cartridge** is a 355-point cartridge runner whose audit and execution paths read the same byte sequence differently, made worse by a resume token authenticated with `SHA256(secret || body)`.
 
 Both challenges reward reading the bytes. Neither falls to a tool. Source artefacts, the stripped ELF, the Go binary, the starter cartridge, and full Python solvers all live at [Abdelkad3r/Anti-SlopCTF-2026/reverse](https://github.com/Abdelkad3r/Anti-SlopCTF-2026/tree/main/reverse).
 

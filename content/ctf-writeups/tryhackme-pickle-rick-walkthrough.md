@@ -3,7 +3,7 @@ title: "TryHackMe: Pickle Rick Walkthrough — Web Exploitation for Beginners"
 slug: "tryhackme-pickle-rick-walkthrough"
 description: "Pickle Rick walkthrough — robots.txt and source review, command injection in a hidden portal, and sudo-based privilege escalation to all three ingredients."
 date: 2026-04-18T09:00:00Z
-lastmod: 2026-04-18T09:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -17,7 +17,7 @@ cover:
 
 {{< ctf-meta platform="TryHackMe" difficulty="Easy" os="Linux" points="10" release="2019-08-29" skills="Web enum, command injection, sudo abuse" >}}
 
-Pickle Rick is the room every new TryHackMe user solves first. It's a perfect introduction to the full pentest loop on a single host — enumeration, exploitation, and post-exploitation — with a forgiving difficulty curve.
+**TryHackMe Pickle Rick** is the room every new TryHackMe user solves first, and this **CyberSecurity Elite** walkthrough covers it end to end. It's a perfect introduction to the full pentest loop on a single host — enumeration, exploitation, and post-exploitation — with a forgiving difficulty curve.
 
 ## Enumeration
 

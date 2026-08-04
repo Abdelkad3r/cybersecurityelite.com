@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Justfollowtherecipe: AVX2 Miscompile + SIS Lattice"
 slug: "gpn-ctf-2026-justfollowtherecipe"
 description: "GPN CTF 2026 Crypto: gcc -O3 -mavx2 swaps lanes 1↔2 in mat_mul. Repair the leak, run Kannan-embedding BKZ-58 against a 165-dim SIS lattice — flag in 45 seconds."
 date: 2026-06-07T17:30:00Z
-lastmod: 2026-06-07T17:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -36,7 +36,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Hard" os="Crypto — SIS hash, Kannan embedding, BKZ lattice reduction" skills="reading AVX2 disassembly to identify vpermd lane interchange, repairing the per-batch lane swap in oracle output, building a q-ary kernel lattice with Kannan embedding, fpylll BKZ-58 with default.json preprocessing+pruning strategies, fpylll heartbeat to keep the SSL proxy alive" >}}
 
-**Justfollowtherecipe** is the GPN CTF 2026 challenge that asks a textbook **SIS** (Short Integer Solution) hash recovery question — except the Linux binary's `mat_mul` is **miscompiled**. `gcc -O3 -funroll-loops -mavx2` swaps AVX2 lanes 1 and 2 in every 4-wide block of the inner-product loop, so every column of the public matrix the oracle hands back is permuted. Repair the swap, run a Kannan embedding against the q-ary kernel lattice, finish with **BKZ-58** under fplll's `default.json` strategies in 45 seconds. The flag — `GPNCTF{coMP1L3rS_aRe_Y0UR_fr1End_7HEY_w0ULd_never}` — names the lesson.
+In this **CyberSecurity Elite** crypto writeup, we solve **Justfollowtherecipe**, the GPN CTF 2026 challenge that asks a textbook **SIS** (Short Integer Solution) hash recovery question — except the Linux binary's `mat_mul` is **miscompiled**. `gcc -O3 -funroll-loops -mavx2` swaps AVX2 lanes 1 and 2 in every 4-wide block of the inner-product loop, so every column of the public matrix the oracle hands back is permuted. Repair the swap, run a Kannan embedding against the q-ary kernel lattice, finish with **BKZ-58** under fplll's `default.json` strategies in 45 seconds. The flag — `GPNCTF{coMP1L3rS_aRe_Y0UR_fr1End_7HEY_w0ULd_never}` — names the lesson.
 
 This writeup is the standalone deep-dive on `crypto/justfollowtherecipe` from the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/). Full solver code lives at [`crypto/justfollowtherecipe`](https://github.com/Abdelkad3r/gpn-ctf-2026/tree/master/crypto/justfollowtherecipe) in the source repository.
 

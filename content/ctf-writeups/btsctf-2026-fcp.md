@@ -3,7 +3,7 @@ title: "BtSCTF 2026 FCP: Recover In-Memory RSA Key, Decrypt Resumed TLS"
 slug: "btsctf-2026-fcp"
 description: "BtSCTF 2026 FCP walkthrough — dump a Go MCP server's memory, find the in-memory RSA private key, decrypt resumed TLS sessions to recover the flag."
 date: 2026-05-16T00:00:00Z
-lastmod: 2026-05-16T00:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="BreakTheSyntax CTF 2026" difficulty="Hard" os="Linux" skills="TLS, RSA, Go memory forensics, EMS PRF, session resumption" >}}
 
-FCP was a multi-step reverse-engineering and network-forensics challenge. You get a Go MCP ("Model Context Protocol") server binary plus a PCAP of someone using it earlier. Buried in the capture is a `get_flag` call — but the live server's `get_flag` endpoint has been rewritten to just return `"no"`, so re-running it is useless. The challenge is to decrypt the historical traffic. Two specific design choices make this both possible and nontrivial.
+Welcome to a **CyberSecurity Elite** writeup on BtSCTF 2026's FCP, a multi-step reverse-engineering and network-forensics challenge. You get a Go MCP ("Model Context Protocol") server binary plus a PCAP of someone using it earlier. Buried in the capture is a `get_flag` call — but the live server's `get_flag` endpoint has been rewritten to just return `"no"`, so re-running it is useless. The challenge is to decrypt the historical traffic. Two specific design choices make this both possible and nontrivial.
 
 Source: [Abdelkad3r/BreakTheSyntax-ctf-2026 · FCP.md](https://github.com/Abdelkad3r/BreakTheSyntax-ctf-2026/blob/main/FCP.md).
 

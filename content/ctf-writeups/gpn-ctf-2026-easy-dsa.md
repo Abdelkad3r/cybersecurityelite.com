@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Easy-DSA: UUID3 MD5 Collision → ECDSA Nonce Reuse"
 slug: "gpn-ctf-2026-easy-dsa"
 description: "GPN CTF 2026 Crypto: uuid3 is MD5 with a constant prefix. Fastcoll generates colliding messages, ECDSA reuses the same nonce on P-521, key recovery and forge in one round."
 date: 2026-06-07T18:15:00Z
-lastmod: 2026-06-07T18:15:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -34,7 +34,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium" os="Crypto — ECDSA on P-521, deterministic nonce, MD5 collision" skills="recognising uuid3 as MD5(ns || name), generating identical-prefix MD5 collisions with Marc Stevens' fastcoll, recovering the nonce from two signatures with the same r, sign-flip check against the published public key, forging fresh signatures with the recovered private key" >}}
 
-**Easy-DSA** is a classic cryptographic-engineering blunder dressed up in a Mongolian-barbecue narrative. The server signs arbitrary recipes with ECDSA on P-521. The "secure" nonce is derived through `uuid3`, which is **MD5** under the hood. Marc Stevens' `fastcoll` generates two messages that MD5-collide under the namespace prefix, forcing the ECDSA nonce to repeat. Standard nonce-reuse algebra recovers the private key in one round. Forge a fresh signature, claim the flag:
+Welcome to a **CyberSecurity Elite** crypto writeup on **GPN CTF 2026 — Easy-DSA**, a classic cryptographic-engineering blunder dressed up in a Mongolian-barbecue narrative. The server signs arbitrary recipes with ECDSA on P-521. The "secure" nonce is derived through `uuid3`, which is **MD5** under the hood. Marc Stevens' `fastcoll` generates two messages that MD5-collide under the namespace prefix, forcing the ECDSA nonce to repeat. Standard nonce-reuse algebra recovers the private key in one round. Forge a fresh signature, claim the flag:
 
 ```
 GPNCTF{m4yb3_w3_sh0uld_us3_RFC_6979_n3xt_t1m3}

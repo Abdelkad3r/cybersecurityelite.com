@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Pharry: PHP 7.4 PHAR Deserialization via Two-Connection
 slug: "gpn-ctf-2026-pharry"
 description: "GPN CTF 2026 Web: md5_file and file_get_contents open separate TCP connections. A counting server fails the integrity check and returns a PHAR with a User __destruct gadget."
 date: 2026-06-07T19:30:00Z
-lastmod: 2026-06-07T19:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -34,7 +34,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Web — PHP 7.4, PHAR metadata unserialize, two-TCP-connection trick" skills="recognising md5_file and file_get_contents both open separate TCP connections to a URL, hosting a connection-counting HTTP server that returns different responses per attempt, crafting a PHAR with a User object metadata that fires system() in __destruct, triggering PHAR unserialize via md5_file(phar:///tmp/...) for RCE" >}}
 
-**Pharry** is the GPN CTF 2026 PHP challenge that turns a `md5_file` + `file_get_contents` integrity-check pair into a PHAR deserialization. Both PHP functions open **separate TCP connections** to the URL they're given, so a counting server can serve one response to `md5_file` (close to make it return `FALSE`) and another to `file_get_contents` (return a PHAR). The PHAR ends up at `/tmp/remote_file.jpg`. A second request to `phar:///tmp/remote_file.jpg/a.txt` triggers PHP's metadata `unserialize()`, which fires `User::__destruct()` → `system("rm " . $avatar_path)` → RCE.
+**Pharry**, the **GPN CTF 2026** PHP challenge this **CyberSecurity Elite** writeup dissects, turns a `md5_file` + `file_get_contents` integrity-check pair into a PHAR deserialization. Both PHP functions open **separate TCP connections** to the URL they're given, so a counting server can serve one response to `md5_file` (close to make it return `FALSE`) and another to `file_get_contents` (return a PHAR). The PHAR ends up at `/tmp/remote_file.jpg`. A second request to `phar:///tmp/remote_file.jpg/a.txt` triggers PHP's metadata `unserialize()`, which fires `User::__destruct()` → `system("rm " . $avatar_path)` → RCE.
 
 Flag:
 

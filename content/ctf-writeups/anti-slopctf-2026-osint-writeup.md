@@ -3,7 +3,7 @@ title: "Anti-Slop CTF 2026 OSINT Writeup: Observers Are All You Need + Geoguessr
 slug: "anti-slopctf-2026-osint-writeup"
 description: "Step-by-step OSINT writeups for Anti-Slop CTF 2026. GitHub artifact-trail pivot for Observers, H3-cell client-side-crypto trick for Geoguessr."
 date: 2026-06-24T00:30:00Z
-lastmod: 2026-06-24T00:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -35,7 +35,7 @@ cover:
   alt: "Anti-Slop CTF 2026 OSINT writeup — Observers GitHub artifact-trail pivot and Geoguessr H3-cell client-side crypto"
 ---
 
-Seventh and last per-category post in the Anti-Slop CTF 2026 series. The earlier ones cover [web](/ctf-writeups/anti-slopctf-2026-web-writeup/), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/), [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/), [blockchain](/ctf-writeups/anti-slopctf-2026-blockchain-writeup/), and the [misc Baby Maths](/ctf-writeups/anti-slopctf-2026-misc-baby-maths/) prompt-injection trap. This one walks the two OSINT challenges in the same step-by-step format.
+Seventh and last per-category post in the **CyberSecurity Elite** Anti-Slop CTF 2026 OSINT series. The earlier ones cover [web](/ctf-writeups/anti-slopctf-2026-web-writeup/), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/), [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/), [blockchain](/ctf-writeups/anti-slopctf-2026-blockchain-writeup/), and the [misc Baby Maths](/ctf-writeups/anti-slopctf-2026-misc-baby-maths/) prompt-injection trap. This one walks the two OSINT challenges in the same step-by-step format.
 
 **Observers Are All You Need** is the GitHub-pivot variant of OSINT: read a cryptic prompt, identify the right project to pivot to, then walk the project's public artifact trail (profile, issues, PRs) to assemble the flag in three fragments. **Geoguessr** is the cooler hybrid: ten panoramas look like a pure geolocation puzzle, but the web client uses each location as a key derivation input for Shamir-shared decryption, and you only need 9 of 10 locations to recover the flag. Once the verification crypto is understood, you don't need pixel-perfect coordinates. You need the correct H3 resolution-8 cell.
 

@@ -3,7 +3,7 @@ title: "RIFFHACK 2026 Writeup: 12 Challenges Solved (Web, SSRF, JWT, LFI, Format
 slug: "riffhack-2026-writeup"
 description: "Step-by-step RIFFHACK 2026 writeup — twelve challenges across a Next.js darknet-marketplace theme covering recon, open redirect + token leak, SQL injection, SSR-prop leaks, IDOR, JWT alg:none, over-scoped exports, IMDS SSRF, path traversal LFI, and a Mach-O ARM64 format-string %hn write."
 date: 2026-07-01T00:30:00Z
-lastmod: 2026-07-01T00:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -49,7 +49,7 @@ cover:
   alt: "RIFFHACK 2026 writeup — twelve challenges solved across the darknet-marketplace themed Next.js CTF"
 ---
 
-RIFFHACK 2026 shipped its challenges as a fictional Next.js "exploit kit marketplace," a darknet storefront themed around offensive tooling. Twelve distinct bugs live inside that codebase: seven core web track challenges (`bitflag{...}` format), four named cross-event challenges that reuse the same application from different angles, and one Mach-O ARM64 binary exploitation addendum on the escrow terminal (`bitctf{{...}}` format). Every one of them teaches a different primitive, and the event's design signature is that the codebase is deliberately salted with flag-shaped strings so that whether a given string is *the* answer depends on which brief you're currently reading.
+This **CyberSecurity Elite** writeup dissects RIFFHACK 2026, which shipped its challenges as a fictional Next.js "exploit kit marketplace," a darknet storefront themed around offensive tooling. Twelve distinct bugs live inside that codebase: seven core web track challenges (`bitflag{...}` format), four named cross-event challenges that reuse the same application from different angles, and one Mach-O ARM64 binary exploitation addendum on the escrow terminal (`bitctf{{...}}` format). Every one of them teaches a different primitive, and the event's design signature is that the codebase is deliberately salted with flag-shaped strings so that whether a given string is *the* answer depends on which brief you're currently reading.
 
 This master writeup walks all twelve solves in the order I worked through them: recon, open redirect + token leak, SQL injection, two flavours of SSR-prop leak, two flavours of IDOR (URL-path and JWT `alg:none`), an over-scoped diagnostic export, a server-stamped fake-proof primitive, an IMDS SSRF, a path-traversal LFI whose flag lives inside `/etc/passwd`, and a format-string `%hn` write against a Mach-O ARM64 binary. Original handouts, per-challenge READMEs, and runnable solver scripts live at [Abdelkad3r/RIFFHACK](https://github.com/Abdelkad3r/RIFFHACK).
 

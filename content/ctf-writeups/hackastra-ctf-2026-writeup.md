@@ -3,7 +3,7 @@ title: "Hackastra CTF 2026 Writeup: All 15 Challenges"
 slug: "hackastra-ctf-2026-writeup"
 description: "Hackastra CTF 2026 full writeup — reverse, web, crypto, misc and forensics. All 15 challenges solved with methodology, exploit code, and the lessons learned."
 date: 2026-05-30T10:00:00Z
-lastmod: 2026-05-30T10:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -47,7 +47,7 @@ cover:
 
 {{< ctf-meta platform="Hackastra CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Web, Crypto, Reverse, Misc, Forensics)" skills="JWT, RS256/HS256 confusion, DSA known-nonce, Coppersmith, Feistel inversion, ARM64/x86_64 RE, WASM RE, AWS Cognito, blind SQLi, XSS, LSB stego" >}}
 
-**Hackastra CTF 2026** ran as a jeopardy-style competition on [CTFtime (event #3270)](https://ctftime.org/event/3270) with fifteen challenges spanning reverse engineering, web exploitation, cryptography, forensics, and miscellaneous infrastructure bugs. The event's name plays on the Sanskrit word **अस्त्र** (*astra*, meaning "weapon" or "missile"), and the challenges live up to it — every flag in this set rewards a specific, named technique rather than rote tooling.
+This **CyberSecurity Elite** writeup covers **Hackastra CTF 2026**, which ran as a jeopardy-style competition on [CTFtime (event #3270)](https://ctftime.org/event/3270) with fifteen challenges spanning reverse engineering, web exploitation, cryptography, forensics, and miscellaneous infrastructure bugs. The event's name plays on the Sanskrit word **अस्त्र** (*astra*, meaning "weapon" or "missile"), and the challenges live up to it — every flag in this set rewards a specific, named technique rather than rote tooling.
 
 This is the master writeup. Each challenge below covers the bug, the exploit chain, and the recovered flag. Full reproductions — solver scripts, register-level disassembly, and intermediate values — live in the source repository: [Abdelkad3r/hackastra-ctf-2026](https://github.com/Abdelkad3r/hackastra-ctf-2026).
 

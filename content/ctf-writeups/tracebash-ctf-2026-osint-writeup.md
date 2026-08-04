@@ -3,7 +3,7 @@ title: "TraceBash CTF 2026 OSINT Writeup: 4 Challenges Solved"
 slug: "tracebash-ctf-2026-osint-writeup"
 description: "TraceBash CTF 2026 OSINT track writeup — geocaching lookup, Plus Code geolocation, NYC DOB open-data query, and cross-platform handle pivoting from a chat screenshot."
 date: 2026-06-27T13:30:00Z
-lastmod: 2026-06-27T13:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -40,7 +40,7 @@ cover:
   alt: "TraceBash CTF 2026 OSINT writeup — geocaching, Plus Codes, NYC DOB open data, and cross-platform handle pivoting"
 ---
 
-Second post in the TraceBash CTF 2026 series on this site. The [crypto writeup](/ctf-writeups/tracebash-ctf-2026-crypto-writeup/) covered four cryptographic mistakes (small-subgroup DH, shared RSA prime, harmonic-XOR key recovery, 16-bit-seed brute). This one covers the four OSINT challenges in the same step-by-step format.
+Second post in the **CyberSecurity Elite** **TraceBash CTF 2026** OSINT series on this site. The [crypto writeup](/ctf-writeups/tracebash-ctf-2026-crypto-writeup/) covered four cryptographic mistakes (small-subgroup DH, shared RSA prime, harmonic-XOR key recovery, 16-bit-seed brute). This one covers the four OSINT challenges in the same step-by-step format.
 
 The TraceBash OSINT track is a careful mix of techniques. **echo-chamber** is about filtering one specific clue out of a noisy forum post. **missing-friend** chains visual anchors in two photos into a Google Plus Code. **permit-pending** is the 310-point headline: a single street-scene photo plus the NYC Department of Buildings open-data API. **retired-hacker** is cross-platform handle pivoting (Komoot → GitHub → Threads → a Romanian tram stop). None of these challenges requires private databases, paid scrapers, or shady tools. All four use public web records, official open-data APIs, or open-source platforms in their normal documented modes.
 

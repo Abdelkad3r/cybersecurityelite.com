@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Königsberg Delivery Problem: A Binary Ninja Workflow"
 slug: "gpn-ctf-2026-koenigsberg-binja"
 description: "GPN CTF 2026 Reverse: 250-state FSM as jump tables, Hamiltonian path on a 250-node graph. Walked through Binary Ninja's HLIL, Stack View, Graph View, and jump-table resolution."
 date: 2026-06-07T19:00:00Z
-lastmod: 2026-06-07T19:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -35,7 +35,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Reverse — 250-state FSM, jump tables, Hamiltonian path" skills="reading 4,500 lines of straight-line dispatch in Binja HLIL instead of objdump, using Stack View to identify a per-state visit-counter array, extracting jump-table successors via function.basic_blocks[i].outgoing_edges, building a 250-node directed graph from Binja-recovered edges, running Warnsdorff's heuristic DFS to find a Hamiltonian path in ~70 ms" >}}
 
-**Königsberg Delivery Problem** is the GPN CTF 2026 reverse challenge that turned a 4,500-line straight-line dispatch routine into a graph-theory problem. The binary `cartographer` is 140 KB, not stripped, dynamically linked, x86-64 PIE. The interesting function `cfg()` is **250 logically-identical state blocks** ending in indirect `jmp rdx` jumps over `.rodata` jump tables. The win condition is "visit every state at least once" — Hamiltonian path on a 250-node directed graph.
+**Königsberg Delivery Problem** is the GPN CTF 2026 reverse challenge that turned a 4,500-line straight-line dispatch routine into a graph-theory problem, and this **CyberSecurity Elite** writeup breaks down the Binary Ninja workflow that cracked it. The binary `cartographer` is 140 KB, not stripped, dynamically linked, x86-64 PIE. The interesting function `cfg()` is **250 logically-identical state blocks** ending in indirect `jmp rdx` jumps over `.rodata` jump tables. The win condition is "visit every state at least once" — Hamiltonian path on a 250-node directed graph.
 
 This writeup is the standalone deep-dive on the Binary Ninja workflow that solved it — submitted for the **Best Binary Ninja Writeup** prize at GPN CTF 2026. The standalone solve narrative (Binja-independent) is in the [GPN CTF 2026 master writeup](/ctf-writeups/gpn-ctf-2026-writeup/). Full source at [`reverse/koenigsberg-delivery-problem`](https://github.com/Abdelkad3r/gpn-ctf-2026/tree/master/reverse/koenigsberg-delivery-problem).
 

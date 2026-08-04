@@ -3,7 +3,7 @@ title: "Midnight Sun 2026 empols: Auto-Solving 20 x86-64 ELFs with radare2"
 slug: "midnight-sun-2026-empols"
 description: "Midnight Sun CTF 2026 empols writeup — the server hands out 20 randomly-generated ELFs from 3 templates. Solve them all with Python + radare2 static analysis."
 date: 2026-05-16T12:30:00Z
-lastmod: 2026-05-16T12:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="Midnight Sun CTF 2026 Quals" difficulty="Hard" os="Linux x86-64" skills="Templated binary RE, radare2 scripting, automated static analysis" >}}
 
-`empols` is the kind of challenge that punishes you for trying to solve binaries by hand. The server hands you twenty fresh, randomly-generated x86-64 ELFs in one session and demands the validating input string for each — and you almost certainly cannot reverse-engineer twenty unique binaries fast enough to fit inside the session timeout. The intended path is to recognise that the binaries are generated from a small set of *templates*, then write a static-analysis engine that detects the template and extracts the answer from disassembly.
+`empols` is the kind of **Midnight Sun CTF 2026** challenge that punishes you for trying to solve binaries by hand; this **CyberSecurity Elite** writeup auto-solves all twenty x86-64 ELFs instead. The server hands you twenty fresh, randomly-generated x86-64 ELFs in one session and demands the validating input string for each — and you almost certainly cannot reverse-engineer twenty unique binaries fast enough to fit inside the session timeout. The intended path is to recognise that the binaries are generated from a small set of *templates*, then write a static-analysis engine that detects the template and extracts the answer from disassembly.
 
 Source: [Abdelkad3r/midnight-sun-ctf-2026-quals · empols/](https://github.com/Abdelkad3r/midnight-sun-ctf-2026-quals/tree/main/empols) (full solver code).
 

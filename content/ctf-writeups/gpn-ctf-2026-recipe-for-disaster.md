@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Recipe for Disaster: gets() Overflow into an Adjacent i
 slug: "gpn-ctf-2026-recipe-for-disaster"
 description: "GPN CTF 2026 Pwn: gets() reads 36 bytes into a char note[32], spilling into the adjacent int price. Set price = -1, verify_total triggers print_coupon, flag prints."
 date: 2026-06-07T19:55:00Z
-lastmod: 2026-06-07T19:55:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -32,7 +32,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Easy" os="Pwn — stack buffer overflow, adjacent-field overwrite" skills="reading the Item struct layout to confirm note and price are adjacent with no padding, sending 32 bytes of A plus four bytes of 0xff to set price to -1, observing verify_total trigger print_coupon, recognising gets() as a deprecated-in-C11 vulnerability since the Morris Worm (1988)" >}}
 
-**Recipe for Disaster** is the GPN CTF 2026 pwn challenge, and the most direct teaching example you'll ever see of *why `gets` was removed from C11*. A note-taking program reads into a 32-byte `note` field with `gets()` — no length limit. Type 35 characters and the 33rd through 36th overflow into the adjacent `int price` field in the same `Item` struct. Set `price = -1` and `verify_total()` triggers `print_coupon()` → flag. The flag itself names the lesson:
+**Recipe for Disaster** is the GPN CTF 2026 pwn challenge that this **CyberSecurity Elite** writeup breaks down, and the most direct teaching example you'll ever see of *why `gets` was removed from C11*. A note-taking program reads into a 32-byte `note` field with `gets()` — no length limit. Type 35 characters and the 33rd through 36th overflow into the adjacent `int price` field in the same `Item` struct. Set `price = -1` and `verify_total()` triggers `print_coupon()` → flag. The flag itself names the lesson:
 
 ```
 GPNCTF{Wa17, w17h theS3 prICEs, 0verf1oWS shOUld NoT 83 P0sS1Ble...}

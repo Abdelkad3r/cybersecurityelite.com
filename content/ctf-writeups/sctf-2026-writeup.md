@@ -3,7 +3,7 @@ title: "SCTF 2026 Writeup: DeFi TWAP Oracle + Groth16 ZK Witness"
 slug: "sctf-2026-writeup"
 description: "SCTF 2026 full writeup — TWAP ring-buffer eviction against an EIP-7540 async LP vault, plus a Groth16 Poseidon-Merkle witness gated by Fermat-factorable RSA."
 date: 2026-06-18T09:00:00Z
-lastmod: 2026-06-18T09:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -59,7 +59,7 @@ cover:
 
 {{< ctf-meta platform="SCTF 2026" difficulty="Hard (DeFi + ZK specialty track)" os="Jeopardy — Blockchain / DeFi, ZK, Misc" skills="reading UniswapV2 fork + EIP-7540 async vault + custom TWAP oracle in Foundry/Anvil, spotting that _consult anchors on observations outside the window, evicting the deploy-time observation by spamming the 8-slot ring buffer, composing a four-puzzle Groth16 claim bundle (Franklin–Reiter cube-root, secp256k1 small-x brute, 40-bit truncated keccak collision, Fermat factoring), generating a Poseidon-Merkle witness with domain-separated tag-1..6 calls in circomlibjs and submitting via snarkjs Groth16 fullprove" >}}
 
-**SCTF 2026** is a specialty Jeopardy-style CTF whose challenge set leans hard into Solidity auditing and zero-knowledge plumbing. The two challenges this writeup covers — **Chronostasis** and **The Last Honest Witness** — sit at opposite ends of the same auditor's toolbox. Chronostasis is a clean DeFi composition bug: three contracts that are each individually reasonable, glued together in a way that lets an attacker draw the LP price on the back of a napkin. The Last Honest Witness is a four-in-one cryptographic decathlon where the actual ZK proof is the easy part — the work is in the four side-puzzles wrapped around it.
+Welcome to a **CyberSecurity Elite** SCTF 2026 writeup — a specialty Jeopardy-style CTF whose challenge set leans hard into Solidity auditing and zero-knowledge plumbing. The two challenges this writeup covers — **Chronostasis** and **The Last Honest Witness** — sit at opposite ends of the same auditor's toolbox. Chronostasis is a clean DeFi composition bug: three contracts that are each individually reasonable, glued together in a way that lets an attacker draw the LP price on the back of a napkin. The Last Honest Witness is a four-in-one cryptographic decathlon where the actual ZK proof is the easy part — the work is in the four side-puzzles wrapped around it.
 
 Both challenges ran on per-team Anvil instances launched over a `nc` menu. Both were solved end-to-end. This writeup documents the parts that cost the most time so the next person doesn't lose it the same way.
 

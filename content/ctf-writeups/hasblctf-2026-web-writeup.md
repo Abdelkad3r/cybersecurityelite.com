@@ -3,7 +3,7 @@ title: "HASBLCTF 2026 Web Exploitation: All 5 Challenges Solved"
 slug: "hasblctf-2026-web-writeup"
 description: "HASBLCTF 2026 web writeup — all 5 challenges solved: robots.txt cookie bypass, path traversal, client-trusted shop, Flask SSTI in PDFs, hint-prune brute."
 date: 2026-06-01T07:00:00Z
-lastmod: 2026-06-01T07:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -52,7 +52,7 @@ cover:
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Web (HTTP, nginx, Express, Next.js, Flask)" skills="client-side auth bypass via robots.txt + cookie injection, non-iterative path-traversal filter bypass, client-trusted economy / coin spoofing, Next.js sourcemap + header reconnaissance with hint-prune brute force, Jinja2 SSTI in PDF receipts with capped-field escape via Flask SECRET_KEY leak and itsdangerous session forgery" >}}
 
-**HASBL CTF 2026** is a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Web Exploitation track** — the five web challenges (`T/I Forum`, `Anatolian Atlas`, `Arena.exe`, `Lineup Challenge`, `DTeam`) were all solved, and each one teaches a different web-attack primitive: client-side authentication theatre defeated by reading the JavaScript, non-iterative `..` traversal filters, client-trusted in-game economies, hint-collection across HTTP headers / sourcemaps / robots.txt, and a two-stage Flask SSTI chain through a PDF-receipt template.
+Here at **CyberSecurity Elite**, we solved the web track of **HASBLCTF 2026**, a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Web Exploitation track** — the five web challenges (`T/I Forum`, `Anatolian Atlas`, `Arena.exe`, `Lineup Challenge`, `DTeam`) were all solved, and each one teaches a different web-attack primitive: client-side authentication theatre defeated by reading the JavaScript, non-iterative `..` traversal filters, client-trusted in-game economies, hint-collection across HTTP headers / sourcemaps / robots.txt, and a two-stage Flask SSTI chain through a PDF-receipt template.
 
 This is the master writeup for the web track. Each challenge below covers the surface, the bug, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts and handout files — live in the source repository: [Abdelkad3r/hasblctf-2026](https://github.com/Abdelkad3r/hasblctf-2026).
 

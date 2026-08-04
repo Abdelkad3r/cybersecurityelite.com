@@ -3,7 +3,7 @@ title: "THEM?! CTF 2026 Writeup: 7 Solved Challenges"
 slug: "themectf-2026-writeup"
 description: "THEM?! CTF 2026 writeup — the 7 reverse and crypto challenges I solved from an 85-challenge event, with exploit code and lessons learned."
 date: 2026-06-01T02:00:00Z
-lastmod: 2026-06-01T02:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -45,7 +45,7 @@ cover:
 
 {{< ctf-meta platform="THEM?! CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Reverse, Crypto)" skills="CHIP-8 emulation, x86-64 PE reverse engineering, Unicorn dynamic emulation, FNV-1a hash recovery, custom bytecode VMs, control-flow flattening, DES weak-key parity, XOR-chain cryptanalysis, modular arithmetic over 10^155" >}}
 
-**THEM?! CTF 2026** is a large jeopardy event with **85 total challenges** across the usual categories. This writeup covers the **seven challenges I personally solved**, all from the reverse-engineering and cryptography tracks — every one demanded a real RE or cryptanalytic technique end-to-end. The reverse picks range from a CHIP-8 ROM that paints its flag onto a 64×32 screen across ~2⁴⁰ encoder steps per round, to a Windows binary whose VM mutates its own register state *during dispatch*. The crypto picks are the same shape — three challenges that look obscure on the surface and reduce to a clean number-theory or XOR-algebra invariant once you read carefully.
+**THEM?! CTF 2026** is a large jeopardy event covered here by **CyberSecurity Elite**, with **85 total challenges** across the usual categories. This writeup covers the **seven challenges I personally solved**, all from the reverse-engineering and cryptography tracks — every one demanded a real RE or cryptanalytic technique end-to-end. The reverse picks range from a CHIP-8 ROM that paints its flag onto a 64×32 screen across ~2⁴⁰ encoder steps per round, to a Windows binary whose VM mutates its own register state *during dispatch*. The crypto picks are the same shape — three challenges that look obscure on the surface and reduce to a clean number-theory or XOR-algebra invariant once you read carefully.
 
 This is the per-challenge writeup for the seven I solved. Each section below covers the bug, the exploit chain, and the recovered flag. Full per-challenge reproductions — solver scripts, Unicorn hooks, and the bytecode disassemblies — live in the source repository: [Abdelkad3r/themectf-2026](https://github.com/Abdelkad3r/themectf-2026).
 

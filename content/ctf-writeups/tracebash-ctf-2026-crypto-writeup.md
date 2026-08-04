@@ -3,7 +3,7 @@ title: "TraceBash CTF 2026 Crypto Writeup: 4 Challenges Solved"
 slug: "tracebash-ctf-2026-crypto-writeup"
 description: "TraceBash CTF 2026 crypto track writeup — DH small-subgroup attack, audio-derived XOR key, shared 512-bit prime RSA, and an exhaustive 16-bit state-machine cipher recovery."
 date: 2026-06-27T11:00:00Z
-lastmod: 2026-06-27T11:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -39,7 +39,7 @@ cover:
   alt: "TraceBash CTF 2026 crypto writeup — small-subgroup DH, harmonic XOR key, shared RSA prime, and stream-cipher seed brute"
 ---
 
-**TraceBash CTF 2026** is a Jeopardy-style CTF with a clean, well-curated challenge set. The crypto track has four challenges, three at 100 points and one at 440 points. This writeup covers all four step-by-step.
+Welcome to a **CyberSecurity Elite** TraceBash CTF 2026 crypto writeup on a Jeopardy-style CTF with a clean, well-curated challenge set. The crypto track has four challenges, three at 100 points and one at 440 points. This writeup covers all four step-by-step.
 
 Each challenge is a different shape of cryptographic mistake. **state-desync** hides a 16-bit-seed stream cipher behind a noisy update function. **broken-trust-protocol** is a textbook Diffie-Hellman implementation that forgets to validate the peer public value. **harmonic-cipher** hides an 8-byte XOR key inside an audio file. **quantum-echo** ships two RSA-1024 public keys that share a 512-bit prime, where a single `gcd` factors both moduli in milliseconds. None of them requires sage, lattice work, or anything more exotic than a careful read and a small Python brute. All four exist in production code somewhere in the wild.
 

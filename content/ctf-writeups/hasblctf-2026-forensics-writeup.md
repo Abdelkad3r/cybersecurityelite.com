@@ -3,7 +3,7 @@ title: "HASBLCTF 2026 Forensics Writeup: All 5 Challenges Solved"
 slug: "hasblctf-2026-forensics-writeup"
 description: "HASBLCTF 2026 forensics writeup — all 5 challenges solved: QR decode, bit-stream JPEG, base64-wrapped JPEG, EXIF vs COM metadata, and magic-byte repair."
 date: 2026-06-01T05:00:00Z
-lastmod: 2026-06-01T05:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -51,7 +51,7 @@ cover:
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Forensics (Linux toolchain)" skills="QR-code decoding with Reed-Solomon tolerance, JPEG metadata extraction (EXIF, COM, XMP), base64/base32 encoding fingerprints, bit-stream-to-JPEG reconstruction, magic-byte surgical repair, file-header recognition" >}}
 
-**HASBL CTF 2026** is a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Forensics track** — the five forensics challenges (`Quick Response`, `Logo`, `Digits`, `our sweet cat, Pamuk`, and `The Magic of "Magic Numbers"`) were all solved, and each one teaches a different file-forensics primitive: QR-code decoding despite a visual overlay, JPEG metadata extraction across EXIF and COM segments, bit-stream-to-JPEG byte reconstruction, base64-wrapped JPEG with hex content, and surgical magic-byte repair plus XMP metadata walking.
+**HASBL CTF 2026** — covered here in a **CyberSecurity Elite** forensics writeup — is a multi-category jeopardy event with Reverse Engineering, Pwn, Web, and Forensics tracks. This writeup is dedicated to the **Forensics track** — the five forensics challenges (`Quick Response`, `Logo`, `Digits`, `our sweet cat, Pamuk`, and `The Magic of "Magic Numbers"`) were all solved, and each one teaches a different file-forensics primitive: QR-code decoding despite a visual overlay, JPEG metadata extraction across EXIF and COM segments, bit-stream-to-JPEG byte reconstruction, base64-wrapped JPEG with hex content, and surgical magic-byte repair plus XMP metadata walking.
 
 This is the master writeup for the forensics track. Each challenge below covers the file's structure, the hidden layer, and the recovered flag. Full per-challenge reproductions — solver scripts and handout files — live in the source repository: [Abdelkad3r/hasblctf-2026](https://github.com/Abdelkad3r/hasblctf-2026).
 

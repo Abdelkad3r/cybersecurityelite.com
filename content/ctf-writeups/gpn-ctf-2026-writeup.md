@@ -3,7 +3,7 @@ title: "GPN CTF 2026 Writeup: All 19 Challenges Solved"
 slug: "gpn-ctf-2026-writeup"
 description: "GPN CTF 2026 full writeup — 19 flags across reverse, crypto, web, pwn, misc. AVX2 miscompile, NTRU bug, BPF verifier, PHAR deserialization, ECDSA nonce reuse."
 date: 2026-06-07T20:00:00Z
-lastmod: 2026-06-07T20:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -65,7 +65,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Reverse, Crypto, Web, Pwn, Misc" skills="AVX2 lane-swap miscompilation discovery + Kannan-embedding SIS lattice attack, NTRU mod-q reduction bug (c mod p == m), ECDSA nonce reuse from MD5(uuid3) collisions via fastcoll, eBPF signed-comparison verifier bypass with patched bzImage, JVM AOT cache override of bytecode, PHP 7.4 PHAR deserialization across two TCP races, Pydantic ForwardRef eval in create_model, CSS attribute-selector cookie exfiltration through Link: rel=stylesheet, holpy proof-checker thm re-axiomatization, knitout front/back-bed bitmap, ternary amplitude-modulated UART, Hamiltonian path on 250-node FSM extracted from jump tables, RFC 5424 syslog stream demux, Rust setuid TOCTOU symlink swap" >}}
 
-**GPN CTF 2026** is the [Gulaschprogrammiernacht CTF](https://ctf.kitctf.de/) hosted annually by **KITCTF** at the GPN hacker camp in Karlsruhe, Germany. The 2026 edition runs a Jeopardy board across **reverse engineering, crypto, web, pwn, and misc**, with a sharp lean toward *low-level systems bugs* — a missing `mod q` in an NTRU implementation, a 4-way AVX2 lane-swap in a `gcc -O3 -mavx2` build, a deleted `BPF_ADJ_END_FROM_*` check in a custom kernel, a JVM AOT cache that silently overrides a JAR method. The flavour throughout is *kitchen* — recipes, ovens, pots — and the flags universally read like Bavarian beer-tent slogans.
+This **CyberSecurity Elite** writeup breaks down **GPN CTF 2026**, the [Gulaschprogrammiernacht CTF](https://ctf.kitctf.de/) hosted annually by **KITCTF** at the GPN hacker camp in Karlsruhe, Germany. The 2026 edition runs a Jeopardy board across **reverse engineering, crypto, web, pwn, and misc**, with a sharp lean toward *low-level systems bugs* — a missing `mod q` in an NTRU implementation, a 4-way AVX2 lane-swap in a `gcc -O3 -mavx2` build, a deleted `BPF_ADJ_END_FROM_*` check in a custom kernel, a JVM AOT cache that silently overrides a JAR method. The flavour throughout is *kitchen* — recipes, ovens, pots — and the flags universally read like Bavarian beer-tent slogans.
 
 This master writeup covers all 19 solved challenges. Each section walks the surface, the bug class, the exploitation chain, and the recovered flag. Full per-challenge reproductions — `solve.py` files, Sage scripts, lattice constructions, BPF bytecode, fastcoll collisions, dnsmasq sinkholes — live in the source repository at [Abdelkad3r/gpn-ctf-2026](https://github.com/Abdelkad3r/gpn-ctf-2026).
 

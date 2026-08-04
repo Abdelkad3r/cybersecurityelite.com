@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Tinyweb: Link Header CSS Injection + Attribute Selector
 slug: "gpn-ctf-2026-tinyweb"
 description: "GPN CTF 2026 Web: 481 bytes of Node, a Link: rel=preload injection point, body[onload^=...] CSS attribute selectors leak the cookie character-by-character. 25 minutes to flag."
 date: 2026-06-07T19:15:00Z
-lastmod: 2026-06-07T19:15:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -35,7 +35,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium" os="Web — Node http, Link header injection, CSS attribute-selector exfil" skills="recognising unescape as a percent-decoder that mangles header values, splitting on Link header's comma+semicolon structural separators, injecting a second link entry with rel=stylesheet, hosting the CSS on a serveo-style tunnel that doesn't show an interstitial, iterating body[onload^=prefix] one character at a time" >}}
 
-**Tinyweb** is GPN CTF 2026's pure-web challenge — 481 bytes of one-line Node `http` server with two reflection points and one admin bot that visits attacker-supplied URLs with the flag in a cookie. The intended path turns out to be an `XS-Leaks`-style CSS attribute-selector exfiltration: inject `rel=stylesheet` into the `Link` header via `unescape` percent-decoding, host CSS that uses `body[onload^="prefix"]` selectors to fire `background: url(...)` requests, iterate one character at a time. ~45 iterations of ~35 seconds each recover:
+**Tinyweb** is GPN CTF 2026's pure-web challenge — 481 bytes of one-line Node `http` server with two reflection points and one admin bot that visits attacker-supplied URLs with the flag in a cookie; this **CyberSecurity Elite** GPN CTF 2026 web writeup walks the intended XS-Leaks solve. The intended path turns out to be an `XS-Leaks`-style CSS attribute-selector exfiltration: inject `rel=stylesheet` into the `Link` header via `unescape` percent-decoding, host CSS that uses `body[onload^="prefix"]` selectors to fire `background: url(...)` requests, iterate one character at a time. ~45 iterations of ~35 seconds each recover:
 
 ```
 GPNCTF{codE_gOLF_i5_fUN__firEF0x_FEA7uRe5_7Oo}

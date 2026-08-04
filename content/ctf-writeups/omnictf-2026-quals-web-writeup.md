@@ -3,7 +3,7 @@ title: "OmniCTF 2026 Quals Web Writeup: 2 Challenges Solved"
 slug: "omnictf-2026-quals-web-writeup"
 description: "OmniCTF 2026 Quals web step-by-step: Ganzir SSTI via a reset-token debug leak into a Jinja2 read_file helper; StayWild GNU tar --checkpoint-action filename injection."
 date: 2026-07-19T16:00:00Z
-lastmod: 2026-07-19T16:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -42,7 +42,7 @@ cover:
   alt: "OmniCTF 2026 Quals web writeup — two challenges solved covering Ganzir server-side template injection via a Jinja2 read_file helper reached through a debug field that leaked the one-time password-reset token for the plot-hinted Cassie account, and StayWild GNU tar --checkpoint-action option injection through upload filenames on a beta endpoint whose frontend disable was not paired with a backend check"
 ---
 
-OmniCTF 2026 Quals shipped a web track built around two recurring lessons: **the "debug" field that made it to production**, and **the disabled-beta button that isn't actually disabled server-side**. Both challenges also come with a *loud* misdirection designed to burn most of the CTF window (Ganzir advertises HTTP request smuggling via response headers around `/employee`; StayWild dangles a client-side `innerHTML` sink at the visitor-notes widget). The intended chains are mundane by comparison, which is the point: trained triage means checking the boring-looking helper *before* chasing the noisy channel.
+In this **CyberSecurity Elite** web writeup, we break down OmniCTF 2026 Quals' web track, built around two recurring lessons: **the "debug" field that made it to production**, and **the disabled-beta button that isn't actually disabled server-side**. Both challenges also come with a *loud* misdirection designed to burn most of the CTF window (Ganzir advertises HTTP request smuggling via response headers around `/employee`; StayWild dangles a client-side `innerHTML` sink at the visitor-notes widget). The intended chains are mundane by comparison, which is the point: trained triage means checking the boring-looking helper *before* chasing the noisy channel.
 
 Handouts, per-challenge READMEs, and pure-stdlib solver scripts live at [Abdelkad3r/OmniCTF-2026-Quals](https://github.com/Abdelkad3r/OmniCTF-2026-Quals). This writeup covers the two web challenges I solved: Ganzir (SSTI via a reset-token debug leak into a Jinja2 `read_file` helper) and StayWild (GNU `tar --checkpoint-action` option injection through unfiltered upload filenames on a beta endpoint whose frontend disable was not paired with a backend check).
 

@@ -3,7 +3,7 @@ title: "BKISC 2026 Cryptografie: Java AltBase64 over UTF-16 BE"
 slug: "bkisc-ctf-2026-cryptografie"
 description: "BKISC CTF 2026 Cryptografie writeup — undo Java FileSystemPreferences AltBase64 encoding applied over UTF-16 BE bytes to recover the original flag."
 date: 2026-05-16T02:00:00Z
-lastmod: 2026-05-16T02:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="BKISC CTF 2026" difficulty="Easy" points="50" os="Encoding" skills="JDK source reading, custom Base64 alphabet, UTF-16 BE" >}}
 
-Cryptografie is a 50-point crypto challenge from BKISC CTF 2026 that hangs off a single, very specific hint: `FileSystemPreferences.dirName()`. If you've never had to look at the OpenJDK source before, this challenge is a tour of an internal Base64-like helper that almost nobody outside the JDK uses — and the decoder only takes about ten lines once you know where to look.
+In this **CyberSecurity Elite** cryptography writeup, we solve Cryptografie, a 50-point crypto challenge from **BKISC CTF 2026** that hangs off a single, very specific hint: `FileSystemPreferences.dirName()`. If you've never had to look at the OpenJDK source before, this challenge is a tour of an internal Base64-like helper that almost nobody outside the JDK uses — and the decoder only takes about ten lines once you know where to look.
 
 Source: [Abdelkad3r/bkisc-ctf-2026 · Cryptografie/](https://github.com/Abdelkad3r/bkisc-ctf-2026/tree/main/Cryptografie).
 

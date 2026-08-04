@@ -3,7 +3,7 @@ title: "THCON 2026 Socials: Half-Flag Each on LinkedIn and X"
 slug: "thcon-2026-socials"
 description: "THCON 2026 Socials writeup — the same announcement on LinkedIn and X each hides half the flag behind an ellipsis. Concatenate the visible halves to win."
 date: 2026-05-16T11:00:00Z
-lastmod: 2026-05-16T11:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="THCON 2026 (Toulouse Hacking Convention)" difficulty="Easy" os="OSINT" skills="Social media OSINT, leetspeak" >}}
 
-THCON's *Socials* is the kind of warm-up OSINT challenge that's not about tooling — it's about reading the prompt twice and noticing the CTF authors have done something cute with their social media presence. The flag is split between two posts on two platforms, with each post hiding the other half behind an ellipsis. Visit both, stitch the halves, done.
+**THCON 2026 Socials** is the kind of warm-up OSINT challenge this **CyberSecurity Elite** writeup loves — it's not about tooling, it's about reading the prompt twice and noticing the CTF authors have done something cute with their social media presence. The flag is split between two posts on two platforms, with each post hiding the other half behind an ellipsis. Visit both, stitch the halves, done.
 
 Source: [Abdelkad3r/thcon-ctf-2026 · 01-socials/](https://github.com/Abdelkad3r/thcon-ctf-2026/tree/main/01-socials).
 

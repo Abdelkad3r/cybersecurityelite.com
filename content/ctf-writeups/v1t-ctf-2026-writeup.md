@@ -3,7 +3,7 @@ title: "V1t CTF 2026 Writeup: 8 Challenges Solved (Crypto, Reverse, Web, Misc)"
 slug: "v1t-ctf-2026-writeup"
 description: "Step-by-step V1t CTF 2026 writeup — eight challenges covered across crypto (ZUC keystream recovery, RSA sextic-twist ECM), reverse (tiny ELF RLE bitmap, TCC stack-VM, KMDF driver), web (Emoji-To-AZ font stego, shell glob bypass), and misc."
 date: 2026-06-28T16:00:00Z
-lastmod: 2026-06-28T16:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -44,7 +44,7 @@ cover:
   alt: "V1t CTF 2026 writeup — eight challenges solved across crypto, reverse, web, and misc tracks"
 ---
 
-V1t CTF 2026 shipped a small but unusually well-curated set of challenges. Every one of the eight problems covered here teaches a specific primitive: a structured-prime RSA factored by stage-1 ECM on a `j = 0` curve, a ZUC stream cipher recovered from three leak functions without the key, a 904-byte ELF whose only validation is the byte-sum of the input, a TCC binary dressed up in packer-section costume but driven by a tiny 365-byte stack VM, a KMDF driver that binds to its userland by FNV-1a of `.text`, a font file aliased back to `Noto Sans` that quietly rewrites emoji into letters, and a 16-character allowlist regex on a `shell=True` command that still leaks the flag via `python3 dis.py` and globs.
+Welcome to a **CyberSecurity Elite** writeup on V1t CTF 2026, which shipped a small but unusually well-curated set of challenges. Every one of the eight problems covered here teaches a specific primitive: a structured-prime RSA factored by stage-1 ECM on a `j = 0` curve, a ZUC stream cipher recovered from three leak functions without the key, a 904-byte ELF whose only validation is the byte-sum of the input, a TCC binary dressed up in packer-section costume but driven by a tiny 365-byte stack VM, a KMDF driver that binds to its userland by FNV-1a of `.text`, a font file aliased back to `Noto Sans` that quietly rewrites emoji into letters, and a 16-character allowlist regex on a `shell=True` command that still leaks the flag via `python3 dis.py` and globs.
 
 This is the master writeup for the whole track. The original handouts, per-challenge READMEs, and solver scripts live in [Abdelkad3r/V1t-CTF-2026](https://github.com/Abdelkad3r/V1t-CTF-2026). I solved everything statically where possible (Ducks Ping-Pong, Sealed Input Verifier, Tiny, both crypto challenges) and reached for headless Chrome only where Cloudflare's managed challenge forced it (Duck Nettool Revenge).
 

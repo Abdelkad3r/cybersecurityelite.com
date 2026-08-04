@@ -3,7 +3,7 @@ title: "LYKNCTF 2026 Crack (Reverse) Writeup: 9 Challenges Solved"
 slug: "lyknctf-2026-crack-writeup"
 description: "Step-by-step LYKNCTF 2026 crack (reverse engineering) writeup — nine keygen and crackme challenges covering RC4-KSA S-box S-box recovery, ARX/Feistel VMs seeded with 0x9E3779B9, SHA-256(.text) self-hash KDFs, anti-debug byte poisoning, control-flow-flattened taint OR-folding, chained per-byte VM state machines, PyInstaller + ChaCha20/AES/marshal layers, Tauri desktop-app string trails, and a character-name Brainfuck esolang."
 date: 2026-07-10T22:00:00Z
-lastmod: 2026-07-10T22:00:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -52,7 +52,7 @@ cover:
   alt: "LYKNCTF 2026 crack writeup — nine reverse engineering challenges solved covering ARX VMs, self-hash anti-tamper KDFs, chained per-byte state machines, PyInstaller multi-stage packers, and a character-name Brainfuck esolang"
 ---
 
-LYKNCTF 2026's crack track (reverse engineering) was built around a repeating pattern: build a small cipher out of well-known cryptographic primitives, wrap it in obfuscation that looks harder than it is, then bake a `.text`-derived self-hash into the state so that any patch or debugger attach silently produces wrong output without changing the error message. Nine challenges, nine variations on that theme, from a simple string-import inspection in a Tauri desktop app all the way to a four-layer keygen whose master key mixes account name, license key, `SHA-256(.text)`, and an anti-debug byte.
+LYKNCTF 2026's crack track (reverse engineering) — the focus of this **CyberSecurity Elite** crack writeup — was built around a repeating pattern: build a small cipher out of well-known cryptographic primitives, wrap it in obfuscation that looks harder than it is, then bake a `.text`-derived self-hash into the state so that any patch or debugger attach silently produces wrong output without changing the error message. Nine challenges, nine variations on that theme, from a simple string-import inspection in a Tauri desktop app all the way to a four-layer keygen whose master key mixes account name, license key, `SHA-256(.text)`, and an anti-debug byte.
 
 This writeup walks all nine crack solves in the order they appear in the repository: KeygenMe (RC4-KSA-derived hidden account name + ARX license-key hash + `.text` self-hash KDF); Activator (SHA-256(.text) as bytecode keystream feeding a Feistel-shaped ARX VM with 8 u32 lanes and 32 golden-ratio rounds); Serial (chained per-byte VM where each character's 32-bit output seeds the next character's base state); Inferir Student (PyInstaller wrapper around a seven-stage ChaCha20 + LZMA + marshal packer, ending in a ChaCha20 stream-cipher target); Waguri2 (Brainfuck program with every instruction replaced by a *Kaoru Hana wa Rin to Saku* character name); I HATE THIS APP (Tauri/Rust app whose flag is the Windows API name `SetWindowDisplayAffinity`); I HATE THIS APP REVENGE (same app + an AES-256-CTR encrypted image with an unusual IV layout); Control Freak 1 (three-round per-byte checker with cross-round `+3r` / `+r` accumulator gotchas); and Control Freak 2 (control-flow-flattened five-state machine with four anti-analysis taints OR-folded into the final compare).
 

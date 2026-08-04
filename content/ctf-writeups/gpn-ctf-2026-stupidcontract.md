@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Stupidcontract: Patched eBPF Verifier + Signed-Cmp OOB"
 slug: "gpn-ctf-2026-stupidcontract"
 description: "GPN CTF 2026 Reverse: a custom kernel strips BPF verifier bounds checks. A signed-comparison eBPF program writes outside the map, clobbers SUCCESS[0], and lights the flag path."
 date: 2026-06-07T18:30:00Z
-lastmod: 2026-06-07T18:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -35,7 +35,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Hard" os="Reverse — Linux kernel forensics, eBPF, Rust aya" skills="unpacking bzImage to vmlinux ELF, string-diffing two kernels with shifted section layout to find removed verifier messages, reading eBPF disassembly to spot signed-compare bypass, exploiting unchecked map-value pointer arithmetic with a negative index, beating a 20%-RNG bit-flip gate by detecting the win and switching to a neutral index" >}}
 
-**Stupidcontract** is the GPN CTF 2026 reverse challenge that lives at the intersection of kernel forensics and eBPF. The handout ships two kernel images — `patched.bzImage` and `unpatched.bzImage` — plus a Rust/aya userspace runner that loads an eBPF program against a 101-byte `.bss` map. The challenge is to figure out *what was patched* and exploit it.
+This **CyberSecurity Elite** writeup breaks down **Stupidcontract**, the GPN CTF 2026 reverse challenge that lives at the intersection of kernel forensics and eBPF. The handout ships two kernel images — `patched.bzImage` and `unpatched.bzImage` — plus a Rust/aya userspace runner that loads an eBPF program against a 101-byte `.bss` map. The challenge is to figure out *what was patched* and exploit it.
 
 The diff turns out to be **five string deletions from the BPF verifier** — exactly the error messages that block unbounded pointer arithmetic against map-value pointers. With those checks gone, an eBPF program using a signed-comparison bounds check and a negative index can write to `bss[idx + 1]` where `idx + 1` lands outside the map. Targeting `idx = -1` writes the RNG bit directly into `bss[0]` = `SUCCESS[0]`, the flag gate. Flag:
 

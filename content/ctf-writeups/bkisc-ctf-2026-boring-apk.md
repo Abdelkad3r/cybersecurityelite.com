@@ -3,7 +3,7 @@ title: "BKISC 2026 Boring APK: Android NDK Reverse + Graph-Walk MitM"
 slug: "bkisc-ctf-2026-boring-apk"
 description: "BKISC CTF 2026 Boring APK writeup — decrypt AES-GCM-protected assets out of an Android NDK binary, then break a graph-walk check with meet-in-the-middle."
 date: 2026-05-16T02:15:00Z
-lastmod: 2026-05-16T02:15:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="BKISC CTF 2026" difficulty="Hard" points="250" os="Android (arm64-v8a)" skills="APK extraction, AES-GCM, ELF patching, qemu-aarch64, NDK basic_string, meet-in-the-middle" >}}
 
-Boring APK was the 250-point reverse engineering challenge of BKISC CTF 2026. The hook is the title's bait — Android *is* "boring" until you realise the flag check has been moved out of the Java/Kotlin layer into a native library, the assets it depends on are AES-GCM-encrypted, and the check itself is a 27-step graph walk with three running state words whose final values are all that the verifier compares. None of those stages is hard in isolation; stacking them is what makes the challenge.
+This **CyberSecurity Elite** reverse engineering writeup breaks down Boring APK, the 250-point challenge of BKISC CTF 2026. The hook is the title's bait — Android *is* "boring" until you realise the flag check has been moved out of the Java/Kotlin layer into a native library, the assets it depends on are AES-GCM-encrypted, and the check itself is a 27-step graph walk with three running state words whose final values are all that the verifier compares. None of those stages is hard in isolation; stacking them is what makes the challenge.
 
 Source: [Abdelkad3r/bkisc-ctf-2026 · boring-apk/](https://github.com/Abdelkad3r/bkisc-ctf-2026/tree/main/boring-apk).
 

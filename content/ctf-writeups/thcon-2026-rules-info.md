@@ -3,7 +3,7 @@ title: "THCON 2026 Rules: Flag Hidden on the CTF Platform's Own /info Page"
 slug: "thcon-2026-rules-info"
 description: "THCON 2026 Rules writeup — the prompt names a generic info page; the flag is on the CTF platform's OWN /info page in tiny grey italic text at the bottom."
 date: 2026-05-16T11:30:00Z
-lastmod: 2026-05-16T11:30:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -18,7 +18,7 @@ cover:
 
 {{< ctf-meta platform="THCON 2026 (Toulouse Hacking Convention)" difficulty="Easy" os="OSINT" skills="Reading prompts literally, CTF platform recon" >}}
 
-Most "find the hidden flag on a webpage" challenges teach you to look harder. This one teaches the opposite — that the most-obvious destination in the prompt is a decoy, and the answer is whatever a literal reading of the wording actually points at. The trick is recognising the misdirection before sinking thirty minutes into the wrong target.
+In this **CyberSecurity Elite** OSINT writeup, we solve THCON 2026's Rules challenge. Most "find the hidden flag on a webpage" challenges teach you to look harder. This one teaches the opposite — that the most-obvious destination in the prompt is a decoy, and the answer is whatever a literal reading of the wording actually points at. The trick is recognising the misdirection before sinking thirty minutes into the wrong target.
 
 Source: [Abdelkad3r/thcon-ctf-2026 · 02-rules-info/](https://github.com/Abdelkad3r/thcon-ctf-2026/tree/main/02-rules-info).
 

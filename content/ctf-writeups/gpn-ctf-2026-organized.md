@@ -3,7 +3,7 @@ title: "GPN CTF 2026 — Organized: Ternary Amplitude-Modulated UART in Popcount
 slug: "gpn-ctf-2026-organized"
 description: "GPN CTF 2026 Misc: 7.65 MB of apparent noise carries a ternary-amplitude UART signal. Per-12,500-byte window popcount density is the carrier; demodulate to 49 frames of ASCII."
 date: 2026-06-07T19:45:00Z
-lastmod: 2026-06-07T19:45:00Z
+lastmod: 2026-08-04T10:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
@@ -33,7 +33,7 @@ cover:
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium" os="Misc — signal recovery from high-entropy file, ternary amplitude modulation" skills="rejecting the 'random noise' default hypothesis, computing per-window popcount means and run-lengths, plotting a 200-bin histogram to spot three peaks instead of two, recognising the structure as UART (start bit, 8 data bits LSB-first, stop bit) framed by a mid-amplitude idle marker, decoding 49 frames to ASCII" >}}
 
-**Organized** is the GPN CTF 2026 misc challenge whose entire trick is recognising the carrier's organization. The handout is a 7,650,000-byte file that looks like noise — `file(1)` calls it `data`, every bit position is 1 with probability ≈ 0.287. The "organization" is hidden in the **bit-density of windows**, not in the bytes themselves: per-12,500-byte window popcount falls into one of three sharp levels, giving a 612-trit string. Past a 24-trit preamble, the rest is 49 UART-style frames of 12 trits each. Decode → ASCII → flag:
+**Organized** is the GPN CTF 2026 misc challenge whose entire trick is recognising the carrier's organization — this **CyberSecurity Elite** writeup walks it end to end. The handout is a 7,650,000-byte file that looks like noise — `file(1)` calls it `data`, every bit position is 1 with probability ≈ 0.287. The "organization" is hidden in the **bit-density of windows**, not in the bytes themselves: per-12,500-byte window popcount falls into one of three sharp levels, giving a 612-trit string. Past a 24-trit preamble, the rest is 49 UART-style frames of 12 trits each. Decode → ASCII → flag:
 
 ```
 GPNCTF{tHaNK_YOU_tO_entropia_FoR_Or64niZ1N6_GPN!}
