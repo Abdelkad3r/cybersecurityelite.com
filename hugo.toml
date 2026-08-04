@@ -92,6 +92,11 @@ canonifyURLs = true
 # Navigation
 [menu]
   [[menu.main]]
+    identifier = "start-here"
+    name = "Start Here"
+    url = "/career/how-to-get-into-cybersecurity-with-ctfs/"
+    weight = 5
+  [[menu.main]]
     identifier = "ctf"
     name = "CTF Writeups"
     url = "/ctf-writeups/"
@@ -109,7 +114,7 @@ canonifyURLs = true
   [[menu.main]]
     identifier = "certifications"
     name = "Certifications"
-    url = "/certifications/"
+    url = "/certifications/best-cybersecurity-certifications-2026/"
     weight = 40
   [[menu.main]]
     identifier = "categories"
