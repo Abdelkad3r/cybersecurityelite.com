@@ -90,6 +90,8 @@ canonifyURLs = true
   author = "authors"
 
 # Navigation
+# Main nav ordered as a beginner→expert journey (left to right):
+# Start Here → Tutorials → CTF Writeups → Tools → Certifications, then utility links.
 [menu]
   [[menu.main]]
     identifier = "start-here"
@@ -97,45 +99,45 @@ canonifyURLs = true
     url = "/career/how-to-get-into-cybersecurity-with-ctfs/"
     weight = 5
   [[menu.main]]
-    identifier = "ctf"
-    name = "CTF Writeups"
-    url = "/ctf-writeups/"
-    weight = 10
-  [[menu.main]]
     identifier = "tutorials"
     name = "Tutorials"
     url = "/tutorials/"
-    weight = 20
+    weight = 10
+  [[menu.main]]
+    identifier = "ctf"
+    name = "CTF Writeups"
+    url = "/ctf-writeups/"
+    weight = 15
   [[menu.main]]
     identifier = "tools"
     name = "Tools"
     url = "/tools/"
-    weight = 30
+    weight = 20
   [[menu.main]]
     identifier = "certifications"
     name = "Certifications"
     url = "/certifications/best-cybersecurity-certifications-2026/"
-    weight = 40
+    weight = 25
   [[menu.main]]
     identifier = "categories"
     name = "Categories"
     url = "/categories/"
-    weight = 50
+    weight = 30
   [[menu.main]]
     identifier = "tags"
     name = "Tags"
     url = "/tags/"
-    weight = 60
+    weight = 35
   [[menu.main]]
     identifier = "search"
     name = "Search"
     url = "/search/"
-    weight = 70
+    weight = 40
   [[menu.main]]
     identifier = "about"
     name = "About"
     url = "/about/"
-    weight = 80
+    weight = 45
 
 # Security: shell exec allowed for git info; nothing else
 [security]
