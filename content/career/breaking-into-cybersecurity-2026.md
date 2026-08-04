@@ -3,7 +3,7 @@ title: "Breaking Into Cybersecurity in 2026: An Honest Roadmap"
 slug: "breaking-into-cybersecurity-2026"
 description: "Stop chasing certs that don't move the needle. Honest 2026 cybersecurity career roadmap: what to learn first, what to skip, what hiring managers actually want."
 date: 2026-05-05T08:00:00Z
-lastmod: 2026-05-05T08:00:00Z
+lastmod: 2026-08-04T00:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["Career"]
@@ -63,12 +63,14 @@ In rough order of ROI for a first job:
 
 What to skip at the entry level: CISSP (requires 5 years experience), OSCP (great long-term, overkill day 1), CEH (overpriced for what it teaches).
 
+For the full breakdown ranked by goal — entry, offensive, blue team, cloud, and management — with honest cost and difficulty notes, see our [best cybersecurity certifications guide](/certifications/best-cybersecurity-certifications-2026/).
+
 ## The Portfolio That Wins Interviews
 
 Resumes get 6 seconds. A portfolio gets 6 minutes. Build one before you apply:
 
 1. **A GitHub with real commits.** Not forks. Detection rules you've written, scripts that solve specific problems, Sigma rule contributions to open repos.
-2. **A blog with 5+ posts.** CTF writeups, a tool deep-dive, an opinion piece. Demonstrates communication ability — the rarest skill in junior candidates.
+2. **A blog with 5+ posts.** CTF writeups, a tool deep-dive, an opinion piece. Demonstrates communication ability — the rarest skill in junior candidates. The fastest way to fill it is our [hands-on roadmap for getting into cybersecurity with CTFs](/career/how-to-get-into-cybersecurity-with-ctfs/) — every challenge you solve becomes a post.
 3. **A home lab.** Even a single VM with Wazuh + Sysmon, processing your own host's logs, and a documented incident you simulated.
 4. **A LinkedIn that's actually written for security people**, not a sales pitch.
 
