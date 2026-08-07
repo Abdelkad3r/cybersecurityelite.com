@@ -1,5 +1,5 @@
 ---
-title: "L3akCTF 2026 Cryptography Writeup: BabyLCG, RSA Eclipse, Immiscible, po1337nomial-revenge, CSC265, Isaac's Kaleidoscope, A Fine Product, and 1+1=3"
+title: "L3akCTF 2026 Crypto Writeup: All 8 Cryptography Challenges"
 slug: "l3akctf-2026-crypto-writeup"
 description: "Full L3akCTF 2026 cryptography writeup covering all eight crypto challenges: recovering LCG parameters from three leaked states to predict an XOR key (BabyLCG); factoring an RSA modulus whose primes sit just below 2^607 and 2^521 (RSA Eclipse); an Oil-and-Vinegar system that becomes linear once the vinegar variables are fixed (Immiscible); reordering shuffled MT19937 outputs via untempering plus graph color refinement to clone the generator (po1337nomial-revenge); a garbled Bloom filter broken with identity-point oblivious transfer, Shamir interpolation, and a hybrid-filter reconstruction (CSC265); a Newton-fractal ECB byte-at-a-time oracle defeated by palette normalization (Isaac's Kaleidoscope); forcing a Sophie Germain / safe-prime relation to factor with Fermat and a GCD, synthesized through lattice reduction (A Fine Product); and a Groth16 proof forgery against a weakened CRS where delta = lambda * gamma (1+1=3)."
 date: 2026-08-06T22:00:00Z

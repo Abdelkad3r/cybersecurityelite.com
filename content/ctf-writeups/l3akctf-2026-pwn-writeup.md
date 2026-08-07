@@ -1,5 +1,5 @@
 ---
-title: "L3akCTF 2026 Binary Exploitation Writeup: Rudimentary Calculator, LattiaVM 1 & 2, Bosh, Piet 1 & 2, and Supervisor"
+title: "L3akCTF 2026 Pwn Writeup: All 7 Binary Exploitation Challenges"
 slug: "l3akctf-2026-pwn-writeup"
 description: "Full L3akCTF 2026 pwn writeup covering all seven binary exploitation challenges: a scanf %s NUL-byte overflow that turns a bignum printer into a stack leak for ret2win (Rudimentary Calculator); a custom stack-VM whose DUP instruction corrupts its own stack pointer into a native-frame read/write primitive with leak-free ASLR-relative ROP (LattiaVM 1 & 2); an RWX-module CTF shell defeated with /proc/self/exe recovery, behavioral oracles, a self-disable bypass, an opcode-widening byte→dword trick, and an atomic stdout->write hook (Bosh); a Piet interpreter whose up/down opcodes alias stack_depth into an exact set_depth primitive and whose roll ignores its depth bound (Piet 1 & 2); and a seccomp user-notification supervisor broken by two unsigned-arithmetic offset+count wraparounds into arbitrary parent read/write, GOT overwrite, and system(\"/readflag\")."
 date: 2026-08-06T23:00:00Z
