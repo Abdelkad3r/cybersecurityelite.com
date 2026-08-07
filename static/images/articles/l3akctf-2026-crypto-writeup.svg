@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="L3akCTF 2026 cryptography writeup covering all eight crypto challenges — BabyLCG recovers LCG parameters from three leaked states to predict the XOR key, RSA Eclipse factors a modulus whose primes sit just below 2^607 and 2^521, Immiscible turns an Oil-and-Vinegar system linear by fixing the vinegar variables, po1337nomial-revenge reorders shuffled MT19937 outputs via graph color refinement to clone the generator, CSC265 breaks a garbled Bloom filter with identity-point oblivious transfer and Shamir interpolation, Isaac's Kaleidoscope defeats a Newton-fractal ECB byte-at-a-time oracle by normalizing away the random palette, A Fine Product forces a safe-prime relation and factors with Fermat and a GCD, and 1+1=3 forges a Groth16 proof against a weakened common reference string where delta equals lambda times gamma">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="L3akCTF 2026 cryptography writeup covering all eight crypto challenges — BabyLCG, RSA Eclipse, Immiscible, po1337nomial-revenge, CSC265, Isaac's Kaleidoscope, A Fine Product, and 1+1=3 — solved by recovering LCG and MT19937 state, factoring structured RSA, linearizing an Oil-and-Vinegar system, breaking a garbled Bloom filter with oblivious transfer, defeating a Newton-fractal ECB oracle, forcing a safe-prime factorization, and forging a Groth16 proof against a weak CRS">
   <defs>
     <linearGradient id="title-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ededef"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
     <linearGradient id="accent-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
     <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0 L0 0 0 48" fill="none" stroke="#0d0d12" stroke-width="1"/></pattern>
-    <radialGradient id="glow" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#a78bfa" stop-opacity="0.10"/><stop offset="1" stop-color="#a78bfa" stop-opacity="0"/></radialGradient>
+    <radialGradient id="glow" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.10"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
   </defs>
   <rect width="1200" height="630" fill="#000000"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
@@ -16,15 +16,15 @@
     <text x="34" y="21" font-family="ui-monospace, monospace" font-size="13" fill="#ededef" letter-spacing="0.06em">8 / 8 SOLVED</text>
   </g>
   <text x="600" y="240" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="88" font-weight="800" fill="url(#title-grad)" letter-spacing="-0.04em">L3AKCTF 2026</text>
-  <text x="600" y="320" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#accent-grad)" letter-spacing="0.05em">CRYPTOGRAPHY &#183; ALL 8 CHALLENGES</text>
+  <text x="600" y="320" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#accent-grad)" letter-spacing="0.05em">CRYPTOGRAPHY &#183; STEP BY STEP</text>
   <text x="600" y="380" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="19" font-weight="500" fill="#9ba0a8" letter-spacing="0.03em">lcg &#183; rsa &#183; oil-and-vinegar &#183; mt19937 &#183; ot &#183; groth16</text>
   <g transform="translate(60, 510)">
-    <text x="0" y="0" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#a78bfa">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">find the structure hidden inside the &#8220;random&#8221;  &#8594;  let algebra finish</tspan></text>
-    <text x="0" y="22" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#a78bfa">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">recover key / factor N / forge proof  &#8594;  L3AK{...}</tspan></text>
+    <text x="0" y="0" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">find the structure hidden inside the &#8220;random&#8221;  &#8594;  let algebra finish</tspan></text>
+    <text x="0" y="22" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">crypto@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">recover key / factor N / forge proof  &#8594;  L3AK{&#8230;}</tspan></text>
   </g>
   <text x="60" y="600" font-family="ui-monospace, 'SFMono-Regular', Menlo, monospace" font-size="15" fill="#9ba0a8" letter-spacing="0.04em">cybersecurityelite.com</text>
-  <g transform="translate(1075, 555)" stroke="#a78bfa" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round">
+  <g transform="translate(1075, 555)" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round">
     <line x1="2" y1="0" x2="2" y2="72"/>
-    <polygon points="5,4 48,18 5,32" fill="#a78bfa" stroke="none"/>
+    <polygon points="5,4 48,18 5,32" fill="#22d3ee" stroke="none"/>
   </g>
 </svg>
