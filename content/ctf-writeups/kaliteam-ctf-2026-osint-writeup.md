@@ -50,7 +50,7 @@ cover:
 
 OSINT at KaliTeam CTF 2026 was a two-challenge track that shares a deceptively simple lesson: **the hard part of an open-source hunt is rarely finding the fact — it's getting to the source, or realizing the string isn't spelled the way you think.** One challenge hides its answer behind a Cloudflare wall and a physically torn page; the other hides it behind a single `@` in a team name. Both are won less by clever queries than by disciplined tradecraft — and by knowing exactly which dead end you're standing in.
 
-This **CyberSecurity Elite** KaliTeam CTF 2026 OSINT writeup walks both challenges end to end, emphasizing the *methodology and the wrong turns* (which, as the source writeups note, are usually the part worth reading). Challenge files, solver scripts, and interactive HTML writeups are at [Abdelkad3r/KaliTeam-CTF26](https://github.com/Abdelkad3r/KaliTeam-CTF26).
+This **CyberSecurity Elite** KaliTeam CTF 2026 OSINT writeup walks both challenges end to end, emphasizing the *methodology and the wrong turns* (which, as the source writeups note, are usually the part worth reading). Challenge files, solver scripts, and interactive HTML writeups are at [KaliTeam CTF 2026 on GitHub](https://github.com/Abdelkad3r/KaliTeam-CTF26).
 
 ## Both challenges at a glance
 
@@ -183,10 +183,10 @@ Two very different hunts, one mindset — **the fact is the easy part; access an
 
 ## Reproduce it yourself
 
-Both challenges ship a reproducible solver at [Abdelkad3r/KaliTeam-CTF26](https://github.com/Abdelkad3r/KaliTeam-CTF26) under `osint/<challenge>/`. The Unbroken Shelf includes `find_issue.js` (Playwright — clears Cloudflare, finds the issue, extracts the address and time) and `verify_alignment.py` (the independent 23-sliver tear-alignment proof), plus the original clipping. Guests ships `find_team.py`, which enumerates the Black Hat MEA series and fuzzy-scans every scoreboard. Each challenge folder also carries a standalone interactive HTML writeup.
+Both challenges ship a reproducible solver at the [KaliTeam CTF 2026 repository](https://github.com/Abdelkad3r/KaliTeam-CTF26) under `osint/<challenge>/`. The Unbroken Shelf includes `find_issue.js` (Playwright — clears Cloudflare, finds the issue, extracts the address and time) and `verify_alignment.py` (the independent 23-sliver tear-alignment proof), plus the original clipping. Guests ships `find_team.py`, which enumerates the Black Hat MEA series and fuzzy-scans every scoreboard. Each challenge folder also carries a standalone interactive HTML writeup.
 
 Browse the full [CTF writeups](/ctf-writeups/) archive for more OSINT and geolocation walkthroughs, including our companion [L3akCTF 2026 OSINT writeup](/ctf-writeups/l3akctf-2026-osint-writeup/).
 
 ---
 
-*This writeup is part of the CyberSecurity Elite [KaliTeam CTF 2026](/series/kaliteam-ctf-2026/) series. Challenge files, solver scripts, and interactive writeups for both OSINT challenges are published at [github.com/Abdelkad3r/KaliTeam-CTF26](https://github.com/Abdelkad3r/KaliTeam-CTF26).*
+*This writeup is part of the CyberSecurity Elite [KaliTeam CTF 2026](/series/kaliteam-ctf-2026/) series. Challenge files, solver scripts, and interactive writeups for both OSINT challenges are published at [github.com/Abdelkad3r/KaliTeam-CTF26](https://github.com/Abdelkad3r/KaliTeam-CTF26) (KaliTeam CTF 2026).*
