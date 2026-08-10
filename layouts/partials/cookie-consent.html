@@ -1,0 +1,279 @@
+{{- /* ─────────────────────────────────────────────────────────────────────────
+     Cookie Consent — CyberSecurity Elite
+     Storage : localStorage['cse_consent'] = { v:1, ts:ms, analytics:bool, advertising:bool }
+     Public  : window.cseConsent.open() — reopens modal (called by footer "Cookie Settings")
+     Gates   : window.__cseFireGA4(), window.__cseFireClarity() (defined in extend_footer.html)
+     ───────────────────────────────────────────────────────────────────────── */ -}}
+<style>
+#cse-cb,#cse-cb *,#cse-modal,#cse-modal *{box-sizing:border-box;margin:0;padding:0}
+
+/* ── banner ── */
+#cse-cb{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;
+  background:var(--theme,#12121a);
+  border-top:1px solid rgba(34,211,238,.4);
+  box-shadow:0 -4px 24px rgba(0,0,0,.45);
+  padding:.85rem 1.25rem;
+  font-size:.8rem;font-family:inherit;
+  color:var(--primary,#cdd6f4)
+}
+#cse-cb.cse-show{display:block}
+.cse-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.cse-text{flex:1 1 240px;line-height:1.55}
+.cse-text a{color:#22d3ee;text-decoration:none}
+.cse-text a:hover{text-decoration:underline}
+.cse-actions{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
+
+/* ── buttons ── */
+.cse-btn{
+  padding:.38rem .85rem;border-radius:3px;
+  font-size:.78rem;font-family:inherit;font-weight:500;
+  cursor:pointer;white-space:nowrap;
+  transition:background .14s,border-color .14s,color .14s
+}
+.cse-btn-accept{background:#22d3ee;color:#0a0a0f;border:1px solid #22d3ee;font-weight:600}
+.cse-btn-accept:hover{background:#06b6d4;border-color:#06b6d4}
+.cse-btn-manage{background:transparent;color:#22d3ee;border:1px solid rgba(34,211,238,.4)}
+.cse-btn-manage:hover{background:rgba(34,211,238,.08)}
+.cse-btn-reject{background:transparent;color:var(--secondary,#9b9b9b);border:1px solid rgba(148,163,184,.25)}
+.cse-btn-reject:hover{color:var(--primary,#cdd6f4);border-color:rgba(148,163,184,.5)}
+
+/* ── modal overlay ── */
+#cse-modal{
+  display:none;position:fixed;inset:0;z-index:9999;
+  align-items:center;justify-content:center;padding:1rem;
+  background:rgba(0,0,0,.72)
+}
+#cse-modal.cse-show{display:flex}
+.cse-box{
+  background:var(--entry,#1a1a26);
+  border:1px solid rgba(34,211,238,.25);
+  border-radius:6px;width:100%;max-width:480px;
+  max-height:90vh;overflow-y:auto;
+  font-size:.82rem;font-family:inherit;
+  color:var(--primary,#cdd6f4);
+  box-shadow:0 8px 48px rgba(0,0,0,.65)
+}
+.cse-mhead{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.9rem 1.1rem .75rem;
+  border-bottom:1px solid rgba(34,211,238,.15)
+}
+.cse-mhead h2{font-size:.9rem;font-weight:600;color:#22d3ee;font-family:inherit}
+.cse-mclose{
+  background:none;border:none;cursor:pointer;
+  color:var(--secondary,#9b9b9b);font-size:1.05rem;line-height:1;padding:.1rem .2rem
+}
+.cse-mclose:hover{color:var(--primary,#cdd6f4)}
+.cse-mbody{padding:.4rem 1.1rem}
+.cse-row{padding:.65rem 0;border-bottom:1px solid rgba(148,163,184,.1)}
+.cse-row:last-child{border-bottom:none}
+.cse-rowhead{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.25rem}
+.cse-rowhead span{font-weight:600;color:var(--primary,#cdd6f4);font-size:.83rem}
+.cse-desc{font-size:.77rem;line-height:1.55;color:var(--secondary,#9b9b9b)}
+.cse-always{
+  font-size:.69rem;color:#22d3ee;
+  border:1px solid rgba(34,211,238,.3);border-radius:3px;
+  padding:.12rem .38rem;white-space:nowrap;flex-shrink:0
+}
+
+/* ── toggle switch ── */
+.cse-tog{position:relative;width:40px;height:22px;flex-shrink:0;display:inline-block}
+.cse-tog input{opacity:0;width:0;height:0;position:absolute}
+.cse-track{
+  position:absolute;inset:0;border-radius:11px;
+  background:rgba(148,163,184,.2);border:1px solid rgba(148,163,184,.3);
+  cursor:pointer;transition:background .18s,border-color .18s
+}
+.cse-tog input:checked~.cse-track{background:rgba(34,211,238,.22);border-color:#22d3ee}
+.cse-track::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:16px;height:16px;border-radius:50%;
+  background:#64748b;transition:transform .18s,background .18s
+}
+.cse-tog input:checked~.cse-track::after{transform:translateX(18px);background:#22d3ee}
+
+/* ── modal footer ── */
+.cse-mfoot{
+  display:flex;gap:.45rem;justify-content:flex-end;
+  padding:.75rem 1.1rem .9rem;
+  border-top:1px solid rgba(34,211,238,.15)
+}
+
+/* ── footer "Cookie Settings" button styled like a link ── */
+.cse-footlink{
+  background:none;border:none;padding:0;
+  font-size:inherit;color:inherit;cursor:pointer;
+  font-family:inherit;text-decoration:none
+}
+.cse-footlink:hover{text-decoration:underline}
+
+/* ── mobile ── */
+@media(max-width:500px){
+  #cse-cb{padding:.85rem 1rem}
+  .cse-actions{width:100%}
+  .cse-btn{flex:1 1 0;text-align:center}
+  .cse-mfoot{flex-direction:column}
+  .cse-mfoot .cse-btn{text-align:center}
+}
+</style>
+
+<!-- Banner -->
+<div id="cse-cb" role="region" aria-label="Cookie consent">
+  <div class="cse-inner">
+    <p class="cse-text">
+      This site uses cookies for analytics and advertising. See our
+      <a href="/privacy-policy/#2-cookies-and-local-storage">Privacy Policy</a> for details.
+    </p>
+    <div class="cse-actions">
+      <button type="button" class="cse-btn cse-btn-reject" id="cse-btn-reject">Reject All</button>
+      <button type="button" class="cse-btn cse-btn-manage" id="cse-btn-manage">Manage</button>
+      <button type="button" class="cse-btn cse-btn-accept" id="cse-btn-accept">Accept All</button>
+    </div>
+  </div>
+</div>
+
+<!-- Preferences modal -->
+<div id="cse-modal" role="dialog" aria-modal="true" aria-labelledby="cse-modal-h">
+  <div class="cse-box">
+    <div class="cse-mhead">
+      <h2 id="cse-modal-h">Cookie Preferences</h2>
+      <button type="button" class="cse-mclose" id="cse-mclose" aria-label="Close">&times;</button>
+    </div>
+    <div class="cse-mbody">
+
+      <div class="cse-row">
+        <div class="cse-rowhead">
+          <span>Strictly Necessary</span>
+          <span class="cse-always">Always on</span>
+        </div>
+        <p class="cse-desc">Required for the site to function: theme preference and session handling. These cannot be disabled.</p>
+      </div>
+
+      <div class="cse-row">
+        <div class="cse-rowhead">
+          <span>Analytics</span>
+          <label class="cse-tog" aria-label="Enable analytics cookies">
+            <input type="checkbox" id="cse-tog-analytics">
+            <span class="cse-track"></span>
+          </label>
+        </div>
+        <p class="cse-desc">Google Analytics 4 and Microsoft Clarity — help us understand how visitors use the site. IP addresses are anonymized; data is aggregated.</p>
+      </div>
+
+      <div class="cse-row">
+        <div class="cse-rowhead">
+          <span>Advertising</span>
+          <label class="cse-tog" aria-label="Enable advertising cookies">
+            <input type="checkbox" id="cse-tog-ads">
+            <span class="cse-track"></span>
+          </label>
+        </div>
+        <p class="cse-desc">Google AdSense and DoubleClick — enables interest-based ads. Disabling shows non-personalized ads or no ads. Ad revenue funds free content.</p>
+      </div>
+
+    </div>
+    <div class="cse-mfoot">
+      <button type="button" class="cse-btn cse-btn-reject" id="cse-modal-cancel">Cancel</button>
+      <button type="button" class="cse-btn cse-btn-accept" id="cse-modal-save">Save Choices</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var KEY = 'cse_consent';
+  var banner = document.getElementById('cse-cb');
+  var modal  = document.getElementById('cse-modal');
+
+  /* storage */
+  function rdCon() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (_) { return null; } }
+  function wrCon(a, d) {
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 1, ts: Date.now(), analytics: !!a, advertising: !!d })); } catch (_) {}
+  }
+
+  /* Google Consent Mode v2 update — signals to AdSense when added */
+  function cmUpdate(a, d) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('consent', 'update', {
+        analytics_storage:  a ? 'granted' : 'denied',
+        ad_storage:         d ? 'granted' : 'denied',
+        ad_user_data:       d ? 'granted' : 'denied',
+        ad_personalization: d ? 'granted' : 'denied'
+      });
+    }
+  }
+
+  /* fire gated analytics scripts */
+  function fireAnalytics() {
+    if (typeof window.__cseFireGA4     === 'function') window.__cseFireGA4();
+    if (typeof window.__cseFireClarity === 'function') window.__cseFireClarity();
+  }
+
+  /* banner */
+  function showBanner() { banner.classList.add('cse-show'); }
+  function hideBanner() { banner.classList.remove('cse-show'); }
+
+  /* modal */
+  function openModal(prefill) {
+    var c = rdCon();
+    document.getElementById('cse-tog-analytics').checked = prefill ? (c ? c.analytics  : true)  : false;
+    document.getElementById('cse-tog-ads').checked       = prefill ? (c ? c.advertising : false) : false;
+    modal.classList.add('cse-show');
+    document.getElementById('cse-mclose').focus();
+  }
+  function closeModal() {
+    modal.classList.remove('cse-show');
+    if (!rdCon()) showBanner();
+  }
+
+  /* actions */
+  function acceptAll()  { wrCon(true, true);   cmUpdate(true, true);   fireAnalytics(); hideBanner(); modal.classList.remove('cse-show'); }
+  function rejectAll()  { wrCon(false, false);  cmUpdate(false, false);                  hideBanner(); modal.classList.remove('cse-show'); }
+  function saveChoices() {
+    var a = document.getElementById('cse-tog-analytics').checked;
+    var d = document.getElementById('cse-tog-ads').checked;
+    wrCon(a, d); cmUpdate(a, d);
+    if (a) fireAnalytics();
+    hideBanner(); modal.classList.remove('cse-show');
+  }
+
+  /* wire buttons */
+  document.getElementById('cse-btn-accept').addEventListener('click', acceptAll);
+  document.getElementById('cse-btn-reject').addEventListener('click', rejectAll);
+  document.getElementById('cse-btn-manage').addEventListener('click', function () { openModal(true); });
+  document.getElementById('cse-mclose').addEventListener('click', closeModal);
+  document.getElementById('cse-modal-cancel').addEventListener('click', closeModal);
+  document.getElementById('cse-modal-save').addEventListener('click', saveChoices);
+
+  /* overlay click & Escape */
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('cse-show')) closeModal();
+  });
+
+  /* focus trap inside modal */
+  modal.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var els = Array.prototype.slice.call(modal.querySelectorAll('button, input'));
+    var first = els[0], last = els[els.length - 1];
+    if (e.shiftKey ? document.activeElement === first : document.activeElement === last) {
+      e.preventDefault();
+      (e.shiftKey ? last : first).focus();
+    }
+  });
+
+  /* public API — called by footer "Cookie Settings" button */
+  window.cseConsent = { open: function () { openModal(true); } };
+
+  /* init */
+  var existing = rdCon();
+  if (!existing) {
+    showBanner();
+  } else {
+    cmUpdate(existing.analytics, existing.advertising);
+    if (existing.analytics) fireAnalytics();
+  }
+})();
+</script>

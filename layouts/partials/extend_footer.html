@@ -1,4 +1,4 @@
-{{- /* Custom footer enhancements: analytics placeholders, schema, and extra links. */ -}}
+{{- /* Custom footer: analytics (consent-gated), cookie consent, and footer links. */ -}}
 
 {{- /* Plausible Analytics (privacy-friendly) — uncomment to enable */ -}}
 {{- with site.Params.plausibleDomain }}
@@ -7,67 +7,67 @@
 */ -}}
 {{- end -}}
 
-{{- /* GA4 Measurement Protocol beacon — replaces gtag.js (153 KB → 500 bytes).
-       Inline, fires once per page load via sendBeacon (non-blocking, survives
-       page unload). Reads stable client_id from localStorage so GA4 sessions
-       persist across pages. */ -}}
+{{- /* GA4 Measurement Protocol beacon — wrapped in __cseFireGA4() so the cookie-consent
+       partial controls when it fires. Uses sendBeacon (non-blocking, survives page unload).
+       Reads stable client_id from localStorage so GA4 sessions persist across pages. */ -}}
 {{- $ga       := site.Params.ga4 -}}
 {{- $mpSecret := site.Params.ga4MPSecret -}}
 {{- if and $ga $mpSecret }}
 <script>
-(function(){
+(function () {
   var MID = '{{ $ga }}';
-  var SECRET = '{{ $mpSecret }}';
-  var cid;
-  try {
-    cid = localStorage.getItem('_ga4_cid');
-    if (!cid) {
-      cid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
-            : (Date.now() + '.' + Math.random().toString(36).slice(2));
-      localStorage.setItem('_ga4_cid', cid);
-    }
-  } catch (e) { cid = 'nostore-' + Date.now(); }
-  var payload = JSON.stringify({
-    client_id: cid,
-    events: [{
-      name: 'page_view',
-      params: {
+  var SEC = '{{ $mpSecret }}';
+  var _done = false;
+  window.__cseFireGA4 = function () {
+    if (_done) return; _done = true;
+    var cid;
+    try {
+      cid = localStorage.getItem('_ga4_cid');
+      if (!cid) {
+        cid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
+              : (Date.now() + '.' + Math.random().toString(36).slice(2));
+        localStorage.setItem('_ga4_cid', cid);
+      }
+    } catch (e) { cid = 'nostore-' + Date.now(); }
+    var payload = JSON.stringify({
+      client_id: cid,
+      events: [{ name: 'page_view', params: {
         page_location: location.href,
         page_title: document.title,
         page_referrer: document.referrer
-      }
-    }]
-  });
-  var url = 'https://www.google-analytics.com/mp/collect?measurement_id=' + MID + '&api_secret=' + SECRET;
-  if (navigator.sendBeacon) {
-    navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
-  } else if (window.fetch) {
-    fetch(url, { method: 'POST', body: payload, keepalive: true });
-  }
+      }}]
+    });
+    var url = 'https://www.google-analytics.com/mp/collect?measurement_id=' + MID + '&api_secret=' + SEC;
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
+    } else if (window.fetch) {
+      fetch(url, { method: 'POST', body: payload, keepalive: true });
+    }
+  };
 })();
 </script>
 {{- end }}
 
-{{- /* Microsoft Clarity — deferred. Fires after window.load OR first user
-       interaction (whichever first). Clarity is ~25 KB of third-party JS;
-       deferring keeps it off the LCP critical path. */ -}}
+{{- /* Microsoft Clarity — deferred and wrapped in __cseFireClarity() for the consent gate. */ -}}
 {{- $clarity := site.Params.microsoftClarity -}}
 {{- if $clarity }}
 <script>
-(function(){
-  var loaded = false;
-  function load(){
-    if (loaded) return; loaded = true;
-    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,'clarity','script','{{ $clarity }}');
-  }
-  if (document.readyState === 'complete') { setTimeout(load, 1500); }
-  else { window.addEventListener('load', function(){ setTimeout(load, 1500); }); }
-  ['mousedown','keydown','touchstart','scroll'].forEach(function(e){
-    window.addEventListener(e, load, { once: true, passive: true });
-  });
+(function () {
+  var _done = false;
+  window.__cseFireClarity = function () {
+    if (_done) return; _done = true;
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,'clarity','script','{{ $clarity }}');
+  };
 })();
 </script>
 {{- end }}
+
+{{- /* Cookie consent banner + preferences modal (gates the functions above) */ -}}
+{{ partial "cookie-consent.html" . }}
 
 {{- /* Footer notice */ -}}
 <div style="text-align:center; padding: 0.8rem 0 1.4rem; font-size: 0.78rem; color: var(--secondary);">
@@ -82,4 +82,6 @@
   <a href="/contact/">Contact</a>
   <span style="margin: 0 0.5rem;">·</span>
   <a href="/sitemap.xml">Sitemap</a>
+  <span style="margin: 0 0.5rem;">·</span>
+  <button type="button" class="cse-footlink" onclick="window.cseConsent&&window.cseConsent.open()">Cookie Settings</button>
 </div>

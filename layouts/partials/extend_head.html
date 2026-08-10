@@ -148,3 +148,9 @@
   mermaid.initialize({ startOnLoad: true, theme: document.documentElement.classList.contains('dark') ? 'dark' : 'default' });
 </script>
 {{ end }}
+
+{{- /* Google Consent Mode v2 — must appear in <head> before any Google ad or analytics scripts.
+     Sets all consent types to 'denied' by default; updated by the cookie-consent banner.
+     wait_for_update gives the banner JS up to 800 ms to signal existing consent (return
+     visitors whose choice is stored in localStorage) before Google scripts proceed. */ -}}
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:800});</script>
