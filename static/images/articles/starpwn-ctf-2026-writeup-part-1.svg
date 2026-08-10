@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#0d0d12" stroke-width="1"/>
+    </pattern>
+
+    <!-- Radial cyan glow -->
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#00fff7" stop-opacity="0.08"/>
+      <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Title gradient white→cyan -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#00fff7"/>
+    </linearGradient>
+
+    <!-- Subtitle gradient cyan→purple -->
+    <linearGradient id="subtitleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00fff7"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+
+    <!-- Glow filter for terminal text -->
+    <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle glow for title -->
+    <filter id="titleGlow" x="-5%" y="-20%" width="110%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Black background -->
+  <rect width="1200" height="630" fill="#000000"/>
+
+  <!-- Grid pattern overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Radial glow overlay -->
+  <rect width="1200" height="630" fill="url(#glowGrad)"/>
+
+  <!-- Horizontal separator lines -->
+  <line x1="0" y1="100" x2="1200" y2="100" stroke="#00fff7" stroke-width="0.5" stroke-opacity="0.25"/>
+  <line x1="0" y1="530" x2="1200" y2="530" stroke="#00fff7" stroke-width="0.5" stroke-opacity="0.25"/>
+
+  <!-- Top label -->
+  <text x="48" y="62" font-family="'Courier New', Courier, monospace" font-size="14" font-weight="600"
+        letter-spacing="3" fill="#00fff7" opacity="0.85">
+    [ CTF WRITEUP · MISC · RF · SPACE COMMS ]
+  </text>
+
+  <!-- Top-right badge: 8/8 SOLVED -->
+  <circle cx="1125" cy="58" r="42" fill="#7c3aed" opacity="0.9"/>
+  <circle cx="1125" cy="58" r="42" fill="none" stroke="#a855f7" stroke-width="2"/>
+  <text x="1125" y="52" font-family="'Courier New', Courier, monospace" font-size="18" font-weight="700"
+        fill="#ffffff" text-anchor="middle">8 / 8</text>
+  <text x="1125" y="70" font-family="'Courier New', Courier, monospace" font-size="11" font-weight="600"
+        fill="#e0d0ff" text-anchor="middle" letter-spacing="1">SOLVED</text>
+
+  <!-- Big title: STARPWN CTF 2026 -->
+  <text x="60" y="220" font-family="'Arial Black', 'Arial Bold', Arial, sans-serif" font-size="72"
+        font-weight="900" fill="url(#titleGrad)" filter="url(#titleGlow)" letter-spacing="-1">
+    STARPWN CTF 2026
+  </text>
+
+  <!-- Subtitle line -->
+  <text x="62" y="268" font-family="'Courier New', Courier, monospace" font-size="26"
+        font-weight="700" fill="url(#subtitleGrad)" letter-spacing="4">
+    MISC &amp; RF · STEP BY STEP
+  </text>
+
+  <!-- Decorative accent line under subtitle -->
+  <rect x="62" y="280" width="520" height="2" fill="url(#subtitleGrad)" opacity="0.6" rx="1"/>
+
+  <!-- Description line -->
+  <text x="62" y="330" font-family="'Courier New', Courier, monospace" font-size="15"
+        fill="#a0aec0" letter-spacing="1">
+    cipher images · ccsds covert channel · morse beacon · gps jammer
+  </text>
+
+  <!-- Terminal block background -->
+  <rect x="48" y="360" width="1104" height="110" rx="6" fill="#0a0a0f" stroke="#00fff7"
+        stroke-width="1" stroke-opacity="0.4"/>
+
+  <!-- Terminal dot decorations -->
+  <circle cx="72" cy="378" r="5" fill="#ff5f57"/>
+  <circle cx="90" cy="378" r="5" fill="#febc2e"/>
+  <circle cx="108" cy="378" r="5" fill="#28c840"/>
+
+  <!-- Terminal label -->
+  <text x="600" y="381" font-family="'Courier New', Courier, monospace" font-size="11"
+        fill="#555" text-anchor="middle">starpwn-ctf-2026</text>
+
+  <!-- Terminal line 1 -->
+  <text x="72" y="415" font-family="'Courier New', Courier, monospace" font-size="14"
+        fill="#00fff7" filter="url(#cyanGlow)">
+    <tspan fill="#a855f7">osint@elite</tspan><tspan fill="#555">:</tspan><tspan fill="#ffffff">~</tspan><tspan fill="#555"> $ </tspan><tspan fill="#00fff7">rot13("Obj gvrf ner pbby!") </tspan><tspan fill="#555">→ </tspan><tspan fill="#ffffff">Bow ties are cool!</tspan>
+  </text>
+
+  <!-- Terminal line 2 -->
+  <text x="72" y="448" font-family="'Courier New', Courier, monospace" font-size="14"
+        fill="#00fff7" filter="url(#cyanGlow)">
+    <tspan fill="#a855f7">osint@elite</tspan><tspan fill="#555">:</tspan><tspan fill="#ffffff">~</tspan><tspan fill="#555"> $ </tspan><tspan fill="#00fff7">ccsds_parse --apid 100 capture.bin </tspan><tspan fill="#555">→ </tspan><tspan fill="#ffffff">h0us3k33p1ng_4n0m4ly</tspan>
+  </text>
+
+  <!-- Bottom left: site URL -->
+  <text x="48" y="576" font-family="'Courier New', Courier, monospace" font-size="14"
+        fill="#00fff7" opacity="0.7" letter-spacing="1">
+    cybersecurityelite.com
+  </text>
+
+  <!-- Bottom right: decorative rocket/arrow element in cyan -->
+  <g transform="translate(1090, 545)" fill="none" stroke="#00fff7" stroke-width="2">
+    <!-- Rocket body -->
+    <ellipse cx="0" cy="-18" rx="12" ry="20" fill="#00fff7" fill-opacity="0.15" stroke="#00fff7" stroke-width="1.5"/>
+    <!-- Nose cone -->
+    <polygon points="0,-38 -12,-18 12,-18" fill="#00fff7" fill-opacity="0.3" stroke="#00fff7" stroke-width="1.5"/>
+    <!-- Window -->
+    <circle cx="0" cy="-16" r="4" fill="#00fff7" fill-opacity="0.5" stroke="#00fff7" stroke-width="1"/>
+    <!-- Left fin -->
+    <polygon points="-12,-4 -22,14 -8,8" fill="#00fff7" fill-opacity="0.2" stroke="#00fff7" stroke-width="1.5"/>
+    <!-- Right fin -->
+    <polygon points="12,-4 22,14 8,8" fill="#00fff7" fill-opacity="0.2" stroke="#00fff7" stroke-width="1.5"/>
+    <!-- Exhaust flame -->
+    <ellipse cx="0" cy="10" rx="6" ry="8" fill="#a855f7" fill-opacity="0.5" stroke="#a855f7" stroke-width="1"/>
+    <ellipse cx="0" cy="14" rx="3" ry="5" fill="#ffffff" fill-opacity="0.6" stroke="none"/>
+    <!-- Stars around rocket -->
+    <circle cx="-40" cy="-30" r="1.5" fill="#00fff7"/>
+    <circle cx="40" cy="-20" r="1" fill="#00fff7"/>
+    <circle cx="-50" cy="5" r="1" fill="#a855f7"/>
+    <circle cx="50" cy="-5" r="1.5" fill="#ffffff" fill-opacity="0.7"/>
+    <circle cx="-30" cy="20" r="1" fill="#ffffff" fill-opacity="0.5"/>
+    <circle cx="35" cy="15" r="1" fill="#00fff7"/>
+  </g>
+
+  <!-- Part 1 badge bottom center -->
+  <rect x="530" y="555" width="140" height="30" rx="4" fill="#1a1a2e" stroke="#a855f7" stroke-width="1" stroke-opacity="0.7"/>
+  <text x="600" y="575" font-family="'Courier New', Courier, monospace" font-size="13"
+        fill="#a855f7" text-anchor="middle" letter-spacing="2">PART 1 OF 2</text>
+</svg>
