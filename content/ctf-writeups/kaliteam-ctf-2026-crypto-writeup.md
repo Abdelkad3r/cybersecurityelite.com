@@ -2,8 +2,8 @@
 title: "KaliTeam CTF 2026 Crypto Writeup: Merkle's Trapdoor — Knapsack Exhaustive Enumeration"
 slug: "kaliteam-ctf-2026-crypto-writeup"
 description: "KaliTeam CTF 2026 cryptography writeup for Merkle's Trapdoor: an 8-element Merkle-Hellman knapsack public key produces only 256 possible ciphertext values, all of which are distinct subset sums forming a collision-free bijection from bytes to integers — so the entire keyspace is tabulated in a single pass and each of the 33 big-endian 16-bit ciphertext blocks is decrypted by direct lookup without recovering the trapdoor modulus or multiplier."
-date: 2026-08-05T14:00:00Z
-lastmod: 2026-08-05T14:00:00Z
+date: 2026-08-09T14:00:00Z
+lastmod: 2026-08-09T14:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

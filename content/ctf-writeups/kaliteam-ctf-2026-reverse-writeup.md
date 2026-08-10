@@ -2,8 +2,8 @@
 title: "KaliTeam CTF 2026 Reverse Engineering Writeup: Whispering Feather & Fault Cartography"
 slug: "kaliteam-ctf-2026-reverse-writeup"
 description: "KaliTeam CTF 2026 reverse engineering writeup for Whispering Feather (stripped AArch64 ELF with a seal VM that emits a constant composite response seeded from .rodata, solved with Unicorn emulation after mapping the PT_LOAD segment at its correct virtual base) and Fault Cartography (x86-64 PIE binary that dispatches SIGILL/SIGFPE/SIGSEGV as six bijective ALU operations over a 104-step route whose target state is a compile-time constant, solved by algebraic inversion)."
-date: 2026-08-05T16:00:00Z
-lastmod: 2026-08-05T16:00:00Z
+date: 2026-08-09T16:00:00Z
+lastmod: 2026-08-09T16:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

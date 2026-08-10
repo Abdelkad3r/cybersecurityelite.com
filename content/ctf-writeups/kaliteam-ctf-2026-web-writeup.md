@@ -2,8 +2,8 @@
 title: "KaliTeam CTF 2026 Web Writeup: PHP Redirect Body Leak & User-Agent Gate Bypass"
 slug: "kaliteam-ctf-2026-web-writeup"
 description: "KaliTeam CTF 2026 web exploitation writeup covering both challenges: Industry Night, where PHP's header() without exit() leaks the full admin dashboard body inside a 302 redirect — readable by any unauthenticated curl request without the -L flag; and Robots, where the server gates the flag behind a User-Agent check that accepts the Googlebot string, demonstrating broken access control through a spoofable HTTP client header."
-date: 2026-08-05T12:00:00Z
-lastmod: 2026-08-05T12:00:00Z
+date: 2026-08-09T12:00:00Z
+lastmod: 2026-08-09T12:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

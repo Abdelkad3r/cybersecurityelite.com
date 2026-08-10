@@ -2,8 +2,8 @@
 title: "KaliTeam CTF 2026 Pwn Writeup: Player, Leaky & Raryray"
 slug: "kaliteam-ctf-2026-pwn-writeup"
 description: "KaliTeam CTF 2026 binary exploitation writeup for all three pwn challenges: Player (classic gets() ret2win with no canary, no PIE, and a stack-alignment ret gadget), Leaky (dual format-string plus stack-overflow in the same buffer — leak libc via %3$p then re-enter for a pop-rdi ret2libc ROP chain), and Raryray (no memory corruption at all — the flag block index is rand() seeded with time(NULL), fully predicted by reimplementing glibc's additive feedback generator and probing a two-second timing window)."
-date: 2026-08-05T18:00:00Z
-lastmod: 2026-08-05T18:00:00Z
+date: 2026-08-09T18:00:00Z
+lastmod: 2026-08-09T18:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
