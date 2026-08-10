@@ -54,25 +54,23 @@ This site uses a small number of cookies and browser localStorage entries:
 | Theme preference (`localStorage`) | Remembers light/dark mode setting | Persistent until cleared |
 | `_ga`, `_ga_*` | Google Analytics 4 — distinguishes unique visitors and sessions | 2 years / 24 hours |
 | `_gid` | Google Analytics 4 — session identifier | 24 hours |
-| `NID`, `DSID`, `IDE`, `__gads` | Google advertising / DoubleClick — used to serve and measure ads | Varies (up to 13 months) |
+| `NID`, `DSID`, `IDE`, `__gads` | Google advertising / DoubleClick — may be set if Google AdSense is enabled in the future | Varies (up to 13 months) |
 
 You can control or delete cookies at any time through your browser settings. Disabling cookies may affect ad personalization and analytics accuracy but will not prevent you from reading content on the site.
 
 ---
 
-## 3. Google AdSense and Advertising
+## 3. Advertising
 
-CyberSecurity Elite participates in the **Google AdSense** program. Google uses cookies and other tracking technologies to serve advertisements based on your prior visits to this site and other sites across the web.
+This site intends to display advertisements in the future, potentially through **Google AdSense**. No advertising network is currently active. This section will be updated when advertising is enabled.
 
-**Key facts about Google advertising on this site:**
+When advertising is active, Google may use cookies and other tracking technologies to serve advertisements based on your prior visits to this site and other sites across the web. The following will apply at that time:
 
 - Google's use of advertising cookies enables it and its partners to serve ads based on your visit to this site and/or other sites on the internet.
-- The **DoubleClick cookie** (and equivalent technologies) is used by Google to serve interest-based advertisements.
-- Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites.
-- You may opt out of personalized advertising by visiting [Google Ad Settings](https://www.google.com/settings/ads) or by visiting [www.aboutads.info](https://www.aboutads.info).
+- The **DoubleClick cookie** (and equivalent technologies) may be used by Google to serve interest-based advertisements.
+- Third-party vendors, including Google, may use cookies to serve ads based on a user's prior visits to this website or other websites.
+- You may opt out of personalized advertising at any time by visiting [Google Ad Settings](https://www.google.com/settings/ads) or [www.aboutads.info](https://www.aboutads.info).
 - You may also opt out of a third-party vendor's use of cookies for personalized advertising by visiting [www.networkadvertising.org/choices/](https://www.networkadvertising.org/choices/).
-
-We do not have access to or control over the cookies placed by Google or other third-party ad networks. Advertising revenues help fund the free content published on this site.
 
 ---
 
@@ -97,7 +95,7 @@ We may also use **Microsoft Clarity** for session-replay and heatmap analysis to
 |---|---|---|
 | GitHub Pages | Hosting | [github.com/site-policy](https://docs.github.com/site-policy/privacy-policies/github-privacy-statement) |
 | Cloudflare | CDN and DDoS protection | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
-| Google AdSense / DoubleClick | Advertising | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Google AdSense / DoubleClick | Advertising (not yet active) | [policies.google.com/privacy](https://policies.google.com/privacy) |
 | Google Analytics 4 | Usage analytics | [policies.google.com/privacy](https://policies.google.com/privacy) |
 | Microsoft Clarity | Heatmaps and session recording | [privacy.microsoft.com](https://privacy.microsoft.com/privacystatement) |
 | Newsletter provider | Email delivery | Provider's own policy (see subscription confirmation email) |
