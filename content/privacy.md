@@ -1,9 +1,9 @@
 ---
 title: "Privacy Policy"
-slug: "privacy"
-description: "Privacy policy for cybersecurityelite.com — what we collect, why, and your rights."
+slug: "privacy-policy"
+description: "Privacy Policy for CyberSecurityElite.com — what information we collect, how we use it, how third-party advertising works, and your rights under GDPR and CCPA."
 date: 2026-01-01T00:00:00Z
-lastmod: 2026-05-12T00:00:00Z
+lastmod: 2026-08-10T00:00:00Z
 layout: "page"
 hidemeta: true
 disableShare: true
@@ -11,76 +11,182 @@ ShowReadingTime: false
 ShowBreadCrumbs: true
 ---
 
-*Last updated: May 12, 2026*
+*Last updated: August 10, 2026*
 
-This Privacy Policy describes how CyberSecurity Elite ("we", "us") collects, uses, and shares information when you use cybersecurityelite.com.
+This Privacy Policy explains what information CyberSecurity Elite ("we", "us", "our") collects when you visit **cybersecurityelite.com**, how we use that information, how third-party advertising and analytics services operate on this site, and the rights available to you.
 
-## Information We Collect
+By using this website you agree to the practices described in this policy. If you do not agree, please discontinue use of the site.
 
-### Information you provide
+---
 
-- **Newsletter signups**: your email address.
-- **Contact and pitch submissions**: your name, email, and the contents of your message.
-- **Comments** (if enabled): your provided identifier and the comment content.
+## 1. Information We Collect
+
+### Information you provide directly
+
+We collect information you voluntarily provide when you:
+
+- **Submit a contact or pitch form** — your name, email address, and the contents of your message.
+- **Subscribe to our newsletter** — your email address.
+- **Leave a comment** (if commenting is enabled) — your display name, email address, and comment text.
+
+We use this information only to respond to your inquiry or to send you the content you subscribed to.
 
 ### Information collected automatically
 
-- **Server logs**: IP address, user agent, referrer, request path, response status. Retained 30 days for abuse prevention.
-- **Analytics** (if enabled): privacy-friendly visitor metrics via Plausible or Google Analytics 4 with IP anonymization.
+When you visit any page on this site, our servers and third-party services automatically receive and may record:
 
-## How We Use the Information
+- **IP address** — used for abuse prevention and geographic aggregation; not linked to identifiable individuals.
+- **User-agent string** — browser type and operating system.
+- **Referrer URL** — the page you came from.
+- **Request path and HTTP status** — which page was requested and whether it was served successfully.
+- **Timestamps** — date and time of each request.
 
-- Deliver and improve the website
-- Send newsletter content you subscribed to
-- Respond to inquiries
-- Detect and prevent abuse
-- Comply with legal obligations
+Raw server logs are retained for a maximum of 30 days and then deleted.
 
-We do **not** sell personal information to third parties.
+---
 
-## Cookies and Local Storage
+## 2. Cookies and Local Storage
 
-We use minimal cookies and localStorage:
+This site uses a small number of cookies and browser localStorage entries:
 
-- A **theme preference** key remembered between visits
-- **Analytics**, if loaded — Plausible uses no cookies; GA4 uses standard `_ga`/`_gid` cookies
+| Storage item | Purpose | Duration |
+|---|---|---|
+| Theme preference (`localStorage`) | Remembers light/dark mode setting | Persistent until cleared |
+| `_ga`, `_ga_*` | Google Analytics 4 — distinguishes unique visitors and sessions | 2 years / 24 hours |
+| `_gid` | Google Analytics 4 — session identifier | 24 hours |
+| `NID`, `DSID`, `IDE`, `__gads` | Google advertising / DoubleClick — used to serve and measure ads | Varies (up to 13 months) |
 
-You can disable cookies in your browser. The site works fully without them.
+You can control or delete cookies at any time through your browser settings. Disabling cookies may affect ad personalization and analytics accuracy but will not prevent you from reading content on the site.
 
-## Third-Party Services
+---
 
-- **GitHub Pages** hosts this site; refer to [GitHub's privacy practices](https://docs.github.com/site-policy/privacy-policies/github-privacy-statement).
-- **Cloudflare** (CDN/WAF) processes request metadata; see [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/).
-- **Newsletter provider** (e.g., Buttondown, ConvertKit, Mailchimp) processes your email; see their respective policies.
-- **Embedded media** (YouTube videos, etc.) may be embedded in privacy-enhanced mode where supported.
+## 3. Google AdSense and Advertising
 
-## Your Rights
+CyberSecurity Elite participates in the **Google AdSense** program. Google uses cookies and other tracking technologies to serve advertisements based on your prior visits to this site and other sites across the web.
 
-Depending on your jurisdiction, you may have rights to:
+**Key facts about Google advertising on this site:**
 
-- Access the personal data we hold about you
-- Request correction or deletion
-- Object to or restrict processing
-- Withdraw consent for newsletters at any time (every email contains an unsubscribe link)
-- Lodge a complaint with your local data protection authority
+- Google's use of advertising cookies enables it and its partners to serve ads based on your visit to this site and/or other sites on the internet.
+- The **DoubleClick cookie** (and equivalent technologies) is used by Google to serve interest-based advertisements.
+- Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this website or other websites.
+- You may opt out of personalized advertising by visiting [Google Ad Settings](https://www.google.com/settings/ads) or by visiting [www.aboutads.info](https://www.aboutads.info).
+- You may also opt out of a third-party vendor's use of cookies for personalized advertising by visiting [www.networkadvertising.org/choices/](https://www.networkadvertising.org/choices/).
 
-Send rights requests to **privacy [at] cybersecurityelite.com**.
+We do not have access to or control over the cookies placed by Google or other third-party ad networks. Advertising revenues help fund the free content published on this site.
 
-## Children
+---
 
-This site is not directed at children under 13 (or 16 in EEA jurisdictions). We do not knowingly collect personal data from children.
+## 4. Analytics
 
-## Data Retention
+This site uses **Google Analytics 4 (GA4)** to understand how visitors find and use our content. GA4 collects data including:
 
-- Newsletter subscriptions: until you unsubscribe.
-- Contact emails: 24 months after our last interaction.
-- Server logs: 30 days.
-- Analytics: per the provider's retention defaults; configured to the minimum offered.
+- Pages viewed, time on page, and scroll depth
+- Traffic source (organic search, direct, referral, social)
+- Device type, browser, and country (derived from IP; the full IP address is not stored)
+- Events such as outbound link clicks
 
-## Changes
+IP addresses sent to Google Analytics are anonymized at collection. Data is processed under [Google's privacy policy](https://policies.google.com/privacy).
 
-We may update this policy. Material changes will be noted at the top of this page and announced via the newsletter where applicable.
+We may also use **Microsoft Clarity** for session-replay and heatmap analysis to improve page usability. Clarity data is subject to [Microsoft's privacy statement](https://privacy.microsoft.com/privacystatement).
 
-## Contact
+---
 
-Questions about this policy: **privacy [at] cybersecurityelite.com**.
+## 5. Third-Party Services
+
+| Service | Purpose | Privacy policy |
+|---|---|---|
+| GitHub Pages | Hosting | [github.com/site-policy](https://docs.github.com/site-policy/privacy-policies/github-privacy-statement) |
+| Cloudflare | CDN and DDoS protection | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
+| Google AdSense / DoubleClick | Advertising | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Google Analytics 4 | Usage analytics | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Microsoft Clarity | Heatmaps and session recording | [privacy.microsoft.com](https://privacy.microsoft.com/privacystatement) |
+| Newsletter provider | Email delivery | Provider's own policy (see subscription confirmation email) |
+
+Each third-party service operates under its own privacy policy. We encourage you to review those policies before using our site.
+
+---
+
+## 6. External Links
+
+This site contains links to external websites, including referenced CTF platforms, security tools, and course providers. Once you leave cybersecurityelite.com, we have no control over and accept no responsibility for the privacy practices or content of those sites. We recommend reading the privacy policy of every external site you visit.
+
+---
+
+## 7. Data Security
+
+We take reasonable technical and organizational measures to protect information processed through this site, including:
+
+- HTTPS encryption for all traffic (enforced via Cloudflare)
+- No storage of payment card data (we do not process payments)
+- Access controls limiting who can modify the site
+
+No method of transmission over the internet is 100% secure. We cannot guarantee absolute security but we review our practices periodically and update them as needed.
+
+---
+
+## 8. Children's Privacy
+
+This website is not directed at children under **13 years of age** (or under **16** in EEA/UK jurisdictions). We do not knowingly collect personal information from children. If you believe a child has submitted personal information to us, please contact us at **privacy [at] cybersecurityelite.com** and we will delete it promptly.
+
+---
+
+## 9. Your Privacy Rights
+
+Depending on your location, you may have the following rights regarding personal information we hold about you:
+
+### GDPR (EU / UK / EEA residents)
+
+- **Right of access** — request a copy of your personal data.
+- **Right to rectification** — request correction of inaccurate data.
+- **Right to erasure** ("right to be forgotten") — request deletion of your personal data.
+- **Right to restrict processing** — request that we limit how we use your data.
+- **Right to data portability** — receive your data in a structured, machine-readable format.
+- **Right to object** — object to processing based on our legitimate interests.
+- **Right to withdraw consent** — withdraw consent at any time (e.g., unsubscribe from the newsletter via the link in any email).
+- **Right to lodge a complaint** — file a complaint with your national data protection authority.
+
+### CCPA (California residents)
+
+California residents have the right to:
+
+- Know what personal information is collected about them and how it is used.
+- Know whether personal information is sold or disclosed, and to whom.
+- Opt out of the sale of personal information. **We do not sell personal information.**
+- Request deletion of personal information.
+- Not be discriminated against for exercising these rights.
+
+To exercise any of the above rights, email **privacy [at] cybersecurityelite.com** with the subject line "Privacy Request" and a description of your request. We will respond within 30 days (or within the timeframe required by applicable law).
+
+---
+
+## 10. Data Retention
+
+| Data type | Retention period |
+|---|---|
+| Newsletter subscriptions | Until you unsubscribe |
+| Contact form messages | 24 months after last interaction |
+| Raw server / access logs | 30 days |
+| Analytics data (GA4) | Per Google's default retention (2 months–14 months depending on settings) |
+| Advertising / DoubleClick data | Controlled by Google; see Google's data retention policies |
+
+---
+
+## 11. Do Not Track
+
+Some browsers send a "Do Not Track" (DNT) signal. This site does not currently alter its data-collection practices in response to DNT signals because there is no universally accepted standard for how sites should respond. If a standard is adopted, we will review our practices accordingly.
+
+---
+
+## 12. Changes to This Privacy Policy
+
+We may update this Privacy Policy from time to time. The **"Last updated"** date at the top of this page will always reflect the most recent revision. Material changes will be announced via the newsletter where applicable. Continued use of the site after changes are posted constitutes your acceptance of the revised policy.
+
+---
+
+## 13. Contact Us
+
+If you have questions, concerns, or requests regarding this Privacy Policy or your personal information, contact us:
+
+**Email:** privacy [at] cybersecurityelite.com  
+**General contact:** contact [at] cybersecurityelite.com  
+**Website:** [cybersecurityelite.com](https://cybersecurityelite.com)
