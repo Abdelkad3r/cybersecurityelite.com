@@ -15,7 +15,7 @@ cover:
   alt: "CTF CRYPTO SOLVING STRATEGIES writeup — CTF challenge breakdown"
 ---
 
-This **CyberSecurity Elite** guide to CTF crypto challenges starts from a hard truth: crypto categories in CTFs intimidate more newcomers than any other. The barrier isn't math — it's pattern recognition. Almost every CTF crypto challenge is a *known weakness* applied to slightly different parameters.
+CTF crypto challenges start from a hard truth: crypto categories in CTFs intimidate more newcomers than any other. The barrier isn't math — it's pattern recognition. Almost every CTF crypto challenge is a *known weakness* applied to slightly different parameters.
 
 ## The First Pass — Identify the Family
 

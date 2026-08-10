@@ -39,7 +39,7 @@ cover:
   alt: "Anti-Slop CTF 2026 pwn writeup — Paper Lantern Bellcore CRT, Graceful Exit leak-and-overwrite, Anchorpoint VM-to-GCM forge chain"
 ---
 
-In this **CyberSecurity Elite** pwn writeup, we solve **Anti-Slop CTF 2026**'s three binary-exploitation challenges end to end. Third post in the Anti-Slop CTF 2026 series. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered HTTP parsers. The [reverse writeup](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) covered an ECDSA nonce attack and a SHA-256 length extension. This one walks the three pwn challenges in the same step-by-step format.
+**Anti-Slop CTF 2026**'s three binary-exploitation challenges end to end. Third post in the Anti-Slop CTF 2026 series. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered HTTP parsers. The [reverse writeup](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) covered an ECDSA nonce attack and a SHA-256 length extension. This one walks the three pwn challenges in the same step-by-step format.
 
 The order below is roughly easiest to hardest. **Paper Lantern** is a clean single-chain CRT-fault attack against an RSA-FDH signer. **Graceful Exit** composes a negative-offset leak with a heap-object overwrite to convert an address disclosure into a controlled read through the legitimate output path. **Anchorpoint** is the marathon: a tiny stack-VM overflow unlocks ECDSA nonce recovery, a BIP340-style shadow proof, and an AES-GCM nonce-reuse GHASH forge, all chained into one connection. All three rewarded reading the binary and modelling the state machine before writing any exploit code.
 

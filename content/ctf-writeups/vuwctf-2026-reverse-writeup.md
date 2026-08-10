@@ -50,7 +50,7 @@ cover:
   alt: "VuwCTF 2026 reverse engineering writeup — two challenges covering ilikewords a stripped PIE ELF that links libcurl and prompts for a key where the key generator looks random using time srand and rand but always converges to 6174 Kaprekar's constant via the Kaprekar routine of max permutation minus min permutation and that constant 6174 is the seed of a walking XOR stream that decodes a 45-byte blob into the NYT Wordle URL template so the flag's percent-s slot is a fixed six-byte wordle slice of the URL at offset 28 and the network strncmp check is only a gate not the source of the flag; and dotsbedashing a stripped ELF that stores a Morse alphabet table whose character bytes are obfuscated with an 8-bit left rotate and an encrypted target stream at 0x40c0 decrypted with an initial key 0xb1e1e1f1 rotated right by one bit before each XOR yielding packed Morse entries that map back through the table to the inner text the0world0says0hii"
 ---
 
-In this **CyberSecurity Elite** reverse engineering writeup, we take on **VuwCTF 2026**'s
+**VuwCTF 2026**'s
 two stripped ELFs, which both hide a short answer behind a wall of *theatrical* computation. **ilikewords** (100 pts,
 Easy) wraps its XOR key in `time()`/`srand()`/`rand()` to look random — but the
 Kaprekar routine it runs always converges to the same integer, `6174`, and that
