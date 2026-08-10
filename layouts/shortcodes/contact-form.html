@@ -1,0 +1,179 @@
+{{- /*
+  Contact form shortcode — CyberSecurity Elite
+  Uses Web3Forms when site.Params.web3formsKey is set; falls back to a
+  mailto: link otherwise. Reads contactEmail from site params.
+*/ -}}
+{{- $web3  := site.Params.web3formsKey -}}
+{{- $email := site.Params.contactEmail | default "contact@cybersecurityelite.com" -}}
+
+<style>
+.cse-cf{margin:1.5rem 0 2rem}
+.cse-cf fieldset{border:none;margin:0;padding:0}
+.cse-cf .cse-cf-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}
+.cse-cf .cse-cf-full{grid-column:1/-1}
+.cse-cf label{display:block;font-size:.78rem;font-weight:500;color:var(--secondary,#9b9b9b);margin-bottom:.3rem;letter-spacing:.02em;text-transform:uppercase}
+.cse-cf input[type=text],
+.cse-cf input[type=email],
+.cse-cf select,
+.cse-cf textarea{
+  width:100%;
+  background:var(--entry,#1a1a26);
+  border:1px solid rgba(34,211,238,.22);
+  border-radius:3px;
+  color:var(--primary,#e2e8f0);
+  font-size:.85rem;
+  font-family:inherit;
+  padding:.55rem .75rem;
+  outline:none;
+  transition:border-color .15s,box-shadow .15s;
+  -webkit-appearance:none;
+  appearance:none
+}
+.cse-cf select{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2322d3ee' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right .75rem center;
+  padding-right:2.2rem
+}
+.cse-cf select option{background:var(--entry,#1a1a26)}
+.cse-cf input:focus,
+.cse-cf select:focus,
+.cse-cf textarea:focus{
+  border-color:#22d3ee;
+  box-shadow:0 0 0 2px rgba(34,211,238,.12)
+}
+.cse-cf textarea{resize:vertical;min-height:130px;line-height:1.55}
+.cse-cf-foot{display:flex;justify-content:flex-end;margin-top:.75rem}
+.cse-cf-btn{
+  background:#22d3ee;color:#0a0a0f;
+  border:1px solid #22d3ee;border-radius:3px;
+  padding:.5rem 1.4rem;
+  font-size:.85rem;font-family:inherit;font-weight:600;
+  cursor:pointer;
+  transition:background .14s,border-color .14s
+}
+.cse-cf-btn:hover{background:#06b6d4;border-color:#06b6d4}
+.cse-cf-btn:disabled{opacity:.55;cursor:not-allowed}
+.cse-cf-note{font-size:.75rem;color:var(--secondary,#9b9b9b);margin-top:.6rem}
+
+/* success banner */
+.cse-cf-success{
+  display:none;
+  background:rgba(34,211,238,.07);
+  border:1px solid rgba(34,211,238,.3);
+  border-radius:4px;
+  padding:.9rem 1.1rem;
+  color:#22d3ee;
+  font-size:.85rem;
+  margin:0 0 1.5rem
+}
+.cse-cf-success.cse-cf-visible{display:block}
+
+/* fallback (no web3formsKey) */
+.cse-cf-fallback{
+  background:var(--entry,#1a1a26);
+  border:1px solid rgba(34,211,238,.22);
+  border-radius:4px;
+  padding:1rem 1.25rem;
+  font-size:.85rem;
+  margin:0 0 1.5rem
+}
+.cse-cf-fallback a{color:#22d3ee}
+
+/* mobile */
+@media(max-width:520px){
+  .cse-cf .cse-cf-row{grid-template-columns:1fr}
+}
+</style>
+
+<div class="cse-cf" id="cse-cf-wrap">
+
+  <!-- success banner (shown via JS when ?sent=1 is in URL) -->
+  <div class="cse-cf-success" id="cse-cf-success" role="alert">
+    Message sent &#10003; — we will get back to you within 72 hours.
+  </div>
+
+  {{- if $web3 }}
+  <form class="cse-cf" action="https://api.web3forms.com/submit" method="POST" novalidate id="cse-cf-form">
+    <!-- Web3Forms config -->
+    <input type="hidden" name="access_key"  value="{{ $web3 }}">
+    <input type="hidden" name="from_name"   value="CyberSecurity Elite Contact">
+    <input type="hidden" name="redirect"    value="{{ "/contact/?sent=1" | absURL }}">
+    <input type="hidden" name="subject"     value="[CyberSecurity Elite] General inquiry" id="cse-cf-subj">
+    <!-- Honeypot -->
+    <input type="checkbox" name="botcheck"  style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <fieldset>
+      <div class="cse-cf-row">
+        <div>
+          <label for="cse-cf-name">Name <span style="font-weight:400;text-transform:none">(optional)</span></label>
+          <input type="text" id="cse-cf-name" name="name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div>
+          <label for="cse-cf-email">Email <span style="color:#22d3ee">*</span></label>
+          <input type="email" id="cse-cf-email" name="email" placeholder="you@example.com" required autocomplete="email">
+        </div>
+      </div>
+      <div class="cse-cf-row">
+        <div class="cse-cf-full">
+          <label for="cse-cf-type">Inquiry type</label>
+          <select id="cse-cf-type" name="inquiry_type">
+            <option value="General">General question or feedback</option>
+            <option value="Correction">Correction or technical error</option>
+            <option value="Guest Pitch">Guest contribution pitch</option>
+            <option value="Security">Security disclosure</option>
+            <option value="Press & Business">Press, partnership, or business</option>
+          </select>
+        </div>
+      </div>
+      <div class="cse-cf-row">
+        <div class="cse-cf-full">
+          <label for="cse-cf-msg">Message <span style="color:#22d3ee">*</span></label>
+          <textarea id="cse-cf-msg" name="message" placeholder="Describe your question, correction, or pitch in as much detail as you like." required></textarea>
+        </div>
+      </div>
+    </fieldset>
+    <div class="cse-cf-foot">
+      <button type="submit" class="cse-cf-btn" id="cse-cf-submit">Send message</button>
+    </div>
+    <p class="cse-cf-note">Fields marked <span style="color:#22d3ee">*</span> are required. We respond within 72 hours.</p>
+  </form>
+  {{- else }}
+  <div class="cse-cf-fallback">
+    Email us directly at <a href="mailto:{{ $email }}">{{ $email }}</a> — we respond within 72 hours.
+  </div>
+  {{- end }}
+
+</div>
+
+<script>
+(function () {
+  /* show success banner if redirected back with ?sent=1 */
+  if (new URLSearchParams(location.search).get('sent') === '1') {
+    var s = document.getElementById('cse-cf-success');
+    if (s) s.classList.add('cse-cf-visible');
+    var f = document.getElementById('cse-cf-form');
+    if (f) f.style.display = 'none';
+    /* clean the query param from the URL without a reload */
+    history.replaceState(null, '', location.pathname);
+  }
+
+  /* update hidden subject field when inquiry type changes */
+  var sel  = document.getElementById('cse-cf-type');
+  var subj = document.getElementById('cse-cf-subj');
+  if (sel && subj) {
+    sel.addEventListener('change', function () {
+      subj.value = '[CyberSecurity Elite] ' + sel.options[sel.selectedIndex].text;
+    });
+  }
+
+  /* disable submit button on send to prevent double-submission */
+  var form = document.getElementById('cse-cf-form');
+  var btn  = document.getElementById('cse-cf-submit');
+  if (form && btn) {
+    form.addEventListener('submit', function () {
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+    });
+  }
+})();
+</script>
