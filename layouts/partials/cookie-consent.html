@@ -25,18 +25,18 @@
 .cse-actions{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center}
 
 /* ── buttons ── */
-.cse-btn{
+.cse-cbtn{
   padding:.38rem .85rem;border-radius:3px;
   font-size:.78rem;font-family:inherit;font-weight:500;
   cursor:pointer;white-space:nowrap;
   transition:background .14s,border-color .14s,color .14s
 }
-.cse-btn-accept{background:#22d3ee;color:#0a0a0f;border:1px solid #22d3ee;font-weight:600}
-.cse-btn-accept:hover{background:#06b6d4;border-color:#06b6d4}
-.cse-btn-manage{background:transparent;color:#22d3ee;border:1px solid rgba(34,211,238,.4)}
-.cse-btn-manage:hover{background:rgba(34,211,238,.08)}
-.cse-btn-reject{background:transparent;color:var(--secondary,#9b9b9b);border:1px solid rgba(148,163,184,.25)}
-.cse-btn-reject:hover{color:var(--primary,#cdd6f4);border-color:rgba(148,163,184,.5)}
+.cse-cbtn-accept{background:#22d3ee;color:#0a0a0f;border:1px solid #22d3ee;font-weight:600}
+.cse-cbtn-accept:hover{background:#06b6d4;border-color:#06b6d4}
+.cse-cbtn-manage{background:transparent;color:#22d3ee;border:1px solid rgba(34,211,238,.4)}
+.cse-cbtn-manage:hover{background:rgba(34,211,238,.08)}
+.cse-cbtn-reject{background:transparent;color:var(--secondary,#9b9b9b);border:1px solid rgba(148,163,184,.25)}
+.cse-cbtn-reject:hover{color:var(--primary,#cdd6f4);border-color:rgba(148,163,184,.5)}
 
 /* ── modal overlay ── */
 #cse-modal{
@@ -112,9 +112,9 @@
 @media(max-width:500px){
   #cse-cb{padding:.85rem 1rem}
   .cse-actions{width:100%}
-  .cse-btn{flex:1 1 0;text-align:center}
+  .cse-cbtn{flex:1 1 0;text-align:center}
   .cse-mfoot{flex-direction:column}
-  .cse-mfoot .cse-btn{text-align:center}
+  .cse-mfoot .cse-cbtn{text-align:center}
 }
 </style>
 
@@ -126,9 +126,9 @@
       <a href="/privacy-policy/#2-cookies-and-local-storage">Privacy Policy</a> for details.
     </p>
     <div class="cse-actions">
-      <button type="button" class="cse-btn cse-btn-reject" id="cse-btn-reject">Reject All</button>
-      <button type="button" class="cse-btn cse-btn-manage" id="cse-btn-manage">Manage</button>
-      <button type="button" class="cse-btn cse-btn-accept" id="cse-btn-accept">Accept All</button>
+      <button type="button" class="cse-cbtn cse-cbtn-reject" id="cse-btn-reject">Reject All</button>
+      <button type="button" class="cse-cbtn cse-cbtn-manage" id="cse-btn-manage">Manage</button>
+      <button type="button" class="cse-cbtn cse-cbtn-accept" id="cse-btn-accept">Accept All</button>
     </div>
   </div>
 </div>
@@ -174,8 +174,8 @@
 
     </div>
     <div class="cse-mfoot">
-      <button type="button" class="cse-btn cse-btn-reject" id="cse-modal-cancel">Cancel</button>
-      <button type="button" class="cse-btn cse-btn-accept" id="cse-modal-save">Save Choices</button>
+      <button type="button" class="cse-cbtn cse-cbtn-reject" id="cse-modal-cancel">Cancel</button>
+      <button type="button" class="cse-cbtn cse-cbtn-accept" id="cse-modal-save">Save Choices</button>
     </div>
   </div>
 </div>
