@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="UIUCTF 2026 Nabi AI web writeup cover — a two-stage chain against a Next.js chat frontend, an OpenBao HashiCorp Vault fork secret store, and a token-gated flag service. Stage one recovers the deprecated baoAddr optional property from the SendMessageRequest TypeScript type by downloading the production Next.js source map, extracts the sendMessage Server Action ID 407e153d5824829d199a24b87d41748243b5d2fdf3, and sends an RSC request with the Next-Action header, an $undefined marker for conversationId, and baoAddr pointing at a webhook so the backend forwards its X-Vault-Token header. Stage two exploits an OpenBao application policy that grants read on path secret/data/+ (single-segment wildcard) so the stolen token reads secret/data/flag and returns FLAG_API_KEY, which the flag service accepts as x-api-token and returns uiuctf{lets_just_go_back_to_a_monolith_983c1ec97484}">
+  <defs>
+    <linearGradient id="title-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ededef"/><stop offset="1" stop-color="#22d3ee"/></linearGradient>
+    <linearGradient id="accent-grad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1200" y2="0"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+    <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0 L0 0 0 48" fill="none" stroke="#0d0d12" stroke-width="1"/></pattern>
+    <radialGradient id="glow" cx="50%" cy="42%" r="60%"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.10"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#000000"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <text x="60" y="62" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="14" fill="#22d3ee" letter-spacing="0.18em" font-weight="500">[ CTF WRITEUP &#183; WEB &#183; NEXT.JS &#183; VAULT &#183; 2026 ]</text>
+  <g transform="translate(940, 44)">
+    <rect x="0" y="0" width="200" height="32" rx="16" fill="#0a0a12" stroke="#1f1f2a" stroke-width="1"/>
+    <circle cx="20" cy="16" r="5" fill="#a78bfa"/>
+    <text x="34" y="21" font-family="ui-monospace, monospace" font-size="13" fill="#ededef" letter-spacing="0.06em">1 / 1 SOLVED</text>
+  </g>
+  <text x="600" y="240" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="82" font-weight="800" fill="url(#title-grad)" letter-spacing="-0.04em">UIUCTF 2026 &#183; NABI AI</text>
+  <text x="600" y="320" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#accent-grad)" letter-spacing="0.05em">WEB &#183; SSRF + VAULT ACL &#183; STEP BY STEP</text>
+  <text x="600" y="380" text-anchor="middle" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-size="19" font-weight="500" fill="#9ba0a8" letter-spacing="0.03em">next.js server action &#183; rsc protocol &#183; x-vault-token leak &#183; path glob</text>
+  <g transform="translate(60, 510)">
+    <text x="0" y="0" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">web@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">sourcemap &#8594; baoAddr (@deprecated)  |  Next-Action: 407e153&#8230; + $undefined</tspan></text>
+    <text x="0" y="22" font-family="ui-monospace, monospace" font-size="16"><tspan fill="#22d3ee">vault@elite</tspan><tspan fill="#9ba0a8">:</tspan><tspan fill="#22d3ee">~</tspan><tspan fill="#9ba0a8"> $ </tspan><tspan fill="#ededef">baoAddr=webhook &#8594; X-Vault-Token &#8594; path &quot;secret/data/+&quot; &#8594; /flag</tspan></text>
+  </g>
+  <text x="60" y="600" font-family="ui-monospace, 'SFMono-Regular', Menlo, monospace" font-size="15" fill="#9ba0a8" letter-spacing="0.04em">cybersecurityelite.com</text>
+  <g transform="translate(1075, 555)" stroke="#22d3ee" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <line x1="2" y1="0" x2="2" y2="72"/>
+    <polygon points="5,4 48,18 5,32" fill="#22d3ee" stroke="none"/>
+  </g>
+</svg>
