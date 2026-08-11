@@ -2,8 +2,8 @@
 title: "UIUCTF 2026 Web Writeup: Nabi AI — Next.js Server Action SSRF Steals OpenBao Token"
 slug: "uiuctf-2026-web-nabi-ai-writeup"
 description: "Complete UIUCTF 2026 Nabi AI web writeup — a two-stage chain against a Next.js chat frontend, an OpenBao (HashiCorp Vault fork) secret store, and a token-gated flag service. Stage one: a deprecated baoAddr property in the SendMessageRequest TypeScript type is still accepted by the sendMessage Server Action, so a React Server Components request with Next-Action: 407e153…, an $undefined conversationId, and baoAddr pointing at webhook.site causes the backend to forward its X-Vault-Token header to the attacker's URL as a credential-leaking SSRF. Stage two: OpenBao's application policy uses the wildcard path secret/data/+ instead of the exact secret/data/nabi, so the stolen token also reads secret/data/flag and returns the FLAG_API_KEY, which the flag service accepts as x-api-token and returns uiuctf{lets_just_go_back_to_a_monolith_983c1ec97484}."
-date: 2026-08-11T16:00:00Z
-lastmod: 2026-08-11T16:00:00Z
+date: 2026-08-11T05:00:00Z
+lastmod: 2026-08-11T05:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

@@ -2,8 +2,8 @@
 title: "UIUCTF 2026 Cryptography Writeup: Young Cryptography, positive-thinking & Rune Decryptor"
 slug: "uiuctf-2026-crypto-writeup"
 description: "Complete UIUCTF 2026 Cryptography writeup covering all three crypto challenges: Young Cryptography (a Diffie–Hellman-style key exchange over 64×64 symmetric integer matrices whose custom my_prod is actually the Robinson–Schensted–Knuth correspondence with Schensted insertion in the plactic monoid — broken by Monico's plactic-division algorithm: find any quotient q such that q·G = AG, then compute q·GB = AGB by associativity, hash the reconstructed matrix, AES-CBC decrypt); positive-thinking (a CKKS FHE oracle that publishes an encrypted 50-bit secret and reveals only the sign of a degree-8 Chebyshev polynomial evaluated on x/2^49 — broken with a chosen-ciphertext adaptive-oracle attack using only additions and repeated doublings so no modulus level is consumed, coarse-splitting the candidate set with translated roots then amplifying with additive 2^d doubling to place the first positive root at a half-integer boundary and recover all 50 bits in 50 queries); and Rune Decryptor (20 rounds of Elder Futhark monoalphabetic substitution across 10 languages with per-key scoring — the redacted bibliographic citation leaks the word-length and punctuation skeleton of Title -- Author, resolving one Project Gutenberg entry among 79,000, plus classical corpora for Latin and Ancient Greek, then gap-tolerant word alignment with majority-vote key recovery — 18 of 20 rounds solved for uiuctf{Po1ygl0t_Pr4ctIC3})."
-date: 2026-08-11T18:00:00Z
-lastmod: 2026-08-11T18:00:00Z
+date: 2026-08-11T06:00:00Z
+lastmod: 2026-08-11T06:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

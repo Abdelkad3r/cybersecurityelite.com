@@ -2,8 +2,8 @@
 title: "UIUCTF 2026 Misc Writeup: jail, smaller-jail & emacsjail2 — 3 Jail Escapes"
 slug: "uiuctf-2026-misc-writeup"
 description: "Complete UIUCTF 2026 Miscellaneous writeup covering all three jail challenges: jail (Java class filtered by a PyTorch character-level CNN classifier, then run under a SecurityManager that permits ReflectPermission suppressAccessChecks — bypassed by reflecting into Class.getDeclaredFields0(false) to reach the unfiltered System.security field and null it, with an adversarial Java block comment tuned to negative-weight convolution filters that drops the model logit from +2.71 to -13.87); smaller-jail (same architecture with a tighter sigmoid ≥ 0.5 threshold and softplus-positive FC weights that make padding monotonically bad — bypassed by splitting reflection identifiers into single-character concatenation, targeted \\uXXXX Unicode escapes at hot windows, and three raw U+008A / U+0013 identifier-ignorable code points inserted inside endsWith / Scanner / Exception to disrupt CNN 3/5/10/20-byte maxima without changing compiled semantics); and emacsjail2 (Emacs 30.2 native compilation with a Capstone control-flow validator that rejects any CS_GRP_CALL or CS_GRP_JUMP — bypassed by the featurep compiler-macro which calls eval on the entire form when the first argument is 'emacs, reading /flag.txt during native-compile before the jailer ever runs the generated lea/mov/ret function that only returns t)."
-date: 2026-08-11T14:00:00Z
-lastmod: 2026-08-11T14:00:00Z
+date: 2026-08-11T04:00:00Z
+lastmod: 2026-08-11T04:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]

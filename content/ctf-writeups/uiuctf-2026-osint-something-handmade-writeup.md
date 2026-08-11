@@ -2,8 +2,8 @@
 title: "UIUCTF 2026 OSINT Writeup: Something Handmade — Wedding Site to Private RSVP"
 slug: "uiuctf-2026-osint-something-handmade-writeup"
 description: "Complete UIUCTF 2026 Something Handmade OSINT writeup. A public Zola wedding site for Belda Byrule and Bink Hyaa mentions Mipha documenting welcome-bag prep on @miphamakes — a specific handle in a sea of altered fictional Zelda names is the pivot signal. That DeviantArt account has three posts each thanking a craft helper by first name (Carl, Tessa, Nolan). Zola's public wedding endpoint /web-api/v1/publicwedding/slug/beldaandbink exposes the wedding_account_uuid 98298caa-11a9-4c3e-83c2-197f59ec8235, and /web-api/v1/publicwedding/rsvp/guest/wedding-account/uuid/.../search-groups accepts a first name and returns the matching guest-group UUID without authentication. Carl's guest-group query against /web-api/v2/publicwedding/rsvp/guest-group/uuid/.../wedding-account/uuid/... returns four events instead of the three Tessa and Nolan see; the extra event Royal Banquet and Byrulian Bappy Hour has meal_options whose first entry is the flag uiuctf{handmade_with_a_hidden_detail_7c4e1d}."
-date: 2026-08-12T12:00:00Z
-lastmod: 2026-08-12T12:00:00Z
+date: 2026-08-11T08:00:00Z
+lastmod: 2026-08-11T08:00:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
