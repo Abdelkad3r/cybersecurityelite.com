@@ -2,8 +2,8 @@
 title: "Cybersecurity Awareness Month 2026: The AI-Powered Phishing Playbook Every Employee Should Know"
 slug: "cybersecurity-awareness-month-2026-ai-phishing-playbook"
 description: "A practical Cybersecurity Awareness Month 2026 (NCSAM 2026) guide for employees, IT teams, and families. Covers the three phishing threats that dominated 2026 — deepfake voice vishing, LLM-crafted spearphishing, and adversary-in-the-middle MFA-bypass proxies — and shows why the old awareness advice (look for typos, hover the link, enable MFA) is no longer sufficient by itself. Maps CISA's Secure Our World pillars (strong unique passwords, phishing-resistant MFA, phishing recognition, keep software updated) onto 2026's threat surface, and gives concrete training scripts, employee checklists, HR/IT campaign templates, and a runnable NCSAM October calendar. Written for the non-technical reader with technical depth in the appendices."
-date: 2026-09-04T18:00:00Z
-lastmod: 2026-09-04T18:00:00Z
+date: 2026-09-04T12:00:00Z
+lastmod: 2026-09-04T19:15:00Z
 draft: false
 author: "CyberSecurity Elite Team"
 categories: ["News", "Awareness"]
