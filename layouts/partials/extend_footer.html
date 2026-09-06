@@ -7,42 +7,26 @@
 */ -}}
 {{- end -}}
 
-{{- /* GA4 Measurement Protocol beacon — wrapped in __cseFireGA4() so the cookie-consent
-       partial controls when it fires. Uses sendBeacon (non-blocking, survives page unload).
-       Reads stable client_id from localStorage so GA4 sessions persist across pages. */ -}}
-{{- $ga       := site.Params.ga4 -}}
-{{- $mpSecret := site.Params.ga4MPSecret -}}
-{{- if and $ga $mpSecret }}
+{{- /* GA4 via standard gtag.js — wrapped in __cseFireGA4() so the cookie-consent
+       partial controls when it fires. Loaded async after consent granted; Consent
+       Mode v2 defaults from extend_head.html are already 'granted' by then, so the
+       initial page_view lands with a proper session_id + engagement metrics. */ -}}
+{{- $ga := site.Params.ga4 -}}
+{{- if $ga }}
 <script>
 (function () {
   var MID = '{{ $ga }}';
-  var SEC = '{{ $mpSecret }}';
   var _done = false;
   window.__cseFireGA4 = function () {
     if (_done) return; _done = true;
-    var cid;
-    try {
-      cid = localStorage.getItem('_ga4_cid');
-      if (!cid) {
-        cid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID()
-              : (Date.now() + '.' + Math.random().toString(36).slice(2));
-        localStorage.setItem('_ga4_cid', cid);
-      }
-    } catch (e) { cid = 'nostore-' + Date.now(); }
-    var payload = JSON.stringify({
-      client_id: cid,
-      events: [{ name: 'page_view', params: {
-        page_location: location.href,
-        page_title: document.title,
-        page_referrer: document.referrer
-      }}]
-    });
-    var url = 'https://www.google-analytics.com/mp/collect?measurement_id=' + MID + '&api_secret=' + SEC;
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon(url, new Blob([payload], { type: 'application/json' }));
-    } else if (window.fetch) {
-      fetch(url, { method: 'POST', body: payload, keepalive: true });
-    }
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + MID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', MID);
   };
 })();
 </script>
