@@ -5,6 +5,22 @@
   </header>
   <div class="entry-content">
     {{ site.Params.homeInfoParams.Content | markdownify }}
+
+    {{- /* Time-limited featured card for Cybersecurity Awareness Month 2026.
+           Renders only between 2026-09-08 and 2026-10-31 inclusive; auto-hides after. */ -}}
+    {{- $now  := now -}}
+    {{- $from := time "2026-09-08T00:00:00Z" -}}
+    {{- $to   := time "2026-11-01T00:00:00Z" -}}
+    {{- if and (ge $now.Unix $from.Unix) (lt $now.Unix $to.Unix) }}
+    <a href="{{ "/news/cybersecurity-awareness-month-2026-ai-phishing-playbook/" | relURL }}"
+       style="display:block; margin:1.4rem 0 0.6rem; padding:1rem 1.1rem; border:1px solid #1f1f2a; border-left:3px solid #22d3ee; border-radius:8px; background:linear-gradient(90deg, rgba(34,211,238,0.06), rgba(167,139,250,0.03)); text-decoration:none; color:inherit;"
+       aria-label="Featured — Cybersecurity Awareness Month 2026 playbook">
+      <div style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:0.72rem; letter-spacing:0.14em; color:#22d3ee; text-transform:uppercase; font-weight:600;">Featured &middot; NCSAM 2026</div>
+      <div style="margin-top:0.35rem; font-weight:700; font-size:1.02rem;">Cybersecurity Awareness Month 2026: The AI-Powered Phishing Playbook</div>
+      <div style="margin-top:0.25rem; font-size:0.9rem; color:var(--secondary);">Deepfake voice, LLM spearphishing, and MFA-bypass proxies &mdash; plus a runnable October campaign calendar for HR &amp; IT teams. Free, no signup.</div>
+    </a>
+    {{- end }}
+
     <div class="cse-hero-actions" role="group" aria-label="Primary calls to action">
       <a class="cse-btn cse-btn-primary" href="{{ "/ctf-writeups/" | relURL }}">
         Explore Writeups

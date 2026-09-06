@@ -119,6 +119,11 @@ canonifyURLs = true
     url = "/certifications/best-cybersecurity-certifications-2026/"
     weight = 25
   [[menu.main]]
+    identifier = "trends"
+    name = "Trends"
+    url = "/news/"
+    weight = 28
+  [[menu.main]]
     identifier = "categories"
     name = "Categories"
     url = "/categories/"
