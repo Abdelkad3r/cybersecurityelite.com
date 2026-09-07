@@ -104,6 +104,11 @@ canonifyURLs = true
     url = "/tutorials/"
     weight = 10
   [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 12
+  [[menu.main]]
     identifier = "ctf"
     name = "CTF Writeups"
     url = "/ctf-writeups/"
