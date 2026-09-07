@@ -91,7 +91,7 @@ canonifyURLs = true
 
 # Navigation
 # Main nav ordered as a beginner→expert journey (left to right):
-# Start Here → Tutorials → CTF Writeups → Tools → Certifications, then utility links.
+# Start Here → Tutorials → CTF Writeups → Posts → Tools → Certifications, then utility links.
 [menu]
   [[menu.main]]
     identifier = "start-here"
@@ -104,15 +104,15 @@ canonifyURLs = true
     url = "/tutorials/"
     weight = 10
   [[menu.main]]
-    identifier = "posts"
-    name = "Posts"
-    url = "/posts/"
-    weight = 12
-  [[menu.main]]
     identifier = "ctf"
     name = "CTF Writeups"
     url = "/ctf-writeups/"
     weight = 15
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 17
   [[menu.main]]
     identifier = "tools"
     name = "Tools"
