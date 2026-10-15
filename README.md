@@ -333,7 +333,7 @@ The project is structured to support multiple monetization paths without rebuild
 
 - **Affiliate links** — disclose in the article front matter (`affiliate: true`) and at the start of the article body
 - **Sponsored content** — create a `sponsored: true` flag in front matter and a custom partial that injects a "Sponsored" badge into post entries
-- **Display ads** — drop ad slots into `layouts/partials/extend_footer.html` or create a custom partial referenced from a content layout
+- **Adsterra Native Banners and Social Bar** — consent-gated placements on the home feed, article pages, and site-wide; update their script URLs and the native container ID in `hugo.toml` when replacing the Adsterra units
 - **Premium content / gated downloads** — wire the `cse-downloads` shortcode to a token-gated CDN URL
 - **Newsletter monetization** — the newsletter signup is form-based and provider-agnostic; point it at Buttondown, ConvertKit, Beehiiv, or Mailchimp
 

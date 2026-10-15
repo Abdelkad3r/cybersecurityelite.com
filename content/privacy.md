@@ -3,7 +3,7 @@ title: "Privacy Policy"
 slug: "privacy-policy"
 description: "Privacy Policy for CyberSecurityElite.com — what information we collect, how we use it, how third-party advertising works, and your rights under GDPR and CCPA."
 date: 2026-01-01T00:00:00Z
-lastmod: 2026-08-10T00:00:00Z
+lastmod: 2026-10-15T00:00:00Z
 layout: "page"
 hidemeta: true
 disableShare: true
@@ -11,7 +11,7 @@ ShowReadingTime: false
 ShowBreadCrumbs: true
 ---
 
-*Last updated: August 10, 2026*
+*Last updated: October 15, 2026*
 
 This Privacy Policy explains what information CyberSecurity Elite ("we", "us", "our") collects when you visit **cybersecurityelite.com**, how we use that information, how third-party advertising and analytics services operate on this site, and the rights available to you.
 
@@ -54,7 +54,7 @@ This site uses a small number of cookies and browser localStorage entries:
 | Theme preference (`localStorage`) | Remembers light/dark mode setting | Persistent until cleared |
 | `_ga`, `_ga_*` | Google Analytics 4 — distinguishes unique visitors and sessions | 2 years / 24 hours |
 | `_gid` | Google Analytics 4 — session identifier | 24 hours |
-| `NID`, `DSID`, `IDE`, `__gads` | Google advertising / DoubleClick — may be set if Google AdSense is enabled in the future | Varies (up to 13 months) |
+| Adsterra and advertising-partner cookies or identifiers | Advertising delivery and measurement, if you consent to advertising | Varies by provider and identifier; see [Adsterra's privacy policy](https://adsterra.com/privacy-policy-managed/) |
 
 You can control or delete cookies at any time through your browser settings. Disabling cookies may affect ad personalization and analytics accuracy but will not prevent you from reading content on the site.
 
@@ -62,15 +62,9 @@ You can control or delete cookies at any time through your browser settings. Dis
 
 ## 3. Advertising
 
-This site intends to display advertisements in the future, potentially through **Google AdSense**. No advertising network is currently active. This section will be updated when advertising is enabled.
+This site displays **Adsterra Native Banner** advertisements in the homepage feed and on article pages, and **Adsterra Social Bar** advertising across the site. Adsterra ad scripts are loaded only after you enable advertising in the cookie preferences. If you later revoke consent, the page reloads so the scripts stop running and are not loaded again. You can change your choice using the “Cookie Settings” link in the footer.
 
-When advertising is active, Google may use cookies and other tracking technologies to serve advertisements based on your prior visits to this site and other sites across the web. The following will apply at that time:
-
-- Google's use of advertising cookies enables it and its partners to serve ads based on your visit to this site and/or other sites on the internet.
-- The **DoubleClick cookie** (and equivalent technologies) may be used by Google to serve interest-based advertisements.
-- Third-party vendors, including Google, may use cookies to serve ads based on a user's prior visits to this website or other websites.
-- You may opt out of personalized advertising at any time by visiting [Google Ad Settings](https://www.google.com/settings/ads) or [www.aboutads.info](https://www.aboutads.info).
-- You may also opt out of a third-party vendor's use of cookies for personalized advertising by visiting [www.networkadvertising.org/choices/](https://www.networkadvertising.org/choices/).
+When you consent to advertising, Adsterra and its advertising partners may process information such as your IP address, browser and device details, the page URL, approximate location, and ad impressions or interactions. They may use cookies or similar technologies for ad delivery, measurement, fraud prevention, or personalization, depending on the ad and provider settings. Their processing is described in [Adsterra's privacy policy](https://adsterra.com/privacy-policy-managed/) and [cookies policy](https://adsterra.com/cookies/). We do not control the data practices of those providers.
 
 ---
 
@@ -95,7 +89,7 @@ We may also use **Microsoft Clarity** for session-replay and heatmap analysis to
 |---|---|---|
 | GitHub Pages | Hosting | [github.com/site-policy](https://docs.github.com/site-policy/privacy-policies/github-privacy-statement) |
 | Cloudflare | CDN and DDoS protection | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
-| Google AdSense / DoubleClick | Advertising (not yet active) | [policies.google.com/privacy](https://policies.google.com/privacy) |
+| Adsterra and its advertising partners | Native Banner and Social Bar ads (loaded after advertising consent) | [adsterra.com/privacy-policy-managed](https://adsterra.com/privacy-policy-managed/) |
 | Google Analytics 4 | Usage analytics | [policies.google.com/privacy](https://policies.google.com/privacy) |
 | Microsoft Clarity | Heatmaps and session recording | [privacy.microsoft.com](https://privacy.microsoft.com/privacystatement) |
 | Newsletter provider | Email delivery | Provider's own policy (see subscription confirmation email) |
@@ -165,7 +159,7 @@ To exercise any of the above rights, email **privacy [at] cybersecurityelite.com
 | Contact form messages | 24 months after last interaction |
 | Raw server / access logs | 30 days |
 | Analytics data (GA4) | Per Google's default retention (2 months–14 months depending on settings) |
-| Advertising / DoubleClick data | Controlled by Google; see Google's data retention policies |
+| Advertising data | Retention is determined by Adsterra and the relevant advertising partners; see their policies |
 
 ---
 

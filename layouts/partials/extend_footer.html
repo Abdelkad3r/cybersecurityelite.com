@@ -50,6 +50,50 @@
 </script>
 {{- end }}
 
+{{- /* Adsterra Native Banner — only load the third-party script after advertising
+       consent, and only on a page that actually contains the ad slot. */ -}}
+{{- $adsterraSrc := site.Params.adsterraNativeBannerScriptURL -}}
+{{- $adsterraContainer := site.Params.adsterraNativeBannerContainerID -}}
+{{- if and $adsterraSrc $adsterraContainer }}
+<script>
+(function () {
+  var src = {{ $adsterraSrc | jsonify | safeJS }};
+  var containerId = {{ $adsterraContainer | jsonify | safeJS }};
+  var loaded = false;
+  window.__cseFireAdsterra = function () {
+    if (loaded) return;
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    loaded = true;
+    container.closest('.cse-adsterra-native').hidden = false;
+    var script = document.createElement('script');
+    script.async = true;
+    script.setAttribute('data-cfasync', 'false');
+    script.src = src;
+    document.body.appendChild(script);
+  };
+})();
+</script>
+{{- end }}
+
+{{- /* Adsterra Social Bar — site-wide, but loaded only after advertising consent. */ -}}
+{{- $adsterraSocialBarSrc := site.Params.adsterraSocialBarScriptURL -}}
+{{- if $adsterraSocialBarSrc }}
+<script>
+(function () {
+  var src = {{ $adsterraSocialBarSrc | jsonify | safeJS }};
+  var loaded = false;
+  window.__cseFireAdsterraSocialBar = function () {
+    if (loaded) return;
+    loaded = true;
+    var script = document.createElement('script');
+    script.src = src;
+    document.body.appendChild(script);
+  };
+})();
+</script>
+{{- end }}
+
 {{- /* Cookie consent banner + preferences modal (gates the functions above) */ -}}
 {{ partial "cookie-consent.html" . }}
 

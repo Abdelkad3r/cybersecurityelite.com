@@ -1,8 +1,8 @@
 {{- /* ─────────────────────────────────────────────────────────────────────────
      Cookie Consent — CyberSecurity Elite
-     Storage : localStorage['cse_consent'] = { v:1, ts:ms, analytics:bool, advertising:bool }
+     Storage : localStorage['cse_consent_v3'] = { v:3, ts:ms, analytics:bool, advertising:bool }
      Public  : window.cseConsent.open() — reopens modal (called by footer "Cookie Settings")
-     Gates   : window.__cseFireGA4(), window.__cseFireClarity() (defined in extend_footer.html)
+     Gates   : analytics and Adsterra scripts (defined in extend_footer.html)
      ───────────────────────────────────────────────────────────────────────── */ -}}
 <style>
 #cse-cb,#cse-cb *,#cse-modal,#cse-modal *{box-sizing:border-box;margin:0;padding:0}
@@ -169,7 +169,7 @@
             <span class="cse-track"></span>
           </label>
         </div>
-        <p class="cse-desc">Google AdSense and DoubleClick — enables interest-based ads. Disabling shows non-personalized ads or no ads. Ad revenue funds free content.</p>
+        <p class="cse-desc">Adsterra and its advertising partners may use cookies or similar technologies. Your choice applies immediately; this page reloads if you revoke consent after scripts have loaded.</p>
       </div>
 
     </div>
@@ -183,17 +183,18 @@
 <script>
 (function () {
   'use strict';
-  var KEY = 'cse_consent';
+  /* A new key asks existing visitors again because the ad provider has changed. */
+  var KEY = 'cse_consent_v3';
   var banner = document.getElementById('cse-cb');
   var modal  = document.getElementById('cse-modal');
 
   /* storage */
   function rdCon() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (_) { return null; } }
   function wrCon(a, d) {
-    try { localStorage.setItem(KEY, JSON.stringify({ v: 1, ts: Date.now(), analytics: !!a, advertising: !!d })); } catch (_) {}
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 3, ts: Date.now(), analytics: !!a, advertising: !!d })); } catch (_) {}
   }
 
-  /* Google Consent Mode v2 update — signals to AdSense when added */
+  /* Google Consent Mode v2 update — keep Google tags aligned with the saved choice. */
   function cmUpdate(a, d) {
     if (typeof window.gtag === 'function') {
       window.gtag('consent', 'update', {
@@ -209,6 +210,11 @@
   function fireAnalytics() {
     if (typeof window.__cseFireGA4     === 'function') window.__cseFireGA4();
     if (typeof window.__cseFireClarity === 'function') window.__cseFireClarity();
+  }
+
+  function fireAdvertising() {
+    if (typeof window.__cseFireAdsterra === 'function') window.__cseFireAdsterra();
+    if (typeof window.__cseFireAdsterraSocialBar === 'function') window.__cseFireAdsterraSocialBar();
   }
 
   /* banner */
@@ -229,14 +235,27 @@
   }
 
   /* actions */
-  function acceptAll()  { wrCon(true, true);   cmUpdate(true, true);   fireAnalytics(); hideBanner(); modal.classList.remove('cse-show'); }
-  function rejectAll()  { wrCon(false, false);  cmUpdate(false, false);                  hideBanner(); modal.classList.remove('cse-show'); }
+  function acceptAll()  { wrCon(true, true);   cmUpdate(true, true);   fireAnalytics(); fireAdvertising(); hideBanner(); modal.classList.remove('cse-show'); }
+  function rejectAll()  {
+    var previous = rdCon();
+    wrCon(false, false); cmUpdate(false, false);
+    hideBanner(); modal.classList.remove('cse-show');
+    if (previous && (previous.analytics || previous.advertising)) {
+      window.location.reload();
+    }
+  }
   function saveChoices() {
+    var previous = rdCon();
     var a = document.getElementById('cse-tog-analytics').checked;
     var d = document.getElementById('cse-tog-ads').checked;
     wrCon(a, d); cmUpdate(a, d);
-    if (a) fireAnalytics();
     hideBanner(); modal.classList.remove('cse-show');
+    if (previous && ((previous.analytics && !a) || (previous.advertising && !d))) {
+      window.location.reload();
+      return;
+    }
+    if (a) fireAnalytics();
+    if (d) fireAdvertising();
   }
 
   /* wire buttons */
@@ -274,6 +293,7 @@
   } else {
     cmUpdate(existing.analytics, existing.advertising);
     if (existing.analytics) fireAnalytics();
+    if (existing.advertising) fireAdvertising();
   }
 })();
 </script>

@@ -11,6 +11,7 @@
                        uses H3 and the 404 has no H2 between).
 */ -}}
 {{- if and (eq .Kind "page") (ne .Layout "page") (ne .Slug "404") -}}
+{{ partial "adsterra-native-banner.html" . }}
 <div class="cse-post-newsletter">
   {{ partial "newsletter.html" . }}
 </div>

@@ -1297,3 +1297,24 @@ select:focus-visible, textarea:focus-visible, summary:focus-visible {
   .footer .cse-motto { white-space: normal; font-size: 0.8rem; line-height: 1.5; }
   .footer .cse-credit { display: block; margin: 0.35rem 0 0; }
 }
+
+/* Adsterra Native Banner slots */
+.cse-adsterra-native {
+  max-width: 100%;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-align: center;
+  overflow: hidden;
+}
+.cse-adsterra-native[hidden] { display: none !important; }
+.cse-adsterra-label {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: var(--secondary);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+#container-f0d3a1d26edda7ec02dd89167a21e792 { max-width: 100%; margin-inline: auto; }

@@ -1,0 +1,7 @@
+{{- $containerID := site.Params.adsterraNativeBannerContainerID -}}
+{{- if and site.Params.adsterraNativeBannerScriptURL $containerID -}}
+<aside class="cse-adsterra-native" aria-label="Advertisement" hidden>
+  <span class="cse-adsterra-label">Advertisement</span>
+  <div id="{{ $containerID }}"></div>
+</aside>
+{{- end -}}

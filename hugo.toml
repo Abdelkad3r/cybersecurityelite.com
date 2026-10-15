@@ -205,6 +205,12 @@ canonifyURLs = true
   microsoftClarity = "wsjo9x58jv"
   plausibleDomain = ""
 
+  # Adsterra Native Banner unit. The external script is loaded only after a
+  # visitor opts in to advertising cookies in the consent banner.
+  adsterraNativeBannerScriptURL = "https://pl31853077.profitableratecpmnetwork.com/f0d3a1d26edda7ec02dd89167a21e792/invoke.js"
+  adsterraNativeBannerContainerID = "container-f0d3a1d26edda7ec02dd89167a21e792"
+  adsterraSocialBarScriptURL = "https://pl31853078.profitableratecpmnetwork.com/ee/7c/d0/ee7cd043a36b01cc3c8b82c82df2b477.js"
+
   # Single source of truth for the public-facing contact email.
   # Referenced by layouts/partials/newsletter.html and any future contact UI.
   contactEmail = "contact@cybersecurityelite.com"
