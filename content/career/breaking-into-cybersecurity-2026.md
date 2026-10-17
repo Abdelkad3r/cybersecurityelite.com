@@ -29,6 +29,8 @@ Three myths to discard:
 
 There are five viable entry paths in 2026:
 
+Not sure which direction fits? Start with this overview of [cybersecurity job titles, day-to-day work, and the skills each path needs](/career/cybersecurity-jobs/), then use the roadmap below to build evidence for your first role.
+
 | Path | Day-1 work | Path-to-senior |
 |------|-----------|----------------|
 | **SOC Analyst (T1)** | Triage alerts in a SIEM | Detection engineering → IR lead |
