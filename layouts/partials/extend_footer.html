@@ -7,10 +7,8 @@
 */ -}}
 {{- end -}}
 
-{{- /* GA4 via standard gtag.js — wrapped in __cseFireGA4() so the cookie-consent
-       partial controls when it fires. Loaded async after consent granted; Consent
-       Mode v2 defaults from extend_head.html are already 'granted' by then, so the
-       initial page_view lands with a proper session_id + engagement metrics. */ -}}
+{{- /* GA4 is loaded only after the applicable regional consent source grants
+       analytics_storage: Google CMP in EEA/UK/CH, custom banner elsewhere. */ -}}
 {{- $ga := site.Params.ga4 -}}
 {{- if $ga }}
 <script>
@@ -19,6 +17,7 @@
   var _done = false;
   window.__cseFireGA4 = function () {
     if (_done) return; _done = true;
+    window.__cseGA4Loaded = true;
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + MID;
@@ -32,19 +31,24 @@
 </script>
 {{- end }}
 
-{{- /* Microsoft Clarity — deferred and wrapped in __cseFireClarity() for the consent gate. */ -}}
+{{- /* Microsoft Clarity loads only after analytics consent and receives Consent V2. */ -}}
 {{- $clarity := site.Params.microsoftClarity -}}
 {{- if $clarity }}
 <script>
 (function () {
   var _done = false;
-  window.__cseFireClarity = function () {
+  window.__cseFireClarity = function (analyticsGranted, advertisingGranted) {
     if (_done) return; _done = true;
+    window.__cseClarityLoaded = true;
     (function(c,l,a,r,i,t,y){
       c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
       t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;
       y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window,document,'clarity','script','{{ $clarity }}');
+    window.clarity('consentv2', {
+      analytics_Storage: analyticsGranted ? 'granted' : 'denied',
+      ad_Storage: advertisingGranted ? 'granted' : 'denied'
+    });
   };
 })();
 </script>
@@ -76,24 +80,6 @@
 </script>
 {{- end }}
 
-{{- /* Adsterra Social Bar — site-wide, but loaded only after advertising consent. */ -}}
-{{- $adsterraSocialBarSrc := site.Params.adsterraSocialBarScriptURL -}}
-{{- if $adsterraSocialBarSrc }}
-<script>
-(function () {
-  var src = {{ $adsterraSocialBarSrc | jsonify | safeJS }};
-  var loaded = false;
-  window.__cseFireAdsterraSocialBar = function () {
-    if (loaded) return;
-    loaded = true;
-    var script = document.createElement('script');
-    script.src = src;
-    document.body.appendChild(script);
-  };
-})();
-</script>
-{{- end }}
-
 {{- /* Cookie consent banner + preferences modal (gates the functions above) */ -}}
 {{ partial "cookie-consent.html" . }}
 
@@ -111,5 +97,5 @@
   <span style="margin: 0 0.5rem;">·</span>
   <a href="/sitemap.xml">Sitemap</a>
   <span style="margin: 0 0.5rem;">·</span>
-  <button type="button" class="cse-footlink" onclick="window.cseConsent&&window.cseConsent.open()">Cookie Settings</button>
+  <button type="button" class="cse-footlink" onclick="window.cseConsent&&window.cseConsent.open()">Privacy and cookie settings</button>
 </div>

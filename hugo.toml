@@ -201,12 +201,15 @@ canonifyURLs = true
   ga4 = "G-TYE341WL0N"
   microsoftClarity = "wsjo9x58jv"
   plausibleDomain = ""
+  # Existing AdSense account publisher ID (also used by the verification meta tag).
+  # Publisher tag is only used to deliver the already-published CMP message; no ad
+  # units or Auto Ads are configured here.
+  adsensePublisherID = "ca-pub-8915981048230727"
 
-  # Adsterra Native Banner unit. The external script is loaded only after a
-  # visitor opts in to advertising cookies in the consent banner.
+  # Adsterra Native Banner unit. Loaded only after explicit advertising consent
+  # outside EEA/UK/Switzerland until the vendor's CMP/TCF eligibility is verified.
   adsterraNativeBannerScriptURL = "https://pl31853077.profitableratecpmnetwork.com/f0d3a1d26edda7ec02dd89167a21e792/invoke.js"
   adsterraNativeBannerContainerID = "container-f0d3a1d26edda7ec02dd89167a21e792"
-  adsterraSocialBarScriptURL = "https://pl31853078.profitableratecpmnetwork.com/ee/7c/d0/ee7cd043a36b01cc3c8b82c82df2b477.js"
 
   # Single source of truth for the public-facing contact email.
   # Referenced by layouts/partials/newsletter.html and any future contact UI.

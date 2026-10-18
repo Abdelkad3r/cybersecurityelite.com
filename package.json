@@ -6,7 +6,8 @@
   "scripts": {
     "index": "pagefind --site public",
     "search": "pagefind --site public --serve",
-    "build": "hugo --gc --minify && pagefind --site public"
+    "build": "hugo --gc --minify && pagefind --site public",
+    "test:consent": "node scripts/test-consent.mjs"
   },
   "devDependencies": {
     "pagefind": "^1.1.1"

@@ -88,6 +88,9 @@ jobs:
         run: |
           npx -y pagefind@latest --site public
 
+      - name: Check consent routing and generated tags
+        run: npm run test:consent
+
       - name: Check generated site for leaked secrets
         run: python3 scripts/check_secrets.py --output public
 
