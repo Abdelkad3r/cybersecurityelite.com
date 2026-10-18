@@ -44,6 +44,9 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Check source for accidentally committed secrets
+        run: python3 scripts/check_secrets.py --source
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
@@ -78,11 +81,15 @@ jobs:
         run: |
           hugo \
             --gc \
-            --minify
+            --minify \
+            --cleanDestinationDir
 
       - name: Build Pagefind search index
         run: |
           npx -y pagefind@latest --site public
+
+      - name: Check generated site for leaked secrets
+        run: python3 scripts/check_secrets.py --output public
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
