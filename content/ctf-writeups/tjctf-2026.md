@@ -1,7 +1,7 @@
 ---
 title: "TJCTF 2026 Writeups: All 21 Challenges Solved"
 slug: "tjctf-2026"
-description: "Complete TJCTF 2026 writeup of all 21 challenges across web, rev, crypto, forensics, misc — JWT, ECDSA Minerva, RSA parity, ReDoS, pickle escape, Godot PCK."
+description: "TJCTF 2026 writeups across web, reverse, crypto, forensics, and misc, including JWT, ECDSA, RSA, ReDoS, pickle, and Godot PCK challenges."
 date: 2026-05-17T16:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -13,7 +13,7 @@ keywords: ["tjctf 2026 writeup", "tjctf 2026 solutions", "thomas jefferson ctf 2
 toc: true
 cover:
   image: "/images/articles/tjctf-2026.png"
-  alt: "TJCTF 2026 ALL 21 CHALLENGES SOLVED writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for TJCTF 2026 Writeups, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="TJCTF 2026 (Thomas Jefferson CTF)" difficulty="Easy → Hard" os="Mixed: Linux, macOS ARM64, WebAssembly, Network captures" skills="JWT crafting, SSRF via URL normalization, Zip Slip, RSA parity oracle, ECDSA timing/Minerva, invalid-curve attacks, Chebyshev matrix exponentiation, ReDoS as side channel, pickle exploitation, PCK parsing, polyglot files, RTP LSB steganography" >}}

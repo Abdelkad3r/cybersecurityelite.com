@@ -1,7 +1,7 @@
 ---
 title: "LYKNCTF 2026 Pwn Writeup: 3 Challenges Solved"
 slug: "lyknctf-2026-pwn-writeup"
-description: "Step-by-step LYKNCTF 2026 pwn (binary exploitation) writeup — three challenges covering a textbook non-PIE ret2win, a signed-int length check that becomes 0xff after byte truncation, and an off-by-one UAF in a note manager chained into heap-safe-linking leak, unsorted-bin libc leak, tcache poisoning, PIE recovery, notes-table hijack for arbitrary read/write, stack ROP, and system('/bin/sh')."
+description: "LYKNCTF 2026 Pwn writeup with step-by-step solutions for three challenges."
 date: 2026-07-11T01:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -43,7 +43,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/lyknctf-2026-pwn-writeup.png"
-  alt: "LYKNCTF 2026 pwn writeup — three binary exploitation challenges solved covering non-PIE ret2win, signed-integer length bypass with byte truncation, and off-by-one UAF chained into tcache poisoning, arbitrary read/write, and stack RIP overwrite"
+  alt: "Dark grid cover card for LYKNCTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 LYKNCTF 2026's pwn track: short but well-graduated, three challenges that climb from a textbook non-PIE ret2win with no canary, through a signed-integer length check that survives negation and byte truncation before it reaches `read()`, and up to an off-by-one UAF in a note manager that composes into heap-safe-linking leak, unsorted-bin libc leak, glibc 2.39 tcache poisoning, PIE recovery through a stack scan for a `.rodata` string pointer, notes-table hijack for arbitrary read/write, upper-stack dump, saved-RIP identification, and a `system("/bin/sh")` ROP chain, all one binary, one exploit run.

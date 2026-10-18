@@ -1,7 +1,7 @@
 ---
 title: "Disable LLMNR and NBT-NS via Group Policy: 2026 Security Guide"
 slug: "disable-llmnr-nbt-ns-group-policy"
-description: "Stop name resolution poisoning by disabling LLMNR and NBT-NS via Group Policy. Complete configuration, registry paths, and rollback procedures."
+description: "Reduce LLMNR and NetBIOS name-resolution exposure with Group Policy, including configuration steps, registry paths, and rollback procedures."
 date: 2026-06-08T15:22:57Z
 lastmod: 2026-06-08T15:22:57Z
 draft: false
@@ -31,7 +31,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/disable-llmnr-nbt-ns-group-policy.png"
-  alt: "Disable LLMNR and NBT-NS via Group Policy — network security hardening guide"
+  alt: "Dark grid cover card for Disable LLMNR and NBT-NS via Group Policy, with large high-contrast title lettering."
 ---
 
 LLMNR (Link-Local Multicast Name Resolution) and NBT-NS (NetBIOS Name Service) are legacy name resolution protocols that attackers exploit to capture credentials through poisoning attacks. When a Windows client can't resolve a hostname via DNS, it falls back to broadcasting LLMNR and NBT-NS queries across the network — and attackers respond with malicious answers, capturing authentication attempts. Tools like **Responder** and **Inveigh** make this attack trivial, turning misconfigured name resolution into domain compromise. This guide shows how to **disable LLMNR and NBT-NS via Group Policy**, with registry paths, PowerShell verification, testing procedures, and complete rollback instructions for Windows 11 and Server 2025 environments.

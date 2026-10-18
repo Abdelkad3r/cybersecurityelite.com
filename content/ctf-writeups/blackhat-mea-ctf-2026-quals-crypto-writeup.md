@@ -2,7 +2,7 @@
 title: "Black Hat MEA CTF Qualification 2026 — Crypto Writeup (Hokan & Popcnt Oracle)"
 date: 2026-09-05T10:00:00Z
 lastmod: 2026-09-07T00:00:00Z
-description: "Full step-by-step crypto writeup for Black Hat MEA CTF Qualification 2026. Covers Hokan (sparse multivariate interpolation over unknown F_p, weighted-degree substitution, LLL knapsack) and Popcnt Oracle (RSA-2048 Hamming-weight oracle, modular-doubling bit extraction, adaptive collision resolution)."
+description: "Black Hat MEA CTF Qualification 2026 — Crypto (Hokan & Popcnt Oracle) writeup with step-by-step challenge solutions."
 summary: "Two advanced crypto challenges from BlackHat MEA CTF Quals 2026: Hokan asks you to interpolate a 5-term 11-variable polynomial over a secret 256-bit prime using only 8 evaluations — two fewer than Ben-Or/Tiwari and without knowing p; Popcnt Oracle leaks only the Hamming weight of RSA decryptions, and you must recover a full 2048-bit plaintext from that single bit of information per query."
 tags:
   - ctf
@@ -30,7 +30,7 @@ categories:
 author: "CyberSecurity Elite"
 cover:
   image: "/images/articles/blackhat-mea-ctf-2026-quals-crypto-writeup.png"
-  alt: "Black Hat MEA CTF Qualification 2026 Crypto writeup cover — Hokan sparse polynomial interpolation and Popcnt Oracle RSA Hamming-weight attack"
+  alt: "Dark grid cover card for Black Hat MEA CTF Qualification 2026 — Crypto (Hokan & Popcnt Oracle), with large high-contrast title lettering."
   relative: false
 showToc: true
 TocOpen: false

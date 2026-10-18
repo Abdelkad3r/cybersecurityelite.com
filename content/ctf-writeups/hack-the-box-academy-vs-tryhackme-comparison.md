@@ -12,7 +12,7 @@ keywords: ["hackthebox vs tryhackme", "htb academy review", "tryhackme review"]
 toc: true
 cover:
   image: "/images/articles/hack-the-box-academy-vs-tryhackme-comparison.png"
-  alt: "HTB vs THM WHICH TO CHOOSE IN 2026 writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for Hack The Box Academy vs TryHackMe, with large high-contrast title lettering."
 ---
 
 **Hack The Box Academy vs TryHackMe**: both platforms are excellent for learning offensive security, but they are not interchangeable — the right choice depends on where you are in your learning journey.

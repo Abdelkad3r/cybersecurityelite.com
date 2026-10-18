@@ -1,7 +1,7 @@
 ---
 title: "UIUCTF 2026 Web Writeup: Nabi AI — Next.js Server Action SSRF Steals OpenBao Token"
 slug: "uiuctf-2026-web-nabi-ai-writeup"
-description: "Complete UIUCTF 2026 Nabi AI web writeup — a two-stage chain against a Next.js chat frontend, an OpenBao (HashiCorp Vault fork) secret store, and a token-gated flag service. Stage one: a deprecated baoAddr property in the SendMessageRequest TypeScript type is still accepted by the sendMessage Server Action, so a React Server Components request with Next-Action: 407e153…, an $undefined conversationId, and baoAddr pointing at webhook.site causes the backend to forward its X-Vault-Token header to the attacker's URL as a credential-leaking SSRF. Stage two: OpenBao's application policy uses the wildcard path secret/data/+ instead of the exact secret/data/nabi, so the stolen token also reads secret/data/flag and returns the FLAG_API_KEY, which the flag service accepts as x-api-token and returns uiuctf{lets_just_go_back_to_a_monolith_983c1ec97484}."
+description: "UIUCTF 2026 Web writeup: Nabi AI — Next.js Server Action SSRF Steals OpenBao Token."
 date: 2026-08-11T05:00:00Z
 lastmod: 2026-08-11T05:00:00Z
 draft: false
@@ -56,7 +56,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/uiuctf-2026-web-nabi-ai-writeup.png"
-  alt: "UIUCTF 2026 Nabi AI web writeup cover — a two-stage chain against a Next.js chat frontend, an OpenBao HashiCorp Vault fork secret store, and a token-gated flag service. Stage one recovers a hidden server input by downloading the production Next.js source map at slash underscore next slash static slash chunks slash 3gby4tb3 underscore 0bas dot js dot map, finding the deprecated baoAddr optional property in the SendMessageRequest TypeScript type, extracting the sendMessage Server Action ID 407e153d5824829d199a24b87d41748243b5d2fdf3 from the createServerReference call, and sending an RSC request with the Next-Action header, an $undefined marker for conversationId, and baoAddr pointing at a webhook so the backend forwards its X-Vault-Token header to the attacker URL. Stage two exploits an OpenBao application policy that grants read on path secret/data/+ (single-segment wildcard) rather than the exact secret/data/nabi, so the stolen token also reads secret/data/flag and returns FLAG_API_KEY which the flag service accepts as x-api-token and returns uiuctf{lets_just_go_back_to_a_monolith_983c1ec97484}"
+  alt: "Dark grid cover card for UIUCTF 2026 Web, with large high-contrast title lettering."
 ---
 
 **UIUCTF 2026**'s Nabi AI is a masterclass in how an ordinary Next.js app becomes a full credential-exfiltration chain when two mundane development shortcuts survive into production. The frontend is a small chat UI. The backend is a Next.js Server Action that talks to an OpenBao (HashiCorp Vault fork) KV store for its API key. A separate flag service accepts an `x-api-token` header. Nothing about the architecture is inherently vulnerable — every service is doing what it advertises. The chain lives entirely in two decisions that are individually reasonable and collectively fatal: **a deprecated request field that was never actually removed**, and **a Vault ACL glob that was never actually tightened**.

@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Stupidcontract: Patched eBPF Verifier + Signed-Cmp OOB"
 slug: "gpn-ctf-2026-stupidcontract"
-description: "GPN CTF 2026 Stupidcontract analysis: the published eBPF object uses a signed index check followed by map-value pointer arithmetic. The challenge README attributes its acceptance to a patched verifier; the kernel images are not in the public source snapshot."
+description: "GPN CTF Stupidcontract analysis separates the signed-index behavior visible in the eBPF object from the README’s unverified patched-verifier claim."
 date: 2026-06-07T18:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -30,7 +30,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-stupidcontract.png"
-  alt: "GPN CTF 2026 Stupidcontract writeup — eBPF object disassembly shows a signed index check and map-value pointer arithmetic; the challenge README describes a patched verifier"
+  alt: "Dark grid cover card for GPN CTF 2026 — Stupidcontract, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Hard" os="Reverse — Linux kernel forensics, eBPF, Rust aya" skills="reviewing a supplied eBPF object, tracing signed comparisons and map-value pointer arithmetic, assessing a challenge-reported verifier patch, following the solver's RNG-gate strategy" >}}

@@ -1,7 +1,7 @@
 ---
 title: "THEM?! CTF 2026 Writeup: 7 Solved Challenges"
 slug: "themectf-2026-writeup"
-description: "THEM?! CTF 2026 writeup — the 7 reverse and crypto challenges I solved from an 85-challenge event, with exploit code and lessons learned."
+description: "THEM?! CTF 2026 writeup with solutions to seven reverse-engineering and cryptography challenges, plus exploit code and lessons learned."
 date: 2026-06-01T02:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -40,7 +40,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/themectf-2026-writeup.png"
-  alt: "THEM?! CTF 2026 writeup — all 7 challenges across reverse engineering and cryptography"
+  alt: "Dark grid cover card for THEM?! CTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="THEM?! CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Reverse, Crypto)" skills="CHIP-8 emulation, x86-64 PE reverse engineering, Unicorn dynamic emulation, FNV-1a hash recovery, custom bytecode VMs, control-flow flattening, DES weak-key parity, XOR-chain cryptanalysis, modular arithmetic over 10^155" >}}

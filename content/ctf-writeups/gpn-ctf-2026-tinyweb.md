@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Tinyweb: Link Header CSS Injection + Attribute Selector Exfil"
 slug: "gpn-ctf-2026-tinyweb"
-description: "GPN CTF 2026 Web: 481 bytes of Node, a Link: rel=preload injection point, body[onload^=...] CSS attribute selectors leak the cookie character-by-character. 25 minutes to flag."
+description: "GPN CTF 2026 Tinyweb writeup on CSS attribute selectors used to extract a cookie through a Link-header injection point."
 date: 2026-06-07T19:15:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -30,7 +30,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-tinyweb.png"
-  alt: "GPN CTF 2026 Tinyweb writeup — Link header CSS injection plus body[onload^=...] attribute selectors leak the cookie character-by-character"
+  alt: "Dark grid cover card for GPN CTF 2026 — Tinyweb, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium" os="Web — Node http, Link header injection, CSS attribute-selector exfil" skills="recognising unescape as a percent-decoder that mangles header values, splitting on Link header's comma+semicolon structural separators, injecting a second link entry with rel=stylesheet, hosting the CSS on a serveo-style tunnel that doesn't show an interstitial, iterating body[onload^=prefix] one character at a time" >}}

@@ -32,7 +32,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/anti-slopctf-2026-osint-writeup.png"
-  alt: "Anti-Slop CTF 2026 OSINT writeup — Observers GitHub artifact-trail pivot and Geoguessr H3-cell client-side crypto"
+  alt: "Dark grid cover card for Anti-Slop CTF 2026 OSINT, with large high-contrast title lettering."
 ---
 
 **Anti-Slop CTF 2026**'s OSINT track presented two challenges: **Observers Are All You Need**, a GitHub artifact-trail pivot that requires walking a contributor account's profile, issue comments, and PR descriptions to assemble a flag split into three base64-decoded fragments; and **Geoguessr**, a hybrid where ten panoramas use client-side H3 resolution-8 cell verification backed by Shamir secret sharing, so identifying the correct ~700 m hexagonal cell for 9 of 10 locations is enough to reconstruct the master AES key without pixel-perfect coordinates. This is the seventh and last per-category post in the Anti-Slop CTF 2026 series; the earlier ones cover [web](/ctf-writeups/anti-slopctf-2026-web-writeup/), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/), [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/), [blockchain](/ctf-writeups/anti-slopctf-2026-blockchain-writeup/), and the [misc Baby Maths](/ctf-writeups/anti-slopctf-2026-misc-baby-maths/) prompt-injection trap.

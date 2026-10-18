@@ -1,7 +1,7 @@
 ---
 title: "Log4Shell Three Years Later: What Actually Changed?"
 slug: "log4shell-three-years-later-what-changed"
-description: "What Log4Shell (CVE-2021-44228) actually changed — the JNDI endpoints still unpatched, which supply-chain controls moved the needle, and what didn't."
+description: "A Log4Shell retrospective on patching, dependency management, and supply-chain controls, with lessons for vulnerability response."
 date: 2026-05-04T11:00:00Z
 lastmod: 2026-05-04T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["log4shell", "cve-2021-44228", "log4j vulnerability", "supply chain s
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "Log4Shell retrospective"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 {{< cvss score="10.0" vector="AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H" >}}

@@ -1,7 +1,7 @@
 ---
 title: "Active Directory Attacks: Kerberoasting Deep Dive"
 slug: "active-directory-kerberoasting-deep-dive"
-description: "Kerberoasting service principal names (SPNs) — TGS extraction with mimikatz, hashcat cracking, lsass dumps, plus gMSA hardening + Event 4769 detection."
+description: "A Kerberoasting guide covering service ticket requests, offline password testing, Event 4769 monitoring, and service-account hardening."
 date: 2026-04-20T11:00:00Z
 lastmod: 2026-04-20T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["kerberoasting", "kerberoasting tutorial", "kerberos attacks", "spn e
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "Kerberoasting deep dive"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 Kerberoasting remains the highest-ROI Active Directory attack: any authenticated domain user can request a service ticket for any account with a Service Principal Name (SPN), and crack that ticket offline. No special privileges. No exploits. Just Kerberos working as designed.

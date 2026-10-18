@@ -1,7 +1,7 @@
 ---
 title: "BDSec CTF 2026 Pwn Writeup: 2 Challenges Solved"
 slug: "bdsec-ctf-2026-pwn-writeup"
-description: "BDSec CTF 2026 pwn step-by-step: Phantom Device duplicate-handle UAF with tcache grooming to overlap a session and forge the privileged role plus two checksums; Muktir Shongket verifier-executor semantic mismatch where ROUTE jumps into a SIGNAL literal."
+description: "BDSec CTF 2026 Pwn writeup with step-by-step solutions for two challenges."
 date: 2026-07-22T15:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -48,7 +48,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bdsec-ctf-2026-pwn-writeup.png"
-  alt: "BDSec CTF 2026 pwn writeup — two challenges solved covering Phantom Device a stripped x86-64 ELF menu-driven driver simulator whose duplicate-handle operation copies the descriptor without incrementing the object refcount so releasing one descriptor frees the chunk while the duplicate remains a valid read-write handle giving a use-after-free primitive that after a seven-device tcache-fill grooming sequence overlaps the freed device chunk with a newly-created session then leaks uid and nonce recovers the per-process cookie from checksum1 = rol64(uid ^ cookie, 17) ^ nonce ^ 0xa55aa55aa55aa55a and patches the session role to 0x1337133713371337 with the corrected checksum2, and Muktir Shongket a stripped x86-64 ELF that both verifies and JIT-translates a custom five-opcode bytecode (WAIT SIGNAL ROUTE END FREEDOM) where the verifier walks ROUTE targets only for in-bounds checks while the executor lowers ROUTE to an x86 jmp rel32 allowing a 12-byte hex payload 300220b8b01b4000ffd0c340 to jump into the 8-byte literal of a following SIGNAL order whose bytes decode to mov eax 0x401bb0 call rax ret invoking the internal flag-printing function of the non-PIE binary"
+  alt: "Dark grid cover card for BDSec CTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 BDSec CTF 2026's pwn track shipped two 100-point challenges that both hinge on the same class of bug — **two components of the same program disagree about the meaning of one operation** — but at completely different levels of the stack. **Phantom Device** is a menu-driven device-driver simulator where the *duplicate handle* operation copies the descriptor but does not update the object refcount, so *release* and *duplicate* disagree about how many live pointers exist. That mismatch drops a stale device handle over a session-object allocation and gives a read/write primitive that leaks the process cookie and forges the privileged role. **Muktir Shongket** is a custom-bytecode terminal where the *verifier* and the *executor* disagree about what a `ROUTE` order does: the verifier walks past it as metadata, the executor translates it into an x86 `jmp rel32`. That jump lands inside a later `SIGNAL` literal, whose bytes were never inspected as instructions, and calls the internal `flag.txt` printer at a fixed address in the non-PIE binary.

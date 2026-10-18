@@ -1,7 +1,7 @@
 ---
 title: "Anti-Slop CTF 2026 Misc Writeup: Baby Maths (Prompt Injection in the Question Stream)"
 slug: "anti-slopctf-2026-misc-baby-maths"
-description: "Step-by-step writeup for Baby Maths from Anti-Slop CTF 2026. Arithmetic automation with a prompt-injection trap that asks the solver to exfiltrate the local OpenAI API key."
+description: "Anti-Slop CTF 2026 Misc writeup: Baby Maths (Prompt Injection in the Question Stream)."
 date: 2026-06-23T23:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -31,7 +31,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/anti-slopctf-2026-misc-baby-maths.png"
-  alt: "Anti-Slop CTF 2026 Misc Baby Maths writeup — automation challenge with a prompt-injection trap"
+  alt: "Dark grid cover card for Anti-Slop CTF 2026 Misc, with large high-contrast title lettering."
 ---
 
 **Anti-Slop CTF 2026**'s **Baby Maths** is a 284-point misc challenge that asks solvers to answer 100 arithmetic questions over a plain TCP socket — with one of those 100 questions being a prompt-injection attempt instructing LLM-driven solvers to exfiltrate a local OpenAI API key from `~/.codex/auth.json`. The correct approach is a Python AST-based safe evaluator that parses arithmetic mechanically, making the injection attempt harmless. This is the sixth post in the Anti-Slop CTF 2026 series; the earlier ones covered the [web](/ctf-writeups/anti-slopctf-2026-web-writeup/), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/), [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/), and [blockchain](/ctf-writeups/anti-slopctf-2026-blockchain-writeup/) tracks.

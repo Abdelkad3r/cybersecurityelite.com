@@ -1,7 +1,7 @@
 ---
 title: "LYKNCTF 2026 Forensics Writeup: 4 Challenges Solved"
 slug: "lyknctf-2026-forensics-writeup"
-description: "Step-by-step LYKNCTF 2026 forensics writeup — four challenges covering PNG eXIf/tEXt metadata trap with repeating-key XOR, red-channel LSB PNG stego with decoy IEND trailer, JPEG masquerading as .png with an appended ZIP archive whose EOCD self-locates, and a TRC-20 USDT chain trace on TRON hitting an OFAC-sanctioned FUNNULL wallet before landing in a Bitget hot wallet."
+description: "LYKNCTF 2026 Forensics writeup with step-by-step solutions for four challenges."
 date: 2026-07-11T02:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -49,7 +49,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/lyknctf-2026-forensics-writeup.png"
-  alt: "LYKNCTF 2026 forensics writeup — four challenges solved covering PNG metadata XOR, red-channel LSB stego, JPEG-as-PNG ZIP append, and TRON USDT OFAC chain trace"
+  alt: "Dark grid cover card for LYKNCTF 2026 Forensics, with large high-contrast title lettering."
 ---
 
 **LYKNCTF 2026**'s forensics track is small but well-shaped, and this **CyberSecurity Elite** writeup walks all four solves — challenges that cover the whole spectrum of file-format triage, from PNG chunk parsing and repeating-key XOR through steganographic LSB extraction and polyglot ZIP appending to a real on-chain USDT trace on TRON that ends at an OFAC-sanctioned wallet before landing in a Bitget hot wallet. Each challenge deliberately ships a decoy layer (an EXIF cover story, an `IEND` trailer with a fake "password hint," a `.png` extension that lies about the container format, a suggestive first hop) that looks like the answer if you stop reading too early.

@@ -1,7 +1,7 @@
 ---
 title: "Anti-Slop CTF 2026 Pwn Writeup: Paper Lantern, Graceful Exit, Anchorpoint"
 slug: "anti-slopctf-2026-pwn-writeup"
-description: "Step-by-step pwn writeups for Anti-Slop CTF 2026. Paper Lantern Bellcore CRT fault, Graceful Exit leak-and-overwrite, Anchorpoint five-stage VM-to-GCM forge chain."
+description: "Anti-Slop CTF 2026 Pwn writeup: Paper Lantern, Graceful Exit, Anchorpoint."
 date: 2026-06-22T20:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -36,7 +36,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/anti-slopctf-2026-pwn-writeup.png"
-  alt: "Anti-Slop CTF 2026 pwn writeup — Paper Lantern Bellcore CRT, Graceful Exit leak-and-overwrite, Anchorpoint VM-to-GCM forge chain"
+  alt: "Dark grid cover card for Anti-Slop CTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 **Anti-Slop CTF 2026**'s three binary-exploitation challenges end to end. Third post in the Anti-Slop CTF 2026 series. The [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered HTTP parsers. The [reverse writeup](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) covered an ECDSA nonce attack and a SHA-256 length extension. This one walks the three pwn challenges in the same step-by-step format.

@@ -1,7 +1,7 @@
 ---
 title: "DalCTF 2026 Writeup: All 9 Challenges Solved"
 slug: "dalctf-2026-writeup"
-description: "DalCTF 2026 full writeup — 9 challenges across Crypto, Reverse, Web, and Android. RSA small factors, Bellcore fault attack, Playfair, Huffman tiebreak, IEEE-754 type punning, UPX-packed checker."
+description: "DalCTF 2026 writeup with step-by-step solutions for nine challenges."
 date: 2026-06-08T19:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -53,7 +53,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/dalctf-2026-writeup.png"
-  alt: "DalCTF 2026 writeup — 9 challenges solved across Crypto, Reverse, Web, and Android"
+  alt: "Dark grid cover card for DalCTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="DalCTF 2026 (dalctf2026.com)" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Crypto, Reverse Engineering, Web, Android" skills="RSA modulus with small prime factor recovered by trial division, Bellcore CRT fault attack as the verification path, Playfair decryption against an un-keyed alphabet square, Huffman tree decode with inverted tiebreaker convention, LCG state recovery from one known plaintext byte, IEEE-754 bit-pattern reinterpretation via Quake-style float pointer cast, UPX-packed ELF unpacked into 44 per-byte check functions, Android APK static-string mining across MainActivity + strings.xml + ColorKt, HTML hidden attribute as a flag-hiding sink" >}}

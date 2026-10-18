@@ -1,7 +1,7 @@
 ---
 title: "HTB CPTS Review (2026): Is Hack The Box's Certified Penetration Testing Specialist Worth It?"
 slug: "htb-cpts-review-2026"
-description: "Honest HTB CPTS review — the Penetration Tester Academy path, the 10-day hands-on exam and report, difficulty vs OSCP, cost, and who it's actually for."
+description: "Honest HTB CPTS review — the Penetration Tester Academy path, the 10-day hands-on exam and report, difficulty vs OSCP, cost, and who the certification suits."
 date: 2026-08-04T00:00:00Z
 lastmod: 2026-08-04T00:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["htb cpts review", "hack the box cpts", "cpts vs oscp", "is cpts wort
 toc: true
 cover:
   image: "/images/articles/htb-cpts-review-2026.png"
-  alt: "A laptop showing a Hack The Box Academy penetration testing lab next to a printed commercial-grade penetration test report on a desk representing the HTB CPTS exam workflow"
+  alt: "Dark grid cover card for HTB CPTS Review (2026), with large high-contrast title lettering."
 ---
 
 Hack The Box's **Certified Penetration Testing Specialist (CPTS)** is one of the best-value practical pentest certifications in 2026 — the short answer is yes, it earns its reputation, with two honest caveats: it is enormous in scope and it will fail you on a weak report even if you own the network. If you want a modern, deeply hands-on credential that mirrors real consulting work — enumeration to a full Active Directory compromise, wrapped in a professional deliverable — the CPTS is an easy recommendation. Where it loses ground to the OSCP is raw recruiter name recognition, and that nuance drives most of the "CPTS vs OSCP" debate.

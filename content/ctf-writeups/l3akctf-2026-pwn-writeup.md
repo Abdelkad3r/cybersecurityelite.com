@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 Pwn Writeup: All 7 Binary Exploitation Challenges"
 slug: "l3akctf-2026-pwn-writeup"
-description: "Full L3akCTF 2026 pwn writeup covering all seven binary exploitation challenges: a scanf %s NUL-byte overflow that turns a bignum printer into a stack leak for ret2win (Rudimentary Calculator); a custom stack-VM whose DUP instruction corrupts its own stack pointer into a native-frame read/write primitive with leak-free ASLR-relative ROP (LattiaVM 1 & 2); an RWX-module CTF shell defeated with /proc/self/exe recovery, behavioral oracles, a self-disable bypass, an opcode-widening byte→dword trick, and an atomic stdout->write hook (Bosh); a Piet interpreter whose up/down opcodes alias stack_depth into an exact set_depth primitive and whose roll ignores its depth bound (Piet 1 & 2); and a seccomp user-notification supervisor broken by two unsigned-arithmetic offset+count wraparounds into arbitrary parent read/write, GOT overwrite, and system(\"/readflag\")."
+description: "L3akCTF 2026 Pwn writeup with step-by-step solutions for seven challenges."
 date: 2026-08-06T23:00:00Z
 lastmod: 2026-08-06T23:00:00Z
 draft: false
@@ -51,7 +51,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-pwn-writeup.png"
-  alt: "L3akCTF 2026 binary exploitation writeup covering seven pwn challenges — Rudimentary Calculator turns a scanf %s NUL-byte stack overflow into a bignum-printer stack leak that defeats PIE and the canary before a ret2win, LattiaVM 1 and 2 abuse a custom stack VM whose DUP instruction overwrites its own stack pointer to become a native-frame read/write that builds a leak-free ASLR-relative system(pr f*) ROP chain, Bosh recovers a hidden musl binary through /proc/self/exe and uses behavioral oracles plus an opcode-widening byte-to-dword patch to atomically hook stdout->write into a chmod-and-forward stub, Piet 1 aliases stack_depth via up and down opcodes into an exact set_depth primitive while Piet 2 abuses an unbounded roll to overwrite saved rbp and pivot into a forged frame, and Supervisor breaks a seccomp user-notification sandbox with two offset-plus-count unsigned wraparounds into arbitrary parent read and write, a strlen GOT overwrite, and system(/readflag)"
+  alt: "Dark grid cover card for L3akCTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 L3akCTF 2026's binary exploitation track was one of the strongest of the season: seven challenges that walked from a beginner-friendly stack overflow all the way to a zero-solve Piet interpreter and a seccomp-user-notification sandbox escape. What ties the set together is a single recurring theme — **metadata you are allowed to touch is more dangerous than the memory you are trying to reach.** Almost every challenge here is won not by smashing a return address directly, but by corrupting a length field, a stack-pointer field, a self-disable byte, an opcode byte, or a saved frame pointer, and letting the program's own trusted code do the dangerous write for you.

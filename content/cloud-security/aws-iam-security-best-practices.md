@@ -1,7 +1,7 @@
 ---
 title: "AWS IAM Security Best Practices for 2026"
 slug: "aws-iam-security-best-practices"
-description: "Stop AWS account takeovers before they happen — root account hygiene, permission boundaries that actually constrain, IAM Access Analyzer findings to act on."
+description: "AWS IAM guidance on root-account protections, permission boundaries, and reviewing IAM Access Analyzer findings."
 date: 2026-05-02T10:00:00Z
 lastmod: 2026-05-02T10:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["aws iam best practices", "iam security", "aws security"]
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "AWS IAM best practices"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 IAM is the AWS control plane. Almost every public AWS breach traces back to an IAM misconfiguration — over-permissive roles, leaked access keys, or trust policies that accidentally trust the entire internet. This is the modern playbook.

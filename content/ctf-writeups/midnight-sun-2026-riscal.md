@@ -13,7 +13,7 @@ keywords: ["midnight sun ctf 2026 riscal writeup", "risc-v ctf reverse engineeri
 toc: true
 cover:
   image: "/images/articles/midnight-sun-2026-riscal.png"
-  alt: "MIDNIGHT SUN 2026 RISCAL writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for Midnight Sun 2026 riscal, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="Midnight Sun CTF 2026 Quals" difficulty="Trivial" os="RISC-V 64-bit Linux" skills="strings(1), reading the rules" >}}

@@ -13,7 +13,7 @@ keywords: ["bkisc ctf 2026 cryptografie writeup", "java filesystempreferences di
 toc: true
 cover:
   image: "/images/articles/bkisc-ctf-2026-cryptografie.png"
-  alt: "BKISC 2026 CRYPTOGRAFIE writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for BKISC 2026 Cryptografie, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="BKISC CTF 2026" difficulty="Easy" points="50" os="Encoding" skills="JDK source reading, custom Base64 alphabet, UTF-16 BE" >}}

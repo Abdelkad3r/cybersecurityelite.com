@@ -1,7 +1,7 @@
 ---
 title: "BDSec CTF 2026 Web Writeup: 2 Challenges Solved"
 slug: "bdsec-ctf-2026-web-writeup"
-description: "BDSec CTF 2026 web step-by-step: Admin Portal JWT alg:none unsigned token forgery granting role=admin; Ticketly stored XSS via SVG SMIL onbegin WAF bypass exfiltrating the admin bot flag cookie to webhook.site via chunked POST requests."
+description: "BDSec CTF 2026 Web writeup with step-by-step solutions for two challenges."
 date: 2026-07-22T16:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -48,7 +48,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bdsec-ctf-2026-web-writeup.png"
-  alt: "BDSec CTF 2026 web writeup — two challenges solved covering Admin Portal JWT alg:none where the server trusts the client-supplied algorithm header and accepts an unsigned token with role=admin producing the flag on the admin panel, and Ticketly a stored XSS challenge whose WAF blacklist blocks script iframe img javascript: and onload but allows SVG SMIL animation elements so an svg animate onbegin payload executes automatically in the admin bot Chromium context reading document.cookie which holds the flag and exfiltrating it to webhook.site via chunked no-cors POST requests"
+  alt: "Dark grid cover card for BDSec CTF 2026 Web, with large high-contrast title lettering."
 ---
 
 BDSec CTF 2026's web track — two challenges that sit at opposite ends of the difficulty scale but share the same root failure: **the server trusts a client-controlled field to govern a security decision**. **Admin Portal** (50 pts) trusts the `alg` field inside the client-supplied JWT header to decide which signature algorithm to enforce — the client says `alg: none`, the server skips signature verification entirely, and a payload with `role=admin` walks through the front door. **Ticketly** (425 pts) trusts a client-controlled ticket body after applying a blacklist sanitiser — the sanitiser blocks `<script>`, `<iframe>`, `<img>`, `javascript:`, and `onload`, but allows SVG SMIL animation elements including the `onbegin` event attribute, which executes JavaScript automatically in any browser that renders the page. An admin bot opens the reported ticket, the animation fires, and `document.cookie` (which holds the flag) is exfiltrated to a webhook in chunked POST bodies.

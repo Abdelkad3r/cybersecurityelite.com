@@ -1,7 +1,7 @@
 ---
 title: "Burp Suite Professional: The Complete Workflow Guide"
 slug: "burp-suite-professional-complete-guide"
-description: "Master Burp Suite Pro like a working bug bounty hunter — Repeater chains, Intruder configs, Collaborator workflows, and the extensions that actually pay off."
+description: "A Burp Suite Professional guide covering Repeater, Intruder, Collaborator, and selected extensions for authorized testing."
 date: 2026-04-12T11:00:00Z
 lastmod: 2026-04-12T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["burp suite tutorial", "burp pro guide", "burp intruder", "burp colla
 toc: true
 cover:
   image: "/images/articles/burp-suite-professional-complete-guide.png"
-  alt: "Burp Suite Professional — bug bounty hunter workflow deep dive"
+  alt: "Dark grid cover card for Burp Suite Professional, with large high-contrast title lettering."
 ---
 
 Burp Suite Professional is the web pentest workhorse. Once you've moved past clicking "Intercept On", the difference between an average tester and a great one is *Burp fluency* — how quickly you can pivot between Repeater, Intruder, and Collaborator without losing context.

@@ -1,7 +1,7 @@
 ---
 title: "OmniCTF 2026 Quals Reverse Writeup: 4 Challenges Solved"
 slug: "omnictf-2026-quals-reverse-writeup"
-description: "OmniCTF 2026 Quals reverse step-by-step: CredVault Parcel migration mismatch, Gatekeep FPGA byte-circuit SAT, Kant multi-round Rust pipeline inversion, Pusher signal-VM."
+description: "OmniCTF 2026 Quals Reverse writeup with step-by-step solutions for four challenges."
 date: 2026-07-19T18:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -43,7 +43,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/omnictf-2026-quals-reverse-writeup.png"
-  alt: "OmniCTF 2026 Quals reverse writeup — four challenges solved covering CredVault Parcel migration mismatch where the forwarding validator only checks a legacy dword the strict validator's checksum can't authenticate, Gatekeep FPGA-style combinational byte circuit solved as a constraint satisfaction problem, Kant stripped Rust binary whose check pipeline stacks XOR, AES-style S-boxes, MixColumns, power maps mod 257, two 16-round Feistel transforms, byte permutations and a bit permutation all inverted from the embedded compare target, and Pusher 32-bit i386 signal-driven VM with SIGSEGV/SIGILL as branch instructions and a scanf %d vs %c input-format trap solved by 50 laps of the slot state machine to build the target string byte by byte"
+  alt: "Dark grid cover card for OmniCTF 2026 Quals Reverse, with large high-contrast title lettering."
 ---
 
 OmniCTF 2026 Quals shipped a reverse-engineering track that runs the full spectrum from beginner constraint-solving to a signal-driven VM that uses `SIGSEGV` and `SIGILL` as branch instructions; in this **CyberSecurity Elite** **OmniCTF 2026 Quals reverse** writeup we walk all four. Four challenges: **CredVault** (medium, 85 solves) is a Parcel-format migration mismatch between two validators over a binary TCP protocol; **Gatekeep** (medium, 62 solves) is a PNG-only FPGA schematic solved as a byte-level constraint satisfaction problem; **Kant** (medium, 92 solves) is a stripped Rust binary whose hidden `check <hex>` mode stacks XOR / S-boxes / MixColumns / power-maps mod 257 / two 16-round Feistels / byte and bit permutations, all reversible from the embedded compare target; **Pusher** (hard, 500 points, 0 solves at release) is a 32-bit i386 ELF whose control flow is smuggled through installed signal handlers and whose `%d` vs ` %c` format-string trap costs an entire remote instance to figure out from the wrong side.

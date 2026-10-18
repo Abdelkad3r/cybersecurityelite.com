@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 Reverse Engineering Writeup: All 6 Challenges"
 slug: "l3akctf-2026-reverse-engineering-writeup"
-description: "Full L3akCTF 2026 reverse engineering writeup covering all six rev challenges: reversing a subleq VM memory dump that runs Langton's Ant to un-scramble an ASCII-art bitmap (Subleq Scramble); running a UPX-scrubbed chat server in Wine and replaying pcap ciphertext so the binary decrypts a custom 8-byte ECB cipher for you (Yet Another Chat); defeating an MBA-obfuscated neural-net checker with a Kannan lattice embedding and BKZ instead of reading the code (Buzzword); solving a custom .wwc VM's six questions including a Feistel inversion bound to a hidden rolling state (What-Who); extracting a flag hidden as 3D Unity cube geometry across serialized scenes with UnityPy (Drippy Adventures); and forging a PRX job with a SHA-256 length-extension attack plus an unauthenticated entry-point patch to run MIPS-like VM shellcode (Omega)."
+description: "L3akCTF 2026 Reverse Engineering writeup with step-by-step solutions for six challenges."
 date: 2026-08-06T17:00:00Z
 lastmod: 2026-08-06T17:00:00Z
 draft: false
@@ -51,7 +51,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-reverse-engineering-writeup.png"
-  alt: "L3akCTF 2026 reverse engineering writeup covering all six rev challenges — Subleq Scramble reverses a subleq VM memory dump running Langton's Ant to un-scramble an ASCII-art bitmap, Yet Another Chat runs a UPX-scrubbed chat server in Wine and replays pcap ciphertext so the binary decrypts a custom 8-byte ECB cipher, Buzzword defeats an MBA-obfuscated neural-net checker with a Kannan lattice embedding and BKZ instead of reading the code, What-Who solves a custom wwc VM's six questions including a seed-bound Feistel inversion, Drippy Adventures extracts a flag hidden as 3D Unity cube geometry across serialized scenes with UnityPy, and Omega forges a PRX job with a SHA-256 length-extension attack plus an unauthenticated entry-point patch to run MIPS-like VM shellcode reading the flag"
+  alt: "Dark grid cover card for L3akCTF 2026 Reverse Engineering, with large high-contrast title lettering."
 ---
 
 Reverse engineering at L3akCTF 2026 was six challenges with one loud message: **you're not always meant to fully reverse the thing in front of you.** Three of the six are bespoke virtual machines, two more bury their logic under industrial-strength obfuscation, and one hides the flag as literal 3D geometry. The winning move, over and over, isn't to grind through every instruction — it's to spot the *structural property* that makes the whole obfuscation irrelevant: a reversible cellular automaton, a decrypt oracle you can just run, a lattice that recovers a small secret, a crypto construction with a known break, or data hidden outside the code entirely.

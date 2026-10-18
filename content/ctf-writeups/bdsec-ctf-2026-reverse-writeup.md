@@ -1,7 +1,7 @@
 ---
 title: "BDSec CTF 2026 Reverse Writeup: 3 Challenges Solved"
 slug: "bdsec-ctf-2026-reverse-writeup"
-description: "BDSec CTF 2026 reverse step-by-step: Easy RE 41-byte XOR/ROL/additive transform; Night Shift 5^8 pthread schedule brute-force; Borrowed Memory 12-step offset VM with checksum-gated instruction tape."
+description: "BDSec CTF 2026 Reverse writeup with step-by-step solutions for three challenges."
 date: 2026-07-22T13:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -48,7 +48,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bdsec-ctf-2026-reverse-writeup.png"
-  alt: "BDSec CTF 2026 reverse writeup — three challenges solved covering Easy RE Challenge an unstripped x86-64 ELF with four length-gated input paths where only the 41-byte BDSEC branch is real and its per-byte transform stacks a two-key XOR a rotate-left by (i mod 7)+1 an additive term (11i)^0x23 and a 13i mod 41 output permutation all trivially inverted from the embedded expected buffer, Night Shift a stripped x86-64 ELF that spawns five pthread workers dispatched by the user's eight-token shift code where a 5^8 brute-force over the shared 128-bit state hash accumulator plus round counter finds the unique schedule 2 0 4 1 3 0 2 4 that unlocks the .rodata table decryption printer, and Borrowed Memory a stripped x86-64 PIE that generates a 0x800-byte xorshift-seeded memory table patches specific offsets to encode a 12-step VM opcode tape where each user offset input decodes an opcode and derives the next offset through a checksum-gated transition producing the final 40-byte .rodata blob decryption via a four-source XOR loop combining encrypted bytes validator outputs state words and user inputs"
+  alt: "Dark grid cover card for BDSec CTF 2026 Reverse, with large high-contrast title lettering."
 ---
 
 BDSec CTF 2026's three-challenge reverse-engineering track that runs the classic escalator: **Easy RE Challenge** (80 pts) is an unstripped ELF with four input paths, three of them decoys with convincing `AFLAG/BFLAG/CFLAG{...}` returns, and one real 41-byte `BDSEC{...}` branch guarded by a per-byte XOR + rotate-left + additive-term + output-permutation transform that inverts cleanly from the embedded expected buffer. **Night Shift** (100 pts) is a stripped ELF that spawns five pthread workers and dispatches them from the user's eight-token "shift code"; only 5^8 = 390 625 orderings exist, and exactly one matches the four 32-bit state targets plus the FNV-shaped hash accumulator, unlocking a `.rodata` printer that emits the flag byte by byte. **Borrowed Memory** (460 pts) is a stripped PIE that generates a 0x800-byte xorshift-seeded memory table, patches specific offsets to encode a 12-step VM opcode tape, and asks the user for twelve 16-bit offsets that walk that tape with checksum-gated transitions — after the twelfth step drops off the end of the table (next-offset = 0xFFFF), a four-source XOR loop decrypts a 40-byte `.rodata` blob into the real flag.

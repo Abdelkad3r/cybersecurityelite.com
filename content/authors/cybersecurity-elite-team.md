@@ -1,7 +1,7 @@
 ---
 title: "CyberSecurity Elite Team"
 slug: "cybersecurity-elite-team"
-description: "The CyberSecurity Elite editorial team — pentesters, malware reverse engineers, SOC analysts, and incident responders who hands-on verify every technique we publish."
+description: "Meet the CyberSecurity Elite editorial team and learn how the site reviews and maintains its cybersecurity guides."
 date: 2026-01-01T00:00:00Z
 lastmod: 2026-05-12T00:00:00Z
 layout: "author"

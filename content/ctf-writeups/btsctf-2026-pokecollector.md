@@ -1,7 +1,7 @@
 ---
 title: "BtSCTF 2026: Pokecollector Writeup — IDOR Through a Self-Issuing JWT"
 slug: "btsctf-2026-pokecollector"
-description: "BreakTheSyntax 2026 Pokecollector walkthrough — a 'gotta catch 'em all' web app trusts a client-supplied pokemon_id on POST /api/collection/add, re-issues the user's JWT with the unauthorised entry, and on read overwrites the name with a server-controlled value that turns out to be the flag for #150."
+description: "BreakTheSyntax 2026 writeup showing how a self-issued JWT enables an IDOR in Pokecollector."
 date: 2026-05-16T01:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -13,7 +13,7 @@ keywords: ["btsctf 2026 pokecollector writeup", "pokecollector writeup", "idor j
 toc: true
 cover:
   image: "/images/articles/btsctf-2026-pokecollector.png"
-  alt: "BtSCTF 2026 POKECOLLECTOR writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for BtSCTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="BreakTheSyntax CTF 2026" difficulty="Easy" os="Web" skills="IDOR, JWT, OWASP API1:2023 Broken Object Level Authorization" >}}

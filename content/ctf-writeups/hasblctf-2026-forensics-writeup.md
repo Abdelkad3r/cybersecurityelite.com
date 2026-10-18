@@ -1,7 +1,7 @@
 ---
 title: "HASBLCTF 2026 Forensics Writeup: All 5 Challenges Solved"
 slug: "hasblctf-2026-forensics-writeup"
-description: "HASBLCTF 2026 forensics writeup — all 5 challenges solved: QR decode, bit-stream JPEG, base64-wrapped JPEG, EXIF vs COM metadata, and magic-byte repair."
+description: "HASBLCTF 2026 forensics writeup covering QR decoding, JPEG bitstreams, metadata, and file-signature repair."
 date: 2026-06-01T05:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -46,7 +46,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/hasblctf-2026-forensics-writeup.png"
-  alt: "HASBLCTF 2026 forensics writeup — all 5 challenges (Quick Response, Logo, Digits, Pamuk, Magic Numbers)"
+  alt: "Dark grid cover card for HASBLCTF 2026 Forensics, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Forensics (Linux toolchain)" skills="QR-code decoding with Reed-Solomon tolerance, JPEG metadata extraction (EXIF, COM, XMP), base64/base32 encoding fingerprints, bit-stream-to-JPEG reconstruction, magic-byte surgical repair, file-header recognition" >}}

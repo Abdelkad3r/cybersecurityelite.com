@@ -1,7 +1,7 @@
 ---
 title: "OSINT Investigation Techniques for Beginners"
 slug: "osint-investigation-techniques-for-beginners"
-description: "Find the person behind a username, geolocate a photo, pivot through breach data — practical OSINT techniques investigators actually run on live cases."
+description: "Beginner OSINT techniques for username research, image geolocation, and lawful use of public breach data."
 date: 2026-04-29T11:00:00Z
 lastmod: 2026-04-29T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["osint", "open source intelligence", "osint techniques"]
 toc: true
 cover:
   image: "/images/articles/osint-investigation-techniques-for-beginners.png"
-  alt: "OSINT investigation techniques for beginners"
+  alt: "Dark grid cover card for OSINT Investigation Techniques for Beginners, with large high-contrast title lettering."
 ---
 
 OSINT — open-source intelligence — is the systematic collection of public data to answer a specific question. Done well, it's the single highest-leverage skill in incident response, threat intel, due diligence, and bug bounty recon. Done poorly, it's hours of dead Google links.

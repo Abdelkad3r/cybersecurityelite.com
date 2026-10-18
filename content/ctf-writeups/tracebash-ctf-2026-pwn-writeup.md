@@ -1,7 +1,7 @@
 ---
 title: "TraceBash CTF 2026 Pwn Writeup: 2 Challenges Solved"
 slug: "tracebash-ctf-2026-pwn-writeup"
-description: "TraceBash CTF 2026 pwn track writeup — Banned Bytes badchars ROP with a socat PTY quoting wrinkle, and Legacy Ledger format-string %hn writes redirecting saved RIP into stack shellcode."
+description: "TraceBash CTF 2026 Pwn writeup with step-by-step solutions for two challenges."
 date: 2026-06-27T14:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -35,7 +35,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/tracebash-ctf-2026-pwn-writeup.png"
-  alt: "TraceBash CTF 2026 pwn writeup — Banned Bytes badchars ROP and Legacy Ledger format-string %hn writes to stack shellcode"
+  alt: "Dark grid cover card for TraceBash CTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 **TraceBash CTF 2026**'s binary exploitation track featured two challenges: **Banned Bytes**, a stack overflow into a ROP chain where the post-overflow byte filter strips `x`, `g`, `a`, and `.` from the input (making `flag.txt` unrepresentable), solved by XOR-encoding the filename into `.bss` and decoding it in memory with `xor byte ptr [r15], r14b` gadgets while also quoting control bytes through the `socat` PTY with `Ctrl-V` literal-next; and **Legacy Ledger**, a banking program that leaks its buffer address at startup via a `printf("%p, %p\n")` debug print, exposes a `printf(user_input)` format-string bug in the deposit/withdraw handlers, and was compiled with `-z execstack`, enabling three `%hn` writes to redirect saved RIP into in-buffer shellcode. This is the third post in the TraceBash CTF 2026 series on this site; the earlier ones cover [crypto](/ctf-writeups/tracebash-ctf-2026-crypto-writeup/) (small-subgroup DH, shared RSA prime, harmonic XOR, 16-bit seed brute) and [OSINT](/ctf-writeups/tracebash-ctf-2026-osint-writeup/) (geocaching pivot, Plus Codes, NYC DOB open data, cross-platform handle pivoting).

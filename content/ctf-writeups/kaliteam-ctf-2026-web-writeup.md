@@ -1,7 +1,7 @@
 ---
 title: "KaliTeam CTF 2026 Web Writeup: PHP Redirect Body Leak & User-Agent Gate Bypass"
 slug: "kaliteam-ctf-2026-web-writeup"
-description: "KaliTeam CTF 2026 web exploitation writeup covering both challenges: Industry Night, where PHP's header() without exit() leaks the full admin dashboard body inside a 302 redirect — readable by any unauthenticated curl request without the -L flag; and Robots, where the server gates the flag behind a User-Agent check that accepts the Googlebot string, demonstrating broken access control through a spoofable HTTP client header."
+description: "KaliTeam CTF 2026 Web writeup: PHP Redirect Body Leak & User-Agent Gate Bypass."
 date: 2026-08-09T12:00:00Z
 lastmod: 2026-08-09T12:00:00Z
 draft: false
@@ -41,7 +41,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/kaliteam-ctf-2026-web-writeup.png"
-  alt: "KaliTeam CTF 2026 web exploitation writeup — two challenges solved covering Industry Night a PHP application where header Location without a following exit sends the full admin dashboard body alongside a 302 redirect allowing any unauthenticated curl request without the -L flag to read the protected page and trigger the PrintFlag GET handler; and Robots a challenge where robots.txt returns two different responses based on the User-Agent header granting the flag only to clients claiming to be Googlebot demonstrating that HTTP client-supplied headers cannot be used as an authorization gate"
+  alt: "Dark grid cover card for KaliTeam CTF 2026 Web, with large high-contrast title lettering."
 ---
 
 KaliTeam CTF 2026's web track presented two challenges that target the same broad vulnerability class — **broken access control** (OWASP A01:2021) — through two completely different implementation mistakes. `Industry Night` exploits one of the most prevalent PHP antipatterns: calling `header("Location: …")` to redirect unauthenticated visitors without a following `exit`, which means the protected page renders in full and its body is transmitted alongside the 302 response. Any HTTP client that does not follow redirects automatically — including plain `curl` without `-L` — reads the leaked dashboard and can trigger its `PrintFlag` handler in a single unauthenticated GET request. `Robots` exploits a server-side `User-Agent` check on `/robots.txt`: the server returns one body to ordinary clients and a different body — containing the flag — to clients that identify themselves as Googlebot. Because `User-Agent` is a plain request header that any client sets freely, one `curl -A 'Googlebot'` command bypasses the gate entirely.

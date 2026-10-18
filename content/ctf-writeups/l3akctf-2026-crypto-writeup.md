@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 Crypto Writeup: All 8 Cryptography Challenges"
 slug: "l3akctf-2026-crypto-writeup"
-description: "Full L3akCTF 2026 cryptography writeup covering all eight crypto challenges: recovering LCG parameters from three leaked states to predict an XOR key (BabyLCG); factoring an RSA modulus whose primes sit just below 2^607 and 2^521 (RSA Eclipse); an Oil-and-Vinegar system that becomes linear once the vinegar variables are fixed (Immiscible); reordering shuffled MT19937 outputs via untempering plus graph color refinement to clone the generator (po1337nomial-revenge); a garbled Bloom filter broken with identity-point oblivious transfer, Shamir interpolation, and a hybrid-filter reconstruction (CSC265); a Newton-fractal ECB byte-at-a-time oracle defeated by palette normalization (Isaac's Kaleidoscope); forcing a Sophie Germain / safe-prime relation to factor with Fermat and a GCD, synthesized through lattice reduction (A Fine Product); and a Groth16 proof forgery against a weakened CRS where delta = lambda * gamma (1+1=3)."
+description: "L3akCTF 2026 Crypto writeup: covering 8 cryptography challenges."
 date: 2026-08-06T22:00:00Z
 lastmod: 2026-08-06T22:00:00Z
 draft: false
@@ -59,7 +59,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-crypto-writeup.png"
-  alt: "L3akCTF 2026 cryptography writeup covering all eight crypto challenges — BabyLCG recovers LCG multiplier and increment from three leaked states to predict the fourth state used as an XOR key, RSA Eclipse factors a modulus whose primes sit just below 2^607 and 2^521 by reading small offsets out of A times B minus N, Immiscible turns an Oil-and-Vinegar public key linear by fixing the four vinegar variables and brute forcing 79^4 assignments, po1337nomial-revenge untempers shuffled MT19937 outputs and reorders them via graph color refinement on the twist recurrence to clone the generator and predict randbytes, CSC265 breaks a garbled Bloom filter with identity-point oblivious transfer and Shamir interpolation then reconstructs a hybrid filter from public and corrected rows, Isaac's Kaleidoscope defeats a Newton-fractal ECB byte-at-a-time oracle by normalizing away the random palette, A Fine Product forces a Sophie Germain safe-prime relation via lattice-synthesized affine composition and factors with Fermat and a GCD, and 1+1=3 forges a Groth16 proof against a weakened common reference string where delta equals lambda times gamma using baby-step giant-step and a zero-randomness Krs correction"
+  alt: "Dark grid cover card for L3akCTF 2026 Crypto, with large high-contrast title lettering."
 ---
 
 L3akCTF 2026's cryptography track was a full tour of the discipline: two beginner warm-ups, a multivariate-crypto puzzle, a Mersenne-Twister reconstruction, a protocol challenge that stitched together oblivious transfer and Shamir secret sharing, an image-oracle side channel, a lattice-plus-number-theory monster, and a zero-knowledge proof forgery. Eight challenges, and every one of them rewards the same instinct — **find the structure the designer left in the "random," then let algebra do the rest.**

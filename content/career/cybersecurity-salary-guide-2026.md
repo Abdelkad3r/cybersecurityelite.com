@@ -1,7 +1,7 @@
 ---
 title: "Cybersecurity Salary in 2026: Pay by Role, Experience, and Location"
 slug: "cybersecurity-salary"
-description: "See what cybersecurity professionals earn in the U.S., including the latest BLS salary benchmarks, pay by industry and location, and practical negotiation advice."
+description: "U.S. cybersecurity salary information by role, experience, industry, and location, with practical pay-negotiation guidance."
 date: 2026-10-18T00:00:00Z
 lastmod: 2026-10-18T00:00:00Z
 draft: false
@@ -25,7 +25,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/cybersecurity-salary-guide-2026.png"
-  alt: "Cybersecurity salary 2026 guide comparing pay by role, experience, industry, and location"
+  alt: "Dark grid cover card for Cybersecurity Salary in 2026, with large high-contrast title lettering."
 ---
 
 ## Cybersecurity salary: the short answer

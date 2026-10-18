@@ -1,7 +1,7 @@
 ---
 title: "Windows LAPS Implementation: Step-by-Step Enterprise Guide (2026)"
 slug: "windows-laps-implementation"
-description: "End local-admin password reuse — the single fix that breaks pass-the-hash propagation. 8-step Windows LAPS rollout: schema, encryption, tiered RBAC, DSRM."
+description: "A Windows LAPS rollout guide covering schema preparation, password encryption, role-based access, and DSRM account management."
 date: 2026-05-20T11:00:00Z
 lastmod: 2026-05-20T11:00:00Z
 draft: false
@@ -34,7 +34,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/windows-laps-implementation.png"
-  alt: "Windows LAPS implementation — step-by-step enterprise deployment guide"
+  alt: "Dark grid cover card for Windows LAPS Implementation, with large high-contrast title lettering."
 ---
 
 If an attacker compromises a single endpoint in your environment and finds a reused local Administrator password, they own every other workstation that shares it. That single misconfiguration is how a phishing click on one helpdesk laptop becomes a 4,000-endpoint ransomware incident — and it's exactly what **Windows LAPS** (Local Administrator Password Solution) was built to prevent. This is the complete step-by-step **Windows LAPS implementation guide** for enterprise environments in 2026: AD schema preparation, KDS root key generation, encrypted password storage, Group Policy reference, PowerShell administration, and the full DSRM password backup workflow for Domain Controllers.

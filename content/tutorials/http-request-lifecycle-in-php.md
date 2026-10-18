@@ -29,7 +29,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/http-request-lifecycle-in-php.png"
-  alt: "The HTTP Request Lifecycle in PHP — from TCP socket through Apache or Nginx and PHP-FPM into the $_SERVER superglobal"
+  alt: "Dark grid cover card for The HTTP Request Lifecycle in PHP, with large high-contrast title lettering."
 ---
 
 The previous article in this series treated `$_SERVER['HTTP_HOST']` and friends as "attacker-controlled territory" and moved on. That's the right operational answer, but it hides an interesting question: *how* does a request actually reach your PHP handler in the first place, and which layer decides that `Host: attacker.com` becomes `$_SERVER['HTTP_HOST'] = "attacker.com"` in your process?

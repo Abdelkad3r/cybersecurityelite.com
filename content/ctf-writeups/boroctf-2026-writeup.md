@@ -1,7 +1,7 @@
 ---
 title: "boroCTF 2026 Writeup: 8 Challenges Solved Across Reverse, Web, and Forensics"
 slug: "boroctf-2026-writeup"
-description: "boroCTF 2026 full writeup — 5 reverse, 2 web, 1 forensics. XOR-7 ELFs, AHK hotstrings, LCG + marshal puzzle, PDF object streams, ImageTragick MVG label:@, and ext4 block slack."
+description: "boroCTF 2026 writeup with step-by-step solutions for eight challenges."
 date: 2026-06-25T22:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -41,7 +41,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/boroctf-2026-writeup.png"
-  alt: "boroCTF 2026 writeup — 8 challenges solved across reverse, web, and forensics"
+  alt: "Dark grid cover card for boroCTF 2026, with large high-contrast title lettering."
 ---
 
 **boroCTF 2026**, a Jeopardy-style CTF with a tight, opinionated challenge set. This writeup covers eight challenges from the 2026 edition across reverse engineering, web exploitation, and forensics. The reverse track here is the heaviest at five challenges (a stripped XOR-7 ELF, an AutoHotkey hotstring keylogger, a Python LCG + `marshal.loads` puzzle, a tiny PDF object-stream stash, and a custom DSL whose interpreter has to be reverse-engineered from probing). The web track has two themed challenges (a Steins;Gate-flavoured IDOR and a Chainsaw Man-themed ImageTragick lab). The forensics track is one ext4 image whose flag hides in block slack.

@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Leftover Leftovers: One-Byte JVM AOT Cache Patch"
 slug: "gpn-ctf-2026-leftover-leftovers"
-description: "GPN CTF 2026 Reverse: flip iconst_0 to iconst_1 inside the JVM AOT cache to bypass a homemade verifyStuff hash check. verifyStuff hashes class structure, not bytecode."
+description: "GPN CTF 2026 Leftover Leftovers writeup: a one-byte JVM AOT cache patch bypasses the challenge’s structural hash check."
 date: 2026-06-07T18:45:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -28,7 +28,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-leftover-leftovers.png"
-  alt: "GPN CTF 2026 Leftover Leftovers writeup — one-byte iconst_0 → iconst_1 patch inside the JVM AOT cache bypasses a verifyStuff hash check"
+  alt: "Dark grid cover card for GPN CTF 2026 — Leftover Leftovers, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Reverse — JVM AOT cache, Javalin, JEP 295 CDS archive" skills="reading a JVM AOT cache's ConstMethodView blob, locating a per-method bytecode body inside a 51 MB CDS archive, identifying that the upload validator hashes class structure not bytecode bytes, patching one byte (iconst_0 → iconst_1) to flip a verifier's return, then chaining the original leftovers exploit on Stage 2" >}}

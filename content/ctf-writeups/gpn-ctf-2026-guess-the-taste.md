@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Guess the Taste: NTRU Missing mod q (Unintended)"
 slug: "gpn-ctf-2026-guess-the-taste"
-description: "GPN CTF 2026 Crypto: the NTRU ciphertext is never reduced modulo q. c mod p == m drops out for free. Two lines of Python recover the message; the intended BKZ-50 lattice attack also works."
+description: "GPN CTF 2026 Guess the Taste writeup: a missing reduction modulo q makes the NTRU message recoverable."
 date: 2026-06-07T18:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -28,7 +28,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-guess-the-taste.png"
-  alt: "GPN CTF 2026 Guess the Taste writeup — NTRU missing mod q reduction, c mod p == m unintended solve"
+  alt: "Dark grid cover card for GPN CTF 2026 — Guess the Taste, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Crypto — labelled Hard, solved as Easy" os="Crypto — NTRU encryption, ternary plaintext, mod q reduction bug" skills="observing the protocol output to spot c values exceeding the q=512 bound, recognising p · r · h ≡ 0 (mod p) lets c mod p leak the plaintext directly, building the standard NTRU lattice basis for the intended BKZ-50 attack, verifying both paths recover the same flag" >}}

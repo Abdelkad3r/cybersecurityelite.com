@@ -34,7 +34,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/ejpt-vs-pnpt.png"
-  alt: "A side-by-side comparison of the eJPT junior penetration tester certification from INE Security and the Practical Network Penetration Tester PNPT certification from TCM Security, contrasting the eJPT beginner practical lab exam with dynamic multiple-choice questions and no written report against the intermediate PNPT five-day network compromise plus professional report and live debrief with an emphasis on OSINT external attack phishing and internal Active Directory exploitation and pivoting, to help decide which entry level pentest certification to take first"
+  alt: "Dark grid cover card for eJPT vs PNPT (2026), with large high-contrast title lettering."
 ---
 
 **eJPT vs PNPT** — the two certifications most people weigh when they want their first *practical* penetration testing credential rather than another multiple-choice knowledge exam. Here is the short verdict up front so you can stop scrolling if that is all you need: **take the eJPT first** to build confidence and fundamentals cheaply with no report to worry about, then **level up to the PNPT** for real Active Directory work, a professional report, and a live debrief that actually moves a resume. Both come from respected vendors, both are fully hands-on, and they solve different problems at different stages. The rest of this guide explains exactly why, and when your situation might justify skipping straight to the PNPT.

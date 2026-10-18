@@ -12,7 +12,7 @@ keywords: ["owasp top 10 2021", "owasp top ten", "web application security risks
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "OWASP Top 10 2021 guide"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 The OWASP Top 10 isn't just a checklist — it's a snapshot of how real-world breaches happen. The 2021 revision reorganized the previous list around **root causes** rather than symptoms, which makes it a much better map for both developers and security engineers. This guide walks through each category with reproducible examples, fixes, and detections.

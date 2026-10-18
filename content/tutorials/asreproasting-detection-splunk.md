@@ -1,7 +1,7 @@
 ---
 title: "ASREProasting Detection in Splunk: Event 4768 Queries (2026)"
 slug: "asreproasting-detection-splunk"
-description: "Catch ASREProasting attacks before privilege escalation. Build Splunk detections for Event 4768, AS-REQ failures, no preauth accounts, and anomaly patterns."
+description: "Build and validate Splunk searches for AS-REP Roasting indicators in Windows Event 4768 data, including accounts without Kerberos pre-authentication."
 date: 2026-06-04T11:39:46Z
 lastmod: 2026-06-04T11:39:46Z
 draft: false
@@ -32,7 +32,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/asreproasting-detection-splunk.png"
-  alt: "ASREProasting detection in Splunk — Event 4768 monitoring and dashboards"
+  alt: "Dark grid cover card for ASREProasting Detection in Splunk, with large high-contrast title lettering."
 ---
 
 AS-REP Roasting targets Active Directory accounts configured to **not require Kerberos pre-authentication**. A requester can obtain an AS-REP for such an account without first proving knowledge of its password; the response can then be tested offline. This guide shows how to identify the relevant Event 4768 records in Splunk and how to validate detections against the fields your Windows event collection actually provides.

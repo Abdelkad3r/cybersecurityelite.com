@@ -1,7 +1,7 @@
 ---
 title: "Wireshark Network Analysis for Beginners (And Intermediate Users)"
 slug: "wireshark-network-analysis-for-beginners"
-description: "Catch attackers in a packet capture using Wireshark — the display filters that matter, TLS decryption setup, and the analysis workflow real analysts use."
+description: "A Wireshark guide to display filters, packet-capture analysis, and TLS decryption setup for authorized investigations."
 date: 2026-04-02T11:00:00Z
 lastmod: 2026-04-02T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["wireshark tutorial", "wireshark filters", "pcap analysis"]
 toc: true
 cover:
   image: "/images/articles/wireshark-network-analysis-for-beginners.png"
-  alt: "Wireshark network analysis tutorial — packet capture and display filters"
+  alt: "Dark grid cover card for Wireshark Network Analysis for Beginners (And Intermediate Users), with large high-contrast title lettering."
 ---
 
 Wireshark is the most powerful free network tool ever made — and arguably the most underused. Most users live in the first 20% of its features. This tutorial pushes you into the productive middle 60%.

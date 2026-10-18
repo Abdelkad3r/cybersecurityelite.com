@@ -54,7 +54,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/sctf-2026-writeup.png"
-  alt: "SCTF 2026 writeup — TWAP oracle ring-buffer eviction and Groth16 Poseidon-Merkle witness solve"
+  alt: "Dark grid cover card for SCTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="SCTF 2026" difficulty="Hard (DeFi + ZK specialty track)" os="Jeopardy — Blockchain / DeFi, ZK, Misc" skills="reading UniswapV2 fork + EIP-7540 async vault + custom TWAP oracle in Foundry/Anvil, spotting that _consult anchors on observations outside the window, evicting the deploy-time observation by spamming the 8-slot ring buffer, composing a four-puzzle Groth16 claim bundle (Franklin–Reiter cube-root, secp256k1 small-x brute, 40-bit truncated keccak collision, Fermat factoring), generating a Poseidon-Merkle witness with domain-separated tag-1..6 calls in circomlibjs and submitting via snarkjs Groth16 fullprove" >}}

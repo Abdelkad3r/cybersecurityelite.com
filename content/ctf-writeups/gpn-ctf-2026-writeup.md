@@ -60,7 +60,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-writeup.png"
-  alt: "GPN CTF 2026 writeup — 19 challenges solved across reverse, crypto, web, pwn, and misc"
+  alt: "Dark grid cover card for GPN CTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Reverse, Crypto, Web, Pwn, Misc" skills="AVX2 lane-swap miscompilation discovery + Kannan-embedding SIS lattice attack, NTRU mod-q reduction bug (c mod p == m), ECDSA nonce reuse from MD5(uuid3) collisions via fastcoll, eBPF signed-comparison verifier bypass with patched bzImage, JVM AOT cache override of bytecode, PHP 7.4 PHAR deserialization across two TCP races, Pydantic ForwardRef eval in create_model, CSS attribute-selector cookie exfiltration through Link: rel=stylesheet, holpy proof-checker thm re-axiomatization, knitout front/back-bed bitmap, ternary amplitude-modulated UART, Hamiltonian path on 250-node FSM extracted from jump tables, RFC 5424 syslog stream demux, Rust setuid TOCTOU symlink swap" >}}

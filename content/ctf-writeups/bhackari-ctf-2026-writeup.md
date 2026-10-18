@@ -1,7 +1,7 @@
 ---
 title: "BhAcKAri CTF 2026 Writeup: All 8 Challenges Solved"
 slug: "bhackari-ctf-2026-writeup"
-description: "BhAcKAri CTF 2026 full writeup — all 8 challenges solved across web, misc, crypto, and reverse with detailed methodology and end-to-end exploit chains."
+description: "BhAcKAri CTF 2026 writeup covering web, misc, crypto, and reverse challenges, with methodology and exploit walkthroughs."
 date: 2026-06-02T08:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -53,7 +53,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bhackari-ctf-2026-writeup.png"
-  alt: "BhAcKAri CTF 2026 writeup — all 8 challenges across web, misc, crypto, and reverse engineering"
+  alt: "Dark grid cover card for BhAcKAri CTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="BhAcKAri CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Web, Misc, Crypto, Reverse (Italian event)" skills="JavaScript deobfuscation + AES-256-CBC cookie C2 + sed shell-glob bypass, lighttpd HTTP CONNECT tunneling past url.access-deny, patched d8 V8 sandbox eval escape via shop-trusted credits, seed-keyed LSB steganography with shuffle order, Minecraft 1.21.10 .mcfunction Vigenère with floor-mod, Coppersmith partial-prime small-roots via Howgrave-Graham lattice, deterministic Python C-extension stage chain with SHA-256/CRC32 key derivation, manual Windows PE loader with 4-byte patches into 7-Zip's GetHandlerProperty2" >}}

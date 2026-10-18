@@ -1,7 +1,7 @@
 ---
 title: "Hackastra CTF 2026 Writeup: All 15 Challenges"
 slug: "hackastra-ctf-2026-writeup"
-description: "Hackastra CTF 2026 full writeup — reverse, web, crypto, misc and forensics. All 15 challenges solved with methodology, exploit code, and the lessons learned."
+description: "Hackastra CTF 2026 writeup covering reverse engineering, web, cryptography, misc, and forensics challenges with solution methods and exploit examples."
 date: 2026-05-30T10:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -42,7 +42,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/hackastra-ctf-2026-writeup.png"
-  alt: "Hackastra CTF 2026 writeup — all 15 challenges across reverse, web, crypto, misc and forensics"
+  alt: "Dark grid cover card for Hackastra CTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="Hackastra CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Web, Crypto, Reverse, Misc, Forensics)" skills="JWT, RS256/HS256 confusion, DSA known-nonce, Coppersmith, Feistel inversion, ARM64/x86_64 RE, WASM RE, AWS Cognito, blind SQLi, XSS, LSB stego" >}}

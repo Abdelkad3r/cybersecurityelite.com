@@ -1,7 +1,7 @@
 ---
 title: "Anti-Slop CTF 2026 Crypto Writeup: Polynomial Drift + Sealed Signal"
 slug: "anti-slopctf-2026-crypto-writeup"
-description: "Step-by-step crypto writeups for Anti-Slop CTF 2026. Polynomial Drift: 24-bit ECDSA nonce leak solved as a CVP lattice. Sealed Signal: CBC-MAC splice past a domain header."
+description: "Anti-Slop CTF 2026 Crypto writeup: Polynomial Drift + Sealed Signal."
 date: 2026-06-22T21:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -34,7 +34,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/anti-slopctf-2026-crypto-writeup.png"
-  alt: "Anti-Slop CTF 2026 crypto writeup — Polynomial Drift CVP-based ECDSA recovery and Sealed Signal CBC-MAC splice"
+  alt: "Dark grid cover card for Anti-Slop CTF 2026 Crypto, with large high-contrast title lettering."
 ---
 
 **Anti-Slop CTF 2026**'s cryptography track featured two challenges: **Polynomial Drift**, where a Rust signing service leaks the low 24 bits of each ECDSA nonce through a VM preview byte, solved as a Hidden Number Problem CVP lattice with `fpylll` over 11 signatures; and **Sealed Signal**, where a chosen-message CBC-MAC oracle for cache capsules shares a key with the resume-capsule MAC, broken by XOR-cancelling the fixed 16-byte domain header to splice a valid MAC onto a forbidden `role=root` resume capsule. This is the fourth post in the **Anti-Slop CTF 2026** series; the [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered HTTP parsers, the [reverse writeup](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) covered a quadratic ECDSA nonce and a SHA-256 length extension, and the [pwn writeup](/ctf-writeups/anti-slopctf-2026-pwn-writeup/) covered a Bellcore CRT fault, a leak-then-overwrite, and a five-stage GCM forge chain.

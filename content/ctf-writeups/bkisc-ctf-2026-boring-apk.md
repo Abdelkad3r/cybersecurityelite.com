@@ -13,7 +13,7 @@ keywords: ["bkisc ctf 2026 boring apk writeup", "android apk reverse engineering
 toc: true
 cover:
   image: "/images/articles/bkisc-ctf-2026-boring-apk.png"
-  alt: "BKISC 2026 BORING APK writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for BKISC 2026 Boring APK, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="BKISC CTF 2026" difficulty="Hard" points="250" os="Android (arm64-v8a)" skills="APK extraction, AES-GCM, ELF patching, qemu-aarch64, NDK basic_string, meet-in-the-middle" >}}

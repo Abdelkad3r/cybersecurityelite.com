@@ -27,7 +27,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/learn-php-before-advanced-web-hacking.png"
-  alt: "PHP and Web Security Tutorial Series — learning path for cybersecurity professionals"
+  alt: "Dark grid cover card for Why Every Cybersecurity Professional Should Learn PHP Before Advanced Web Hacking, with large high-contrast title lettering."
 ---
 
 Most of the WordPress, Joomla, and plugin bugs that hit my inbox last year had the same root cause: somebody wrote PHP without understanding how PHP handles types, sessions, or file paths. If you can't read the buggy code, you can't write a working exploit. And you definitely can't tell the customer how to patch it.

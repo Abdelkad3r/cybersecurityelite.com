@@ -1,7 +1,7 @@
 ---
 title: "HASBLCTF 2026 Reverse Engineering: All 4 Challenges Solved"
 slug: "hasblctf-2026-reverse-engineering-writeup"
-description: "HASBLCTF 2026 reverse engineering writeup — all 4 rev challenges solved: Go binary triage, anti-debug bypass, custom protocol, game-logic RE."
+description: "HASBLCTF 2026 reverse-engineering writeup covering Go binary triage, anti-debugging, a custom protocol, and game logic."
 date: 2026-06-01T03:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -41,7 +41,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/hasblctf-2026-reverse-engineering-writeup.png"
-  alt: "HASBLCTF 2026 reverse engineering writeup — all 4 rev challenges (baby-go, DebugMe, Pr0t0c0l1337, PamukTheCat)"
+  alt: "Dark grid cover card for HASBLCTF 2026 Reverse Engineering, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Reverse Engineering" skills="Go binary triage, static-only flag recovery, PE anti-debug bypass (PEB.BeingDebugged, x64dbg process scan, NtCreateThreadEx), custom binary protocol parsing, game-logic reverse engineering" >}}

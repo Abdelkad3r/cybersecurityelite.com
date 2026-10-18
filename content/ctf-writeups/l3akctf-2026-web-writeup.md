@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 Web Writeup: All 12 Web Exploitation Challenges"
 slug: "l3akctf-2026-web-writeup"
-description: "Full L3akCTF 2026 web exploitation writeup covering all twelve web challenges: session parameter tampering into a wrong-column SQL query (catvault-1); an Express methodOverride-before-body-parse plus CSRF-on-POST-only chain driven by an admin bot (Get The Flag); React2Shell (CVE-2025-55182) RCE against Next.js 16 (Platform Protection 0) and its UTF-16LE per-part charset filter bypass (Part 1); NFKC-slug and js-yaml-vs-PyYAML merge-key parser differentials (Zebda); a SQLite byte oracle plus a window.length frame-count XS-leak (Side Channel Surfer); a svg-hush CSS injection with an image-set() exfil bypass (SVG); a workerd V8 RegExp lastIndex write-barrier isolate escape (Workerboard 1 and 2); a path-traversal plus coordinate-mask one-byte /proc/self/mem patch on a Rust canvas server (L3aky Canvas); a four-bug json/ujson and urlparse/requests differential chain ending in a procfs stat/open TOCTOU race (Squid); and a Traefik %2f auth bypass plus MLflow prompt-source relative-path traversal (ml-platform)."
+description: "L3akCTF 2026 Web writeup with step-by-step solutions for twelve challenges."
 date: 2026-08-06T20:00:00Z
 lastmod: 2026-08-06T20:00:00Z
 draft: false
@@ -59,7 +59,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-web-writeup.png"
-  alt: "L3akCTF 2026 web exploitation writeup covering all twelve web challenges — catvault-1 tampers a session parameter into a wrong-column SQL query, Get The Flag chains an Express methodOverride-before-body-parse bug with a CSRF-on-POST-only guard driven by an admin bot, Platform Protection 0 lands React2Shell CVE-2025-55182 RCE on Next.js 16 and Part 1 bypasses its request filter with a UTF-16LE per-part charset, Zebda exploits NFKC-slug and js-yaml-versus-PyYAML merge-key parser differentials, Side Channel Surfer combines a SQLite byte oracle with a window.length frame-count XS-leak, SVG turns a svg-hush CSS injection and an image-set exfil bypass into a credential oracle, Workerboard 1 and 2 escape a workerd V8 isolate via a RegExp lastIndex write-barrier bug, L3aky Canvas uses path traversal and a coordinate-mask bug for a one-byte /proc/self/mem patch, Squid chains four parser and race bugs into a procfs stat-open TOCTOU, and ml-platform bypasses Traefik auth with an encoded slash before an MLflow prompt-source relative-path traversal"
+  alt: "Dark grid cover card for L3akCTF 2026 Web, with large high-contrast title lettering."
 ---
 
 Web was the deepest track at L3akCTF 2026 — twelve challenges spanning a three-request SQL-tampering warm-up all the way to two full V8 isolate escapes and a zero-day-flavored framework RCE. If pwn was about corrupting metadata and crypto about finding structure in randomness, **web's recurring theme is disagreement**: two components look at the same bytes — a URL, a slug, a YAML document, a multipart field, an encoded slash — and reach different conclusions. Almost every hard challenge here is a *parser or normalization differential*, and the exploit lives in the gap.

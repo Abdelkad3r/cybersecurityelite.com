@@ -1,7 +1,7 @@
 ---
 title: "HASBLCTF 2026 Crypto Writeup: All 6 Challenges Solved"
 slug: "hasblctf-2026-crypto-writeup"
-description: "HASBLCTF 2026 crypto writeup — all 6 challenges solved: modular bijections, permutation undo, debug-leak shortcut, LFSR endianness, classic VIC cipher."
+description: "HASBLCTF 2026 crypto writeup covering modular bijections, permutations, debug leaks, LFSR endianness, and the VIC cipher."
 date: 2026-06-01T06:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -48,7 +48,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/hasblctf-2026-crypto-writeup.png"
-  alt: "HASBLCTF 2026 crypto writeup — all 6 challenges (baby-counting-fingers, baby-learns-obfuscation, baby-learns-walking, script-kiddie, head-team, VIC)"
+  alt: "Dark grid cover card for HASBLCTF 2026 Crypto, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Crypto (Python + C)" skills="Modular multiplicative bijections, modular-inverse tables, permutation reversal, debug-print leakage exploitation, Galois LFSR + htonl endianness pitfalls, classic VIC cipher (straddling checkerboard + chain-addition keystream + special-character word substitution)" >}}

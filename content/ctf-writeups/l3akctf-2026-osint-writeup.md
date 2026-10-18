@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 OSINT Writeup: Crossroads & Overgrown Ruins"
 slug: "l3akctf-2026-osint-writeup"
-description: "Full L3akCTF 2026 OSINT writeup covering both geolocation challenges: reading a road sign (TRAIL CR RD) and a realty phone number (208-588-2707) off a 360-degree panorama to pin an intersection on Trail Creek Road near Mackay, Idaho (Crossroads); and matching ivy-covered ruins with a lakeside car park and UK signage to Old Wardour Castle in Wiltshire — the Robin Hood: Prince of Thieves filming location (Overgrown Ruins). Both are solved by extracting text and landmark clues from the panorama, pivoting to public records and OpenStreetMap, and submitting coordinates to the challenge's JSON endpoint."
+description: "L3akCTF 2026 OSINT writeup: Crossroads & Overgrown Ruins."
 date: 2026-08-06T19:00:00Z
 lastmod: 2026-08-06T19:00:00Z
 draft: false
@@ -42,7 +42,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-osint-writeup.png"
-  alt: "L3akCTF 2026 OSINT writeup covering both geolocation challenges — Crossroads reads a green road sign reading TRAIL CR RD and a Trail Creek Realty sign with the phone number 208-588-2707 off a 360-degree panorama, uses the 208 area code and the phone number to identify Trail Creek Road near Mackay Idaho, and submits the accepted coordinate on OpenStreetMap; and Overgrown Ruins matches ivy-covered stone ruins with a surviving tower, a lakeside car park, an estate access road, and UK-style parking signage plus a 2020 Google Street View watermark to Old Wardour Castle in Wiltshire England, the filming location for Robin Hood Prince of Thieves, submitting its coordinate to the challenge JSON endpoint"
+  alt: "Dark grid cover card for L3akCTF 2026 OSINT, with large high-contrast title lettering."
 ---
 
 OSINT at L3akCTF 2026 was a two-challenge geolocation track built on the same self-hosted "geosint" engine — a 360° panorama, a Leaflet map, and a JSON endpoint that accepts a coordinate and hands back the flag if you're close enough. No metadata to scrape, no EXIF GPS: the whole game is **reading the scene, extracting a clue that anchors it to the real world, and pivoting through public records** until the map agrees with you.

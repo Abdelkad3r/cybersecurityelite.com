@@ -1,7 +1,7 @@
 ---
 title: "D3CTF 2026 PWN Writeup: d3kbus & d3kbus-revenge — Kernel Page-Cache Write via CRC32C Forgery"
 slug: "d3ctf-2026-pwn-writeup"
-description: "D3CTF 2026 PWN writeup for d3kbus and d3kbus-revenge: a custom Linux kernel module with a confused-ownership bug in its splice path commits a deferred CRC32C trailer into the backing page cache of an external file, giving any unprivileged user an aligned 4-byte page-cache write to any readable file — exploited by forging user_tag via meet-in-the-middle CRC32C solving to patch 16 dwords of /bin/busybox poweroff_main with a flag-reading shellcode stub, then triggering root to execute the patched binary."
+description: "D3CTF 2026 PWN writeup: d3kbus & d3kbus-revenge — Kernel Page-Cache Write via CRC32C Forgery."
 date: 2026-07-31T20:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -48,7 +48,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/d3ctf-2026-pwn-writeup.png"
-  alt: "D3CTF 2026 PWN writeup — two challenges solved covering d3kbus a Linux kernel module with confused ownership in its splice path that commits a deferred CRC32C trailer into the backing page cache of an external file giving unprivileged aligned 4-byte page-cache writes to any readable file, exploited by meet-in-the-middle CRC32C user_tag forgery to patch 16 dwords of /bin/busybox poweroff_main with a flag-reading shellcode stub then killing the parent shell to trigger root execution; and d3kbus-revenge which used the byte-for-byte identical module and exploit with the direct-IO flag-loading hardening providing zero protection against the BusyBox patch chain"
+  alt: "Dark grid cover card for D3CTF 2026 PWN, with large high-contrast title lettering."
 ---
 
 D3CTF 2026's PWN track delivered two challenges around the same Linux kernel module — `d3kbus.ko` — a fictional inter-process message bus exposed through a character device, and this **CyberSecurity Elite** writeup walks both end to end. A confused-ownership bug in the module's `sendfile()` splice path causes the driver to commit a deferred CRC32C trailer into the page cache of the source file rather than into driver-private memory. The result is an unprivileged aligned 4-byte write to any offset in any readable file's page cache. Turning this into a controlled write requires forging the attacker-visible `user_tag` field in the wire header so the CRC32C output equals the desired value — solvable in under 1 ms per iteration via a meet-in-the-middle attack that splits the 4-byte key space into two 2^16 halves. Sixteen iterations patch `poweroff_main` in `/bin/busybox` with a shellcode stub that opens and reads `/flag`. Killing the parent `ctf` shell causes root's init to call `/sbin/poweroff`, which executes the patched BusyBox stub as root, printing the flag. The second challenge, `d3kbus-revenge`, used a byte-for-byte identical module and required an identical exploit — the hardening (direct-I/O flag loading followed by a cache drop) addressed a page-cache read of `/flag` that the exploit never performed.

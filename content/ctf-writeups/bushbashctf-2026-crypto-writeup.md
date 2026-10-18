@@ -1,7 +1,7 @@
 ---
 title: "BushBashCTF 2026 Cryptography Writeup: Emoji Cipher, Repeating-Key XOR & AES-CBC Malleability"
 slug: "bushbashctf-2026-crypto-writeup"
-description: "BushBashCTF 2026 cryptography writeup covering all three challenges: xored (repeating-key XOR with known-plaintext recovery), Beat Around The Bush (emoji monoalphabetic substitution cipher decoded via frequency analysis and known-prefix crib), and strawberries (AES-CBC malleability attack that leaks plaintext via the server's own logging then flips the user ID block to PREMIUM_USER triggering the flag with a stdout flush bypass via socket shutdown)."
+description: "BushBashCTF 2026 Cryptography writeup: Emoji Cipher, Repeating-Key XOR & AES-CBC Malleability."
 date: 2026-08-02T16:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -43,7 +43,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bushbashctf-2026-crypto-writeup.png"
-  alt: "BushBashCTF 2026 cryptography writeup — three challenges solved covering xored a repeating-key XOR cipher broken by known-plaintext attack recovering the 8-byte key from the bushbash prefix; Beat Around The Bush a 27-symbol emoji monoalphabetic substitution cipher decoded by frequency analysis and a known-prefix crib; and strawberries an AES-CBC oracle service where the server echoes decrypted plaintext back to the client enabling a two-step CBC malleability attack that flips the user ID block to PREMIUM_USER making strawberry count exceed 2 to the 32 to trigger the flag display with a stdout flush bypass via socket SHUT_WR"
+  alt: "Dark grid cover card for BushBashCTF 2026 Cryptography, with large high-contrast title lettering."
 ---
 
 BushBashCTF 2026's crypto track presented three challenges spanning the classic end-to-end spectrum of cipher difficulty: `xored` (200 pts, 258 solves), a pure repeating-key XOR broken instantly with a known-prefix attack; `Beat Around The Bush` (200 pts, 164 solves), a creative emoji monoalphabetic substitution that requires careful Unicode tokenization and frequency analysis with a known-prefix crib to decode; and `strawberries` (228 pts, 176 solves), an AES-CBC interactive service containing a two-stage attack chain — a plaintext leak through the server's own debug logging followed by a bit-flip CBC malleability attack that elevates `normal_user` to `PREMIUM_USER` and drives `strawberry_count` past `2^32` to trigger the flag, with an additional subtlety: the `displayFlag()` call uses an unflushed `print()`, so the flag only appears after forcing a Python process exit via socket EOF.

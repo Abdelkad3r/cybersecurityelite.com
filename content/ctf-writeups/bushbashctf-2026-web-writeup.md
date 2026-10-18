@@ -1,7 +1,7 @@
 ---
 title: "BushBashCTF 2026 Web Writeup: Certificate Transparency Flag Leak & Next.js Middleware Bypass Recon"
 slug: "bushbashctf-2026-web-writeup"
-description: "BushBashCTF 2026 web writeup covering both challenges: Secret hidden website (a DNS-less hostname whose flag is exfiltrated through a SubjectAltName in a Certificate Transparency log, decoded via crt.sh with lbrac/rbrac brace stand-ins) and Old website (a Next.js App Router service where CVE-2025-29927 middleware bypass is the intended primitive — a full reconnaissance and attack-surface enumeration of an unresolved medium challenge)."
+description: "BushBashCTF 2026 Web writeup: Certificate Transparency Flag Leak & Next.js Middleware Bypass Recon."
 date: 2026-08-03T09:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -47,7 +47,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bushbashctf-2026-web-writeup.png"
-  alt: "BushBashCTF 2026 web writeup — two challenges covering Secret hidden website a DNS-less hostname that returns NXDOMAIN on every resolver whose flag is leaked through a Certificate Transparency log where a second SubjectAltName in the issued TLS certificate encodes bushbash lbrac h0w-d1d-y0u-f1nd-th1s rbrac as DNS labels decoded through crt.sh with lbrac meaning open brace and rbrac meaning close brace; and Old website a Next.js App Router service serving a single prerendered database-offline page where CVE-2025-29927 x-middleware-subrequest middleware bypass is the intended primitive documented through a full fingerprint attack-surface enumeration Host and SNI sweep and manifest analysis of an unresolved medium challenge"
+  alt: "Dark grid cover card for BushBashCTF 2026 Web, with large high-contrast title lettering."
 ---
 
 **BushBashCTF 2026**'s web track paired two medium challenges that never let you touch the application layer the "normal" way — the answer to both lives *outside* the HTTP response body. **Secret hidden website** (202 pts, 100 solves) advertises a real HTTPS URL that has no DNS record at all; the flag is exfiltrated through the one public side effect of requesting a TLS certificate — a **Certificate Transparency** log entry — where a second `SubjectAltName` spells the flag out in DNS labels. **Old website** (247 pts, 74 solves) is a Next.js App Router service that serves a single prerendered "database offline" page and points squarely at **CVE-2025-29927** (the `x-middleware-subrequest` middleware bypass); this half of the writeup is an honest, reproducible reconnaissance deep-dive of a challenge I did *not* land inside the CTF window, documenting the fingerprint, why every obvious attack fails, and exactly what remains to try.

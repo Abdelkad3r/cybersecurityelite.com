@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Customer Service: Three Bugs in a holpy Proof Checker"
 slug: "gpn-ctf-2026-customer-service"
-description: "GPN CTF 2026 Misc: list == 1 typo, every thm is re-axiomatized, win check matches false by name. Declare a homemade false constant, axiomatize it, ship a one-line proof."
+description: "GPN CTF 2026 Customer Service writeup: a proof-checker logic error accepts a one-line proof of a declared false statement."
 date: 2026-06-07T19:50:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -28,7 +28,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-customer-service.png"
-  alt: "GPN CTF 2026 Customer Service writeup — three bugs stacked in a holpy proof checker yield ex contradictione quodlibet"
+  alt: "Dark grid cover card for GPN CTF 2026 — Customer Service, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Misc — holpy proof checker, LCF-style higher-order logic" skills="reading 115 lines of checker glue around holpy's monitor, spotting list == 1 as a dead branch, recognising Theorem.get_extension always re-axiomatizes, exploiting concl.is_const('false') as a name comparison in an EmptyTheory scope, declaring a homemade false constant and proving it with a one-line theorem rule" >}}

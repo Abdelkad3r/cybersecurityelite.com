@@ -1,7 +1,7 @@
 ---
 title: "LYKNCTF 2026 Web Writeup: 10 Challenges Solved"
 slug: "lyknctf-2026-web-writeup"
-description: "Step-by-step LYKNCTF 2026 web-track writeup — ten challenges covering HTTP 302 body leaks, WebSocket race, nginx case-sensitivity bypass, AES-CBC padding oracle (CBC-R), 4-digit OTP brute + SQLi RCE + SUID csvtool, client-side API key leak, Flask debug source disclosure, JWT alg:none forge, PHP short-tag .php5 RCE, and SSRF into HMAC-invite forge into Jinja2 SSTI."
+description: "LYKNCTF 2026 Web writeup with step-by-step solutions for ten challenges."
 date: 2026-07-09T14:15:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -44,7 +44,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/lyknctf-2026-web-writeup.png"
-  alt: "LYKNCTF 2026 web writeup — ten web challenges solved covering padding oracle, JWT alg:none, SSRF+SSTI, PHP short-tag RCE, and Flask debug source disclosure"
+  alt: "Dark grid cover card for LYKNCTF 2026 Web, with large high-contrast title lettering."
 ---
 
 LYKNCTF 2026's ten-challenge web track, which collectively covered almost every category of modern web vulnerability: an HTTP-protocol trick that abuses the RFC-9110 allowance for bodies on 3xx redirects, a WebSocket race condition that only trips on pipelined frames, an nginx case-sensitivity `location` bypass into an autoindexed directory, a full AES-CBC padding oracle (CBC-R) against a signed session token with three distinguishable error classes, a four-digit OTP brute-force feeding a SQL-injection-to-RCE that reads a split flag via a SUID `csvtool` binary, a client-side leak of `window.API_KEY` combined with an OpenAPI-schema-discovered admin endpoint, a Flask `?debug=1` source-disclosure hook that leaks `app.secret_key` for a session forge, a textbook `alg:none` JWT bypass, a PHP short-tag `.php5` extension bypass through a Tesseract OCR pipeline, and a five-stage SSRF-into-internal-source-map-into-HMAC-invite-forge-into-Jinja2-SSTI chain.

@@ -1,7 +1,7 @@
 ---
 title: "KaliTeam CTF 2026 Reverse Engineering Writeup: Whispering Feather & Fault Cartography"
 slug: "kaliteam-ctf-2026-reverse-writeup"
-description: "KaliTeam CTF 2026 reverse engineering writeup for Whispering Feather (stripped AArch64 ELF with a seal VM that emits a constant composite response seeded from .rodata, solved with Unicorn emulation after mapping the PT_LOAD segment at its correct virtual base) and Fault Cartography (x86-64 PIE binary that dispatches SIGILL/SIGFPE/SIGSEGV as six bijective ALU operations over a 104-step route whose target state is a compile-time constant, solved by algebraic inversion)."
+description: "KaliTeam CTF 2026 Reverse Engineering writeup: Whispering Feather & Fault Cartography."
 date: 2026-08-09T16:00:00Z
 lastmod: 2026-08-09T16:00:00Z
 draft: false
@@ -46,7 +46,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/kaliteam-ctf-2026-reverse-writeup.png"
-  alt: "KaliTeam CTF 2026 reverse engineering writeup — two challenges solved covering Whispering Feather a stripped static AArch64 ELF whose embedded seal VM generates a constant composite response seeded entirely from .rodata constants and Fault Cartography a x86-64 PIE binary dispatching SIGILL SIGFPE SIGSEGV as bijective ALU operations across a 104-step fixed route solved by algebraic inversion"
+  alt: "Dark grid cover card for KaliTeam CTF 2026 Reverse Engineering, with large high-contrast title lettering."
 ---
 
 KaliTeam CTF 2026 shipped two reverse engineering challenges that pull in opposite directions: **Whispering Feather** (by 0xK1L) is an AArch64 binary whose complexity is architectural — a stripped static ELF housing an embedded "seal" virtual machine that must be coaxed into producing its output through emulation rather than static reading — while **Fault Cartography** (by S1l3nt) is an x86-64 obfuscation puzzle that abuses Linux signal delivery as a branching mechanism, turning hardware exception signals (SIGILL, SIGFPE, SIGSEGV) into a fully functional six-operation ALU. Both challenges yielded to careful static analysis followed by a short Python script; neither required bruteforce or symbolic execution. This writeup walks through each challenge from first look to flag, with every key decision explained.

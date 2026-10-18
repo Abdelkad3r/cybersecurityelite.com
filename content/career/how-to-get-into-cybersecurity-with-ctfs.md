@@ -1,7 +1,7 @@
 ---
 title: "How to Get Into Cybersecurity With CTFs: A Hands-On Beginner Roadmap (2026)"
 slug: "how-to-get-into-cybersecurity-with-ctfs"
-description: "A beginner roadmap for how to get into cybersecurity by actually doing it — using CTFs and hands-on labs as the learning engine. The foundations to build first, a staged path from PicoCTF and TryHackMe beginner rooms to real competitions, a category map (web, crypto, pwn, reverse, forensics, OSINT) with worked examples, and how to turn practice into a portfolio that gets interviews."
+description: "A beginner roadmap to cybersecurity that uses CTFs and hands-on labs to build practical skills."
 date: 2026-08-04T00:00:00Z
 lastmod: 2026-08-04T00:00:00Z
 draft: false
@@ -39,7 +39,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/how-to-get-into-cybersecurity-with-ctfs.png"
-  alt: "How to get into cybersecurity with CTFs — a hands-on beginner roadmap showing the learning engine of capture-the-flag practice: first build five foundations (Linux command line, networking and TCP/IP, a scripting language such as Python or Bash, how the web works with HTTP, and basic operating-system internals), then progress through four stages from absolute-beginner platforms like PicoCTF and TryHackMe beginner rooms, to structured skill paths on Hack The Box Academy, to rooting real machines on Hack The Box, to competing in live jeopardy CTF events, while mapping the six core categories of web exploitation, cryptography, binary exploitation or pwn, reverse engineering, forensics, and OSINT to worked writeup examples, and turning every solve into a public writeup that becomes an interview-winning portfolio"
+  alt: "Dark grid cover card for How to Get Into Cybersecurity With CTFs, with large high-contrast title lettering."
 ---
 
 The fastest way to **get into cybersecurity** is by *doing* it — starting with Capture The Flag competitions rather than courses. Most people start by buying a course, watching forty hours of video, and still freezing the first time a blank terminal asks them to hack something. The fix is **Capture The Flag (CTF)** challenges and hands-on labs: gamified, legal, safe targets that force you to *apply* knowledge instead of just collecting it. This guide is the learning engine — the foundations to build first, a staged path from your very first flag to live competitions, and how to turn every solve into a portfolio that gets you interviews. (For the résumé-and-hiring side of the journey, pair this with our [honest 2026 guide to breaking into cybersecurity](/career/breaking-into-cybersecurity-2026/).)

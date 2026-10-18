@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Organized: Ternary Amplitude-Modulated UART in Popcount Density"
 slug: "gpn-ctf-2026-organized"
-description: "GPN CTF 2026 Misc: 7.65 MB of apparent noise carries a ternary-amplitude UART signal. Per-12,500-byte window popcount density is the carrier; demodulate to 49 frames of ASCII."
+description: "GPN CTF 2026 Organized writeup: extracting a ternary-amplitude UART signal from a noisy audio file."
 date: 2026-06-07T19:45:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -28,7 +28,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-organized.png"
-  alt: "GPN CTF 2026 Organized writeup — ternary amplitude-modulated UART hidden in per-12,500-byte window popcount density"
+  alt: "Dark grid cover card for GPN CTF 2026 — Organized, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium" os="Misc — signal recovery from high-entropy file, ternary amplitude modulation" skills="rejecting the 'random noise' default hypothesis, computing per-window popcount means and run-lengths, plotting a 200-bin histogram to spot three peaks instead of two, recognising the structure as UART (start bit, 8 data bits LSB-first, stop bit) framed by a mid-amplitude idle marker, decoding 49 frames to ASCII" >}}

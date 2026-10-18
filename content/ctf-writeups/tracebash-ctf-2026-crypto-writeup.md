@@ -1,7 +1,7 @@
 ---
 title: "TraceBash CTF 2026 Crypto Writeup: 4 Challenges Solved"
 slug: "tracebash-ctf-2026-crypto-writeup"
-description: "TraceBash CTF 2026 crypto track writeup — DH small-subgroup attack, audio-derived XOR key, shared 512-bit prime RSA, and an exhaustive 16-bit state-machine cipher recovery."
+description: "TraceBash CTF 2026 Crypto writeup with step-by-step solutions for four challenges."
 date: 2026-06-27T11:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -36,7 +36,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/tracebash-ctf-2026-crypto-writeup.png"
-  alt: "TraceBash CTF 2026 crypto writeup — small-subgroup DH, harmonic XOR key, shared RSA prime, and stream-cipher seed brute"
+  alt: "Dark grid cover card for TraceBash CTF 2026 Crypto, with large high-contrast title lettering."
 ---
 
 TraceBash CTF 2026's crypto track presents four challenges — three at 100 points and one at 440 points — in a clean, well-curated Jeopardy-style competition. This writeup covers all four step-by-step.

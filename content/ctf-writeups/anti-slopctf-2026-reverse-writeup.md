@@ -1,7 +1,7 @@
 ---
 title: "Anti-Slop CTF 2026 Reverse Writeup: Audit Spiral + Parallax Cartridge"
 slug: "anti-slopctf-2026-reverse-writeup"
-description: "Step-by-step reverse writeups for Anti-Slop CTF 2026. Audit Spiral: quadratic ECDSA nonce. Parallax Cartridge: audit/runner split + SHA-256 length extension on the resume token."
+description: "Anti-Slop CTF 2026 Reverse writeup: Audit Spiral + Parallax Cartridge."
 date: 2026-06-22T18:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -35,7 +35,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/anti-slopctf-2026-reverse-writeup.png"
-  alt: "Anti-Slop CTF 2026 reverse writeup — Audit Spiral quadratic ECDSA nonce and Parallax Cartridge length-extension exploit"
+  alt: "Dark grid cover card for Anti-Slop CTF 2026 Reverse, with large high-contrast title lettering."
 ---
 
 **Anti-Slop CTF 2026**'s reverse engineering track featured two challenges: **Audit Spiral**, where a secp256k1 signing VM generates ECDSA nonces as a quadratic polynomial in the signing index (`k_i = c0 + c1·i + c2·i²`), recovered by solving a 4×4 linear system mod the group order with four signatures; and **Parallax Cartridge**, where a `quiet` record byte shifts the cartridge runner's final program index into a hidden dictionary bank the audit step never checks, combined with a `SHA256(secret || body)` prefix MAC on the resume token that is vulnerable to SHA-256 length extension. This is the second post in the Anti-Slop CTF 2026 series; the [web writeup](/ctf-writeups/anti-slopctf-2026-web-writeup/) covered the two challenges that lived in HTTP parsers.

@@ -31,7 +31,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-justfollowtherecipe.png"
-  alt: "GPN CTF 2026 Justfollowtherecipe writeup — gcc -O3 -mavx2 lane swap and Kannan-embedding BKZ-58 SIS lattice attack"
+  alt: "Dark grid cover card for GPN CTF 2026 — Justfollowtherecipe, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Hard" os="Crypto — SIS hash, Kannan embedding, BKZ lattice reduction" skills="reading AVX2 disassembly to identify vpermd lane interchange, repairing the per-batch lane swap in oracle output, building a q-ary kernel lattice with Kannan embedding, fpylll BKZ-58 with default.json preprocessing+pruning strategies, fpylll heartbeat to keep the SSL proxy alive" >}}

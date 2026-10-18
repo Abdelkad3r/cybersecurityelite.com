@@ -1,7 +1,7 @@
 ---
 title: "Memory Forensics with Volatility 3: A Hands-On Tutorial"
 slug: "memory-forensics-with-volatility-3"
-description: "Catch process injection, dump credentials, find rootkits in a memory image — Volatility 3 workflows that work on real Windows and Linux dumps."
+description: "Volatility 3 workflows for examining Windows and Linux memory images, including process injection, credential artifacts, and rootkit indicators."
 date: 2026-04-08T10:00:00Z
 lastmod: 2026-04-08T10:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["volatility 3 tutorial", "memory forensics", "windows memory analysis
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "Volatility 3 memory forensics tutorial"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 Memory forensics catches what disk forensics misses — running malware, in-RAM credentials, injected processes, and rootkit hooks. Volatility 3 modernized the framework with Python 3, symbol-driven analysis, and a cleaner plugin model. Here's how to actually use it.

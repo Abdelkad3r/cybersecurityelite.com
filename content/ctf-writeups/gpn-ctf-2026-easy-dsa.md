@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Easy-DSA: UUID3 MD5 Collision → ECDSA Nonce Reuse"
 slug: "gpn-ctf-2026-easy-dsa"
-description: "GPN CTF 2026 Crypto: uuid3 is MD5 with a constant prefix. Fastcoll generates colliding messages, ECDSA reuses the same nonce on P-521, key recovery and forge in one round."
+description: "GPN CTF 2026 Easy-DSA writeup: an MD5 collision from UUID3 leads to ECDSA nonce reuse and key recovery."
 date: 2026-06-07T18:15:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -29,7 +29,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-easy-dsa.png"
-  alt: "GPN CTF 2026 Easy-DSA writeup — UUID3 MD5 collision to force ECDSA nonce reuse on P-521 and recover the private key"
+  alt: "Dark grid cover card for GPN CTF 2026 — Easy-DSA, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium" os="Crypto — ECDSA on P-521, deterministic nonce, MD5 collision" skills="recognising uuid3 as MD5(ns || name), generating identical-prefix MD5 collisions with Marc Stevens' fastcoll, recovering the nonce from two signatures with the same r, sign-flip check against the published public key, forging fresh signatures with the recovered private key" >}}

@@ -1,7 +1,7 @@
 ---
 title: "KaliTeam CTF 2026 OSINT Writeup: The Unbroken Shelf & Guests"
 slug: "kaliteam-ctf-2026-osint-writeup"
-description: "Full KaliTeam CTF 2026 OSINT writeup covering both OSINT challenges: OCR'ing a torn 1920 newspaper clipping, clearing a Cloudflare block with a headed Playwright browser to search Chronicling America, and pinning the New-York Tribune of 21 August 1920 — then proving it with a 23-line tear-alignment checksum to recover 157 Eighth Avenue at 8:40 p.m. (The Unbroken Shelf); and locating Team Havok on the Black Hat MEA CTF scoreboards with a leetspeak-tolerant fuzzy regex that matches the real registration H@vOK, placing them 83rd in the 2024 Final in Riyadh (Guests)."
+description: "KaliTeam CTF 2026 OSINT writeup: The Unbroken Shelf & Guests."
 date: 2026-08-10T00:00:00Z
 lastmod: 2026-08-10T00:00:00Z
 draft: false
@@ -45,7 +45,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/kaliteam-ctf-2026-osint-writeup.png"
-  alt: "KaliTeam CTF 2026 OSINT writeup covering both challenges — The Unbroken Shelf OCRs a torn 1920 newspaper clipping, clears a Cloudflare block with a headed Playwright browser to search Chronicling America, pins the New-York Tribune of 21 August 1920 page 1, and proves it with a 23-line tear-alignment checksum to recover the address 157 Eighth Avenue and the time 8:40 p.m.; and Guests locates Team Havok across the ten Black Hat MEA CTF scoreboards on CTFtime with a leetspeak-tolerant fuzzy regex that matches the real registration H@vOK, placing them 83rd in the Black Hat MEA CTF Final 2024 held in Riyadh"
+  alt: "Dark grid cover card for KaliTeam CTF 2026 OSINT, with large high-contrast title lettering."
 ---
 
 OSINT at KaliTeam CTF 2026 was a two-challenge track that shares a deceptively simple lesson: **the hard part of an open-source hunt is rarely finding the fact — it's getting to the source, or realizing the string isn't spelled the way you think.** One challenge hides its answer behind a Cloudflare wall and a physically torn page; the other hides it behind a single `@` in a team name. Both are won less by clever queries than by disciplined tradecraft — and by knowing exactly which dead end you're standing in.

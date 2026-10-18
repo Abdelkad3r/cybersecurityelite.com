@@ -13,7 +13,7 @@ keywords: ["thcon 2026 socials writeup", "thcon ctf 2026", "social media osint c
 toc: true
 cover:
   image: "/images/articles/thcon-2026-socials.png"
-  alt: "THCON 2026 SOCIALS writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for THCON 2026 Socials, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="THCON 2026 (Toulouse Hacking Convention)" difficulty="Easy" os="OSINT" skills="Social media OSINT, leetspeak" >}}

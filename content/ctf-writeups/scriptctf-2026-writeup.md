@@ -1,7 +1,7 @@
 ---
 title: "scriptCTF 2026 Writeup: Misdirection & F\\*\\*K — Bacon Cipher Trap + Brainfuck Timing"
 slug: "scriptctf-2026-writeup"
-description: "Full scriptCTF 2026 writeup covering both released challenges: Misdirection (Cryptography, 160 pts) where a 115-bit blob rules out byte-decoding, splits cleanly into 23 five-bit groups, and only produces meaningful text under Bacon's original 24-letter alphabet (I/J and U/V shared) — the modern 26-letter mapping is the trap; and F\\*\\*K (Reverse Engineering, 454 pts) where a 28,786-byte Brainfuck program disguises 31 algebraic byte checks as noise, each shaped like `input += C; temp = A*K + B; input -= temp`, encoding the flag entirely in `[-]` clear-loop iteration count with no printable success output — the flag lives in the program's timing."
+description: "scriptCTF 2026 writeup on the Bacon cipher in Misdirection and timing-based Brainfuck checks in F**K."
 date: 2026-08-11T10:00:00Z
 lastmod: 2026-08-11T10:00:00Z
 draft: false
@@ -55,7 +55,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/scriptctf-2026-writeup.png"
-  alt: "scriptCTF 2026 writeup covering both released challenges — Misdirection is a 115-bit blob that rules out byte decoding by length, splits cleanly into 23 five-bit groups, but only produces meaningful text under Bacon's original 24-letter alphabet where I and J share a symbol and U and V share a symbol, revealing SCRIPTCTFNOTWHATITSEEMS which restores to scriptCTF{notwhatitseems}; and F**K is a 28,786-byte Brainfuck program that hides 31 algebraic byte checks of the form input += C then temp = A times K plus B then input -= temp inside deliberate visual noise, encodes the entire flag in the iteration count of the [-] clear loops with no printable success message, ends in a +[] infinite loop sentinel, and reveals scriptCTF{t1mm1ng_s1d$_ch@nn31} once the comparison template is recognized and folded"
+  alt: "Dark grid cover card for scriptCTF 2026, with large high-contrast title lettering."
 ---
 
 **scriptCTF 2026** is a two-challenge micro-set that manages to teach the same lesson twice in radically different domains: **the first plausible interpretation of the data is the trap, and the challenge itself tells you so.** Misdirection is 115 bits of ASCII binary — a length that is not divisible by 8 but is divisible by 5, a shape that rules out byte-decoding before you write any code. Fold it into 23 five-bit groups and the "obvious" modern 26-letter Bacon mapping produces plausible-looking gibberish (`RCQIOSCSFMNSUHASISREELR`). Only Bacon's *original* 24-letter alphabet — the one where `I/J` and `U/V` share a symbol — collapses those groups into `SCRIPTCTFNOTWHATITSEEMS`. The flag name (*Misdirection*), the hint (*"It is not what it is"*), and the recovered plaintext (`NOT WHAT IT SEEMS`) all point at the same lesson.

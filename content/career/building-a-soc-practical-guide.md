@@ -1,7 +1,7 @@
 ---
 title: "Building a SOC From Zero: A Practical Guide"
 slug: "building-a-soc-practical-guide"
-description: "Build a SOC that doesn't drown in alerts — 90-day milestone plan, staffing model, SIEM and EDR shortlist, processes that survive the first real incident."
+description: "A practical SOC planning guide with a 90-day rollout, staffing considerations, SIEM and EDR options, and incident-response processes."
 date: 2026-05-03T09:00:00Z
 lastmod: 2026-05-03T09:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["build a soc", "soc setup", "soc playbook", "security operations"]
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "Building a SOC"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 Most newly-built SOCs spend twelve months becoming a dashboard wall before they detect their first real intrusion. Here's how to skip the theatre and ship value from week two.

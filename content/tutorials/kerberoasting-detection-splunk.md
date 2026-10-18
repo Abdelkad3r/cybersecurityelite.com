@@ -1,7 +1,7 @@
 ---
 title: "Kerberoasting Detection in Splunk: Event 4769 Queries (2026)"
 slug: "kerberoasting-detection-splunk"
-description: "Stop Kerberoasting before privilege escalation. Build Splunk detections for Event 4769, RC4 encryption, unusual service accounts, and volume spikes."
+description: "Build Splunk searches for Kerberoasting indicators in Event 4769 data, including ticket encryption types, service accounts, and request volume."
 date: 2026-06-04T00:00:00Z
 lastmod: 2026-06-04T00:00:00Z
 draft: false
@@ -31,7 +31,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/kerberoasting-detection-splunk.png"
-  alt: "Kerberoasting detection in Splunk — Event 4769 monitoring and dashboards"
+  alt: "Dark grid cover card for Kerberoasting Detection in Splunk, with large high-contrast title lettering."
 ---
 
 Kerberoasting abuses normal Kerberos service-ticket requests: an authenticated domain user can request a ticket for a service principal name (SPN), then test the ticket offline against candidate passwords. Event 4769 records service-ticket requests on domain controllers and provides useful hunting evidence. No single field—including RC4—proves that a request was malicious.

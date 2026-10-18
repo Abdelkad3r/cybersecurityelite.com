@@ -1,7 +1,7 @@
 ---
 title: "BushBashCTF 2026 Reverse Engineering Writeup: COBS Framing, Z3 Template Constraints, a Compile-Time Feistel Cipher & prost Protobuf"
 slug: "bushbashctf-2026-reverse-writeup"
-description: "BushBashCTF 2026 reverse engineering writeup covering all six challenges: Hack The Vault I (plaintext password in .rodata of a stripped PIE ELF), password (COBS-framed login over a raw socket), the two template-metaprogramming challenges (a C++ constraint oracle solved with Z3, and a compile-time DSL interpreter that turns out to be a 16-round Feistel cipher), mystery server I (a Rust prost + COBS client with a not-yet-implemented readflag serializer built by hand), and Turned Around (a 10 KB Brainfuck program with guarded hidden branches — documented as unresolved)."
+description: "BushBashCTF 2026 Reverse Engineering writeup: COBS Framing, Z3 Template Constraints, a Compile-Time Feistel Cipher & prost Protobuf."
 date: 2026-08-03T12:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -49,7 +49,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bushbashctf-2026-reverse-writeup.png"
-  alt: "BushBashCTF 2026 reverse engineering writeup — six challenges covering Hack The Vault I a stripped PIE ELF whose password sits in plaintext in the rodata section; password a login service that speaks COBS Consistent Overhead Byte Stuffing where admin and password must be wrapped in zero-delimited frames; a C++ template metaprogramming file whose hundreds of enable_if constraints form an integer system over 214 flag bytes solved with the Z3 SMT solver; a second templates challenge that is a compile-time interpreter for a tiny imperative DSL that turns out to be a 16-round Feistel cipher inverted to recover the plaintext; mystery server I a Rust prost protobuf plus COBS client whose readflag subcommand is not yet implemented so the ClientToServer read_flag message is hand-encoded as 22 00 then COBS-framed to 02 22 01 00; and Turned Around a 10 KB Brainfuck program with guarded hidden branches extracted and re-executed to reveal two masked password fragments documented as unresolved"
+  alt: "Dark grid cover card for BushBashCTF 2026 Reverse Engineering, with large high-contrast title lettering."
 ---
 
 **BushBashCTF 2026**'s reverse engineering track is a tour of *where secrets hide*, and almost none of them hid in machine code. Across six challenges the answer lived in a `.rodata` string, in the framing layer around an obvious login, in a C++ compiler's constraint checker, in a Turing-tarpit DSL evaluated entirely at compile time, in a Rust client's un-implemented serializer, and in the never-taken branches of a Brainfuck program. This writeup walks all six step by step: **Hack The Vault I** (100 pts, beginner), **password** (100 pts, easy), **`\langle\rangle\langle\rangle`** (182 pts, medium), **`\langle\rangle`×6** (210 pts, medium), **mystery server I** (304 pts, medium), and **Turned Around** (292 pts, hard). Five fell cleanly; **Turned Around** is documented honestly as unresolved, with every payload the program emits and the fragment-folding problem that remained.

@@ -13,7 +13,7 @@ keywords: ["btsctf 2026 fcp writeup", "fcp writeup breakthesyntax", "tls_rsa_wit
 toc: true
 cover:
   image: "/images/articles/btsctf-2026-fcp.png"
-  alt: "BtSCTF 2026 FCP writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for BtSCTF 2026 FCP, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="BreakTheSyntax CTF 2026" difficulty="Hard" os="Linux" skills="TLS, RSA, Go memory forensics, EMS PRF, session resumption" >}}

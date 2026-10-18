@@ -1,7 +1,7 @@
 ---
 title: "Junior.Crypt 2026 Forensic + Misc + OSINT Writeup: 8 Solved"
 slug: "junior-crypt-2026-forensic-misc-osint-writeup"
-description: "Step-by-step Junior.Crypt 2026 forensic, misc, and OSINT writeup — two forensic challenges (Invoice Without a Bank: WinZip-AES phishing corpus filtered by the Portuguese Fatura Emitida subject template; Philologist: Cyrillic acrostic ГИТЛОГ hint pointing at git log first-byte SHA-1 abbreviations), four misc challenges (1000-7: MIDI pitch-wheel +2304/-2304 pair steganography over a Tokyo Ghoul theme; Ghost Layers: SVG glyph paths referenced only through clip-path so they never reach the raster; Invisible Editor: DOCX customXml/item1.xml carrying a fake revisionLog whose per-step inserted chunks replay the flag one character at a time; Pickles: model.pkl calling payload.install_supply_chain_probe with a LedgerModel.infer backdoor triggered by a four-word history hash), and two OSINT challenges (Fire Mural: Grodno fire watchtower mural by Vladimir Kachan; FOOTBALLchik: Neman vs ML Vitebsk broadcast clock timestamp of the first goal)."
+description: "Junior.Crypt 2026 writeup with eight forensic, misc, and OSINT challenge solutions."
 date: 2026-07-15T14:20:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -57,7 +57,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/junior-crypt-2026-forensic-misc-osint-writeup.png"
-  alt: "Junior.Crypt 2026 forensic + misc + OSINT writeup — eight challenges solved covering a WinZip-AES phishing corpus filtered by the Portuguese Fatura Emitida subject template, a Cyrillic acrostic ГИТЛОГ hint pointing at git log first-byte SHA-1 abbreviations, MIDI pitch-wheel +2304/-2304 pair steganography over a Tokyo Ghoul theme, SVG glyph paths referenced only through clip-path so they never reach the raster, DOCX customXml/item1.xml carrying a fake revisionLog whose per-step inserted chunks replay the flag, model.pkl calling payload.install_supply_chain_probe with a LedgerModel.infer backdoor triggered by a four-word history hash, Grodno fire watchtower mural identification, and Belarusian Higher League broadcast clock reading"
+  alt: "Dark grid cover card for Junior.Crypt 2026 Forensic + Misc + OSINT, with large high-contrast title lettering."
 ---
 
 Junior.Crypt 2026 (grodno flag prefix) rounded out its web, crypto, pwn, and reverse tracks with three softer categories; in this **CyberSecurity Elite** forensic, misc, and OSINT writeup we work through all eight, which are still surprisingly rich: forensic (two challenges), misc (four), and OSINT (two). None of them require heavy tooling: every solve in this writeup is either a stdlib Python script, a browser render of an extracted SVG fragment, an `unzip -l` size disparity, or a bilingual Yandex reverse-image query. What the eight challenges do share is a *pattern-recognition* discipline that a defender's eye can be trained on: password-protected malware zips (`Infected` password → live samples), first-byte-of-SHA-1 covert channels in `git log`, pitch-wheel event pairs as a MIDI bit channel, `clip-path` references that consume glyph geometry without painting it, `customXml/item1.xml` outweighing `document.xml` in a near-empty DOCX, `.pyc` shipped next to a `.pkl` that hands the loader RCE, and OSINT chains that lean on Russian-language search over English for post-Soviet targets.

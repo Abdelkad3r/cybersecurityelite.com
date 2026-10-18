@@ -43,7 +43,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/incident-67-bgp-hijack-crypto-wallet.png"
-  alt: "Incident 67 — BGP sub-prefix hijack of a crypto wallet gateway, network/BGP challenge from SAS CTF 2026 Quals"
+  alt: "Dark grid cover card for Incident 67, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="SAS CTF 2026 Quals" difficulty="Hard" os="Network — Alpine Linux + FRR 10.0" skills="BGP sub-prefix hijack, FRR network-statement RIB origin, vtysh static routes, dnsmasq DNS sinkhole, OpenSSL self-signed certs, Python TLS termination + ALPN, RPKI/ROA defender perspective, IXP filtering" >}}

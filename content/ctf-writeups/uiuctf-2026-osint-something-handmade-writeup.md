@@ -1,7 +1,7 @@
 ---
 title: "UIUCTF 2026 OSINT Writeup: Something Handmade — Wedding Site to Private RSVP"
 slug: "uiuctf-2026-osint-something-handmade-writeup"
-description: "Complete UIUCTF 2026 Something Handmade OSINT writeup. A public Zola wedding site for Belda Byrule and Bink Hyaa mentions Mipha documenting welcome-bag prep on @miphamakes — a specific handle in a sea of altered fictional Zelda names is the pivot signal. That DeviantArt account has three posts each thanking a craft helper by first name (Carl, Tessa, Nolan). Zola's public wedding endpoint /web-api/v1/publicwedding/slug/beldaandbink exposes the wedding_account_uuid 98298caa-11a9-4c3e-83c2-197f59ec8235, and /web-api/v1/publicwedding/rsvp/guest/wedding-account/uuid/.../search-groups accepts a first name and returns the matching guest-group UUID without authentication. Carl's guest-group query against /web-api/v2/publicwedding/rsvp/guest-group/uuid/.../wedding-account/uuid/... returns four events instead of the three Tessa and Nolan see; the extra event Royal Banquet and Byrulian Bappy Hour has meal_options whose first entry is the flag uiuctf{handmade_with_a_hidden_detail_7c4e1d}."
+description: "UIUCTF 2026 OSINT writeup: Something Handmade — Wedding Site to Private RSVP."
 date: 2026-08-11T08:00:00Z
 lastmod: 2026-08-11T08:00:00Z
 draft: false
@@ -51,7 +51,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/uiuctf-2026-osint-something-handmade-writeup.png"
-  alt: "UIUCTF 2026 Something Handmade OSINT writeup cover — a public Zola wedding site for Belda Byrule and Bink Hyaa mentions Mipha documenting welcome-bag preparation on the DeviantArt handle miphamakes, a specific handle in a sea of intentionally altered fictional Zelda names which is the pivot signal. The three DeviantArt posts each thank a craft helper by first name yielding Carl, Tessa, and Nolan. Zola's public wedding endpoint slash web-api slash v1 slash publicwedding slash slug slash beldaandbink exposes the wedding_account_uuid 98298caa-11a9-4c3e-83c2-197f59ec8235, and the guest-search endpoint slash web-api slash v1 slash publicwedding slash rsvp slash guest slash wedding-account slash uuid slash ... slash search-groups accepts a first name unauthenticated and returns the matching guest-group UUID. Carl White's guest-group query against slash web-api slash v2 slash publicwedding slash rsvp slash guest-group slash uuid slash ... slash wedding-account slash uuid slash ... returns four events instead of the three that Tessa and Nolan see, and the extra event Royal Banquet and Byrulian Bappy Hour has meal_options whose first entry is uiuctf{handmade_with_a_hidden_detail_7c4e1d}"
+  alt: "Dark grid cover card for UIUCTF 2026 OSINT, with large high-contrast title lettering."
 ---
 
 **UIUCTF 2026**'s Something Handmade is a compact OSINT chain that trains one specific reflex: **the pivot is a specific string in a sea of altered ones.** The challenge starts on a public Zola wedding site for "Belda Byrule and Bink Hyaa" — every proper noun in that fictional universe is a deliberate Zelda misspelling, so nothing on the page is directly searchable. Everything, that is, except one line under Welcome Bags that says *"Mipha documented the process over on @miphamakes"*. That handle is unaltered, is specific enough to have exactly one owner on the whole internet, and is the entire pivot. The moment you notice a real handle inside a fictional site, the shape of the solve is fixed.

@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 Misc Writeup: All 4 Miscellaneous Challenges"
 slug: "l3akctf-2026-misc-writeup"
-description: "Full L3akCTF 2026 miscellaneous writeup covering all four misc challenges: decoding a QWERTY keyboard-shift cipher where the right hand typed one key too far right (me fr); reading letters drawn on an 8x8 board by the destination squares of White's queen across 24 rigged PGN chess games (Blunder); auto-solving 100 ANSI-rendered weighted mazes under a five-second deadline by parsing colored terminal cells, converting board-game pieces to tile costs, and running Dijkstra, then reading a FIGlet flag (Maze Captcha); and clearing 100 rotated image-tile mazes through a web API that leaks the full wall matrices, solved with BFS plus HTTP/1.1 request pipelining over one TLS connection (Cursed Maze Captcha)."
+description: "L3akCTF 2026 Misc writeup with step-by-step solutions for four challenges."
 date: 2026-08-06T21:00:00Z
 lastmod: 2026-08-06T21:00:00Z
 draft: false
@@ -52,7 +52,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-misc-writeup.png"
-  alt: "L3akCTF 2026 miscellaneous writeup covering all four misc challenges — me fr decodes a QWERTY keyboard-shift cipher where the right hand typed one key too far to the right, Blunder reads letters drawn on an 8x8 board by the destination squares of White's queen across 24 rigged PGN chess games that spell HARDTOKEEPUPWITHTHEQUEEN, Maze Captcha auto-solves 100 ANSI-rendered weighted terminal mazes under a five-second deadline by parsing colored cells and double-width Unicode board pieces into tile costs and running Dijkstra before reading a FIGlet flag, and Cursed Maze Captcha clears 100 rotated image-tile mazes through a web API that leaks the full horizontal and vertical wall matrices, solved with breadth-first search plus HTTP/1.1 request pipelining over a single TLS connection to beat the per-round deadline"
+  alt: "Dark grid cover card for L3akCTF 2026 Misc, with large high-contrast title lettering."
 ---
 
 Miscellaneous is where CTFs hide the challenges that don't fit a neat category — and L3akCTF 2026's four misc tasks are a perfect cross-section: a beginner cipher you solve by *looking* at it, a chess-notation steganography puzzle, and two "prove you're human" captchas that are really speed-automation problems. The through-line across all four is **separating presentation from payload** — the QWERTY typo, the FIGlet art, the rotated maze board, and the absurd chess games are all costumes over something simple underneath.

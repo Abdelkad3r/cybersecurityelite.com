@@ -1,7 +1,7 @@
 ---
 title: "Splunk Detection Engineering: From Logs to Useful Alerts"
 slug: "splunk-detection-engineering"
-description: "Stop drowning in Splunk false positives. The detection-engineering playbook mature SOCs use: CIM hygiene, MITRE-aligned content, lifecycle at scale."
+description: "A Splunk detection-engineering guide covering CIM normalization, MITRE ATT&CK mapping, false-positive review, and content lifecycle."
 date: 2026-04-26T09:00:00Z
 lastmod: 2026-04-26T09:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["splunk detection engineering", "splunk siem", "detection rules"]
 toc: true
 cover:
   image: "/images/articles/splunk-detection-engineering.png"
-  alt: "Detection engineering in Splunk"
+  alt: "Dark grid cover card for Splunk Detection Engineering, with large high-contrast title lettering."
 ---
 
 Most SIEMs fail not because the technology can't keep up but because the detection content is bad. This guide walks through how a detection engineer actually thinks about a rule, from data onboarding to deployment.

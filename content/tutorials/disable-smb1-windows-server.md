@@ -1,7 +1,7 @@
 ---
 title: "Disable SMBv1 on Windows Server: Security Hardening Guide"
 slug: "disable-smb1-windows-server"
-description: "Kill SMBv1 protocol vulnerabilities in Windows environments. The 6-step rollout — audit usage, enforce modern SMB, remove features, verify compliance."
+description: "A Windows Server workflow for auditing SMBv1 use, migrating dependencies, removing the feature, and verifying the result."
 date: 2026-06-04T12:30:27Z
 lastmod: 2026-06-04T12:30:27Z
 draft: false
@@ -29,7 +29,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/disable-smb1-windows-server.png"
-  alt: "Disable SMBv1 on Windows Server — complete security hardening guide"
+  alt: "Dark grid cover card for Disable SMBv1 on Windows Server, with large high-contrast title lettering."
 ---
 
 SMBv1 should have died in 2017 when **WannaCry** ransomware exploited the EternalBlue vulnerability (MS17-010) to infect 300,000+ Windows systems worldwide in 72 hours. Yet five years later, most enterprise environments still have SMBv1 enabled by default — not because they need it, but because it's legacy technical debt that "works" and nobody wants to break file shares. This guide shows how to **disable SMBv1 on Windows Server safely**: audit current usage, migrate dependencies to modern SMBv2/v3, remove the protocol entirely, and verify compliance across the fleet.

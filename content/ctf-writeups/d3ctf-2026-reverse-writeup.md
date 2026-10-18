@@ -1,7 +1,7 @@
 ---
 title: "D3CTF 2026 Reverse Engineering Writeup: D3LLVM & PacMan — Mobile RE with OLLVM, MNN Runtime Trap, and Actor VM"
 slug: "d3ctf-2026-reverse-writeup"
-description: "D3CTF 2026 reverse engineering writeup for D3LLVM and PacMan: D3LLVM hides an ARM64 native validator VM behind OLLVM control-flow flattening inside a self-unpacking Android APK, then anchors half the AES-128-ECB flag key to MNN runtime callback operator names that differ from the static model graph — bypassed by Unicorn emulation plus MNN 3.6.1 Docker execution. PacMan is an iOS Pac-Man game whose flag is RC4-encrypted with a key derived by a 72-record deterministic actor VM baked into the ARM64 Mach-O — solved in 28 VM steps without running the game."
+description: "D3CTF 2026 Reverse Engineering writeup: D3LLVM & PacMan — Mobile RE with OLLVM, MNN Runtime Trap, and Actor VM."
 date: 2026-07-31T22:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -50,7 +50,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/d3ctf-2026-reverse-writeup.png"
-  alt: "D3CTF 2026 reverse engineering writeup — two challenges solved covering D3LLVM an Android APK with OLLVM control-flow flattening over a self-unpacking ARM64 native library containing a flag validator VM and an encrypted MNN model whose runtime optimizer-rewritten operator names seed a FNV-1a-64 hash XORed with the validated hex input through splitmix64 to produce an AES-128-ECB decryption key; and PacMan an iOS IPA Pac-Man game containing a 72-record deterministic actor VM in the ARM64 Mach-O deriving an RC4 key through 28 SplitMix64-style state transitions decrypting the embedded 40-byte ciphertext without playing the game"
+  alt: "Dark grid cover card for D3CTF 2026 Reverse Engineering, with large high-contrast title lettering."
 ---
 
 D3CTF 2026's reverse engineering track put two mobile binaries in front of solvers and asked them to read the flag without running the apps in the intended way — this **CyberSecurity Elite** reverse engineering writeup walks both solves end to end. **D3LLVM** (`app-debug.apk`) wrapped an Android native flag-validator VM inside an OLLVM-obfuscated self-unpacking ARM64 shared library, then anchored half the AES-128-ECB decryption key to the operator names that MNN's graph optimizer assigns at runtime — names that differ from what the static MNN flatbuffer stores, a deliberate trap for anyone who read the model without executing it. **PacMan** (`pacman.ipa`) hid a 72-record deterministic actor VM inside an iOS ARM64 Mach-O whose SplitMix64-style state transitions, traversed in a fixed 28-step path, produce the RC4 key needed to decrypt the flag without ever playing a round of Pac-Man.

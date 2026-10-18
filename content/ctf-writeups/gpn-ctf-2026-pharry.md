@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Pharry: PHP 7.4 PHAR Deserialization via Two-Connection Race"
 slug: "gpn-ctf-2026-pharry"
-description: "GPN CTF 2026 Web: md5_file and file_get_contents open separate TCP connections. A counting server fails the integrity check and returns a PHAR with a User __destruct gadget."
+description: "GPN CTF Pharry writeup: a two-connection race makes md5_file() and file_get_contents() read different PHAR data."
 date: 2026-06-07T19:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -29,7 +29,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-pharry.png"
-  alt: "GPN CTF 2026 Pharry writeup — PHP 7.4 PHAR deserialization via md5_file vs file_get_contents two-connection race"
+  alt: "Dark grid cover card for GPN CTF 2026 — Pharry, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Web — PHP 7.4, PHAR metadata unserialize, two-TCP-connection trick" skills="recognising md5_file and file_get_contents both open separate TCP connections to a URL, hosting a connection-counting HTTP server that returns different responses per attempt, crafting a PHAR with a User object metadata that fires system() in __destruct, triggering PHAR unserialize via md5_file(phar:///tmp/...) for RCE" >}}

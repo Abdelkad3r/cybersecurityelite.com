@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Recipe for Disaster: gets() Overflow into an Adjacent int"
 slug: "gpn-ctf-2026-recipe-for-disaster"
-description: "GPN CTF 2026 Pwn: gets() reads 36 bytes into a char note[32], spilling into the adjacent int price. Set price = -1, verify_total triggers print_coupon, flag prints."
+description: "GPN CTF 2026 Recipe for Disaster writeup: a gets() overflow changes an adjacent integer and reaches the coupon flag check."
 date: 2026-06-07T19:55:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -27,7 +27,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-recipe-for-disaster.png"
-  alt: "GPN CTF 2026 Recipe for Disaster writeup — gets() overflows char note[32] into an adjacent int price field"
+  alt: "Dark grid cover card for GPN CTF 2026 — Recipe for Disaster, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Easy" os="Pwn — stack buffer overflow, adjacent-field overwrite" skills="reading the Item struct layout to confirm note and price are adjacent with no padding, sending 32 bytes of A plus four bytes of 0xff to set price to -1, observing verify_total trigger print_coupon, recognising gets() as a deprecated-in-C11 vulnerability since the Morris Worm (1988)" >}}

@@ -1,7 +1,7 @@
 ---
 title: "Breaking Into Cybersecurity in 2026: An Honest Roadmap"
 slug: "breaking-into-cybersecurity-2026"
-description: "Stop chasing certs that don't move the needle. Honest 2026 cybersecurity career roadmap: what to learn first, what to skip, what hiring managers actually want."
+description: "A 2026 cybersecurity career roadmap covering foundational skills, entry-level roles, portfolio projects, and job-search preparation."
 date: 2026-05-05T08:00:00Z
 lastmod: 2026-08-04T00:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["breaking into cybersecurity", "cybersecurity career", "how to get in
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "Breaking into cybersecurity"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 The cybersecurity job market in 2026 is bifurcated: thousands of unfilled senior positions, vicious competition for entry-level roles. This guide is for the person trying to land that first SOC analyst, GRC analyst, or junior pentest job — written from the perspective of someone who reviews resumes for those exact roles.

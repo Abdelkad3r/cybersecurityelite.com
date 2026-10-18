@@ -1,7 +1,7 @@
 ---
 title: "Nmap: The Ultimate Network Scanning Tutorial (2026 Edition)"
 slug: "nmap-ultimate-network-scanning-tutorial"
-description: "Find every open service, fingerprint OS versions, bypass firewalls with Nmap. From first SYN scan to NSE scripting — the tutorial pentesters bookmark."
+description: "A practical Nmap guide to host discovery, port and service scanning, NSE scripts, output formats, and authorized assessment workflows."
 date: 2026-04-10T11:00:00Z
 lastmod: 2026-04-10T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["nmap tutorial", "nmap cheat sheet", "network scanning tutorial"]
 toc: true
 cover:
   image: "/images/articles/nmap-ultimate-network-scanning-tutorial.png"
-  alt: "Nmap network scanning tutorial — SYN scan to NSE scripting"
+  alt: "Dark grid cover card for Nmap, with large high-contrast title lettering."
 ---
 
 Nmap is the single most important tool in any network security professional's toolkit. This tutorial covers everything from basic discovery to the Nmap Scripting Engine (NSE) and firewall evasion.

@@ -1,7 +1,7 @@
 ---
 title: "STARPWN CTF 2026 Writeup Part 1: Misc, Image Ciphers, CCSDS Steganography & RF Signals"
 slug: "starpwn-ctf-2026-writeup-part-1"
-description: "STARPWN CTF 2026 writeup part 1 covering eight challenges across Misc and Space Communications: ROT13 on a Doctor Who graffiti quote hidden behind a C2PA JUMBF provenance manifest, Vigenere key HAL decoded from a neon 2001: A Space Odyssey billboard, Caesar shift +10 recovering a Hitchhiker's Guide phrase, CCSDS Space Packet Protocol covert channel in out-of-range APID 100 mode bytes, LSB steganography in the red channel of an anomalously large PNG with a two-byte length prefix, Morse code on-off keying at 600 Hz decoded to B34C0N D3C0D3D V14 R4D10, MAVLink v2 drone GPS tracks visualized to reveal aerial BVLOS skywriting by drone 4, and GPS jammer geolocation by circumcenter trilateration from three downed ArduCopter vehicles in a 207 MB MAVLink pcap identified as Echo Trail Park Las Vegas."
+description: "STARPWN CTF 2026 Part 1 writeup: Misc, Image Ciphers, CCSDS Steganography & RF Signals."
 date: 2026-08-10T10:00:00Z
 lastmod: 2026-08-10T10:00:00Z
 draft: false
@@ -51,7 +51,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/starpwn-ctf-2026-writeup-part-1.png"
-  alt: "STARPWN CTF 2026 writeup Part 1 cover — eight challenges solved across Misc and Space Communications including ROT13 graffiti, Vigenere HAL 9000, Caesar cipher, CCSDS covert channel, LSB steganography, Morse code beacon, MAVLink drone skywriting, and GPS jammer trilateration"
+  alt: "Dark grid cover card for STARPWN CTF 2026 Part 1, with large high-contrast title lettering."
 ---
 
 STARPWN CTF 2026 leaned harder into real space infrastructure than any competition we have covered before. The challenge designers did not use space as a theme coat of paint — they pulled actual protocols off the wire: CCSDS Space Packet Protocol headers straight from CCSDS 133.0-B-2, MAVLink v2 frame structure as you would capture it from an ArduCopter fleet, and genuine on-off keying waveforms at 600 Hz. The Misc track ran alongside the Space Comms category and the two shared a philosophy: every challenge had an obvious rabbit hole that ate hours, and a correct path that required methodically ruling the obvious hole out. If you ran five independent steganography tests and all came back negative, that *was* the deliverable — the flag was on the wall behind you.

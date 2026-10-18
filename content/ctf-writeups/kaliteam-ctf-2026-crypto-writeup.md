@@ -1,7 +1,7 @@
 ---
 title: "KaliTeam CTF 2026 Crypto Writeup: Merkle's Trapdoor — Knapsack Exhaustive Enumeration"
 slug: "kaliteam-ctf-2026-crypto-writeup"
-description: "KaliTeam CTF 2026 cryptography writeup for Merkle's Trapdoor: an 8-element Merkle-Hellman knapsack public key produces only 256 possible ciphertext values, all of which are distinct subset sums forming a collision-free bijection from bytes to integers — so the entire keyspace is tabulated in a single pass and each of the 33 big-endian 16-bit ciphertext blocks is decrypted by direct lookup without recovering the trapdoor modulus or multiplier."
+description: "KaliTeam CTF 2026 Crypto writeup: Merkle's Trapdoor — Knapsack Exhaustive Enumeration."
 date: 2026-08-09T14:00:00Z
 lastmod: 2026-08-09T14:00:00Z
 draft: false
@@ -42,7 +42,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/kaliteam-ctf-2026-crypto-writeup.png"
-  alt: "KaliTeam CTF 2026 cryptography writeup — Merkle's Trapdoor solved by recognising that an 8-element Merkle-Hellman knapsack public key produces only 256 possible ciphertext values all of which are distinct subset sums forming a collision-free bijection from bytes to integers so the entire keyspace is enumerated in a single table lookup without recovering the trapdoor modulus or multiplier"
+  alt: "Dark grid cover card for KaliTeam CTF 2026 Crypto, with large high-contrast title lettering."
 ---
 
 KaliTeam CTF 2026's lone cryptography challenge — **Merkle's Trapdoor** (by author F4R3S) — is built around the **Merkle-Hellman knapsack cryptosystem** (1978), one of the first practical proposals for public-key encryption. The intended solve path, hinted at by the challenge title and its "super-increasing shadows" flavour text, is to recover the private trapdoor: the super-increasing sequence, the modulus `m`, and the multiplier `w` whose modular inverse maps the public weights back to the easy knapsack. That path is entirely bypassed by one observation: the public key has only **8 elements**, which means the knapsack can encrypt at most **2⁸ = 256 distinct values**. When all 256 subset sums turn out to be distinct — zero collisions — the "encryption" is nothing more than a bijection from bytes to integers. The complete decryption table fits in a Python dict built in a single loop, and every ciphertext block is resolved by a dictionary lookup. The trapdoor is real but irrelevant: you can walk around the locked door.

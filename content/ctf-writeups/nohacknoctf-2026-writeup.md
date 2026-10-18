@@ -1,7 +1,7 @@
 ---
 title: "NoHackNoCTF 2026 Writeup: 5 Challenges Solved"
 slug: "nohacknoctf-2026-writeup"
-description: "Step-by-step NoHackNoCTF 2026 (NHNC) writeup — five challenges across crypto (AES-CTR keystream reuse, ECDSA same-prefix HNP via Turkish İ length expansion + LLL), web (whois TCP-client SSRF into Redis SAVE into Jinja2 SSTI with request.args token smuggling), forensics (Firefox places.sqlite → Proton Drive → ext4 unallocated-block carving → WZ-AES ZIP), and misc/OSINT (boarding-gate photo → EXIF + aircraft registration + airport identification + timetable lookup)."
+description: "NoHackNoCTF 2026 writeup with step-by-step solutions for five challenges."
 date: 2026-07-11T04:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -52,7 +52,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/nohacknoctf-2026-writeup.png"
-  alt: "NoHackNoCTF 2026 writeup — five challenges solved covering AES-CTR nonce reuse, ECDSA nonce-prefix HNP via Python Unicode length expansion, whois-to-Redis SSRF into Jinja2 SSTI, Firefox places.sqlite forensics into ext4 unallocated-block carving, and boarding-gate photo OSINT to a single Jetstar Japan flight number"
+  alt: "Dark grid cover card for NoHackNoCTF 2026, with large high-contrast title lettering."
 ---
 
 NoHackNoCTF 2026 (NHNC) shipped a small but well-engineered set of challenges where every one of the five bugs pivots on a language-level or protocol-level detail that looks benign until it isn't: AES-CTR reused with a constant nonce collapses into a one-time pad with a reused pad; an ECDSA nonce whose top 384 bits are `SHA384(salt || account)` becomes the Hidden Number Problem the moment two "distinct" users can be forced to sign under the same account, arranged by exploiting Python's `str.lower()` returning a longer string on Turkish `İ`; `/usr/bin/whois` is a full TCP client whose `-h HOST -p PORT` flags turn a domain-lookup box into a Redis SSRF that writes an RDB snapshot into Flask's template directory for Jinja2 SSTI; Firefox `places.sqlite` is a narrative artefact that leads through a Proton Drive share to an ext4 image whose unallocated blocks still hold a torn note's untorn twin and a WZ-AES ZIP; and a single boarding-gate photograph carries enough EXIF, a legible aircraft registration, and enough background scenery to pin down one specific Jetstar Japan flight from Kansai to Taipei on May 5, 2026.

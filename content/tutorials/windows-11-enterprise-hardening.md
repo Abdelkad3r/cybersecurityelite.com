@@ -37,7 +37,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/windows-11-enterprise-hardening.png"
-  alt: "Windows 11 enterprise hardening checklist and security controls"
+  alt: "Dark grid cover card for Windows 11 Enterprise Hardening for 2026, with large high-contrast title lettering."
 ---
 
 Windows 11 includes security features such as Microsoft Defender Antivirus, SmartScreen, Secure Boot, virtualization-based protections on supported hardware, and automatic security updates. Enterprise protection still depends on edition, hardware, configuration, licensing, management authority, and the applications an organization must support. This guide provides a staged way to assess and improve those controls with Microsoft Intune, Group Policy, or both.

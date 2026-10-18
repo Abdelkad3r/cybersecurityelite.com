@@ -1,7 +1,7 @@
 ---
 title: "SEKAI CTF 2026 Writeup: 11 Challenges Solved"
 slug: "sekai-ctf-2026-writeup"
-description: "Step-by-step SEKAI CTF 2026 writeup — eleven challenges across blockchain (TON cross-instance funding, Solidity reentrancy, transparent-proxy storage collision), crypto, web (Next.js triple bug), pwn (AFC heap overflow + tcache GOT overwrite), reverse (eBPF VM + custom KDF), game, and Android misc."
+description: "SEKAI CTF 2026 writeup with step-by-step solutions for eleven challenges."
 date: 2026-06-29T14:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -40,7 +40,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/sekai-ctf-2026-writeup.png"
-  alt: "SEKAI CTF 2026 writeup — eleven challenges solved across blockchain, crypto, web, pwn, reverse, game, and misc tracks"
+  alt: "Dark grid cover card for SEKAI CTF 2026, with large high-contrast title lettering."
 ---
 
 SEKAI CTF 2026 was a thick, multi-track event with carefully engineered bugs, documented here in a **CyberSecurity Elite** SEKAI CTF 2026 writeup. This writeup walks the eleven challenges I solved across seven categories: three on-chain bugs (a TON cross-instance economy exploit, the classic Solidity reentrancy, and a "fixed" Solidity build whose patch introduced a transparent-proxy storage collision), one cryptography puzzle that compresses into a single Python assertion, one Next.js web chain with three independent middleware bypasses, an AFC heap overflow in `libimobiledevice` that turns into a `puts@GOT → system` tcache rewrite, a Windows PE that hides an eBPF verifier inside a nested verifier payload, a six-puzzle pzpr.js logic-puzzle hunt with an SJCL-key-from-canonical-solution gimmick and a JIGSAW meta, a terminal-kit Bejeweled bot whose only real catch is that the win screen renders the flag on a different row than the time-out screen, an Android two-app conference badge whose `debuggable="true"` collapses the intended IPC-forgery chain into a single `adb run-as`, and an "impossible stego" challenge whose AI-gateway log of the author's Claude session contains every `Write`/`Edit` tool call that built the stego package, including the baked-in `ROOT_SECRET`.

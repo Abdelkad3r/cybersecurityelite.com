@@ -1,7 +1,7 @@
 ---
 title: "TraceBash CTF 2026 OSINT Writeup: 4 Challenges Solved"
 slug: "tracebash-ctf-2026-osint-writeup"
-description: "TraceBash CTF 2026 OSINT track writeup — geocaching lookup, Plus Code geolocation, NYC DOB open-data query, and cross-platform handle pivoting from a chat screenshot."
+description: "TraceBash CTF 2026 OSINT writeup with step-by-step solutions for four challenges."
 date: 2026-06-27T13:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -37,7 +37,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/tracebash-ctf-2026-osint-writeup.png"
-  alt: "TraceBash CTF 2026 OSINT writeup — geocaching, Plus Codes, NYC DOB open data, and cross-platform handle pivoting"
+  alt: "Dark grid cover card for TraceBash CTF 2026 OSINT, with large high-contrast title lettering."
 ---
 
 **TraceBash CTF 2026**'s OSINT track covered four distinct public-record techniques: **echo-chamber** requires filtering a geocaching FTF log out of a noisy forum post and looking up cache code `GCK4GH`; **missing-friend** chains a MotoGP Pertamina signage anchor to Lombok and matches a Mexican bar's interior to compute a Google Plus Code; **permit-pending** queries the NYC Department of Buildings Open Data API to match a street-scene photo's signage to DOB job filing `120033169`; and **retired-hacker** pivots a Komoot profile URL through GitHub to a Threads post, then geolocates an image anchor in Timișoara to find the tram stop. This is the second post in the TraceBash CTF 2026 series on this site; the [crypto writeup](/ctf-writeups/tracebash-ctf-2026-crypto-writeup/) covered four cryptographic mistakes (small-subgroup DH, shared RSA prime, harmonic-XOR key recovery, 16-bit-seed brute).

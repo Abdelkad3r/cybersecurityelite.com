@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Königsberg Delivery Problem: A Binary Ninja Workflow"
 slug: "gpn-ctf-2026-koenigsberg-binja"
-description: "GPN CTF 2026 Reverse: 250-state FSM as jump tables, Hamiltonian path on a 250-node graph. Walked through Binary Ninja's HLIL, Stack View, Graph View, and jump-table resolution."
+description: "GPN CTF 2026 Königsberg writeup: using Binary Ninja to analyze a 250-state control-flow graph and Hamiltonian path."
 date: 2026-06-07T19:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -30,7 +30,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-koenigsberg-binja.png"
-  alt: "GPN CTF 2026 Königsberg Delivery Problem writeup — Binary Ninja HLIL, Stack View, Graph View, and jump-table resolution for a 250-state FSM"
+  alt: "Dark grid cover card for GPN CTF 2026 — Königsberg Delivery Problem, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Medium-Hard" os="Reverse — 250-state FSM, jump tables, Hamiltonian path" skills="reading 4,500 lines of straight-line dispatch in Binja HLIL instead of objdump, using Stack View to identify a per-state visit-counter array, extracting jump-table successors via function.basic_blocks[i].outgoing_edges, building a 250-node directed graph from Binja-recovered edges, running Warnsdorff's heuristic DFS to find a Hamiltonian path in ~70 ms" >}}

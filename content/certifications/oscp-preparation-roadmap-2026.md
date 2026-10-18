@@ -1,7 +1,7 @@
 ---
 title: "OSCP Preparation Roadmap (2026 Edition)"
 slug: "oscp-preparation-roadmap-2026"
-description: "Pass the OSCP first try — realistic 6-month study plan, the lab boxes that actually prepare you, AD priority, exam strategy, and reporting template."
+description: "A six-month OSCP preparation roadmap covering lab practice, Active Directory, exam planning, and report writing."
 date: 2026-04-28T08:00:00Z
 lastmod: 2026-08-04T00:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["oscp preparation", "oscp roadmap", "oscp study plan", "pen-200"]
 toc: true
 cover:
   image: "/images/articles/oscp-preparation-roadmap-2026.png"
-  alt: "OSCP preparation roadmap 2026 — 6-month study plan and exam strategy"
+  alt: "Dark grid cover card for OSCP Preparation Roadmap (2026 Edition), with large high-contrast title lettering."
 ---
 
 The OSCP exam changed substantially in 2024 — three Active Directory machines worth 40 points and three standalone hosts worth 60. Pass mark stayed at 70/100. This roadmap reflects the *current* exam, not the legacy one your YouTube favorites prepared for.

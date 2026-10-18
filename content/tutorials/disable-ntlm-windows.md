@@ -1,7 +1,7 @@
 ---
 title: "Disable NTLM in Windows Safely: 2026 Step-by-Step Hardening Guide"
 slug: "disable-ntlm-windows"
-description: "Kill NTLM relay attacks in your domain without breaking apps. The 8-step rollout — audit, stage, enforce, roll back — for Windows 11 + Server 2025."
+description: "A staged Windows NTLM reduction plan covering usage audits, policy changes, application testing, and rollback."
 date: 2026-05-19T12:00:00Z
 lastmod: 2026-05-19T12:00:00Z
 draft: false
@@ -29,7 +29,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/disable-ntlm-windows.png"
-  alt: "How to disable NTLM safely in Windows — a 2026 hardening guide"
+  alt: "Dark grid cover card for Disable NTLM in Windows Safely, with large high-contrast title lettering."
 ---
 
 NTLM has been on borrowed time for two decades, and Microsoft made it official: as of late 2023 Microsoft formally announced that **NTLM is deprecated**, with Kerberos and the new Negotiate-based authentication taking over. Windows 11 24H2 and Windows Server 2025 ship with NTLMv1 fully removed, and Microsoft strongly recommends auditing and disabling NTLMv2 wherever Kerberos can take over. This guide walks through how to **disable NTLM in Windows safely** — auditing first, staging the rollout, and rolling back cleanly if something breaks.

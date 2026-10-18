@@ -1,7 +1,7 @@
 ---
 title: "Cybersecurity Awareness Month 2026: The AI-Powered Phishing Playbook Every Employee Should Know"
 slug: "cybersecurity-awareness-month-2026-ai-phishing-playbook"
-description: "A practical Cybersecurity Awareness Month 2026 (NCSAM 2026) guide for employees, IT teams, and families. Covers the three phishing threats that dominated 2026 — deepfake voice vishing, LLM-crafted spearphishing, and adversary-in-the-middle MFA-bypass proxies — and shows why the old awareness advice (look for typos, hover the link, enable MFA) is no longer sufficient by itself. Maps CISA's Secure Our World pillars (strong unique passwords, phishing-resistant MFA, phishing recognition, keep software updated) onto 2026's threat surface, and gives concrete training scripts, employee checklists, HR/IT campaign templates, and a runnable NCSAM October calendar. Written for the non-technical reader with technical depth in the appendices."
+description: "A practical phishing-awareness guide for employees, families, and small businesses, with steps for recognizing and responding to suspicious messages."
 date: 2026-09-04T12:00:00Z
 lastmod: 2026-09-04T19:15:00Z
 draft: false
@@ -63,7 +63,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/cybersecurity-awareness-month-2026-ai-phishing-playbook.png"
-  alt: "Cybersecurity Awareness Month 2026 cover — the AI-powered phishing playbook. Three 2026 phishing threats dominate: deepfake voice vishing that clones a CEO or family member in seconds from public audio; LLM-crafted spearphishing that produces grammatically perfect, personalized emails at scale so 'look for typos' no longer works; and adversary-in-the-middle MFA-bypass proxies (Evilginx-style toolkits) that steal live session cookies from realistic proxy portals even when MFA is enabled. The playbook maps CISA's Secure Our World pillars — strong unique passwords, phishing-resistant MFA (passkeys / FIDO2 / WebAuthn), phishing recognition, keep software updated — onto 2026's threat surface, and gives employees a verify-out-of-band callback rule, a passkey-first rollout script, an AI-phishing red-flag checklist, and an HR/IT NCSAM October calendar with runnable training exercises."
+  alt: "Dark grid cover card for Cybersecurity Awareness Month 2026, with large high-contrast title lettering."
 ---
 
 **Cybersecurity Awareness Month 2026** — the 23rd annual campaign run by [CISA](https://www.cisa.gov/cybersecurity-awareness-month) and the [National Cybersecurity Alliance](https://staysafeonline.org/) — begins on **October 1, 2026** and runs through October 31. The theme is still **"Secure Our World"** (in its fourth year), and the four campaign pillars remain: **use strong unique passwords, turn on phishing-resistant MFA, recognize and report phishing, and keep software updated**. All four are still correct. All four also need a serious 2026 refresh, because the threats an average employee will face this year look nothing like the ones the pillars were originally written to defend against.

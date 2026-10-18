@@ -1,7 +1,7 @@
 ---
 title: "L3akCTF 2026 Forensics Writeup: All 4 Challenges"
 slug: "l3akctf-2026-forensics-writeup"
-description: "Full L3akCTF 2026 forensics writeup covering all four challenges: carving Windows thumbnail-cache databases to recover a flag from a cached RIZZLER preview after the user already decrypted a 7-Zip archive (L3ak APT); reconstructing a CT sinogram stored in SQLite via filtered back-projection with iradon to read a flag in the reconstructed X-ray image (You Scanned WHAT?!?); scaling that to 617 sinograms into a 3D volume projection (You Scanned HOW?!?!); and parsing Windows Jump Lists as OLE Compound File containers to pull the share path, File Droid GUID, hostname, and rename trail for the NoNeedToWonder folder (Transcendent Renovation)."
+description: "L3akCTF 2026 Forensics writeup with step-by-step solutions for four challenges."
 date: 2026-08-06T18:00:00Z
 lastmod: 2026-08-06T18:00:00Z
 draft: false
@@ -46,7 +46,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/l3akctf-2026-forensics-writeup.png"
-  alt: "L3akCTF 2026 forensics writeup covering all four challenges — L3ak APT carves Windows thumbnail-cache databases to recover a flag from a cached RIZZLER preview after the user already decrypted a 7-Zip archive, You Scanned WHAT reconstructs a CT sinogram stored in a SQLite projections table via filtered back-projection with iradon to read the flag arched over an X-ray droplet mascot, You Scanned HOW scales that to 617 SQLite slice tables reconstructed into a 3D CT volume whose summed projection spells the flag along the scanned object, and Transcendent Renovation parses Windows Jump Lists as OLE Compound File containers to extract the tsclient HauntedHouse share path, the File Droid GUID, the logging-vm hostname, and the NoNeedToWonder folder rename trail"
+  alt: "Dark grid cover card for L3akCTF 2026 Forensics, with large high-contrast title lettering."
 ---
 
 Forensics at L3akCTF 2026 split cleanly into two disciplines: **Windows artifact analysis** — the kind of DFIR triage that reconstructs a user's activity from Jump Lists, the MFT, and thumbnail caches — and a two-part **signal-processing** pair that hid flags inside CT scan data. Both reward the same instinct: don't attack the obvious locked door (an encrypted archive, a single unreadable slice); find the byproduct the system left behind or the transform that makes the data legible.

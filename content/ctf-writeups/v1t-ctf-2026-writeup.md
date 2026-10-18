@@ -1,7 +1,7 @@
 ---
 title: "V1t CTF 2026 Writeup: 8 Challenges Solved (Crypto, Reverse, Web, Misc)"
 slug: "v1t-ctf-2026-writeup"
-description: "Step-by-step V1t CTF 2026 writeup — eight challenges covered across crypto (ZUC keystream recovery, RSA sextic-twist ECM), reverse (tiny ELF RLE bitmap, TCC stack-VM, KMDF driver), web (Emoji-To-AZ font stego, shell glob bypass), and misc."
+description: "V1t CTF 2026 writeup with step-by-step solutions for eight challenges."
 date: 2026-06-28T16:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -41,7 +41,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/v1t-ctf-2026-writeup.png"
-  alt: "V1t CTF 2026 writeup — eight challenges solved across crypto, reverse, web, and misc tracks"
+  alt: "Dark grid cover card for V1t CTF 2026, with large high-contrast title lettering."
 ---
 
 V1t CTF 2026 shipped a small but unusually well-curated set of challenges. Every one of the eight problems covered here teaches a specific primitive: a structured-prime RSA factored by stage-1 ECM on a `j = 0` curve, a ZUC stream cipher recovered from three leak functions without the key, a 904-byte ELF whose only validation is the byte-sum of the input, a TCC binary dressed up in packer-section costume but driven by a tiny 365-byte stack VM, a KMDF driver that binds to its userland by FNV-1a of `.text`, a font file aliased back to `Noto Sans` that quietly rewrites emoji into letters, and a 16-character allowlist regex on a `shell=True` command that still leaks the flag via `python3 dis.py` and globs.

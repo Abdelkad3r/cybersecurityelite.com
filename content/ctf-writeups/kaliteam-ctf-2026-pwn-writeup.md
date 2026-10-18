@@ -1,7 +1,7 @@
 ---
 title: "KaliTeam CTF 2026 Pwn Writeup: Player, Leaky & Raryray"
 slug: "kaliteam-ctf-2026-pwn-writeup"
-description: "KaliTeam CTF 2026 binary exploitation writeup for all three pwn challenges: Player (classic gets() ret2win with no canary, no PIE, and a stack-alignment ret gadget), Leaky (dual format-string plus stack-overflow in the same buffer — leak libc via %3$p then re-enter for a pop-rdi ret2libc ROP chain), and Raryray (no memory corruption at all — the flag block index is rand() seeded with time(NULL), fully predicted by reimplementing glibc's additive feedback generator and probing a two-second timing window)."
+description: "KaliTeam CTF 2026 Pwn writeup: Player, Leaky & Raryray."
 date: 2026-08-09T18:00:00Z
 lastmod: 2026-08-09T18:00:00Z
 draft: false
@@ -44,7 +44,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/kaliteam-ctf-2026-pwn-writeup.png"
-  alt: "KaliTeam CTF 2026 binary exploitation writeup — three challenges solved covering Player ret2win via gets overflow, Leaky format-string ret2libc ROP, and Raryray predictable PRNG time seed"
+  alt: "Dark grid cover card for KaliTeam CTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 KaliTeam CTF 2026's binary exploitation track offered three challenges that span the classic pwn curriculum without repeating themselves: **Player** is a pure ret2win in its most elemental form — `gets()`, no canary, no PIE, one call to `win()`; **Leaky** layers a format-string vulnerability and a stack overflow into the same buffer, demanding a two-stage attack that leaks both a libc address and a stack pointer before building a ROP chain on a re-entered frame; and **Raryray** is the structural outlier — a PIE binary hardened with NX, Full RELRO, IBT, and SHSTK where there is no memory corruption at all, only a logic flaw: the flag is hidden behind a `rand()` call seeded with `time(NULL)`, and anyone who can reimplement glibc's PRNG can predict the block index before the binary prints the prompt.

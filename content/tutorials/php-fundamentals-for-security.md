@@ -1,7 +1,7 @@
 ---
 title: "PHP Fundamentals for Security: Comparison Operators, Superglobals, and the Loose-Typing Trap"
 slug: "php-fundamentals-for-security"
-description: "Half of real-world PHP CVEs come from three primitives: loose comparison, superglobals, and type juggling. Walk-through with vulnerable code, exploits, and fixes."
+description: "An introduction to PHP security pitfalls, including type juggling, loose comparisons, and safer input handling."
 date: 2026-06-21T15:00:00Z
 lastmod: 2026-06-21T19:45:00Z
 draft: false
@@ -28,7 +28,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/php-fundamentals-for-security.png"
-  alt: "PHP Fundamentals for Security — comparison operators, superglobals, and the loose-typing trap"
+  alt: "Dark grid cover card for PHP Fundamentals for Security, with large high-contrast title lettering."
 ---
 
 I keep telling new hunters that PHP isn't a bad language. It's a language with a few defaults that will eat your lunch if you don't understand them. After spending most of 2024 and 2025 reviewing WordPress plugin code for paying clients, I'm comfortable saying that roughly half of every PHP CVE I read traces back to three things: `==`, `$_REQUEST`, and the rules PHP uses to convert one type into another.

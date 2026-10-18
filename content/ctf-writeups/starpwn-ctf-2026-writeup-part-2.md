@@ -1,7 +1,7 @@
 ---
 title: "STARPWN CTF 2026 Writeup Part 2: Orbital Mechanics, Spacecraft Detumbling & Ground Operations"
 slug: "starpwn-ctf-2026-writeup-part-2"
-description: "STARPWN CTF 2026 writeup part 2 covering seven challenges across Orbital Mechanics and Ground Operations: spacecraft detumbling by computing angular momentum L = I·ω and applying counter-torque capped at 0.98 N·m with a whole-second grid burn correction, Hohmann transfer phasing with vis-viva equation and synodic-rate wait-time derivation (the V2 variant removes the leaked-answer oracle making the math mandatory), Gitea Actions CI/CD secret exfiltration by pushing a malicious workflow that base64-encodes PROD_SIGNING_KEY to defeat log masking and commits it to a loot branch, NASA cFS golden image supply chain attack by replacing status-generator.py in a unsigned ZIP and triggering Power-On Reset, MAVLink 2 signing key extraction from an ArduPilot EEPROM at offset 0x1F80 followed by MAVLink FTP to download a flag JPEG, and an unpinned-dependency PyPI-style supply chain attack by publishing a poisoned cubesat-upstream-driver wheel at version 99.0.0 that exfiltrates the FLAG environment variable via a DEPLOY_SOLAR_PANEL command."
+description: "STARPWN CTF 2026 Part 2 writeup: Orbital Mechanics, Spacecraft Detumbling & Ground Operations."
 date: 2026-08-10T12:00:00Z
 lastmod: 2026-08-10T12:00:00Z
 draft: false
@@ -48,7 +48,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/starpwn-ctf-2026-writeup-part-2.png"
-  alt: "STARPWN CTF 2026 writeup part 2 — orbital mechanics, spacecraft detumbling, ground operations, MAVLink, supply chain"
+  alt: "Dark grid cover card for STARPWN CTF 2026 Part 2, with large high-contrast title lettering."
 ---
 
 **STARPWN CTF 2026** is a space-themed Jeopardy-style CTF that punishes teams who can only guess. Part 2 of this two-part writeup series covers the seven remaining challenges across the Orbital Mechanics and Ground Operations tracks — categories that demand real physics, genuine protocol knowledge, and creative supply-chain thinking. If you arrived here first, [Part 1 covers the OSINT, RF, and Misc tracks](/ctf-writeups/starpwn-ctf-2026-writeup-part-1/).

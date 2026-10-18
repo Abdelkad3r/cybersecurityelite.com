@@ -1,7 +1,7 @@
 ---
 title: "LYKNCTF 2026 Crack (Reverse) Writeup: 9 Challenges Solved"
 slug: "lyknctf-2026-crack-writeup"
-description: "Step-by-step LYKNCTF 2026 crack (reverse engineering) writeup — nine keygen and crackme challenges covering RC4-KSA S-box S-box recovery, ARX/Feistel VMs seeded with 0x9E3779B9, SHA-256(.text) self-hash KDFs, anti-debug byte poisoning, control-flow-flattened taint OR-folding, chained per-byte VM state machines, PyInstaller + ChaCha20/AES/marshal layers, Tauri desktop-app string trails, and a character-name Brainfuck esolang."
+description: "LYKNCTF 2026 Crack (Reverse) writeup with step-by-step solutions for nine challenges."
 date: 2026-07-10T22:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -49,7 +49,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/lyknctf-2026-crack-writeup.png"
-  alt: "LYKNCTF 2026 crack writeup — nine reverse engineering challenges solved covering ARX VMs, self-hash anti-tamper KDFs, chained per-byte state machines, PyInstaller multi-stage packers, and a character-name Brainfuck esolang"
+  alt: "Dark grid cover card for LYKNCTF 2026 Crack (Reverse), with large high-contrast title lettering."
 ---
 
 LYKNCTF 2026's crack track (reverse engineering) — the focus of this **CyberSecurity Elite** crack writeup — was built around a repeating pattern: build a small cipher out of well-known cryptographic primitives, wrap it in obfuscation that looks harder than it is, then bake a `.text`-derived self-hash into the state so that any patch or debugger attach silently produces wrong output without changing the error message. Nine challenges, nine variations on that theme, from a simple string-import inspection in a Tauri desktop app all the way to a four-layer keygen whose master key mixes account name, license key, `SHA-256(.text)`, and an anti-debug byte.

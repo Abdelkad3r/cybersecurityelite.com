@@ -1,7 +1,7 @@
 ---
 title: "VuwCTF 2026 Reverse Engineering Writeup: Kaprekar's Constant XOR & a Rotated Morse Cipher"
 slug: "vuwctf-2026-reverse-writeup"
-description: "VuwCTF 2026 reverse engineering writeup covering both challenges: ilikewords (a stripped libcurl ELF whose 'random' XOR key is always 6174 — Kaprekar's constant — used to decode an obfuscated NYT Wordle URL, where the flag's %s is a fixed 'wordle' slice of the URL and the network key check is only a gate) and dotsbedashing (a stripped ELF that packs a rol8-obfuscated Morse alphabet table and a ror32 rolling-XOR encrypted target stream that decodes to the0world0says0hii)."
+description: "VuwCTF 2026 Reverse Engineering writeup: Kaprekar's Constant XOR & a Rotated Morse Cipher."
 date: 2026-08-03T15:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -47,7 +47,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/vuwctf-2026-reverse-writeup.png"
-  alt: "VuwCTF 2026 reverse engineering writeup — two challenges covering ilikewords a stripped PIE ELF that links libcurl and prompts for a key where the key generator looks random using time srand and rand but always converges to 6174 Kaprekar's constant via the Kaprekar routine of max permutation minus min permutation and that constant 6174 is the seed of a walking XOR stream that decodes a 45-byte blob into the NYT Wordle URL template so the flag's percent-s slot is a fixed six-byte wordle slice of the URL at offset 28 and the network strncmp check is only a gate not the source of the flag; and dotsbedashing a stripped ELF that stores a Morse alphabet table whose character bytes are obfuscated with an 8-bit left rotate and an encrypted target stream at 0x40c0 decrypted with an initial key 0xb1e1e1f1 rotated right by one bit before each XOR yielding packed Morse entries that map back through the table to the inner text the0world0says0hii"
+  alt: "Dark grid cover card for VuwCTF 2026 Reverse Engineering, with large high-contrast title lettering."
 ---
 
 **VuwCTF 2026**'s

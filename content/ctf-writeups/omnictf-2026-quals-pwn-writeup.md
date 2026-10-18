@@ -1,7 +1,7 @@
 ---
 title: "OmniCTF 2026 Quals Pwn Writeup: 2 Challenges Solved"
 slug: "omnictf-2026-quals-pwn-writeup"
-description: "OmniCTF 2026 Quals pwn step-by-step: nullshui glibc 2.39 heap null-write to tcache poison over _IO_2_1_stdout_; WinCapture Windows kernel-driver COPY TOCTOU race."
+description: "OmniCTF 2026 Quals Pwn writeup with step-by-step solutions for two challenges."
 date: 2026-07-19T17:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -42,7 +42,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/omnictf-2026-quals-pwn-writeup.png"
-  alt: "OmniCTF 2026 Quals pwn writeup — two challenges solved covering nullshui glibc 2.39 heap exploitation via a heap-relative zero-write primitive that unlocks tcache poisoning over _IO_2_1_stdout_ with a fake wide-file vtable calling setcontext to pivot to a heap ROP open/read/write chain, and WinCapture Windows kernel-driver TOCTOU race between two reads of slot_lengths inside the COPY IOCTL exploited via named-pipe partial sends to interleave a LOAD that flips 8 bytes into a 4 KB overflow into an adjacent key object"
+  alt: "Dark grid cover card for OmniCTF 2026 Quals Pwn, with large high-contrast title lettering."
 ---
 
 OmniCTF 2026 Quals shipped a pwn track with two challenges from very different worlds; in this **CyberSecurity Elite** OmniCTF 2026 Quals pwn writeup we take on both. **nullshui** (hard, 500 points, 0 solves at release) is glibc 2.39 heap exploitation on Ubuntu 24.04 with every modern mitigation turned on (Full RELRO, canary, NX, PIE, SHSTK, IBT). **WinCapture** (medium, 111 points, 39 solves) is a Windows kernel-driver TOCTOU race exposed through a named pipe. What they share is a design shape worth noticing: neither one lets you spawn a shell (Ubuntu 24.04 hardening on one side, kernel-mode context on the other both make direct shellcode impractical), neither relies on a stack smash, and the winning primitive in both is a **narrow write into carefully-shaped adjacent state** that a defender would look at and say "too small to exploit in practice."

@@ -1,7 +1,7 @@
 ---
 title: "Linux Privilege Escalation Cheat Sheet (2026)"
 slug: "linux-privilege-escalation-cheat-sheet"
-description: "From low-priv shell to root on modern Linux — enumeration commands, sudo abuse, SUID/capabilities tricks, and the post-LinPEAS workflow that actually wins."
+description: "Linux privilege-escalation enumeration covering sudo rules, SUID files, capabilities, and follow-up checks after LinPEAS."
 date: 2026-04-19T11:00:00Z
 lastmod: 2026-04-19T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["linux privesc", "linux privilege escalation", "linpeas"]
 toc: true
 cover:
   image: "/images/articles/linux-privilege-escalation-cheat-sheet.png"
-  alt: "Linux privilege escalation cheat sheet"
+  alt: "Dark grid cover card for Linux Privilege Escalation Cheat Sheet (2026), with large high-contrast title lettering."
 ---
 
 You have a low-privilege shell. Now what? This cheat sheet is the ordered, opinionated checklist that solves the privesc step on most CTFs and audits.

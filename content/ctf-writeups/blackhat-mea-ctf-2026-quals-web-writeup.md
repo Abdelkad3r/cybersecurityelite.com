@@ -2,7 +2,7 @@
 title: "Black Hat MEA CTF Qualification 2026 — Web Writeup (Lumen)"
 date: 2026-09-06T10:00:00Z
 lastmod: 2026-09-07T00:00:00Z
-description: "Full step-by-step web writeup for Black Hat MEA CTF Qualification 2026. Covers Lumen: a three-stage chain combining a split-boundary %3c filter bypass for HTML injection, a PHP max_input_vars CSP header drop, and localStorage exfiltration via a same-origin trace store."
+description: "Black Hat MEA CTF Web writeup for Lumen, tracing HTML injection through CSP header handling to localStorage exposure."
 summary: "Lumen is a single PHP app whose Content-Security-Policy looks airtight from the client side — until you realise the header is set by PHP code that can be beaten by the request parser. The chain is three steps: inject one raw '<' by splitting a double-encoded percent sequence across two GET parameters; flood the request with >1000 variables to trigger an unbuffered PHP warning that races the header() call and wins; read the operator's localStorage into the app's own trace store and collect it."
 tags:
   - ctf
@@ -30,7 +30,7 @@ categories:
 author: "CyberSecurity Elite"
 cover:
   image: "/images/articles/blackhat-mea-ctf-2026-quals-web-writeup.png"
-  alt: "Black Hat MEA CTF Qualification 2026 Web writeup cover — Lumen CSP bypass via PHP max_input_vars header race and split %3c filter bypass"
+  alt: "Dark grid cover card for Black Hat MEA CTF Qualification 2026 — Web (Lumen), with large high-contrast title lettering."
   relative: false
 showToc: true
 TocOpen: false

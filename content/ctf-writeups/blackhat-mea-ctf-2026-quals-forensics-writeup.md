@@ -2,7 +2,7 @@
 title: "Black Hat MEA CTF Qualification 2026 — Forensics Writeup (Qfact & Whisper)"
 date: 2026-09-04T10:00:00Z
 lastmod: 2026-09-07T00:00:00Z
-description: "Full step-by-step forensics writeup for Black Hat MEA CTF Qualification 2026. Covers Qfact (Defender quarantine extraction, HTA dropper reversal, AES-256-CBC decryption) and Whisper (Ollama LLM history forensics, BLAKE2b password trap, WinZip-AES recovery)."
+description: "Black Hat MEA CTF Qualification 2026 — Forensics (Qfact & Whisper) writeup with step-by-step challenge solutions."
 summary: "Two DFIR challenges from BlackHat MEA CTF Quals 2026: Qfact requires recovering a ransomware dropper from Defender's quarantine store and decrypting 9 exfiltrated documents; Whisper traces a data-exfiltration script through Ollama prompt history, a GNOME Trash recovery, and a BLAKE2b password trap buried inside a WinZip-AES archive."
 tags:
   - ctf
@@ -31,7 +31,7 @@ categories:
 author: "CyberSecurity Elite"
 cover:
   image: "/images/articles/blackhat-mea-ctf-2026-quals-forensics-writeup.png"
-  alt: "Black Hat MEA CTF Qualification 2026 Forensics writeup cover — Qfact Defender quarantine recovery and Whisper Ollama LLM forensics"
+  alt: "Dark grid cover card for Black Hat MEA CTF Qualification 2026 — Forensics (Qfact & Whisper), with large high-contrast title lettering."
   relative: false
 showToc: true
 TocOpen: false

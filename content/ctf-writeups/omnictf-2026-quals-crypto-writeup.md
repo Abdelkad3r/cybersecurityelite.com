@@ -1,7 +1,7 @@
 ---
 title: "OmniCTF 2026 Quals Crypto Writeup: 3 Challenges Solved"
 slug: "omnictf-2026-quals-crypto-writeup"
-description: "OmniCTF 2026 Quals crypto step-by-step: dual_linera CRT-collapse LWE + LLL, Whiskerfield DH mod 65537^16 one-byte patch to shared=0, Orbital octonion state rank test."
+description: "OmniCTF 2026 Quals Crypto writeup with step-by-step solutions for three challenges."
 date: 2026-07-19T20:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -44,7 +44,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/omnictf-2026-quals-crypto-writeup.png"
-  alt: "OmniCTF 2026 Quals crypto writeup — three challenges solved covering dual_linera two-modulus LWE where the same small e is used across both moduli so CRT collapse to a single equation Y equals A s plus e mod q1 q2 followed by LLL on a 20-dimensional lattice recovers the 96-bit secret, Whiskerfield-Meowtin CuteSecure DH whose modulus is 65537 raised to the 16th power and whose public value is hand-crafted as one byte flip away from a multiple of 65537 so a single-byte patch drives the shared secret to zero and the flag decrypts under a glibc-rand LCG stream cipher, and Orbital-Strike-Cannon octonion state with a broken LCG whose output stream is published and 7 satellites 5 real 2 fake where non-associative Cayley-Dickson multiplication collapses to 8x8 matrix multiplication once association order is fixed leaving 9 unknowns against 75 linear equations per real satellite solved by per-satellite RREF"
+  alt: "Dark grid cover card for OmniCTF 2026 Quals Crypto, with large high-contrast title lettering."
 ---
 
 **OmniCTF 2026 Quals** shipped a crypto track built around one recurring lesson — **the algebra is scarier than the actual attack surface** — and this **CyberSecurity Elite** writeup solves all three of its challenges. Three challenges, all rated medium, and every one dresses a mundane linear-algebra collapse in a costume the reader is expected to spend hours investigating. **dual_linera** uses two-modulus LWE where the error `e` is shared across both moduli. CRT is a linear map, so `e` survives the reconstruction and 18 samples plus LLL on a 20x20 lattice recover the 96-bit secret. **Whiskerfield-Meowtin** offers a "CuteSecure-DH" whose modulus is `65537^16` (Fermat prime to the 16th power) and whose public value is hand-crafted as one byte-flip away from a multiple of 65537. Patch the byte, drive the shared secret to zero, decrypt under the LCG stream cipher. **Orbital-Strike-Cannon** wraps a 9-unknown affine state in non-associative octonion multiplication, a published-stream "broken RNG", and 7 satellites (5 real, 2 fake), but once you fix the association order it becomes 8x8 matrix multiplication, and once you write the samples as linear equations a per-satellite RREF sorts real from fake without needing the private `real_ids`.

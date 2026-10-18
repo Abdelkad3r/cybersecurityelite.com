@@ -13,7 +13,7 @@ keywords: ["midnight sun ctf 2026 empols writeup", "midnight sun quals 2026", "a
 toc: true
 cover:
   image: "/images/articles/midnight-sun-2026-empols.png"
-  alt: "MIDNIGHT SUN 2026 EMPOLS writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for Midnight Sun 2026 empols, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="Midnight Sun CTF 2026 Quals" difficulty="Hard" os="Linux x86-64" skills="Templated binary RE, radare2 scripting, automated static analysis" >}}

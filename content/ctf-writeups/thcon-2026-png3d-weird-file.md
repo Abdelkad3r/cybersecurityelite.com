@@ -13,7 +13,7 @@ keywords: ["thcon 2026 png3d writeup", "weird_file.thc thcon", "emoji binary enc
 toc: true
 cover:
   image: "/images/articles/thcon-2026-png3d-weird-file.png"
-  alt: "THCON 2026 PNG3D / WEIRD_FILE writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for THCON 2026 PNG3D, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="THCON 2026 (Toulouse Hacking Convention)" difficulty="Medium" os="Steganography" skills="Frequency analysis, binary encoding, PNG carving, LSB steganography" >}}

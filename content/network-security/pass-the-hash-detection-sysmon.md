@@ -1,7 +1,7 @@
 ---
 title: "Pass-the-Hash Detection with Sysmon: Event Guide (2026)"
 slug: "pass-the-hash-detection-sysmon"
-description: "Block lateral movement attacks with Sysmon. Configure Event ID 10 process access detection, analyze LSASS memory reads, and build forensic timelines."
+description: "A Sysmon-based detection guide for suspicious process access to LSASS, including Event ID 10 configuration, investigation, and timeline review."
 date: 2026-06-08T20:27:30Z
 lastmod: 2026-06-08T20:27:30Z
 draft: false
@@ -31,7 +31,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/pass-the-hash-detection-sysmon.png"
-  alt: "Pass-the-Hash detection with Sysmon — comprehensive monitoring and response guide"
+  alt: "Dark grid cover card for Pass-the-Hash Detection with Sysmon, with large high-contrast title lettering."
 ---
 
 Pass-the-Hash (PtH) uses a stolen password hash as alternate authentication material; the hash does not have to be cracked to be used. Sysmon Event ID 10 can help identify a process opening LSASS while an attacker collects credentials, but that is **credential-access telemetry**, not proof that a hash was later reused. A hash obtained elsewhere, or already present in a process, can be used for PtH without a new LSASS access event on the system where authentication occurs.

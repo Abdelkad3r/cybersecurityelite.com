@@ -1,7 +1,7 @@
 ---
 title: "BYUCTF 2026 Writeup: All 15 Challenges"
 slug: "byuctf-2026-writeup"
-description: "BYUCTF 2026 full writeup — crypto, forensics, reverse and web. All 15 challenges solved with methodology, exploit code, and the lessons learned."
+description: "BYUCTF 2026 writeup covering cryptography, forensics, reverse engineering, and web challenges with methodology and exploit examples."
 date: 2026-05-30T21:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -43,7 +43,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/byuctf-2026-writeup.png"
-  alt: "BYUCTF 2026 writeup — all 15 challenges across crypto, forensics, reverse and web"
+  alt: "Dark grid cover card for BYUCTF 2026, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="BYUCTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy (Crypto, Forensics, Reverse, Web)" skills="Coppersmith small-roots, multi-prime RSA, Euler totient tower reduction, YARA constraint solving, NTP/ICMP/HTTP pcap forensics, Go reverse engineering, Python prototype pollution, CSP bypass" >}}

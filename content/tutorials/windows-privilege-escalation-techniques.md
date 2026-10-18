@@ -1,7 +1,7 @@
 ---
 title: "Windows Privilege Escalation Techniques That Still Work in 2026"
 slug: "windows-privilege-escalation-techniques"
-description: "Escalate from local user to SYSTEM on Windows 10/11 — token impersonation, unquoted paths, service hijacking, and the WinPEAS pivots that actually land."
+description: "Escalate from local user to SYSTEM on Windows 10/11 — token impersonation, unquoted paths, service hijacking, and follow-up checks using WinPEAS."
 date: 2026-04-21T11:00:00Z
 lastmod: 2026-04-21T11:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["windows privesc", "windows privilege escalation", "winpeas"]
 toc: true
 cover:
   image: "/images/articles/windows-privilege-escalation-techniques.png"
-  alt: "Windows privilege escalation techniques"
+  alt: "Dark grid cover card for Windows Privilege Escalation Techniques That Still Work in 2026, with large high-contrast title lettering."
 ---
 
 The Windows privilege escalation surface has narrowed since the days of unquoted-service-path goldmines, but it hasn't disappeared. Token abuse, misconfigured services, and overlooked AutoLogon registry entries still net SYSTEM on a meaningful percentage of corporate hosts.

@@ -1,7 +1,7 @@
 ---
 title: "Bug Bounty Recon Methodology: The Workflow That Actually Finds Bugs"
 slug: "bug-bounty-recon-methodology"
-description: "The recon pipeline that consistently surfaces bounty-paying bugs — subdomain enum, content discovery, parameter mining, and how to prioritise what to test."
+description: "A scoped bug bounty reconnaissance workflow covering asset discovery, service review, and prioritizing manual tests."
 date: 2026-04-30T10:00:00Z
 lastmod: 2026-04-30T10:00:00Z
 draft: false
@@ -12,7 +12,7 @@ keywords: ["bug bounty recon", "subdomain enumeration", "bug bounty methodology"
 toc: true
 cover:
   image: "/images/og-default.svg"
-  alt: "Bug bounty recon methodology"
+  alt: "CyberSecurity Elite shield and wordmark on a dark grid."
 ---
 
 Recon is the single highest-leverage activity in bug bounty hunting — but most beginners do it wrong. They run every tool, collect 200,000 subdomains, and then stare at the wall. This is the recon pipeline used by hunters who consistently hit the leaderboard.

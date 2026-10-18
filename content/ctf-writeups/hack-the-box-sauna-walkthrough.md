@@ -13,7 +13,7 @@ keywords: ["hack the box sauna", "htb sauna writeup", "as-rep roasting walkthrou
 toc: true
 cover:
   image: "/images/articles/hack-the-box-sauna-walkthrough.png"
-  alt: "HTB SAUNA WALKTHROUGH writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for Hack The Box, with large high-contrast title lettering."
   hidden: false
 ---
 

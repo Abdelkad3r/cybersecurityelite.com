@@ -1,7 +1,7 @@
 ---
 title: "HASBLCTF 2026 Pwn Writeup: All 5 Challenges Solved"
 slug: "hasblctf-2026-pwn-writeup"
-description: "HASBLCTF 2026 pwn writeup — all 5 binary exploitation challenges solved: ret2win, int16 wrap, shellcode injection, jmp rdx gadget chain, and ROP."
+description: "HASBLCTF 2026 pwn writeup covering ret2win, integer wraparound, shellcode, a jmp rdx gadget chain, and ROP."
 date: 2026-06-01T04:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -51,7 +51,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/hasblctf-2026-pwn-writeup.png"
-  alt: "HASBLCTF 2026 pwn writeup — all 5 binary exploitation challenges (baby-bufferoverflow, candy-store, baby-shellcoder, jumper, padawan-pwn)"
+  alt: "Dark grid cover card for HASBLCTF 2026 Pwn, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Medium)" os="Jeopardy — Pwn (Linux x86-64)" skills="ret2win with movaps stack alignment, int16 signed overflow, mmap RWX shellcode injection, register-controlled jmp into pre-built gadget chain, classic ROP with SysV-ABI argument-register setup, pwntools payload construction, checksec mitigation analysis" >}}

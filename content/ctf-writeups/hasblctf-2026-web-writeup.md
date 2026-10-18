@@ -1,7 +1,7 @@
 ---
 title: "HASBLCTF 2026 Web Exploitation: All 5 Challenges Solved"
 slug: "hasblctf-2026-web-writeup"
-description: "HASBLCTF 2026 web writeup — all 5 challenges solved: robots.txt cookie bypass, path traversal, client-trusted shop, Flask SSTI in PDFs, hint-prune brute."
+description: "HASBLCTF 2026 web writeup covering five challenges: cookie checks, path traversal, client-side trust, PDF SSTI, and hint brute force."
 date: 2026-06-01T07:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -47,7 +47,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/hasblctf-2026-web-writeup.png"
-  alt: "HASBLCTF 2026 web writeup — all 5 challenges (T/I Forum, Anatolian Atlas, Arena.exe, Lineup Challenge, DTeam)"
+  alt: "Dark grid cover card for HASBLCTF 2026 Web Exploitation, with large high-contrast title lettering."
 ---
 
 {{< ctf-meta platform="HASBL CTF 2026" difficulty="Mixed (Easy → Hard)" os="Jeopardy — Web (HTTP, nginx, Express, Next.js, Flask)" skills="client-side auth bypass via robots.txt + cookie injection, non-iterative path-traversal filter bypass, client-trusted economy / coin spoofing, Next.js sourcemap + header reconnaissance with hint-prune brute force, Jinja2 SSTI in PDF receipts with capped-field escape via Flask SECRET_KEY leak and itsdangerous session forgery" >}}

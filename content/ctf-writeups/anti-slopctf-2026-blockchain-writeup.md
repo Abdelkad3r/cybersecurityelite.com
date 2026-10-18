@@ -1,7 +1,7 @@
 ---
 title: "Anti-Slop CTF 2026 Blockchain Writeup: Finality Cache + Canopy Cache"
 slug: "anti-slopctf-2026-blockchain-writeup"
-description: "Step-by-step blockchain-track writeups for Anti-Slop CTF 2026. Finality Cache: bridge receipt commitment patch. Canopy Cache: PackBits decompression overwrites the bind table after validation."
+description: "Anti-Slop CTF 2026 Blockchain writeup: Finality Cache + Canopy Cache."
 date: 2026-06-22T22:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -33,7 +33,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/anti-slopctf-2026-blockchain-writeup.png"
-  alt: "Anti-Slop CTF 2026 blockchain writeup — Finality Cache receipt commitment patch and Canopy Cache PackBits overflow into the bind table"
+  alt: "Dark grid cover card for Anti-Slop CTF 2026 Blockchain, with large high-contrast title lettering."
 ---
 
 **Anti-Slop CTF 2026**'s blockchain track delivered two bridge-protocol challenges — **Finality Cache** and **Canopy Cache** — neither of which involves Solidity or EVM: Finality Cache is solved by patching all three consistency fields of a bridge receipt (lane varint, header amount, and VM commitment) and recomputing the commitment via the guardian binary itself under `gdb`; Canopy Cache exploits a TOCTOU gap between two validators using a PackBits decompression that overwrites the bind table after the bind has already been validated. This is the fifth and final per-category post in the **Anti-Slop CTF 2026** series; the earlier writeups covered [web](/ctf-writeups/anti-slopctf-2026-web-writeup/) (HTTP parsers), [reverse](/ctf-writeups/anti-slopctf-2026-reverse-writeup/) (ECDSA nonce attack + SHA-256 length extension), [pwn](/ctf-writeups/anti-slopctf-2026-pwn-writeup/) (Bellcore CRT fault + leak-and-overwrite + GCM forge chain), and [crypto](/ctf-writeups/anti-slopctf-2026-crypto-writeup/) (HNP CVP + CBC-MAC splice).

@@ -12,12 +12,20 @@
 {{- /* Canonical OG/Twitter image — emitted before PaperMod's stock so social crawlers pick it up first.
        Resolves to per-article cover → auto-generated card → site default, via og_image partial. */ -}}
 {{- $ogimg := partial "og_image.html" . }}
+{{- $ogAlt := "CyberSecurity Elite wordmark on a dark background." -}}
+{{- with .Params.cover.image -}}
+  {{- with $.Params.cover.alt -}}
+    {{- $ogAlt = . -}}
+  {{- else -}}
+    {{- $ogAlt = "Dark cover card with cyan and white typography." -}}
+  {{- end -}}
+{{- end -}}
 <meta property="og:image" content="{{ $ogimg }}">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="{{ .Title }} — CyberSecurity Elite">
+<meta property="og:image:alt" content="{{ $ogAlt }}">
 <meta name="twitter:image" content="{{ $ogimg }}">
-<meta name="twitter:image:alt" content="{{ .Title }} — CyberSecurity Elite">
+<meta name="twitter:image:alt" content="{{ $ogAlt }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@csecurityelite">
 <meta name="twitter:creator" content="@csecurityelite">
@@ -120,7 +128,7 @@
     "@type" "BlogPosting"
     "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
     "headline" .Title
-    "description" ((or .Description .Summary) | plainify)
+    "description" ((partial "page_description.html" .) | plainify)
     "image" $img
     "author" $author
     "publisher" (dict

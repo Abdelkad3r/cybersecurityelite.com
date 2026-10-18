@@ -30,7 +30,7 @@ keywords: [
 toc: true
 cover:
   image: "/images/articles/adfs-security-hardening.png"
-  alt: "ADFS security hardening guide — token signing, claim rules, Golden SAML defence"
+  alt: "Dark grid cover card for ADFS Security Hardening, with large high-contrast title lettering."
 ---
 
 If your environment still runs **Active Directory Federation Services (ADFS)** — and most large enterprises that adopted federation between 2015 and 2020 still do — you are sitting on the single highest-value target in your identity stack. An attacker who extracts the ADFS **token-signing certificate** can mint SAML tokens for any user, including domain admins, with no further AD interaction and no Kerberos or NTLM tickets to detect. That class of attack is **Golden SAML**, and it's exactly what hit SolarWinds-era victims in 2020. This is the practical **ADFS security hardening guide** for 2026: rotating signing certificates, auditing claim rules, enforcing Extranet Lockout, blocking the mimikatz / ADFSDump extraction path, and the migration path to Microsoft Entra ID for the eventual decommission.

@@ -12,7 +12,7 @@ keywords: ["ctf crypto", "ctf cryptography challenges", "crypto challenge"]
 toc: true
 cover:
   image: "/images/articles/ctf-crypto-challenges-solving-strategies.png"
-  alt: "CTF CRYPTO SOLVING STRATEGIES writeup — CTF challenge breakdown"
+  alt: "Dark grid cover card for CTF Crypto Challenges, with large high-contrast title lettering."
 ---
 
 CTF crypto challenges start from a hard truth: crypto categories in CTFs intimidate more newcomers than any other. The barrier isn't math — it's pattern recognition. Almost every CTF crypto challenge is a *known weakness* applied to slightly different parameters.
