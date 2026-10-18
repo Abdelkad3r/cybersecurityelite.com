@@ -32,7 +32,7 @@
          alt="{{ $alt }}">
   {{- else -}}
     <picture>
-      {{- if ne $webp $img -}}<source srcset="{{ $webpURL }}" type="image/webp">{{- end }}
+      {{- if and (ne $webp $img) (fileExists (printf "static%s" $webp)) -}}<source srcset="{{ $webpURL }}" type="image/webp">{{- end }}
       <img loading="{{ $loading }}" fetchpriority="{{ $fp }}"
            src="{{ $imgURL }}"
            width="1200" height="630"
