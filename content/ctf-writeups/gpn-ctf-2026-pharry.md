@@ -84,9 +84,9 @@ The `0xdeadbeef` type-juggling branch is a decoy — the real flag is at `/flag`
 
 ## The trigger — PHAR metadata `unserialize`
 
-PHP 7 automatically `unserialize()`s the metadata section of a PHAR archive whenever any file operation touches a `phar://` path. That includes `md5_file("phar:///path/to/archive.phar/internal-file")`. The deserialized objects persist until the request ends, when PHP calls their destructors — including `User::__destruct()`.
+In PHP 7, opening a PHAR through a `phar://` path automatically deserializes its metadata. That includes a file operation such as `md5_file("phar:///path/to/archive.phar/internal-file")`. The deserialized objects persist until the request ends, when PHP calls their destructors — including `User::__destruct()`.
 
-So if we get a PHAR with a malicious `User` in its metadata onto the server's local filesystem and then call `md5_file("phar:///tmp/...")`, we achieve RCE.
+This behavior changed in **PHP 8.0**: merely opening a PHAR no longer deserializes its metadata. Metadata is deserialized when code explicitly calls `Phar::getMetadata()` or `PharFileInfo::getMetadata()`. Those calls can still be unsafe on untrusted archives unless deserialization is appropriately restricted. This challenge uses PHP 7.4, so its `md5_file("phar:///tmp/...")` trigger applies to the challenge runtime. See the [PHP Phar manual](https://www.php.net/manual/en/class.phar.php), [Phar::getMetadata() manual](https://www.php.net/manual/en/phar.getmetadata.php), and the [PHP RFC that introduced the change](https://wiki.php.net/rfc/phar_stop_autoloading_metadata).
 
 ## Why nested stream wrappers don't work
 
@@ -195,7 +195,7 @@ GPNCTF{WeB_15_FOR_w33BS_4nd_5UCk5_pHP_IS_C00l_Tou6H}
 
 ## Defender takeaway
 
-- **PHAR metadata auto-deserialization is the bedrock primitive for PHP-side RCE.** PHP 7.4 and earlier automatically call `unserialize()` on PHAR metadata during any `phar://` file operation. PHP 8.0+ added restrictions and PHP 8.1 deprecated it entirely. **Upgrade to PHP 8.1+ or actively check for `phar://` in user-controlled paths.**
+- **PHAR metadata auto-deserialization is the primitive in this PHP 7.4 challenge.** PHP 7.x automatically deserializes PHAR metadata when opening an archive. Starting with PHP 8.0, opening an archive alone no longer does so; explicit `getMetadata()` calls still deserialize metadata and must be treated carefully. Upgrade to a currently supported PHP release, avoid calling metadata accessors on untrusted archives, and allow-list the schemes and paths accepted from users. The [PHP Phar documentation](https://www.php.net/manual/en/class.phar.php) describes the version change.
 - **`md5_file` and `file_get_contents` opening separate TCP connections is a TOCTOU primitive.** Any integrity check that fetches the URL twice is vulnerable to a counting server. The fix is to fetch *once*, hash the buffer, and use the same buffer for the work — not "hash via URL, then read via URL."
 - **`User` classes with `__destruct` that runs `system`/`exec` are a deserialization gadget chain waiting to happen.** Move side-effecting code out of `__destruct`; if you must keep it, validate the inputs at construction and treat any `unserialize`-touched object as untrusted.
 - **Command injection in PHP `system` calls** is the second-tier vulnerability beneath the deserialization. Even if PHAR unserialize were fixed, `$avatar_path = "avatars/".$name.".png"` is shell-injectable via `name=foo;ls`. Use `escapeshellarg()` or pass arguments as an array via `proc_open`.
@@ -204,7 +204,7 @@ GPNCTF{WeB_15_FOR_w33BS_4nd_5UCk5_pHP_IS_C00l_Tou6H}
 
 ### What's the PHAR metadata deserialization bug?
 
-PHP 7.4 and earlier automatically call `unserialize()` on the metadata section of a PHAR archive whenever any file operation touches a `phar://` path — `md5_file`, `file_get_contents`, `fopen`, `file_exists`, etc. The deserialized objects persist until the request ends, when PHP calls their destructors. A PHAR with a `User` object whose `__destruct` runs `system()` gives arbitrary command execution.
+In PHP 7.x, opening a PHAR through a `phar://` operation such as `md5_file`, `file_get_contents`, `fopen`, or `file_exists` automatically deserializes its metadata. Starting with PHP 8.0, opening the archive alone no longer deserializes metadata; calling `Phar::getMetadata()` or `PharFileInfo::getMetadata()` does. On PHP 7.x, a PHAR containing a `User` object can therefore trigger its destructor when the archive is opened, if the application has the relevant gadget. On PHP 8.0 and later, the explicit metadata access call is the deserialization point. See the [PHP Phar manual](https://www.php.net/manual/en/class.phar.php).
 
 ### Why does the two-connection trick work?
 
@@ -224,7 +224,7 @@ A decoy. The condition `$res == 0xdeadbeef` (integer `3735928559`) is a nod to P
 
 ### How would you fix the server?
 
-Three orthogonal fixes: (1) upgrade to PHP 8.1+ where PHAR auto-deserialize is deprecated; (2) explicitly reject `phar://` in user-controlled paths via `stream_get_wrappers` filtering or a regex check; (3) fetch the URL once into a buffer and operate on the buffer (not "hash via URL, then read via URL").
+Use a currently supported PHP release and preserve the PHP 8.0 behavior change in your threat model: opening a PHAR no longer automatically deserializes metadata, but explicit `getMetadata()` calls still do. Do not call those accessors on untrusted archives unless deserialization is safely restricted. For user-controlled paths, allow-list the schemes and filesystem locations the application needs instead of trying to infer safety from a string check. Separately, fetch remote content once, then hash and process that same buffer; do not make integrity decisions from one URL fetch and use a second fetch as the content.
 
 ### Where can I find the solver?
 
@@ -235,12 +235,12 @@ Full source at [`web/pharry`](https://github.com/Abdelkad3r/gpn-ctf-2026/tree/ma
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question","name": "What's the PHAR metadata deserialization bug?","acceptedAnswer": {"@type": "Answer","text": "PHP 7.4 and earlier automatically call unserialize() on the metadata section of a PHAR archive whenever any file operation touches a phar:// path — md5_file, file_get_contents, fopen, file_exists. The deserialized objects persist until the request ends; PHP then calls their destructors. A PHAR with a User object whose __destruct runs system() gives arbitrary command execution."}},
+    {"@type": "Question","name": "What's the PHAR metadata deserialization bug?","acceptedAnswer": {"@type": "Answer","text": "In PHP 7.x, opening a PHAR through a phar:// operation automatically deserializes metadata. Starting with PHP 8.0, opening the archive alone no longer deserializes metadata; Phar::getMetadata() or PharFileInfo::getMetadata() does. A gadget in a PHP 7.x application can therefore run when the archive is opened, while in PHP 8.0 and later the explicit metadata accessor is the deserialization point."}},
     {"@type": "Question","name": "Why does the two-connection trick work?","acceptedAnswer": {"@type": "Answer","text": "md5_file and file_get_contents each open a separate TCP connection to the URL. A counting HTTP server serves different responses per connection: close the first so md5_file returns FALSE, serve the PHAR on the second so file_get_contents returns bytes. file_put_contents writes the PHAR to /tmp/remote_file.jpg; a follow-up phar:// access triggers deserialization."}},
     {"@type": "Question","name": "Why doesn't phar://data:// work on PHP 7.4?","acceptedAnswer": {"@type": "Answer","text": "PHP 7.4's PHAR extension requires the archive path to be a local filesystem path. Nested stream wrappers (data://, https://, php://filter/...) are rejected. We have to land the PHAR locally first."}},
     {"@type": "Question","name": "How does the User destructor chain fire?","acceptedAnswer": {"@type": "Answer","text": "The PHAR metadata is a serialized User object with avatar_path = /tmp/x;cat /flag;#. unserialize reconstructs the object; __construct is NOT called on deserialization. At request end PHP GCs the object and __destruct runs system(rm /tmp/x;cat /flag;#) — the ; chains cat /flag after rm, # comments out the trailing .png."}},
     {"@type": "Question","name": "What's the 0xdeadbeef branch for?","acceptedAnswer": {"@type": "Answer","text": "A decoy. The condition $res == 0xdeadbeef is a nod to PHP's loose-comparison type juggling. The reward flag.txt contains an ASCII-art decoy. The real flag is at /flag (no extension), reached only via the PHAR deserialization path."}},
-    {"@type": "Question","name": "How would you fix the server?","acceptedAnswer": {"@type": "Answer","text": "Three orthogonal fixes: upgrade to PHP 8.1+ where PHAR auto-deserialize is deprecated; explicitly reject phar:// in user-controlled paths; fetch the URL once into a buffer and operate on the buffer instead of hash-via-URL then read-via-URL."}},
+    {"@type": "Question","name": "How would you fix the server?","acceptedAnswer": {"@type": "Answer","text": "Use a currently supported PHP release. Since PHP 8.0, opening a PHAR alone no longer automatically deserializes metadata, but explicit getMetadata() calls still do and must be treated carefully. Allow-list accepted schemes and paths, avoid metadata access on untrusted archives unless deserialization is restricted, and fetch remote content once so the hash and processing use the same bytes."}},
     {"@type": "Question","name": "Where can I find the solver code?","acceptedAnswer": {"@type": "Answer","text": "Full source at web/pharry in github.com/Abdelkad3r/gpn-ctf-2026 including the PHAR generator, counting server, and end-to-end exploit. Master writeup at cybersecurityelite.com/ctf-writeups/gpn-ctf-2026-writeup/."}}
   ]
 }

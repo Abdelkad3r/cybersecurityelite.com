@@ -73,22 +73,23 @@ Transfer-Encoding: chunked
 X
 ```
 
-The front-end sees `Content-Length: 6`, forwards 6 bytes of body (`0\r\n\r\nX`) to the back-end. The back-end reads chunked, sees `0\r\n\r\n` as the end-of-body marker, and treats the trailing `X` as the first byte of the *next* request on the keep-alive connection. Whatever the attacker appends after `X` becomes a smuggled request that runs with whatever session and IP context the next legitimate user has.
+The front-end sees `Content-Length: 6` and forwards the six body bytes (`0\r\n\r\nX`) to the back-end. A chunked-aware back-end sees `0\r\n\r\n` as the end of the body; the trailing `X` is then left over on the connection. What happens to those bytes depends on the back-end parser and connection handling. In a vulnerable chain, leftover bytes can become the beginning of a second request, creating a request boundary the front end did not see. This payload is illustrative: the exact behavior and impact depend on both parsers, proxy configuration, and whether the connection is reused.
 
-Impact against PHP: session hijack, WAF bypass, cache poisoning, forced request replay of authenticated actions. James Kettle's PortSwigger research is the definitive reference; a search for "HTTP Desync Attacks: Request Smuggling Reborn" will find the writeup.
+Depending on the proxy chain and application, request smuggling can enable WAF bypass, cache poisoning, or unauthorized request effects; session impact depends on which requests share the affected connection and how the application handles them. For a detailed treatment, see PortSwigger's [HTTP Desync Attacks: Request Smuggling Reborn](https://portswigger.net/research/http-desync-attacks-request-smuggling-reborn).
 
 ### Secure fix
 
-- Terminate HTTP at a single, standards-strict reverse proxy (Nginx `>= 1.17`, HAProxy `>= 2.4`, Envoy) and use HTTP/2 or HTTP/3 upstream to PHP-FPM if the version allows. HTTP/2 doesn't have the CL/TE ambiguity.
-- Reject requests with both `Content-Length` and `Transfer-Encoding` at the edge. Nginx does this by default since 1.23; verify with a probe.
-- Disable HTTP/1.1 pipelining and keep-alive on the socket between your CDN and your origin if the CDN insists on speaking HTTP/1.1. Loss of that optimisation is cheaper than a smuggling incident.
+- Keep every HTTP parser in the request path patched and configured to handle message framing consistently. Reject ambiguous or malformed framing at the edge where possible, and verify that each proxy-to-backend hop parses and forwards the request the same way. [RFC 9112](https://www.rfc-editor.org/rfc/rfc9112.html#section-6.3) allows a server to reject a request containing both `Content-Length` and `Transfer-Encoding` or process it using `Transfer-Encoding`; either way, it requires the connection to be closed after the response. An intermediary that forwards such a message must remove `Content-Length` and process the transfer coding before forwarding.
+- Nginx began returning an error for requests containing both `Content-Length` and `Transfer-Encoding` in **1.21.1**. Use a currently supported release from your distribution or vendor, check its release notes for backports, and verify the behavior of the complete proxy chain; this one check does not cover every request-smuggling variant.
+- Nginx's `fastcgi_pass` sends requests to PHP-FPM using **FastCGI**, not HTTP/2 or HTTP/3. Those HTTP versions may be used on a client-to-proxy or proxy-to-HTTP-origin hop; their framing differs from HTTP/1.1, but protocol translation and later HTTP/1.1 hops still need consistent parsing. See the [Nginx FastCGI module documentation](https://nginx.org/en/docs/http/ngx_http_fastcgi_module.html), [RFC 9113](https://www.rfc-editor.org/rfc/rfc9113.html), and [RFC 9114](https://www.rfc-editor.org/rfc/rfc9114.html).
+- Closing a connection when required by the protocol is part of correct error handling, but turning off keep-alive or HTTP/1.1 pipelining is not a general fix for parser disagreement. Do not rely on connection settings as a substitute for patching and validating every hop.
 - On WAF-terminated deployments, subscribe to your WAF's HTTP-smuggling ruleset and monitor it. AWS ALB, Cloudflare, and Fastly all publish smuggling-related deploy notes.
 
 ### Key lessons
 
 - The socket and the wire come *before* PHP. Bugs at this layer land in your PHP handler.
 - Every hop between the client and PHP is a header-parsing implementation. Two implementations that disagree = smuggling.
-- HTTP/1.1's dual body-length rules are the underlying primitive. HTTP/2 removes the primitive but adds different ones (frame prioritisation, HPACK, header validation). Migration doesn't remove the class; it moves it.
+- HTTP/1.1 framing disagreements are one request-smuggling primitive. HTTP/2 uses binary frames; HTTP/3 carries HTTP frames over QUIC streams. Translating between protocols or forwarding to an HTTP/1.1 backend can introduce framing differences again. Moving a hop to a newer HTTP version does not by itself prove that the whole request path is safe.
 
 ## 2. The handoff to PHP: mod_php vs PHP-FPM
 
