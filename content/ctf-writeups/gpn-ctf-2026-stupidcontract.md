@@ -1,7 +1,7 @@
 ---
 title: "GPN CTF 2026 — Stupidcontract: Patched eBPF Verifier + Signed-Cmp OOB"
 slug: "gpn-ctf-2026-stupidcontract"
-description: "GPN CTF 2026 Reverse: a custom kernel strips BPF verifier bounds checks. A signed-comparison eBPF program writes outside the map, clobbers SUCCESS[0], and lights the flag path."
+description: "GPN CTF 2026 Stupidcontract analysis: the published eBPF object uses a signed index check followed by map-value pointer arithmetic. The challenge README attributes its acceptance to a patched verifier; the kernel images are not in the public source snapshot."
 date: 2026-06-07T18:30:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -30,14 +30,16 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/gpn-ctf-2026-stupidcontract.png"
-  alt: "GPN CTF 2026 Stupidcontract writeup — patched kernel strips BPF verifier bounds checks, signed-comparison OOB write clobbers SUCCESS"
+  alt: "GPN CTF 2026 Stupidcontract writeup — eBPF object disassembly shows a signed index check and map-value pointer arithmetic; the challenge README describes a patched verifier"
 ---
 
-{{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Hard" os="Reverse — Linux kernel forensics, eBPF, Rust aya" skills="unpacking bzImage to vmlinux ELF, string-diffing two kernels with shifted section layout to find removed verifier messages, reading eBPF disassembly to spot signed-compare bypass, exploiting unchecked map-value pointer arithmetic with a negative index, beating a 20%-RNG bit-flip gate by detecting the win and switching to a neutral index" >}}
+{{< ctf-meta platform="GPN CTF 2026 (kitctf)" difficulty="Hard" os="Reverse — Linux kernel forensics, eBPF, Rust aya" skills="reviewing a supplied eBPF object, tracing signed comparisons and map-value pointer arithmetic, assessing a challenge-reported verifier patch, following the solver's RNG-gate strategy" >}}
 
-This **CyberSecurity Elite** writeup breaks down **Stupidcontract**, the GPN CTF 2026 reverse challenge that lives at the intersection of kernel forensics and eBPF. The handout ships two kernel images — `patched.bzImage` and `unpatched.bzImage` — plus a Rust/aya userspace runner that loads an eBPF program against a 101-byte `.bss` map. The challenge is to figure out *what was patched* and exploit it.
+This **CyberSecurity Elite** writeup examines **Stupidcontract**, the GPN CTF 2026 reverse challenge involving a Rust/aya runner and an eBPF object. The public challenge repository includes a README, `contract.bpf.o`, and a solver. Its README says the full handout contains patched and unpatched kernel images plus a root filesystem, but those images and the root filesystem are not present in the public repository snapshot. This distinction matters: the object lets us inspect the program's index check and pointer arithmetic, while the exact kernel patch can only be attributed to the README's account unless the images or a source diff are available.
 
-The diff turns out to be **five string deletions from the BPF verifier** — exactly the error messages that block unbounded pointer arithmetic against map-value pointers. With those checks gone, an eBPF program using a signed-comparison bounds check and a negative index can write to `bss[idx + 1]` where `idx + 1` lands outside the map. Targeting `idx = -1` writes the RNG bit directly into `bss[0]` = `SUCCESS[0]`, the flag gate. Flag:
+The challenge README reports that comparing the supplied kernel images reveals five verifier-related strings present in the reference image but absent from the patched image. It interprets those differences as removal of verifier rejection paths for out-of-bounds pointer arithmetic. The public repository does not include either image, the extracted `vmlinux` files, or a source diff, so that patch-level conclusion cannot be independently confirmed here. A missing diagnostic string alone does not establish which code paths changed or whether all bounds checks were removed.
+
+The included BPF object does independently show the relevant program pattern: a signed comparison against `99`, a map-value pointer relocation, a register-based pointer addition, and a byte store at offset `1`. With an index of `-1`, the computed store address is the map-value base. The README and supplied solver report that this works in the challenge environment and changes `SUCCESS[0]`; that runtime result is documented by the challenge author, not reproduced from the missing kernel image in this review. Flag:
 
 ```
 GPNCTF{W417, n0! WHo STo1e mY S3CurITy???}
@@ -47,7 +49,7 @@ This is the standalone deep-dive on `reverse/stupidcontract` from the [GPN CTF 2
 
 ## What's "patched"?
 
-The bzImage payload is a gzip stream starting at offset `0x42c4`:
+The challenge README gives a procedure for extracting a gzip stream from the supplied `patched.bzImage`, at offset `0x42c4` in that handout:
 
 ```python
 data = open('patched.bzImage','rb').read()
@@ -55,7 +57,7 @@ i = data.find(b'\x1f\x8b\x08')   # 0x42c4
 open('comp.gz','wb').write(data[i:])
 ```
 
-After `gunzip`, both vmlinux ELFs are ~23 MB and **99% of bytes differ** because of a section-layout shift introduced by the patch. Naive `diff -q` is uninformative. String-diffing strips the noise:
+The challenge README says the unpacked `vmlinux` files are about 23 MB and that most bytes differ because of a section-layout shift. It also reports the following string comparison. Since the images and extracted ELFs are absent from the public repository, these sizes, byte-difference percentage, and string results are not independently reproducible from the published files:
 
 ```
 $ strings vmlinux-patched | sort -u > p.s
@@ -70,20 +72,18 @@ $ diff p.s u.s | awk 'length > 30'
 > value %lld makes %s pointer be out of bounds
 ```
 
-The unpatched kernel *has* the verifier's bounds-check error messages; the patched one does **not**. So the patch is "delete the OOB-pointer error paths in `check_reg_arithmetic` / `check_helper_mem_access`" — the verifier still loads programs but no longer rejects unbounded pointer arithmetic against map-value pointers.
-
-Conclusion: any eBPF code with deliberately unverifiable pointer math is now loadable, and its runtime accesses are unchecked. We need to find a program that takes advantage of that.
+The README attributes the missing strings to changes in verifier checks such as `check_reg_arithmetic` and `check_helper_mem_access`. That is a plausible interpretation of the reported diff, but the string comparison alone cannot prove that those particular paths were deleted. It also does not support the broader claim that *any* program with unverifiable pointer arithmetic is accepted. The narrower challenge-specific claim is that the supplied object and solver are reported to run on the challenge kernel.
 
 ## The userspace binary
 
-`rootfs.ext2` mounts cleanly as ext2. The Rust/aya binary `/usr/bin/stupidcontract` exposes two BPF programs:
+According to the challenge README, `rootfs.ext2` contains a Rust/aya binary at `/usr/bin/stupidcontract` with two BPF programs. The root filesystem and executable are not present in the public repository snapshot, so the following userspace behavior is the challenge-provided description rather than an independent inspection:
 
 - `try_get_reservation(idx: i64)` — runs a 20% RNG check, writes the resulting `0`/`1` byte into a 101-byte `.bss` map at offset `idx + 1`.
 - `validate_reservations()` — walks `bss[1..100]`; if every byte's low bit is set, writes `bss[0] = 1`.
 
-The userspace loop runs `try_get_reservation` 300 times with user-supplied indices, then runs `validate_reservations`, then checks `SUCCESS[0]` and prints the flag if it's `1`.
+The README describes a userspace loop that runs `try_get_reservation` 300 times with supplied indices, then calls `validate_reservations` and checks `SUCCESS[0]` before printing the flag.
 
-The embedded BPF ELF (machine = `EM_BPF` = `0xf7`) is at file offset `0x2aa20` (three identical copies are baked in for relocation purposes); extract it by walking the ELF header.
+The README places the embedded BPF ELF at offset `0x2aa20` and reports three identical copies. The published `contract.bpf.o` is independently identifiable as a 64-bit ELF for the eBPF machine; the rootfs binary needed to verify its embedding offset and copies is not included.
 
 ## `try_get_reservation` in eBPF
 
@@ -110,9 +110,9 @@ The embedded BPF ELF (machine = `EM_BPF` = `0xf7`) is at file offset `0x2aa20` (
 Two cooperating mistakes:
 
 1. **Signed compare on an unsigned offset.** `r7 s> 0x63` returns false for any value with bit 63 set — any negative `i64`. A user input of `-1` skips the "index too large" branch.
-2. **Unbounded map-value arithmetic.** `r1 += r7` after `r1 = .bss` is exactly the pattern the deleted verifier messages warn about. On stock 6.19.5 the program would be rejected at load time. On the patched kernel it loads, and at runtime the kernel just does the addition.
+2. **Map-value pointer arithmetic from an attacker-controlled register.** `r1 += r7` after `r1 = .bss` makes the store address depend on the supplied index. The challenge README says the patched kernel accepts this program and that the unpatched image rejects it. The exact verifier behavior is kernel-version and program-context dependent; without those images or a matching source diff, this writeup cannot independently verify the claimed stock-kernel rejection or identify the patch that changed it.
 
-Passing `r7 = -1` makes the store target `bss + (-1) + 1 = bss[0]` — the `SUCCESS[0]` flag gate.
+Passing `r7 = -1` makes the store target `bss + (-1) + 1`, the map-value base. The challenge README identifies that byte as `SUCCESS[0]`, the flag gate.
 
 ## Exploiting the 20% gate
 
@@ -121,8 +121,8 @@ Passing `r7 = -1` makes the store target `bss + (-1) + 1 = bss[0]` — the `SUCC
 What we actually want:
 
 1. Send `-1` until `SUCCESS[0]` becomes `1`. The server prints *Your reservation succeeded* on the same iteration, so we know when this happens.
-2. Immediately switch to a "neutral" index whose write target is outside `bss[0..100]`. `-200` writes `bss[-199]` and changes nothing the binary cares about. `validate_reservations` still fails (`bss[1..100]` were never set), but it doesn't *clear* `bss[0]` either.
-3. Burn the remaining iterations on `-200`. The 300-round loop ends, `validate_reservations` runs, `bss[0]` is still `1` from our earlier successful `-1` call, the binary's `SUCCESS[0]` lookup returns `1`, and the flag-printing branch fires.
+2. The supplied solver switches to `-200` after observing a successful `-1` attempt. That index computes a store before the map-value base (`bss - 199`); it is still an out-of-bounds write. The README reports that this write completes in the challenge's kernel. Its safety depends on that environment's memory layout: a similar write could corrupt unrelated kernel memory or fault on another build. Do not treat a negative index as a generally safe or neutral destination. `validate_reservations` still fails (`bss[1..100]` were never set), but it does not clear `bss[0]` according to the challenge's documented behavior.
+3. The supplied solver burns the remaining iterations on `-200`. According to the README's description, after the 300-round loop `validate_reservations` runs without clearing `bss[0]`; the userspace check then sees the earlier `1` and prints the flag. The rootfs executable needed to independently confirm that sequence is not present in the public snapshot.
 
 The "we won" detection is straightforward: each round the server prints `Your reservation succeeded` or `Well, better luck next time` between prompts.
 
@@ -138,7 +138,7 @@ if b"reservation succeeded" in buf and not won:
     won = True
 ```
 
-End-to-end run (excerpt):
+The repository's README includes an end-to-end run (excerpt); this review did not reproduce it because the kernel image and root filesystem are missing from the published snapshot:
 
 ```
 266/300 …  -1
@@ -155,36 +155,36 @@ End-to-end run (excerpt):
 
 ## Defender takeaway
 
-- **An eBPF verifier is a compiler in your TCB.** Custom-kernel patches to the verifier should get the same review rigor as the verifier's original code. The five-string deletion patch in this challenge would be a single-PR change in a real codebase, and it carries the security implication of "every BPF program that runs is now untrusted."
-- **Differential analysis on bzImage is a real engineering skill.** Bzipped kernel images differ in 99% of bytes due to layout shifts even when the source diff is tiny. The reliable forensic path is unpack → ELF symbol diff → string diff for content changes → manual review of the related code.
-- **Signed vs unsigned comparisons on attacker-controlled offsets** are the most common eBPF map-OOB primitive. The verifier's bounds tracking specifically handles this — removing it lets a `r7 s> 0x63` check pass for `r7 = -1` and any other negative value.
-- **Rust/aya doesn't help.** The Rust BPF source code that compiled to the offending bytecode is just as patched-kernel-dependent as a C version. Memory safety in userspace doesn't translate to BPF program safety.
+- **Treat verifier changes as security-sensitive kernel changes.** The challenge README attributes the demonstrated acceptance to a custom verifier patch. Because its images and source diff are unavailable here, this writeup cannot establish the patch's exact scope or generalize its impact to other programs.
+- **Use binary differences as leads, not proof of a code change.** The README recommends comparing unpacked kernels and strings, but matching source or disassembly is needed to establish which verifier logic changed. The reported byte-difference percentage and string removals could not be checked from the public artifacts reviewed here.
+- **Inspect signed comparisons and pointer arithmetic together.** In the included object, the signed `r7 > 99` branch and later map-value pointer addition are visible. The object alone does not prove that a given kernel verifier accepts the program or that an out-of-bounds access will be safe.
+- **Userspace language safety does not establish BPF safety.** The public snapshot reviewed here contains the compiled object, not the Rust BPF source. Whatever language produced it, verifier acceptance and runtime pointer behavior depend on the kernel and program context.
 
 ## Frequently asked questions
 
 ### What was patched in the kernel?
 
-Five strings were removed from the BPF verifier — specifically the error messages from `check_reg_arithmetic` / `check_helper_mem_access` that reject unbounded pointer arithmetic against map-value pointers. Removing the strings is a proxy for removing the corresponding error paths. eBPF programs with deliberately unverifiable pointer math now load and run with their pointer arithmetic unchecked.
+The challenge README reports five verifier-related strings missing from the patched image and attributes them to changes involving `check_reg_arithmetic` and `check_helper_mem_access`. The images and a source diff are not in the public repository snapshot, so this writeup cannot confirm the code changes from those strings. It also cannot conclude that arbitrary unverifiable eBPF programs load. The supplied object and solver are reported by the README to work in the challenge environment.
 
 ### Why is the diff on bzImage so noisy?
 
-Adding code to the kernel shifts every following section's load address, which cascades through `e_shoff`/`e_shnum` and the gzip-compressed payload's layout. The result: 99% of bytes differ between two kernels that share 99% of their source. Reliable diff: unpack to vmlinux, sort `strings` output, diff at line granularity, then grep for missing content patterns.
+The challenge README says a section-layout shift explains the large byte-level difference and reports that about 99% of bytes differ. The underlying images are unavailable in the public snapshot, so that percentage and explanation are not independently verified here. Unpacked ELF and string comparisons can help locate differences, but code or disassembly review is needed to determine their meaning.
 
 ### What's the signed-comparison bug in `try_get_reservation`?
 
-The check `if r7 s> 0x63 goto error` returns false for any `r7` with bit 63 set — i.e. any negative `i64`. Sending `-1` as the user index passes the "too large" check and enters the RNG/write branch with `r7 = -1`. The subsequent `r1 += r7` against the map base pointer produces an out-of-bounds write at runtime.
+In the included object, the signed check `if r7 s> 0x63 goto error` returns false for a negative `i64`, including `-1`. The object then adds `r7` to the map-value pointer and stores at offset `1`, which computes the map-value base for `-1`. The README identifies this as an out-of-bounds verifier bypass targeting `SUCCESS[0]` and reports it works on the challenge kernel; the missing kernel image prevents independent confirmation of verifier acceptance and runtime behavior.
 
 ### Why does `-1` write to `bss[0]`?
 
-The store instruction is `*(u8 *)(r1 + 0x1) = w0` where `r1 = bss + r7`. With `r7 = -1`, the effective address is `bss + (-1) + 1 = bss[0]`. That's the `SUCCESS[0]` flag gate the userspace binary reads after the 300-iteration loop.
+The store instruction is `*(u8 *)(r1 + 0x1) = w0` where `r1` is relocated to a map value and then adjusted by `r7`. With `r7 = -1`, the arithmetic reaches the map-value base. The challenge README identifies that byte as `SUCCESS[0]` and describes it as the flag gate; the userspace binary needed to confirm this mapping is absent from the public snapshot.
 
 ### How do you beat the 20% RNG gate?
 
-Each `try_get_reservation` call *writes* the RNG result, win or lose. So consecutive `-1` calls overwrite `SUCCESS[0]` each time, and the final state is the last call's value — still a 20% probability. The trick is to detect the "Your reservation succeeded" message (server prints it on the same iteration as the win), then switch to a neutral index (`-200` writes to `bss[-199]`, well outside the map) for the remaining iterations. The successful `-1` write persists; `validate_reservations` doesn't clear `bss[0]` on failure.
+Each `try_get_reservation` call *writes* the RNG result, win or lose. So consecutive `-1` calls overwrite `SUCCESS[0]` each time, and the final state is the last call's value — still a 20% probability. The supplied solver detects the "Your reservation succeeded" message and then switches to `-200`. From the shown arithmetic, that index targets `bss - 199`, still outside the map; the README reports this works in the challenge environment. This is not a neutral or generally safe address. The persistence of `bss[0]` after failed validation is also described by the README and depends on the challenge program's behavior.
 
 ### Why doesn't the kernel SIGSEGV on the OOB write?
 
-eBPF map values are kernel-heap allocations. Writing into adjacent pages within the kernel heap doesn't fault as long as the page is mapped and writable. `-199` reaches the adjacent page in this layout, which is mapped (allocator slab) and writable. No SIGSEGV, no kernel oops; the BPF program returns normally.
+The public artifacts reviewed here do not establish the address reached by `-200`, adjacent allocator state, or why the challenge run completes without faulting. The README and solver report a successful run in the challenge environment; the precise memory-layout explanation is unverified. An out-of-bounds kernel write may corrupt data or fault and must not be assumed safe.
 
 ### Where can I find the solver?
 
@@ -195,12 +195,12 @@ Full source at [`reverse/stupidcontract`](https://github.com/Abdelkad3r/gpn-ctf-
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type": "Question","name": "What was patched in the kernel?","acceptedAnswer": {"@type": "Answer","text": "Five strings were removed from the BPF verifier — specifically error messages from check_reg_arithmetic and check_helper_mem_access that reject unbounded pointer arithmetic against map-value pointers. Removing the strings is a proxy for removing the corresponding error paths. eBPF programs with deliberately unverifiable pointer math now load and run with unchecked pointer arithmetic."}},
-    {"@type": "Question","name": "Why is the diff on bzImage so noisy?","acceptedAnswer": {"@type": "Answer","text": "Adding code to the kernel shifts every following section's load address, cascading through e_shoff/e_shnum and the gzip-compressed payload's layout. 99% of bytes differ between two kernels that share 99% of source. Reliable diff: unpack to vmlinux, sort strings output, diff at line granularity, grep for missing content patterns."}},
-    {"@type": "Question","name": "What's the signed-comparison bug in try_get_reservation?","acceptedAnswer": {"@type": "Answer","text": "The check if r7 s> 0x63 returns false for any r7 with bit 63 set — any negative i64. Sending -1 passes the too-large check and enters the RNG/write branch with r7 = -1. The subsequent r1 += r7 against the map base pointer produces an out-of-bounds write at runtime."}},
-    {"@type": "Question","name": "Why does -1 write to bss[0]?","acceptedAnswer": {"@type": "Answer","text": "The store is *(u8 *)(r1 + 0x1) = w0 where r1 = bss + r7. With r7 = -1, the effective address is bss + (-1) + 1 = bss[0]. That's the SUCCESS[0] flag gate the userspace binary reads after the 300-iteration loop."}},
-    {"@type": "Question","name": "How do you beat the 20% RNG gate?","acceptedAnswer": {"@type": "Answer","text": "Each try_get_reservation writes the RNG result win or lose, so consecutive -1 calls overwrite SUCCESS[0]. Detect the Your reservation succeeded message and switch to a neutral index (-200 writes to bss[-199], outside the map). The successful -1 write persists; validate_reservations doesn't clear bss[0] on failure."}},
-    {"@type": "Question","name": "Why doesn't the kernel SIGSEGV on the OOB write?","acceptedAnswer": {"@type": "Answer","text": "eBPF map values are kernel-heap allocations. Writing into adjacent pages within the kernel heap doesn't fault as long as the page is mapped and writable. -199 reaches an adjacent page that is mapped (allocator slab) and writable. No SIGSEGV, no kernel oops; the BPF program returns normally."}},
+    {"@type": "Question","name": "What was patched in the kernel?","acceptedAnswer": {"@type": "Answer","text": "The challenge README reports five verifier-related strings missing from the patched image and attributes them to changes involving check_reg_arithmetic and check_helper_mem_access. The images and source diff are absent from the public repository snapshot, so this writeup cannot verify the code changes or conclude that arbitrary unverifiable eBPF programs load. The README reports that the supplied object and solver work in the challenge environment."}},
+    {"@type": "Question","name": "Why is the diff on bzImage so noisy?","acceptedAnswer": {"@type": "Answer","text": "The challenge README attributes a large byte-level difference to a section-layout shift and reports about 99 percent of bytes differ. The images are unavailable in the public snapshot, so the percentage and explanation are not independently verified here. ELF and string comparisons can locate leads; code or disassembly review is needed to establish their meaning."}},
+    {"@type": "Question","name": "What's the signed-comparison issue in try_get_reservation?","acceptedAnswer": {"@type": "Answer","text": "In the included object, the signed check r7 s> 0x63 is followed by map-value pointer arithmetic using r7 and a byte store at offset 1. For r7 = -1, that arithmetic targets the map-value base. The challenge README identifies this as SUCCESS[0] and reports the program works on its patched kernel; the public snapshot lacks the kernel image needed to verify verifier acceptance and runtime behavior independently."}},
+    {"@type": "Question","name": "Why does -1 target bss[0]?","acceptedAnswer": {"@type": "Answer","text": "In the included object, the pointer is adjusted by r7 and then the byte store uses offset 1. With r7 = -1, the computed address is the map-value base. The challenge README identifies that byte as SUCCESS[0]; the rootfs binary needed to independently confirm that mapping is absent from the public snapshot."}},
+    {"@type": "Question","name": "How does the solver handle the RNG gate?","acceptedAnswer": {"@type": "Answer","text": "The included solver watches for the success message after sending -1 and then switches to -200. That index is still out of bounds according to the object's pointer arithmetic. The README reports it works in the challenge environment; it is not a generally safe or neutral address, and the README's description of state persistence depends on the challenge program."}},
+    {"@type": "Question","name": "Why doesn't the kernel fault on the out-of-bounds write?","acceptedAnswer": {"@type": "Answer","text": "The public artifacts do not establish the address reached by -200 or the adjacent allocator state. The README and solver report a successful run in the challenge environment, but the precise memory-layout explanation is unverified. An out-of-bounds kernel write may corrupt data or fault and should not be assumed safe."}},
     {"@type": "Question","name": "Where can I find the solver code?","acceptedAnswer": {"@type": "Answer","text": "Full source at reverse/stupidcontract in github.com/Abdelkad3r/gpn-ctf-2026 including the extracted contract.bpf.o. Master writeup at cybersecurityelite.com/ctf-writeups/gpn-ctf-2026-writeup/."}}
   ]
 }
