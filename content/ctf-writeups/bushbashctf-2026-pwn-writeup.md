@@ -1,7 +1,7 @@
 ---
 title: "BushBashCTF 2026 Binary Exploitation Writeup: Hack The Vault II — Adjacent Buffer NUL Overwrite & printf %s Overread"
 slug: "bushbashctf-2026-pwn-writeup"
-description: "BushBashCTF 2026 binary exploitation writeup for Hack The Vault II (100 pts, 207 solves): buffer and password pointers alias into the same 191-byte stack array, sending exactly 127 bytes then closing the write end causes fgets to write a NUL terminator at array[127] which is password[0], fread immediately overwrites it, and printf %s on buffer walks past the input and prints the adjacent password plaintext — a two-connection exploit leaks the server secret then submits it to collect the flag."
+description: "BushBashCTF 2026 Hack The Vault II writeup: sending 127 bytes and closing the write side ends the manual getchar loop; fread then overwrites the NUL at array[127], allowing printf to disclose the adjacent password. The source-verified exploit leaks it on one connection and submits it on another."
 date: 2026-08-02T12:00:00Z
 lastmod: 2026-08-04T10:00:00Z
 draft: false
@@ -28,7 +28,7 @@ keywords:
   - "adjacent buffer overread ctf"
   - "printf %s overread ctf"
   - "nul overwrite stack buffer ctf"
-  - "fgets nul terminator exploit"
+  - "getchar input terminator exploit"
   - "password leak printf ctf"
   - "buffer password alias stack ctf"
   - "two connection exploit ctf"
@@ -41,7 +41,7 @@ keywords:
 toc: true
 cover:
   image: "/images/articles/bushbashctf-2026-pwn-writeup.png"
-  alt: "BushBashCTF 2026 binary exploitation writeup — Hack The Vault II an easy 100-point challenge where buffer and password pointers alias into the same 191-byte stack array such that sending exactly 127 bytes and closing the socket causes the NUL terminator written to buffer[127] to land on password[0] but the subsequent fread into password immediately overwrites that NUL so printf %s walks past the input and prints the adjacent password plaintext enabling a two-connection exploit that leaks the server password then submits it to receive the flag"
+  alt: "BushBashCTF 2026 Hack The Vault II: the manual getchar loop places a NUL at the shared buffer boundary, and a later fread overwrites it so printf discloses the adjacent password."
 ---
 
 BushBashCTF 2026’s binary-exploitation track included **Hack The Vault II**, a small C authentication service. The challenge repository provides the source, solver, and README. Reviewing those artifacts resolves the earlier conflicting explanations: this is not a `fgets` edge case or a race. The source reads input first, writes its terminator at the start of the adjacent password region when the input is exactly 127 bytes, then reads the password over that terminator before printing the input as a C string.
