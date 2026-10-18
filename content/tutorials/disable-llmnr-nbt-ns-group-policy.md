@@ -457,7 +457,7 @@ Your implementation roadmap:
 2. **Next week:** Deploy to a pilot OU with monitoring for 72 hours to catch any application dependencies  
 3. **Within 30 days:** Roll out organization-wide with documented exceptions for any legitimate dependencies discovered
 
-Combine this hardening with [NTLM disabling](/tutorials/disable-ntlm-windows/) and [SMB hardening](/tutorials/windows-hardening/) to create a comprehensive defense against network-based credential attacks. The overlapping protections ensure that eliminating one attack vector doesn't just push attackers to an equally viable alternative.
+Combine this hardening with [NTLM disabling](/tutorials/disable-ntlm-windows/) and [SMB hardening](/tutorials/disable-smb1-windows-server/) to create a comprehensive defense against network-based credential attacks. The overlapping protections ensure that eliminating one attack vector doesn't just push attackers to an equally viable alternative.
 
 ## References
 

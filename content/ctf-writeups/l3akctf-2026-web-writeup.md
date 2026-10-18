@@ -75,12 +75,12 @@ This **CyberSecurity Elite** L3akCTF 2026 web writeup walks all twelve challenge
 | [Platform Protection 0](#platform-protection-0--react2shell-cve-2025-55182) | 125 | 46 | React2Shell RSC deserialization RCE |
 | [Zebda](#zebda--two-parsers-two-answers) | 137 | 40 | NFKC slug + js-yaml/PyYAML merge-key differential |
 | [Side Channel Surfer](#side-channel-surfer--count-the-frames-leak-the-flag) | 139 | 39 | SQLite byte oracle + `window.length` XS-leak |
-| [Workerboard - Part 1](#workerboard--part-1--escaping-a-v8-isolate) | 201 | 22 | workerd V8 RegExp `lastIndex` write-barrier escape |
+| [Workerboard - Part 1](#workerboard---part-1--escaping-a-v8-isolate) | 201 | 22 | workerd V8 RegExp `lastIndex` write-barrier escape |
 | [SVG](#svg--css-that-escapes-the-svg) | 244 | 16 | svg-hush CSS injection + `image-set()` exfil |
 | [Platform Protection 1](#platform-protection-1--the-same-rce-through-a-utf-16-door) | 299 | 11 | React2Shell + UTF-16LE charset filter bypass |
 | [L3aky Canvas](#l3aky-canvas--one-byte-to-rule-them-all) | 405 | 5 | Path traversal + coordinate-mask `/proc/self/mem` patch |
 | [Squid](#squid--four-bugs-and-a-procfs-race) | 453 | 3 | json/ujson + urlparse/requests differentials + procfs TOCTOU |
-| [Workerboard - Part 2](#workerboard--part-2--from-isolate-escape-to-root) | 478 | 2 | Same V8 escape + setuid `/readflag` via fork/execve |
+| [Workerboard - Part 2](#workerboard---part-2--from-isolate-escape-to-root) | 478 | 2 | Same V8 escape + setuid `/readflag` via fork/execve |
 | [ml-platform](#ml-platform--an-encoded-slash-and-a-relative-source) | 500 | 1 | Traefik `%2f` auth bypass + MLflow prompt-source traversal |
 
 ---
@@ -221,7 +221,7 @@ But (5) procfs reports `st_size == 0` for `environ`, and Werkzeug's `send_file` 
 
 > *Flag:* `L3AK{w0rk3rd_7R1es_t0_1s0l473_e4CH_w0rK3R...FoR_4_ReWaRD}`
 
-Same handout, same workerd V8 escape as [Part 1](#workerboard--part-1--escaping-a-v8-isolate) — the RegExp `lastIndex` write-barrier UAF, fake-string map leak, cage read/write, and Wasm-jump-table native execution are reused verbatim. The difference is the target: Part 1's flag lived in a readable app file; Part 2's is root-only `/flag.txt`, readable only via the setuid `/readflag` helper.
+Same handout, same workerd V8 escape as [Part 1](#workerboard---part-1--escaping-a-v8-isolate) — the RegExp `lastIndex` write-barrier UAF, fake-string map leak, cage read/write, and Wasm-jump-table native execution are reused verbatim. The difference is the target: Part 1's flag lived in a readable app file; Part 2's is root-only `/flag.txt`, readable only via the setuid `/readflag` helper.
 
 Native code alone doesn't grant root — `setuid(0)` from the injected payload fails because the Workerd process is unprivileged. The privilege transition happens only when Linux `execve`s the mode-4511 root-owned helper. So the 254-byte payload creates a `pipe`, `fork`s, redirects the child's stdout to the pipe with `dup2`, and `execve`s `/readflag`; Linux applies the setuid bit, the helper becomes root, reads the flag, and writes it to the pipe, which the parent copies into Wasm linear memory for JavaScript to return. **Takeaway:** an isolate escape gets you the runtime's privileges, not the kernel's — but a setuid binary on the worker filesystem bridges that gap, which is why untrusted runtimes need a VM boundary and no setuid helpers within reach.
 

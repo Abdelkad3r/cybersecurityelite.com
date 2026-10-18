@@ -88,14 +88,14 @@ Handouts, per-challenge READMEs, solver scripts, and captured session artifacts 
 
 | Challenge | Points | Sub-genre | The wake to read | Flag |
 |---|---:|---|---|---|
-| [Black Box](#black-boxbigendian-record-carving-and-a-checksum-shaped-xor-key) | 118 | Binary record parsing | Big-endian sequence numbers + `0xDEAD` in the checksum slot | `zdk{ElEmeN74ry_bLnArY_par5LnG_MAS73r}` |
-| [Dead Current](#dead-currentcriu-checkpoint-afterimage-and-a-stripped-go-relay) | 148 | CRIU checkpoint carving | Ghost file + freed heap pages + `gopclntab` | `zdk{CRIU_4fT3RIMAGE_sOA7Et3zoBl083TbCD96185oCqDD59c4}` |
-| [Dead Letter Wake](#dead-letter-wakemime-messagepartial-reassembly-and-a-pix8-forward-model) | 149 | Network / mail / PDF / renderer inversion | Postfix queue item `DLW214704` + PIX-8 mosaic + calibration | `zdk{D3Ad_L3tTeRs_5pE4k_afTer_THE_wAke}` |
-| [Ghost in the GPU](#ghost-in-the-gpuentropy-carving-in-a-scrubbed-vram-dump) | 131 | Memory forensics | The 1.5 MiB survivor at `0x900000` | `zdk{MemOrY_1Eak_found}` |
-| [Hydra FC](#hydra-fca-source-map-leaks-the-vulnerable-gateway-function) | 122 | Network / WebSocket / QR reconstruction | `replay.js.map` + `confidence == 1.0` frames | `zdk{Mess1_0R_RONa1d0}` |
-| [layer-eight](#layereightoci-whiteouts-still-remember-secrets) | 120 | Container image forensics | Layers 4 and 6 (whiteouts in layer 8) + label shards | `zdk{whltEOUt_1AyErs_5TlL1_r3MeMBer_SECrETs}` |
-| [99.8%](#998-qbcn-container-inside-a-torrent-partfile) | 162 | Torrent client forensics | `.!qB` partfile final piece + memory-dump `domain` | `zdk{Q8IT_hI6H_g0a7ED}` |
-| [Unrotated](#unrotatedsevenpart-incident-response-chain-across-eight-log-classes) | 137 | Incident response | Whichever log class *isn't* the label | `zdk{a_HuM4n_REaD5_7HE_W4ke_nO7_7h3_14Bel5}` |
+| [Black Box](#black-box--big-endian-record-carving-and-a-checksum-shaped-xor-key) | 118 | Binary record parsing | Big-endian sequence numbers + `0xDEAD` in the checksum slot | `zdk{ElEmeN74ry_bLnArY_par5LnG_MAS73r}` |
+| [Dead Current](#dead-current--criu-checkpoint-afterimage-and-a-stripped-go-relay) | 148 | CRIU checkpoint carving | Ghost file + freed heap pages + `gopclntab` | `zdk{CRIU_4fT3RIMAGE_sOA7Et3zoBl083TbCD96185oCqDD59c4}` |
+| [Dead Letter Wake](#dead-letter-wake--mime-messagepartial-reassembly-and-a-pix-8-forward-model) | 149 | Network / mail / PDF / renderer inversion | Postfix queue item `DLW214704` + PIX-8 mosaic + calibration | `zdk{D3Ad_L3tTeRs_5pE4k_afTer_THE_wAke}` |
+| [Ghost in the GPU](#ghost-in-the-gpu--entropy-carving-in-a-scrubbed-vram-dump) | 131 | Memory forensics | The 1.5 MiB survivor at `0x900000` | `zdk{MemOrY_1Eak_found}` |
+| [Hydra FC](#hydra-fc--a-source-map-leaks-the-vulnerable-gateway-function) | 122 | Network / WebSocket / QR reconstruction | `replay.js.map` + `confidence == 1.0` frames | `zdk{Mess1_0R_RONa1d0}` |
+| [layer-eight](#layer-eight--oci-whiteouts-still-remember-secrets) | 120 | Container image forensics | Layers 4 and 6 (whiteouts in layer 8) + label shards | `zdk{whltEOUt_1AyErs_5TlL1_r3MeMBer_SECrETs}` |
+| [99.8%](#998--qbcn-container-inside-a-torrent-partfile) | 162 | Torrent client forensics | `.!qB` partfile final piece + memory-dump `domain` | `zdk{Q8IT_hI6H_g0a7ED}` |
+| [Unrotated](#unrotated--seven-part-incident-response-chain-across-eight-log-classes) | 137 | Incident response | Whichever log class *isn't* the label | `zdk{a_HuM4n_REaD5_7HE_W4ke_nO7_7h3_14Bel5}` |
 
 Eight challenges, eight different substrates, one repeated discipline.
 

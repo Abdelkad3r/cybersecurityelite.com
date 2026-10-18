@@ -9,6 +9,7 @@ ShowReadingTime: false
 ShowBreadCrumbs: true
 hidemeta: true
 disableShare: true
+robotsNoIndexFollow: true
 sitemap:
   disable: true
 ---

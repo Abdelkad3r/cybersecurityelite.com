@@ -86,14 +86,14 @@ Handouts, per-challenge READMEs, and dependency-conscious solvers live at [Abdel
 | Challenge | Points | Sub-genre | The parser differential | Flag |
 |---|---:|---|---|---|
 | [Salvage Protocol](#salvage-protocol--declared-length-vs-actual-length-desync-into-vaultd) | 136 | Two-daemon protocol | `reclaimd` allocates using actual length but declares zero → smuggled frames into `vaultd` | `zdk{5a1VAGEd_thR0UgH_7He_sEAM}` |
-| [rapture](#rapture--heap-manifest-snapshot-into-tcache-safelinking-bypass) | 144 | Heap UAF | Manifest snapshot copies pointer → aliased chunk → tcache safe-linking bypass | `zdk{FreeD_ln_tHE_DeeP_But_N3v3R_FORg0t7en}` |
+| [rapture](#rapture--heap-manifest-snapshot-into-tcache-safe-linking-bypass) | 144 | Heap UAF | Manifest snapshot copies pointer → aliased chunk → tcache safe-linking bypass | `zdk{FreeD_ln_tHE_DeeP_But_N3v3R_FORg0t7en}` |
 | [House XIII](#house-xiii--signed-cursor-wrap-plus-stale-table-alias) | 143 | Custom VM + heap | Signed cursor validated on wrapped 16-bit offset; Star→Orbital leaves stale table entry | `zdk{HouSe_xLLl_0penS_wHeN_thE_st413_Aud1t_rECOrD_reWrL7e5_7h3_r0uTe}` |
 | [Dead Reckoning](#dead-reckoning--aarch64-top-byte-ignore-validator-vs-raw-store) | 251 | AArch64 SROP | AArch64 TBI: validator clears top byte, store uses raw pointer | `zdk{ThE_70P_8YTe_CHARtEd_A_RoU7e_B31OW_th3_suRFACe}` |
-| [Phantom Phase](#phantom-phase--vm-validator-unsigned-vs-executor-signextended) | 334 | Custom register VM | Validator: unsigned 12-bit. Executor: sign-extended. `0xe00` = `-0x200` | `zdk{DEAD_rEckon1N6_sl6N3d_the_wr0n6_CoURs3}` |
-| [paperweight](#paperweight--poppler-splash-tiling-pattern-32bit-wrap-into-folio-overflow) | 202 | Bundled-library integer wrap | Poppler `tilingPatternFill`: 32-bit horizontal extent wraps `0x100000004 → 4` | `zdk{ThE_Sc4nlIN3_5AnK_8ELOw_32_bI75}` |
+| [Phantom Phase](#phantom-phase--vm-validator-unsigned-vs-executor-sign-extended) | 334 | Custom register VM | Validator: unsigned 12-bit. Executor: sign-extended. `0xe00` = `-0x200` | `zdk{DEAD_rEckon1N6_sl6N3d_the_wr0n6_CoURs3}` |
+| [paperweight](#paperweight--poppler-splash-tiling-pattern-32-bit-wrap-into-folio-overflow) | 202 | Bundled-library integer wrap | Poppler `tilingPatternFill`: 32-bit horizontal extent wraps `0x100000004 → 4` | `zdk{ThE_Sc4nlIN3_5AnK_8ELOw_32_bI75}` |
 | [Expert Witness](#expert-witness--moepack-python-auditor-vs-native-worker-hash-collision) | 347 | ML supply-chain parser differential | Python auditor: full name. Native worker: salted 32-bit hash. Craft collisions | `zdk{the_ExP3Rt_wi7neSS_T3StIFi35_FR0m_b3NEatH_ThE_modeL_R3gIstRY}` |
 | [Pelagic Palimpsest](#pelagic-palimpsest--nuitka-plugin-supply-chain-into-hidden-native-backend) | 347 | Supply-chain pwn | Audited Python source vs shipped Nuitka plugin injecting hidden `_fastmemo` ELF | `zdk{ThE_deeP3sT_cUrRENt_WaS_7HE_C0MpILeR_cuRRENt}` |
-| [Undertow](#undertow--gaussian-elimination-on-a-128bit-seal-plus-checkpoint-list-aliasing) | 321 | Checkpoint service | GF(2) linear-equation leak recovers 128-bit `UNDERTOW_SEAL`; commit-vs-snapshot list alias | `zdk{4_ST4L3_CheckP0INt_s4nK_BeLOW_The_pOInTER_gUarD}` |
+| [Undertow](#undertow--gaussian-elimination-on-a-128-bit-seal-plus-checkpoint-list-aliasing) | 321 | Checkpoint service | GF(2) linear-equation leak recovers 128-bit `UNDERTOW_SEAL`; commit-vs-snapshot list alias | `zdk{4_ST4L3_CheckP0INt_s4nK_BeLOW_The_pOInTER_gUarD}` |
 
 Nine challenges, nine primitives (protocol desync / heap UAF / stale table / TBI / VM sign-extension / bundled-library wrap / ML parser / supply-chain / checkpoint quarantine), one repeated pattern.
 

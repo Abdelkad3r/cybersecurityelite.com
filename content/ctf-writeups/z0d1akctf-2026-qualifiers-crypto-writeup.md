@@ -79,12 +79,12 @@ Handouts, per-challenge READMEs, solvers, and captured session artifacts live at
 
 | Challenge | Points | Sub-genre | Parameter to attack | Flag |
 |---|---:|---|---|---|
-| [siren](#sirenbiased-ecdsa-nonce-into-the-hidden-number-problem) | 116 | ECDSA nonce bias | Public 10-bit nonce prefix `public_pitch(msg)` | `zdk{4_feW_8ltS_PeR_5LGNA7UR3_sLNkS_The_KEy}` |
-| [Rewind](#rewindstream-cipher-counter-reset-is-a-twotime-pad) | 120 | Stream cipher | Reset counter → shared keystream | `zdk{ReWlnDiNg_thE_C0UNt3r_rEUs3s_Th3_sTRE4m}` |
-| [Rewind Revenge](#rewind-revengeaesgcm-nonce-reuse-and-the-forbidden-attack) | 123 | AES-GCM nonce reuse | Fixed nonce → affine tag `T = C·H² ⊕ P` | `zdk{LoCaL_REWinD_R3VenGE_F1Ag}` |
-| [You Have Not Seen My Colors](#you-have-not-seen-my-colorssentinel-in-the-blue-channel) | 137 | PNG channel-sentinel stego | Blue channel `B == 0` reserved | `zdk{m4S7er_OF_C0l0rs_4nD_C7f}` |
-| [cyclotomic-echo](#cyclotomic-echontru-private-basis-leaked-as-recovery-json) | 139 | Lattice signature | `recovery.json` = private basis with `fG − gF = 1` | `zdk{cyc10T0mic_eCho_on3_BA5IS_biNdS_3verY_TeAM_ARcHIvE}` |
-| [THESEUS](#theseus-ethereum-proxy-storage-and-blockchain-history) | 154 | Ethereum proxy | EIP-1967 storage slots 2, 3, 4, 8, 9, 10, 11 | `zdk{an_4DDrESS_Ls_A_l0C4TLoN_NoT_aN_Ld3nTl7Y}` |
+| [siren](#siren--biased-ecdsa-nonce-into-the-hidden-number-problem) | 116 | ECDSA nonce bias | Public 10-bit nonce prefix `public_pitch(msg)` | `zdk{4_feW_8ltS_PeR_5LGNA7UR3_sLNkS_The_KEy}` |
+| [Rewind](#rewind--stream-cipher-counter-reset-is-a-two-time-pad) | 120 | Stream cipher | Reset counter → shared keystream | `zdk{ReWlnDiNg_thE_C0UNt3r_rEUs3s_Th3_sTRE4m}` |
+| [Rewind Revenge](#rewind-revenge--aes-gcm-nonce-reuse-and-the-forbidden-attack) | 123 | AES-GCM nonce reuse | Fixed nonce → affine tag `T = C·H² ⊕ P` | `zdk{LoCaL_REWinD_R3VenGE_F1Ag}` |
+| [You Have Not Seen My Colors](#you-have-not-seen-my-colors--sentinel-in-the-blue-channel) | 137 | PNG channel-sentinel stego | Blue channel `B == 0` reserved | `zdk{m4S7er_OF_C0l0rs_4nD_C7f}` |
+| [cyclotomic-echo](#cyclotomic-echo--ntru-private-basis-leaked-as-recoveryjson) | 139 | Lattice signature | `recovery.json` = private basis with `fG − gF = 1` | `zdk{cyc10T0mic_eCho_on3_BA5IS_biNdS_3verY_TeAM_ARcHIvE}` |
+| [THESEUS](#theseus--ethereum-proxy-storage-and-blockchain-history) | 154 | Ethereum proxy | EIP-1967 storage slots 2, 3, 4, 8, 9, 10, 11 | `zdk{an_4DDrESS_Ls_A_l0C4TLoN_NoT_aN_Ld3nTl7Y}` |
 
 Six challenges, six different primitives (ECDSA / stream cipher / AES-GCM / PNG stego / NTRU-style lattice / EVM), one repeated discipline.
 

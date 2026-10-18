@@ -8,7 +8,7 @@ draft: false
 author: "CyberSecurity Elite Team"
 categories: ["CTF Writeups"]
 aliases:
-  - /ctf-writeups/omnictf-2026-quals-misc-writeup/
+  - /ctf-writeups/omnictf-2026-quals-misc-forensics-writeup/
 series: ["OmniCTF 2026 Quals"]
 tags:
   - "omnictf"

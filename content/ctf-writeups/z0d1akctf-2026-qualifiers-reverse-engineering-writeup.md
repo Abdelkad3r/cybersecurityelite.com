@@ -74,7 +74,7 @@ Handouts, per-challenge READMEs, and dependency-conscious solvers live at [Abdel
 | Challenge | Points | Sub-genre | Layer stack | Flag |
 |---|---:|---|---|---|
 | [stars-below](#stars-below--invert-two-custom-vms-from-a-blake2s-target) | 209 | Custom VM inversion | Base32 → payload → VM A 24 ARX rounds → callsign permutation → VM B 19 stack rounds → BLAKE2s target | `zdk{The_1OAd3r_DREaMS_IN_PAgE_boUNDArIE5}` |
-| [Black Tide Survey](#black-tide-survey--bts2-container-plus-12-bit-zigzag-plus-even-odd-reorder) | 179 | Undocumented binary format | BTS2 CRC container → 12-bit packing → ZigZag delta mod 4096 → even/odd seq reorder → render | `zdk{S4Ble_54_T3L0}` |
+| [Black Tide Survey](#black-tide-survey--bts2-container-plus-12-bit-zigzag-plus-evenodd-reorder) | 179 | Undocumented binary format | BTS2 CRC container → 12-bit packing → ZigZag delta mod 4096 → even/odd seq reorder → render | `zdk{S4Ble_54_T3L0}` |
 | [husk](#husk--the-anti-debug-results-are-the-key) | 132 | Anti-debug + chained cipher | LCG mask → F 6-round chained cipher → RC4 keystream → key = XOR of 4 anti-debug probes | `zdk{7h3_An7LdEbu6_Was_Th3_decryP7LON_key}` |
 
 Three challenges, three completely different pipelines, one repeated discipline: **document every codec, invert every codec, and the flag is at the bottom of the stack.**

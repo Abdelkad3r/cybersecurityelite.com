@@ -1,13 +1,11 @@
 {{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-{{- /* Filter out term pages under /tags/ — they're noindex,follow at the page
-       level, so listing them in the sitemap just wastes Google's discovery
-       budget on URLs it can't index. Categories, series, and author terms
-       are kept since those taxonomies have fewer, denser pages. */ -}}
+{{- /* Respect per-page sitemap exclusions and robotsNoIndex. Tag archives stay
+       crawlable through links but are intentionally kept out of the sitemap. */ -}}
 {{ range .Data.Pages }}
-  {{- $skip := false -}}
-  {{- if and (eq .Kind "term") (eq .Section "tags") -}}{{ $skip = true }}{{- end -}}
+  {{- $skip := or .Sitemap.Disable (eq .Params.robotsNoIndex true) -}}
+  {{- if and (in (slice "taxonomy" "term") .Kind) (eq .Section "tags") -}}{{ $skip = true }}{{- end -}}
   {{- if not $skip -}}
   {{- if .Permalink -}}
   <url>

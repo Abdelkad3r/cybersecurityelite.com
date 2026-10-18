@@ -1,11 +1,20 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{{- if hugo.IsProduction | or (eq site.Params.env "production") | and (ne .Params.robotsNoIndex true) }}
-<meta name="robots" content="index, follow">
-{{- else }}
-<meta name="robots" content="noindex, nofollow">
-{{- end }}
+{{- /* Emit one robots directive. Tag archives and later pagination pages stay
+       crawlable for link discovery, but are intentionally not indexable. */ -}}
+{{- $isProduction := hugo.IsProduction | or (eq site.Params.env "production") -}}
+{{- $robots := "index, follow" -}}
+{{- if or (not $isProduction) (eq .Params.robotsNoIndex true) -}}
+  {{- $robots = "noindex, nofollow" -}}
+{{- else if eq .Params.robotsNoIndexFollow true -}}
+  {{- $robots = "noindex, follow" -}}
+{{- else if and (in (slice "taxonomy" "term") .Kind) (eq .Section "tags") -}}
+  {{- $robots = "noindex, follow" -}}
+{{- else if in (slice "home" "section" "taxonomy" "term") .Kind -}}
+  {{- with .Paginator -}}{{- if gt .PageNumber 1 -}}{{- $robots = "noindex, follow" -}}{{- end -}}{{- end -}}
+{{- end -}}
+<meta name="robots" content="{{ $robots }}">
 
 {{- /* Title — guarantees a unique <title> per indexable URL.
        - Pagination pages get " — Page N" appended.

@@ -75,10 +75,10 @@ Handouts, per-challenge READMEs, solver scripts, and captured session artifacts 
 
 | Challenge | Points | Sub-genre | Substrate the exploit reads | Flag |
 |---|---:|---|---|---|
-| [genie](#geniegame-boy-rom-replay-with-an-authenticated-cheat-port) | 138 | Game Boy ROM replay | RAM `C100–C105` (gold + XOR + MAC) inside writable cheat window | `zdk{7Hree_WOrD5_NiNE_eCHo3S_ON3_oPeN_Seal}` |
-| [ihateDAA](#ihatedaaparallel-bfs-over-a-cyclic-web-graph) | 149 | HTTP graph traversal | HTML `<title>` element + cyclic 92k-node adjacency list | `zdk{i_l0Ve_GRaPH_7RAvER5AL_4nd_dyN4mIc_inSTanc35}` |
-| [Control Plane](#control-planeevm-kernel-parser-differential) | 163 | EVM parser differential | 1594-byte kernel runtime bytecode; executor's own record-length decoder | `zdk{ENDIan_fIREw4l1_d3L3gA7e_DRaIN}` |
-| [Sanity Check](#sanity-checkcloudflare-injected-hostname-keyed-fragment) | 199 | Cloudflare-Snippet OSINT | `<style id="sanity-check-fragment">` injected by a Cloudflare Snippet, keyed on hostname | `zdk{all the best, we hope you enjoy the ctf}` |
+| [genie](#genie--game-boy-rom-replay-with-an-authenticated-cheat-port) | 138 | Game Boy ROM replay | RAM `C100–C105` (gold + XOR + MAC) inside writable cheat window | `zdk{7Hree_WOrD5_NiNE_eCHo3S_ON3_oPeN_Seal}` |
+| [ihateDAA](#ihatedaa--parallel-bfs-over-a-cyclic-web-graph) | 149 | HTTP graph traversal | HTML `<title>` element + cyclic 92k-node adjacency list | `zdk{i_l0Ve_GRaPH_7RAvER5AL_4nd_dyN4mIc_inSTanc35}` |
+| [Control Plane](#control-plane--evm-kernel-parser-differential) | 163 | EVM parser differential | 1594-byte kernel runtime bytecode; executor's own record-length decoder | `zdk{ENDIan_fIREw4l1_d3L3gA7e_DRaIN}` |
+| [Sanity Check](#sanity-check--cloudflare-injected-hostname-keyed-fragment) | 199 | Cloudflare-Snippet OSINT | `<style id="sanity-check-fragment">` injected by a Cloudflare Snippet, keyed on hostname | `zdk{all the best, we hope you enjoy the ctf}` |
 
 Four categories dressed as one: replay + web + smart-contract + OSINT. One repeated pattern.
 

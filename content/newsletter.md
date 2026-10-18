@@ -27,7 +27,7 @@ Roughly 6-8 minutes to read. Always Friday morning, UTC.
 
 <p style="color: var(--secondary); font-size: 0.92rem; margin-top: 1rem;">
   Your email is only used to send the weekly newsletter — no spam, unsubscribe in one click.
-  See our <a href="/privacy/">Privacy Policy</a> for details.
+  See our <a href="/privacy-policy/">Privacy Policy</a> for details.
 </p>
 
 ## What Subscribers Are Saying

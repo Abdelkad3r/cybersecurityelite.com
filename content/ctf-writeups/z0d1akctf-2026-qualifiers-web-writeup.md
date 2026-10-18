@@ -78,7 +78,7 @@ Handouts, per-challenge READMEs, and dependency-conscious solvers live at [Abdel
 | [captcha](#captcha--replay-one-jwt-proof-across-all-four-checks) | 174 | Broken authorization scope | JWT proof asserts `human: true` but never names the check that produced it | `zdk{53Ems_HuMAN_3NoU6H_7o_m3}` |
 | [hydra-fc-will-come-back](#hydra-fc-will-come-back--public-anchor-drags-restricted-fixtures-into-the-response) | Unknown | Response filter bypass | `compare` bundles restricted fixtures whenever a public anchor is included | `zdk{FE3LinG_8aD_fOR_CroAtiA}` |
 | [Middle-Out](#middle-out--gateway-vs-worker-fnv-1a-parser-differential-into-hmac-forgery) | 378 | Parser differential + hash collision | Gateway identifies fields by full name; worker dispatches by 32-bit FNV-1a | `zdk{TH3_6A7EwaY_and_W0rker_5QuEEZ3d_dLfFeR3NT_MIdD1e5}` |
-| [Sprout & About](#sprout--about--alg-none-jwt-plus-preview-token-moderation-leak) | 152 | Classic `alg:none` JWT | Server accepts unsigned JWT when header is `{"alg":"none"}` | `zdk{0C3AN_DLviNG_i5_fUN}` |
+| [Sprout & About](#sprout--about--algnone-jwt-plus-preview-token-moderation-leak) | 152 | Classic `alg:none` JWT | Server accepts unsigned JWT when header is `{"alg":"none"}` | `zdk{0C3AN_DLviNG_i5_fUN}` |
 
 Four completely different technology stacks — a WebSocket four-game gate, a Football offside gateway, a Pied-Piper-parody browser-to-WASM-to-native pipeline, a Next.js plant shop — and one repeated pattern.
 

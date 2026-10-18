@@ -68,8 +68,8 @@ Handouts, per-challenge READMEs, and pure-stdlib solvers live at [Abdelkad3r/scr
 
 | Challenge | Category | Points | Author | Flag |
 |---|---|---:|---|---|
-| [Misdirection](#misdirectionbacons-original-24letter-alphabet) | Cryptography | 160 | NoobMaster | `scriptCTF{notwhatitseems}` |
-| [F\*\*K](#fkbrainfuck-as-a-timing-encoded-comparator) | Reverse Engineering | 454 | Connor Chang | `scriptCTF{t1mm1ng_s1d$_ch@nn31}` |
+| [Misdirection](#misdirection--bacons-original-24-letter-alphabet) | Cryptography | 160 | NoobMaster | `scriptCTF{notwhatitseems}` |
+| [F\*\*K](#fk--brainfuck-as-a-timing-encoded-comparator) | Reverse Engineering | 454 | Connor Chang | `scriptCTF{t1mm1ng_s1d$_ch@nn31}` |
 
 Two challenges, two categories, and one repeated pattern: the intended solve is always one deliberate step *below* the obvious first attempt. Reading the *shape* of the data before decoding it wins both.
 
