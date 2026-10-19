@@ -90,8 +90,8 @@ canonifyURLs = true
   author = "authors"
 
 # Navigation
-# Main nav ordered as a beginner→expert journey (left to right):
-# Start Here → Tutorials → CTF Writeups → Posts → Tools → Certifications, then utility links.
+# Main nav ordered as a learning and professional-development journey (left to right):
+# Start Here → Tutorials → CTF Writeups → Posts → Tools → Certifications → Career, then utility links.
 [menu]
   [[menu.main]]
     identifier = "start-here"
@@ -123,6 +123,11 @@ canonifyURLs = true
     name = "Certifications"
     url = "/certifications/best-cybersecurity-certifications-2026/"
     weight = 25
+  [[menu.main]]
+    identifier = "career"
+    name = "Career"
+    url = "/career/"
+    weight = 27
   [[menu.main]]
     identifier = "trends"
     name = "Trends"
