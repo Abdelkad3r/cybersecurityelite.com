@@ -3,7 +3,7 @@ title: "Privacy Policy"
 slug: "privacy-policy"
 description: "Privacy Policy for CyberSecurityElite.com — what information we collect, how we use it, how third-party advertising works, and your rights under GDPR and CCPA."
 date: 2026-01-01T00:00:00Z
-lastmod: 2026-10-18T00:00:00Z
+lastmod: 2026-10-23T00:00:00Z
 layout: "page"
 hidemeta: true
 disableShare: true
@@ -11,7 +11,7 @@ ShowReadingTime: false
 ShowBreadCrumbs: true
 ---
 
-*Last updated: October 18, 2026*
+*Last updated: October 23, 2026*
 
 This Privacy Policy explains what information CyberSecurity Elite ("we", "us", "our") collects when you visit **cybersecurityelite.com**, how we use that information, how third-party advertising and analytics services operate on this site, and the rights available to you.
 
@@ -57,6 +57,8 @@ This site uses a small number of cookies and browser localStorage entries:
 | Adsterra Native Banner identifiers | Advertising delivery where the banner is enabled after advertising consent | Varies by provider; see [Adsterra's privacy policy](https://adsterra.com/privacy-policy-managed/) |
 
 The Adsterra Social Bar is disabled. The site source contains no AdSense ad unit placements; the AdSense publisher tag is used for the European consent message. Auto Ads are controlled by the AdSense account settings. You can delete local storage and cookies through your browser settings; doing so may reset your saved preferences.
+
+In the EEA, UK, and Switzerland, the Google Privacy & Messaging CMP is the primary consent interface. If it does not respond, a backup choice panel may appear after a short delay; that backup can only grant or deny analytics. Advertising remains denied there, and Adsterra is not loaded.
 
 ---
 

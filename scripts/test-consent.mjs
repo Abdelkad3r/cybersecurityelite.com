@@ -29,7 +29,14 @@ assert.ok(!/adsbygoogle\.js/.test(privacy), 'privacy-policy page must not load c
 assert.ok(!/<ins[^>]+adsbygoogle|adsbygoogle\.push/.test(home), 'no AdSense ad placements are configured');
 assert.ok(!/profitableratecpmnetwork\.com\/ee\//.test(home), 'Social Bar must remain disabled');
 assert.ok(/consentv2/.test(footer), 'Clarity Consent V2 must be wired');
-assert.ok(/region === 'other'/.test(consent), 'custom banner must be restricted to non-regulated regions');
+assert.ok(/region === 'other'/.test(consent), 'Adsterra consent remains limited to non-regulated regions');
+assert.ok(/showFallbackChoices/.test(consent), 'EU visitors get an analytics-only fallback if Google CMP does not respond');
+assert.ok(/Adsterra ads stay disabled in this region/.test(consent), 'EU fallback discloses that Adsterra stays off');
+assert.ok(/if \(region !== 'other'\) return/.test(consent), 'Adsterra calls are blocked outside known non-regulated regions');
+assert.ok(/window\.location\.pathname !== '\/privacy-policy\//.test(consent), 'CMP fallback does not appear on the page that intentionally omits the Google tag');
+assert.ok(/backup choice panel may appear after a short delay/.test(await readFile('content/privacy.md', 'utf8')), 'privacy policy documents the analytics-only CMP fallback');
+assert.ok(/script\.onerror = function/.test(footer), 'Adsterra loader releases its retry lock after a failed request');
+assert.ok(/window\.__CSE_CONSENT_REGION__ !== 'other'/.test(footer), 'Adsterra source rejects non-regulated regions');
 assert.ok(/CONSENT_MODE_DATA_READY/.test(consent), 'Google tags must wait for Google CMP consent data');
 assert.ok(/analyticsStoragePurposeConsentStatus === statuses\.GRANTED/.test(consent), 'Google Analytics must require granted analytics consent');
 assert.ok(/cse_consent_v4/.test(consent), 'custom consent storage must use the current key');
@@ -46,9 +53,12 @@ assert.ok(managerScript, 'custom consent controller script must exist');
 
 function createRuntime(region, savedConsent) {
   const ids = ['cse-cb', 'cse-modal', 'cse-tog-analytics', 'cse-tog-ads', 'cse-mclose',
-    'cse-btn-accept', 'cse-btn-reject', 'cse-btn-manage', 'cse-modal-cancel', 'cse-modal-save'];
+    'cse-btn-accept', 'cse-btn-reject', 'cse-btn-manage', 'cse-modal-cancel', 'cse-modal-save', 'cse-eu-fallback-note'];
   const elements = Object.fromEntries(ids.map((id) => [id, {
     checked: false,
+    disabled: false,
+    hidden: true,
+    textContent: '',
     events: {},
     classes: new Set(),
     classList: {
@@ -63,6 +73,9 @@ function createRuntime(region, savedConsent) {
   const listeners = {};
   const stored = new Map(savedConsent ? [['cse_consent_v4', JSON.stringify(savedConsent)]] : []);
   const fcQueue = [];
+  const timers = [];
+  let nextTimer = 1;
+  const advertisingCalls = [];
   const win = {
     __CSE_CONSENT_REGION__: region,
     location: { pathname: '/', search: '', hash: '', reloads: 0, reload() { this.reloads++; }, assign() {} },
@@ -74,7 +87,9 @@ function createRuntime(region, savedConsent) {
     __cseAdsterraLoaded: false,
     __cseFireGA4() { this.__cseGA4Loaded = true; },
     __cseFireClarity() { this.__cseClarityLoaded = true; },
-    __cseFireAdsterra() { this.__cseAdsterraLoaded = true; }
+    __cseFireAdsterra() { advertisingCalls.push(true); this.__cseAdsterraLoaded = true; },
+    setTimeout(fn, delay) { const timer = { id: nextTimer++, fn, delay, cleared: false }; timers.push(timer); return timer.id; },
+    clearTimeout(id) { const timer = timers.find((candidate) => candidate.id === id); if (timer) timer.cleared = true; }
   };
   const doc = {
     body: { classList: { contains() { return false; } } },
@@ -95,7 +110,7 @@ function createRuntime(region, savedConsent) {
     Array
   };
   vm.runInNewContext(managerScript, context);
-  return { elements, listeners, stored, fcQueue, win };
+  return { elements, listeners, stored, fcQueue, timers, advertisingCalls, win };
 }
 
 const other = createRuntime('other');
@@ -111,6 +126,7 @@ const accepted = createRuntime('other');
 accepted.elements['cse-btn-accept'].events.click();
 assert.equal(accepted.win.__cseGA4Loaded, true, 'Accept All unlocks analytics');
 assert.equal(JSON.parse(accepted.stored.get('cse_consent_v4')).advertising, true, 'Accept All records advertising consent');
+assert.equal(accepted.advertisingCalls.length, 1, 'non-regulated Accept All starts the Adsterra loader');
 accepted.elements['cse-btn-reject'].events.click();
 assert.equal(accepted.win.location.reloads, 1, 'Reject All reloads to stop already-loaded optional scripts');
 
@@ -118,9 +134,29 @@ const unknown = createRuntime('unknown');
 assert.equal(unknown.elements['cse-cb'].classes.has('cse-show'), false, 'unknown geography fails closed without a custom prompt');
 assert.equal(unknown.win.__cseGA4Loaded, false, 'unknown geography cannot start analytics');
 
+const euFallback = createRuntime('eu');
+assert.equal(euFallback.elements['cse-cb'].classes.has('cse-show'), false, 'European visitor initially waits for Google CMP');
+assert.equal(euFallback.win.__cseGA4Loaded, false, 'Google tags wait until Google CMP data is ready');
+assert.equal(euFallback.timers.at(-1).delay, 8000, 'EU fallback waits for the Google CMP response');
+euFallback.timers.at(-1).fn();
+assert.equal(euFallback.elements['cse-cb'].classes.has('cse-show'), true, 'EU visitor sees backup choices if Google CMP does not respond');
+assert.match(euFallback.elements['cse-eu-fallback-note'].textContent, /Adsterra ads stay disabled/);
+euFallback.elements['cse-btn-accept'].events.click();
+assert.equal(JSON.parse(euFallback.stored.get('cse_consent_v4')).analytics, true, 'EU fallback stores an explicit analytics choice');
+assert.equal(JSON.parse(euFallback.stored.get('cse_consent_v4')).advertising, false, 'EU fallback does not grant advertising consent');
+assert.equal(euFallback.win.__cseGA4Loaded, true, 'EU fallback starts analytics only after opt-in');
+assert.equal(euFallback.advertisingCalls.length, 0, 'EU fallback never starts Adsterra');
+
+const euCmpAvailable = createRuntime('eu');
+euCmpAvailable.win.__tcfapi = (_command, _version, callback) => { euCmpAvailable.tcfListener = callback; };
+euCmpAvailable.fcQueue.find((item) => item.CONSENT_API_READY)?.CONSENT_API_READY();
+euCmpAvailable.tcfListener({ eventStatus: 'cmpuishown' }, true);
+assert.equal(euCmpAvailable.timers.at(-1).cleared, true, 'Google CMP response cancels the fallback timer');
+euCmpAvailable.timers.at(-1).fn();
+assert.equal(euCmpAvailable.elements['cse-cb'].classes.has('cse-show'), false, 'Google CMP and fallback are never visible together');
+assert.equal(euCmpAvailable.elements['cse-tog-ads'].disabled, true, 'Adsterra stays unavailable in regulated regions');
+
 const eu = createRuntime('eu');
-assert.equal(eu.elements['cse-cb'].classes.has('cse-show'), false, 'European visitor never sees the custom banner');
-assert.equal(eu.win.__cseGA4Loaded, false, 'Google tags wait until Google CMP data is ready');
 let consentValues = {
   analyticsStoragePurposeConsentStatus: 2,
   adStoragePurposeConsentStatus: 2

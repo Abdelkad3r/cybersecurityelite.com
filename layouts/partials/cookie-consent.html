@@ -71,6 +71,7 @@
 .cse-rowhead{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.25rem}
 .cse-rowhead span{font-weight:600;color:var(--primary,#cdd6f4);font-size:.83rem}
 .cse-desc{font-size:.77rem;line-height:1.55;color:var(--secondary,#9b9b9b)}
+.cse-eu-fallback-note{flex:1 1 100%;color:#fbbf24}
 .cse-always{
   font-size:.69rem;color:#22d3ee;
   border:1px solid rgba(34,211,238,.3);border-radius:3px;
@@ -86,6 +87,7 @@
   cursor:pointer;transition:background .18s,border-color .18s
 }
 .cse-tog input:checked~.cse-track{background:rgba(34,211,238,.22);border-color:#22d3ee}
+.cse-tog input:disabled~.cse-track{opacity:.45;cursor:not-allowed}
 .cse-track::after{
   content:'';position:absolute;top:2px;left:2px;
   width:16px;height:16px;border-radius:50%;
@@ -125,6 +127,7 @@
       We use Google Analytics 4 and Microsoft Clarity for analytics, and Adsterra Native Banner advertising where enabled. Optional services stay off until you choose. See our
       <a href="/privacy-policy/#2-cookies-and-local-storage">Privacy Policy</a> for details.
     </p>
+    <p class="cse-desc cse-eu-fallback-note" id="cse-eu-fallback-note" hidden></p>
     <div class="cse-actions">
       <button type="button" class="cse-cbtn cse-cbtn-reject" id="cse-btn-reject">Reject All</button>
       <button type="button" class="cse-cbtn cse-cbtn-manage" id="cse-btn-manage">Manage Preferences</button>
@@ -189,6 +192,10 @@
   var inRegulatedRegion = region === 'eu';
   var banner = document.getElementById('cse-cb');
   var modal  = document.getElementById('cse-modal');
+  var fallbackNote = document.getElementById('cse-eu-fallback-note');
+  var fallbackMode = false;
+  var googleCmpActive = false;
+  var euCmpWatchdog = null;
 
   /* storage */
   function rdCon() {
@@ -226,6 +233,8 @@
   }
 
   function fireAdvertising() {
+    /* Adsterra is not enabled in the EEA/UK/CH until its vendor consent path is verified. */
+    if (region !== 'other') return;
     if (typeof window.__cseFireAdsterra === 'function') window.__cseFireAdsterra();
   }
 
@@ -247,7 +256,13 @@
   }
 
   /* actions */
-  function acceptAll()  { wrCon(true, true);   cmUpdate(true, true);   fireAnalytics(true); fireAdvertising(); hideBanner(); modal.classList.remove('cse-show'); }
+  function acceptAll()  {
+    var adsAllowed = region === 'other';
+    wrCon(true, adsAllowed); cmUpdate(true, adsAllowed);
+    fireAnalytics(adsAllowed);
+    if (adsAllowed) fireAdvertising();
+    hideBanner(); modal.classList.remove('cse-show');
+  }
   function rejectAll()  {
     var previous = rdCon();
     wrCon(false, false); cmUpdate(false, false);
@@ -260,7 +275,7 @@
   function saveChoices() {
     var previous = rdCon();
     var a = document.getElementById('cse-tog-analytics').checked;
-    var d = document.getElementById('cse-tog-ads').checked;
+    var d = region === 'other' && document.getElementById('cse-tog-ads').checked;
     wrCon(a, d); cmUpdate(a, d);
     if (typeof window.clarity === 'function') window.clarity('consentv2', {
       analytics_Storage: a ? 'granted' : 'denied',
@@ -311,7 +326,9 @@
   window.cseConsent = {
     open: function () {
       if (inRegulatedRegion) {
-        if (window.location.pathname === '/privacy-policy/') {
+        if (fallbackMode) {
+          openModal(true);
+        } else if (window.location.pathname === '/privacy-policy/') {
           window.location.assign('/?privacy-settings=1');
         } else {
           openGooglePreferences();
@@ -335,6 +352,43 @@
   } else if (inRegulatedRegion) {
     hideBanner();
     modal.classList.remove('cse-show');
+    document.getElementById('cse-tog-ads').checked = false;
+    document.getElementById('cse-tog-ads').disabled = true;
+
+    function useGoogleCMP() {
+      googleCmpActive = true;
+      if (euCmpWatchdog !== null) window.clearTimeout(euCmpWatchdog);
+      if (!fallbackMode) return;
+      fallbackMode = false;
+      fallbackNote.hidden = true;
+      hideBanner();
+      modal.classList.remove('cse-show');
+      try { localStorage.removeItem(KEY); } catch (_) {}
+      cmUpdate(false, false);
+      if (window.__cseGA4Loaded || window.__cseClarityLoaded) window.location.reload();
+    }
+
+    function showFallbackChoices() {
+      if (googleCmpActive) return;
+      fallbackMode = true;
+      fallbackNote.textContent = 'Google’s regional consent form did not respond. This backup controls analytics only; Adsterra ads stay disabled in this region.';
+      fallbackNote.hidden = false;
+      document.getElementById('cse-btn-accept').textContent = 'Allow analytics';
+      document.getElementById('cse-modal-save').textContent = 'Save analytics choice';
+      var fallbackConsent = rdCon();
+      if (!fallbackConsent) {
+        showBanner();
+      } else {
+        cmUpdate(fallbackConsent.analytics, false);
+        if (fallbackConsent.analytics) fireAnalytics(false);
+      }
+    }
+
+    /* The Google interface should have answered before this timeout. If it did
+       not, offer an analytics-only fallback while keeping advertising denied. */
+    if (window.location.pathname !== '/privacy-policy/') {
+      euCmpWatchdog = window.setTimeout(showFallbackChoices, 8000);
+    }
 
     /* Google documents this callback as the Basic Consent Mode gate. */
     window.googlefc = window.googlefc || {};
@@ -360,8 +414,9 @@
     window.googlefc.callbackQueue.push({ CONSENT_MODE_DATA_READY: applyGoogleConsent });
     window.googlefc.callbackQueue.push({ CONSENT_API_READY: function () {
       if (typeof window.__tcfapi === 'function') {
-        window.__tcfapi('addEventListener', 0, function (tcData, success) {
-          if (success && tcData && (tcData.eventStatus === 'tcloaded' || tcData.eventStatus === 'useractioncomplete')) {
+        window.__tcfapi('addEventListener', 2, function (tcData, success) {
+          if (success && tcData && ['cmpuishown', 'tcloaded', 'useractioncomplete'].includes(tcData.eventStatus)) {
+            useGoogleCMP();
             window.googlefc.callbackQueue.push({ CONSENT_MODE_DATA_READY: applyGoogleConsent });
           }
         });

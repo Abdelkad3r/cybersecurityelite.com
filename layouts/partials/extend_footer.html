@@ -64,16 +64,24 @@
   var src = {{ $adsterraSrc | jsonify | safeJS }};
   var containerId = {{ $adsterraContainer | jsonify | safeJS }};
   var loaded = false;
+  var loading = false;
   window.__cseFireAdsterra = function () {
-    if (loaded) return;
+    if (loaded || loading || window.__CSE_CONSENT_REGION__ !== 'other') return;
     var container = document.getElementById(containerId);
-    if (!container) return;
-    loaded = true;
-    container.closest('.cse-adsterra-native').hidden = false;
+    var placement = container && container.closest('.cse-adsterra-native');
+    if (!container || !placement) return;
+    loading = true;
+    placement.hidden = false;
     var script = document.createElement('script');
     script.async = true;
     script.setAttribute('data-cfasync', 'false');
     script.src = src;
+    script.onload = function () { loading = false; loaded = true; };
+    script.onerror = function () {
+      loading = false;
+      placement.hidden = true;
+      window.__cseAdsterraLoadFailed = true;
+    };
     document.body.appendChild(script);
   };
 })();
